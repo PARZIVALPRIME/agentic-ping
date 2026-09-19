@@ -30,12 +30,40 @@ function svgEl(tag, attrs = {}, parent) {
 }
 
 /* ── header meta + stat cards ─────────────────────────────────────── */
+/* How the provider participated in this run. "live" means the model returned
+   text; "deterministic" means no call was made (--no-llm, or a run that asked
+   for the LLM and had none); "provider-failed" means calls were attempted and
+   returned nothing usable, so every answer is the solver's. The distinction is
+   the whole point of the provenance block: "0 LLM calls/q" must read as a
+   property of the run, never of the architecture. */
+function runModeLabel() {
+  const mode = (DATA.summary || {}).run_mode;
+  if (mode === "live") return "provider: live";
+  if (mode === "provider-failed") return "provider: returned nothing";
+  if (mode === "deterministic") return "deterministic baseline";
+  // Older summaries have no run_mode; derive it from the records instead of
+  // defaulting to a reassuring label.
+  const vals = Object.keys(DATA.llm_activity || {}).map(k => DATA.llm_activity[k] || {});
+  if (vals.some(v => (v.records_answering || 0) > 0)) return "provider: live";
+  if (vals.some(v => (v.calls || 0) > 0)) return "provider: returned nothing";
+  if (vals.length) return "deterministic baseline";
+  return "provider: not recorded";
+}
+
+function activityFor(name) {
+  const top = (DATA.llm_activity || {})[name];
+  if (top) return top;
+  const prov = ((DATA.summary || {}).provenance || {}).llm_activity || {};
+  return prov[name] || null;
+}
+
 function renderMeta() {
   const s = DATA.summary || {};
   document.getElementById("meta").innerHTML =
     `${s.num_questions || (DATA.entries || []).length} public questions · ` +
     `evaluator: ${s.evaluator && s.evaluator.llm_judge_enabled ? "LLM judge on" : "deterministic"} · ` +
-    `wall clock ${s.wall_clock_s ? s.wall_clock_s + "s" : "–"} · generated ${DATA.generated}`;
+    `wall clock ${s.wall_clock_s ? s.wall_clock_s + "s" : "–"} · ` +
+    `${runModeLabel()} · generated ${DATA.generated}`;
   document.getElementById("footMeta").textContent =
     `results: ${DATA.results_file} · corpus: 2,951 Wikipedia articles (1987–2023) · ` +
     `vector backend: sparse TF-IDF · planner: openai/gpt-oss-120b via Groq`;
@@ -47,6 +75,25 @@ function renderCards() {
   const host = document.getElementById("cards");
   host.innerHTML = "";
   const cls = { "RAG": "c-rag", "GraphRAG": "c-graph", "Agentic GraphRAG": "c-agent" };
+
+  // Say it before the numbers, not after: a file whose provider calls returned
+  // nothing still shows three plausible accuracies and three "0 LLM calls/q".
+  const mode = s.run_mode;
+  const warned = Object.keys(DATA.llm_activity || {})
+    .some(k => (DATA.llm_activity[k] || {}).records_answering > 0) === false;
+  if (mode && mode !== "live" && warned) {
+    const note = el("p", { class: "hint", style: "grid-column:1/-1" }, host);
+    el("span", {
+      class: `chip ${mode === "deterministic" ? "same" : "down"}`,
+      text: mode === "deterministic" ? "deterministic baseline"
+        : "provider returned nothing" }, note);
+    el("span", { text: mode === "deterministic"
+      ? " — no provider calls were made for this file, so every answer came from "
+        + "the deterministic solvers: 0 LLM calls/q is expected here, not a bug."
+      : " — the provider was called but returned no completion text, so every "
+        + "answer below is the deterministic one." }, note);
+  }
+
   for (const [name, ps] of Object.entries(pipes)) {
     const card = el("div", { class: `card ${cls[name] || ""}` }, host);
     el("h3", { text: name }, card);
@@ -56,9 +103,16 @@ function renderCards() {
     el("div", { class: "row", html:
       `<span>${ps.correct ?? "–"}/${ps.num_evaluated ?? "–"} correct</span>` +
       `<span>${short(ps.avg_total_tokens)} tok avg</span>` }, card);
+    // Prefer the summary's average, but fall back to the per-record activity so
+    // an older summary (no avg_llm_calls) still reports what really happened.
+    const act = activityFor(name);
+    const callsQ = ps.avg_llm_calls != null ? ps.avg_llm_calls
+      : act && act.records ? +(act.calls / act.records).toFixed(2) : 0;
+    const served = act ? (act.records_answering || 0) : null;
     el("div", { class: "row", html:
       `<span>${short(ps.avg_latency_ms)} ms avg</span>` +
-      `<span>${ps.avg_llm_calls ?? 0} LLM calls/q</span>` +
+      `<span>${callsQ} LLM calls/q` +
+      `${served === 0 ? " · none answered" : ""}</span>` +
       `<span>${ps.avg_retrieval_steps ?? 0} steps</span>` }, card);
   }
 }
@@ -371,14 +425,23 @@ function renderLlmActivity() {
     const a = activity[name] || {};
     const records = a.records || 0;
     const called = a.records_with_calls || 0;
-    const share = records ? called / records : 0;
-    const label = share === 0 ? "deterministic only"
-      : share === 1 ? "provider on every question"
-        : `provider on ${Math.round(share * 100)}% of questions`;
+    const answered = a.records_answering != null ? a.records_answering : called;
+    // "called" and "answered" are different questions. A pipeline that invoked
+    // the provider on every question but got empty completions is not the same
+    // as one that never called: the first is a provider failure wearing an LLM
+    // run's clothes, the second is the documented deterministic fallback.
+    const label = called === 0 ? "deterministic only · no calls made"
+      : `${called}/${records} called · ${answered} returned text`;
     const card = el("div", { class: "card" }, grid);
     el("h3", { text: name }, card);
-    el("div", { class: "big", text: `${called}/${records}` }, card);
-    el("div", { class: "row", text: `${short(a.total_tokens || 0)} tokens · ${label}` }, card);
+    el("div", { class: "big", text: `${answered}/${records}` }, card);
+    el("div", { class: "row", html:
+      `<span>${short(a.total_tokens || 0)} tokens · ${label}</span>` }, card);
+    if (called > 0 && answered === 0) {
+      el("div", { class: "row", html: `<span class="chip down">provider-failed</span>` }, card);
+    } else if (called > 0 && called < records) {
+      el("div", { class: "row", html: `<span class="chip">partial-llm</span>` }, card);
+    }
   });
   (provenanceOf().warnings || []).forEach(w => {
     const p = el("p", { class: "hint", style: "margin-top:10px" }, host);

@@ -24,6 +24,94 @@ def _mean(values: List[float]) -> Optional[float]:
     return round(sum(nums) / len(nums), 4) if nums else None
 
 
+def llm_activity(entries: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
+    """Per-pipeline provider contribution, derived only from the records.
+
+    Every results file records ``llm_calls`` and tokens per pipeline, so "did the
+    LLM actually answer anything in this run?" is answerable after the fact. It
+    needs to be: a run whose provider calls all failed (or a ``--no-llm`` run)
+    still writes a complete, plausible-looking file in which every answer came
+    from the deterministic path. Without this block a reader cannot tell such a
+    file apart from an LLM-backed one - "0 LLM calls" looks like a property of
+    the architecture instead of a property of the run.
+
+    Lives here (not in ``benchmark.runner``) so the dashboard generator can call
+    it without importing the harness, KG builders or evaluator.
+    """
+    activity: Dict[str, Dict[str, Any]] = {}
+    for entry in entries:
+        for name, rec in (entry.get("pipelines") or {}).items():
+            if not isinstance(rec, dict):
+                continue
+            slot = activity.setdefault(name, {
+                "records": 0, "records_with_calls": 0, "records_answering": 0,
+                "calls": 0, "total_tokens": 0, "output_tokens": 0,
+                "unusable_adjudications": 0,
+            })
+            slot["records"] += 1
+            calls = int(rec.get("llm_calls") or 0)
+            out_tokens = int(rec.get("output_tokens") or 0)
+            slot["calls"] += calls
+            slot["total_tokens"] += int(rec.get("total_tokens") or 0)
+            slot["output_tokens"] += out_tokens
+            if calls > 0:
+                slot["records_with_calls"] += 1
+            if out_tokens > 0:
+                # The provider returned prose for this record, so the model - not
+                # just the client - ran. A record can carry llm_calls > 0 with
+                # zero output tokens when the call failed (429, timeout, bad
+                # JSON), which is exactly the case that looks like "the LLM was
+                # used" while every answer still came from the solvers.
+                slot["records_answering"] += 1
+            adj = (rec.get("metadata") or {}).get("adjudication")
+            if isinstance(adj, dict) and adj.get("reason") == "verdict_unusable":
+                slot["unusable_adjudications"] += 1
+    for slot in activity.values():
+        slot["llm_contributed"] = slot["records_answering"] > 0
+    return activity
+
+
+def llm_activity_warnings(activity: Dict[str, Dict[str, Any]]) -> List[str]:
+    """Human-readable warnings about a run's provider contribution.
+
+    Shared by the live runner and ``--summarize-only`` so both describe the same
+    situation the same way. An empty list means every pipeline recorded provider
+    calls for every question.
+    """
+    warnings: List[str] = []
+    if not activity:
+        return warnings
+    active = {name: slot for name, slot in activity.items()
+              if slot["records_with_calls"] > 0}
+    if not active:
+        warnings.append("no pipeline recorded a provider call: this results file "
+                        "is a deterministic run (see --no-llm)")
+    elif len(active) < len(activity):
+        idle = ", ".join(sorted(set(activity) - set(active)))
+        warnings.append("mixed LLM activity: no provider calls recorded for "
+                        f"{idle} - those records came from the deterministic path")
+    partial = {name: slot for name, slot in active.items()
+               if slot["records_with_calls"] < slot["records"]}
+    if partial:
+        detail = ", ".join(f"{name} {slot['records_with_calls']}/{slot['records']}"
+                           for name, slot in sorted(partial.items()))
+        warnings.append("provider calls were recorded on only part of the run "
+                        f"({detail}) - the remaining records are deterministic")
+    # Calls were attempted but no completion text came back: the client counted
+    # the request, the provider served nothing (429/timeout/bad JSON), and the
+    # answers are therefore deterministic. This is the "0 tokens, 1 call"
+    # signature of a run that looks LLM-backed and is not.
+    silent = {name: slot for name, slot in active.items()
+              if slot["output_tokens"] == 0}
+    if silent:
+        detail = ", ".join(f"{name} {slot['calls']} call(s)"
+                           for name, slot in sorted(silent.items()))
+        warnings.append("provider calls returned no completion text "
+                        f"({detail}): those answers came from the deterministic "
+                        "path - check the API key, quota and circuit breaker")
+    return warnings
+
+
 class MetricsCollector:
     """Accumulates per-question records and computes aggregate summaries."""
 

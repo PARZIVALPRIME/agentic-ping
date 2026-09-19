@@ -173,6 +173,27 @@ So the contribution of the LLM is recorded explicitly rather than inferred:
 | dashboard | the **Provider contribution** panel, plus `provenance.warnings` |
 | audit | `tools/audit_results.py` — non-zero exit when a pipeline took part in a provider-using run but recorded no calls of its own, or when a file was written by an older revision of the pipelines |
 
+Two failure shapes look alike in a results file and must not be conflated:
+
+| Shape | `llm_calls` | `output_tokens` | Meaning |
+|---|---|---|---|
+| deterministic fallback | `0` | `0` | no call was made — the solvers answered, as designed |
+| provider failure | `> 0` | `0` | calls were attempted and returned nothing usable, so every answer is still the solver's |
+
+`llm_activity` separates them per pipeline (`records_with_calls` vs
+`records_answering`), the summary carries `run_mode` (`live` /
+`provider-failed` / `deterministic`), and the dashboard names the reason instead
+of printing a bare "0 calls/q". Publishing is gated two ways: `--require-llm` on
+`benchmark.dashboard_generator` refuses to build the headline page from a file in
+which no pipeline recorded provider output, and `tools/validate_dashboard.py`
+asserts that the published page's counters are consistent and that any pipeline
+with failed calls is named in the page's own warnings.
+
+Because a run's mode is a property of the *run*, not of the architecture, the two
+modes are published as two pages from two files: `dashboard/index.html`
+(LLM-assisted, `results/llm_results.json`) beside `dashboard/baseline.html`
+(deterministic, `results/deterministic_results.json`).
+
 `--summarize-only` rebuilds a summary from an existing results file. Provider,
 evaluator and backend telemetry is only known *during* a run, so a rebuilt
 summary reports those blocks as `null` and says so in `provenance`, instead of

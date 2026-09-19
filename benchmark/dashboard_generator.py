@@ -21,6 +21,8 @@ import os
 import sys
 from typing import Any, Dict
 
+from benchmark.metrics import llm_activity, llm_activity_warnings
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, "dashboard")
 
@@ -132,20 +134,45 @@ def _load(path: str) -> Any:
 
 def generate(results_path: str = "results/public_results.json",
              summary_path: str = "results/metrics_summary.json",
-             out_dir: str = "dashboard") -> str:
+             out_dir: str = "dashboard",
+             require_llm: bool = False,
+             name: str = "index.html") -> str:
     entries = _load(results_path)
     summary = _load(summary_path) if os.path.exists(summary_path) else {}
+
+    # Provider contribution is derived from the per-question records so the panel
+    # works even when the summary predates the provenance block (an older run, or
+    # one rebuilt from a results file). A summary that carries its own
+    # ``provenance.llm_activity`` still wins in the dashboard.
+    activity = llm_activity(entries)
+    warnings = llm_activity_warnings(activity)
+
+    if require_llm and not any(slot.get("llm_contributed") for slot in activity.values()):
+        idle = ", ".join(sorted(activity)) or "no pipeline"
+        raise SystemExit(
+            "--require-llm: no pipeline recorded provider output in "
+            f"{results_path} ({idle}) - this is a deterministic run, so its "
+            "accuracy table cannot be presented as an LLM result. Re-run "
+            "without --no-llm, or drop the flag to publish it as the baseline.")
+
     payload = {"entries": entries, "summary": summary,
+               "llm_activity": activity, "llm_warnings": warnings,
                "generated": __import__("time").strftime("%Y-%m-%d %H:%M:%S"),
                "results_file": results_path}
 
     os.makedirs(out_dir, exist_ok=True)
     html = HTML_HEAD.replace("__DATA__", json.dumps(payload, ensure_ascii=False))
-    out_path = os.path.join(out_dir, "index.html")
+    out_path = os.path.join(out_dir, name)
     with open(out_path, "w", encoding="utf-8") as fh:
         fh.write(html)
     print(f"dashboard -> {out_path} ({len(entries)} questions, "
           f"{len(html) / 1024:.0f} KiB)")
+    for name, slot in activity.items():
+        print(f"  {name:<18s} provider calls in {slot['records_with_calls']}"
+              f"/{slot['records']} records, model output in "
+              f"{slot['records_answering']} - {slot['total_tokens']} tokens")
+    for warning in warnings:
+        print(f"  WARNING: {warning}")
     return out_path
 
 
@@ -156,6 +183,16 @@ if __name__ == "__main__":
     ap.add_argument("results", nargs="?", default="results/public_results.json")
     ap.add_argument("--summary", default="results/metrics_summary.json")
     ap.add_argument("--out", default="dashboard")
+    ap.add_argument("--name", default="index.html",
+                    help="output file name inside --out; the page links "
+                         "styles.css/dashboard.js relatively, so any name in "
+                         "that directory works (e.g. 'baseline.html' to publish "
+                         "the deterministic baseline beside the live run)")
+    ap.add_argument("--require-llm", action="store_true",
+                    help="refuse to build the page unless at least one pipeline "
+                         "recorded provider output, so a deterministic run cannot "
+                         "be published as an LLM result")
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
-    generate(args.results, args.summary, args.out)
+    generate(args.results, args.summary, args.out,
+             require_llm=args.require_llm, name=args.name)

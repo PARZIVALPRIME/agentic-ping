@@ -20,7 +20,8 @@ import time
 from typing import Any, Dict, List, Optional
 
 from benchmark.evaluator import Evaluator
-from benchmark.metrics import MetricsCollector
+from benchmark.metrics import (MetricsCollector, llm_activity,
+                               llm_activity_warnings)
 # Imported at module level (not inside main) because the runner records the
 # active backend in the summary and the CLI prints it on every run.
 from kg.backend import describe_backend, open_graph
@@ -63,29 +64,22 @@ def load_entries(path: str) -> List[Dict[str, Any]]:
         return []
 
 
-def _llm_activity(entries: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Per-pipeline LLM activity, derived only from what the records contain.
+def _provenance(entries: List[Dict[str, Any]], *, rebuilt_from: Optional[str],
+                note: str) -> Dict[str, Any]:
+    """The provider-contribution block every summary carries, live or rebuilt.
 
-    A results file records tokens per pipeline, so "did the LLM actually
-    contribute to this run?" is answerable after the fact. It needs to be: a
-    run whose provider calls all failed still writes a complete file, with
-    every answer coming from the deterministic path and every counter at zero.
+    One shape for both paths, so the dashboard and the audit tool never have to
+    guess where ``llm_activity`` lives: a run whose provider calls all failed
+    writes a complete, plausible-looking file in which every answer came from the
+    deterministic path, and this block is what makes that visible.
     """
-    activity: Dict[str, Dict[str, Any]] = {}
-    for entry in entries:
-        for name, rec in (entry.get("pipelines") or {}).items():
-            slot = activity.setdefault(name, {"records": 0, "records_with_calls": 0,
-                                              "total_tokens": 0, "output_tokens": 0,
-                                              "unusable_adjudications": 0})
-            slot["records"] += 1
-            slot["total_tokens"] += int(rec.get("total_tokens") or 0)
-            slot["output_tokens"] += int(rec.get("output_tokens") or 0)
-            if int(rec.get("llm_calls") or 0) > 0:
-                slot["records_with_calls"] += 1
-            adj = (rec.get("metadata") or {}).get("adjudication")
-            if isinstance(adj, dict) and adj.get("reason") == "verdict_unusable":
-                slot["unusable_adjudications"] += 1
-    return activity
+    activity = llm_activity(entries)
+    return {
+        "rebuilt_from": rebuilt_from,
+        "note": note,
+        "llm_activity": activity,
+        "warnings": llm_activity_warnings(activity),
+    }
 
 
 def summarize_entries(entries: List[Dict[str, Any]], summary_path: Optional[str] = None,
@@ -100,32 +94,22 @@ def summarize_entries(entries: List[Dict[str, Any]], summary_path: Optional[str]
     """
     collector = MetricsCollector()
     collector.entries.extend(entries)
-    activity = _llm_activity(entries)
-    active = {name: slot for name, slot in activity.items()
-              if slot["records_with_calls"] > 0}
-    warnings: List[str] = []
-    if activity and not active:
-        warnings.append("no pipeline recorded a provider call: this results file "
-                       "is a deterministic run (see --no-llm)")
-    elif active and len(active) < len(activity):
-        idle = ", ".join(sorted(set(activity) - set(active)))
-        warnings.append("mixed LLM activity: no provider calls recorded for "
-                        f"{idle} - those records came from the deterministic path")
+    activity = llm_activity(entries)
     summary = collector.summarize(extra={
         "evaluator": None,
         "llm": None,
         "backend": None,
         "wall_clock_s": None,
-        "provenance": {
-            "rebuilt_from": source,
-            "rebuilt_at": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "provider_stats": "unavailable",
-            "note": ("summary rebuilt from an existing results file; the "
-                     "evaluator/llm/backend blocks are only known during a live "
-                     "run, so they are null rather than guessed"),
-            "llm_activity": activity,
-            "warnings": warnings,
-        },
+        # Derived from the records: a rebuilt summary still knows whether the
+        # provider answered anything, it just cannot know the client telemetry.
+        "run_mode": ("live" if any(slot.get("records_answering") for slot in activity.values())
+                     else "provider-failed" if any(slot.get("calls") for slot in activity.values())
+                     else "deterministic"),
+        "provenance": _provenance(
+            entries, rebuilt_from=source,
+            note=("summary rebuilt from an existing results file; evaluator/llm/"
+                  "backend telemetry is only known during a live run, so those "
+                  "blocks are null rather than guessed")),
     })
     if summary_path:
         os.makedirs(os.path.dirname(summary_path) or ".", exist_ok=True)
@@ -247,24 +231,89 @@ class BenchmarkRunner:
                 print(f"           note: slow pipeline(s) {', '.join(slow)} - "
                       f"{cause}; see llm.circuit in the summary", flush=True)
 
+        # "live" must mean the provider *answered*, not merely that one was
+        # configured. A run whose calls all failed (429, timeout, bad JSON) still
+        # writes a complete file with zeroed token counters and every answer from
+        # the solvers; labelling that "live" is precisely how a deterministic run
+        # gets mistaken for an LLM-backed one.
+        activity = llm_activity(collector.entries)
+        answered = any(slot.get("records_answering") for slot in activity.values())
+        attempted = any(slot.get("calls") for slot in activity.values())
+        if not getattr(self.llm, "available", False):
+            mode = "deterministic"
+        elif answered:
+            mode = "live"
+        elif attempted:
+            mode = "provider-failed"
+        else:
+            mode = "live"          # configured, but nothing needed the LLM yet
         summary = collector.summarize(extra={
             "evaluator": self.evaluator.stats(),
             "llm": self.llm.stats() if hasattr(self.llm, "stats") else {},
+            # "live" = a provider was configured for this run, "deterministic" =
+            # --no-llm. Recorded because "0 LLM calls/q" is a property of the run,
+            # never of the architecture, and the two are otherwise indistinguishable
+            # once the numbers are on a slide.
+            "run_mode": mode,
             "wall_clock_s": round(time.time() - t_start, 1),
             # Which graph store actually answered. Recorded in the summary so a
             # TigerGraph run is distinguishable from a local one after the fact -
             # a backend that silently fell back would otherwise look identical.
             "backend": describe_backend(),
-            # Which pipelines the provider actually contributed to. A run whose
-            # calls all failed still finishes and looks successful, so the
-            # summary states the contribution explicitly instead of leaving it to
-            # be inferred from the reports.
-            "llm_activity": _llm_activity(collector.entries),
+            # Which pipelines the provider actually contributed to, in the same
+            # block a rebuilt summary uses. A run whose calls all failed still
+            # finishes and looks successful, so the summary states the
+            # contribution explicitly instead of leaving it to be inferred from
+            # the accuracy table ("0 LLM calls/q" must not read as a property of
+            # the architecture when it is a property of the run).
+            "provenance": _provenance(
+                collector.entries, rebuilt_from=None,
+                note="live run: llm/evaluator/backend telemetry recorded above"),
         })
         if summary_path:
             with open(summary_path, "w", encoding="utf-8") as fh:
                 json.dump(summary, fh, indent=2, ensure_ascii=False)
+        self._report_provider(mode, summary)
         return {"summary": summary, "entries": collector.entries}
+
+    def _report_provider(self, mode: str, summary: Dict[str, Any]) -> None:
+        """Say out loud whether the provider contributed to this run.
+
+        A live run whose calls all failed still finishes and writes a complete,
+        plausible-looking file with zeroed token counters, so the harness states
+        the outcome at the moment it is known instead of leaving a reader to
+        notice it later. ``tools/audit_results.py`` is the gate that blocks such
+        a file from being published; this is the same information, printed.
+        """
+        activity = (summary.get("provenance") or {}).get("llm_activity") or {}
+        calls = sum(int(slot.get("calls") or 0) for slot in activity.values())
+        answering = sum(int(slot.get("records_answering") or 0)
+                        for slot in activity.values())
+        if mode == "deterministic":
+            print("\nMODE: deterministic (--no-llm): no provider calls were made. "
+                  "These accuracies are the solver baseline, not LLM results.",
+                  flush=True)
+            return
+        questions = max(1, int(summary.get("num_questions") or 1))
+        if calls and answering:
+            print(f"\nMODE: live: the provider returned text for {answering} "
+                  f"record(s) across {calls} call(s) "
+                  f"({calls / questions:.2f} calls/question).", flush=True)
+            return
+        stats = summary.get("llm") or {}
+        print("\n" + "!" * 72, flush=True)
+        print("PROVIDER CALLS RECORDED NOTHING: every answer in this run came from\n"
+              "the deterministic solvers. Check the failure counters below and the\n"
+              "provider quota, then re-run with --resume (finished questions are\n"
+              "kept, so only the failed ones are retried).", flush=True)
+        print(f"  run_mode={mode} (recorded in the summary so the dashboard cannot "
+              f"present this file as an LLM result)", flush=True)
+        if stats:
+            print(f"  available={stats.get('available')} "
+                  f"calls={stats.get('num_calls')} "
+                  f"failed={stats.get('failed_calls')} "
+                  f"error={stats.get('last_error')!r}", flush=True)
+        print("!" * 72, flush=True)
 
     # ── persistence ────────────────────────────────────────────────────
     def _write(self, out_path: str, entries: List[Dict[str, Any]]) -> None:
@@ -309,6 +358,21 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
         log("LLM disabled (--no-llm): deterministic reasoning only")
     else:
         llm = build_llm(config)
+        # A run that asks for the LLM must not silently become a deterministic
+        # one. Without this guard a missing/blank key produces a complete results
+        # file whose every answer came from the solvers and whose dashboard reads
+        # "0 LLM calls/q" - which is exactly how a deterministic run gets mistaken
+        # for a failed LLM one. Better to stop before spending an hour on it.
+        if not llm.available:
+            raise SystemExit(
+                "no LLM provider available: "
+                f"{llm.error or 'unknown reason'}\n"
+                f"  provider={getattr(config.llm, 'provider', None)!r} "
+                f"model={getattr(config.llm, 'chat_model', '')!r} "
+                f"key={'set' if getattr(config.llm, 'api_key', None) else 'MISSING'}\n"
+                "  fix: put LLM_PROVIDER + the matching *_API_KEY in .env "
+                "(e.g. LLM_PROVIDER=groq, GROQ_API_KEY=gsk_...)\n"
+                "  or pass --no-llm to run the deterministic baseline on purpose.")
     log(f"llm available: {llm.available} ({llm.chat_model}) | index: {index.stats()}")
 
     all_pipes = build_pipelines(index, llm, config)

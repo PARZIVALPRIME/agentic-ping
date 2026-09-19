@@ -1078,33 +1078,48 @@
       "delta": 0
     }
   ],
-  "evaluator": {
-    "llm_judge_enabled": false,
-    "judge_calls": 0,
-    "judge_flips": 0,
-    "judge_tokens": 0
-  },
-  "llm": {
-    "available": false,
-    "provider": null,
-    "chat_model": null,
-    "eval_model": null,
-    "num_calls": 0,
-    "failed_calls": 0,
-    "degraded": false,
-    "error": "no provider/API key configured",
-    "min_interval_s": 1.5,
-    "tpm_budget": 6000,
-    "rate_limit_events": 0,
-    "pace_sleeps": 0,
-    "pace_slept_s": 0.0,
-    "circuit": {
-      "threshold": 3,
-      "cooldown_s": 60.0,
-      "trips": 0,
-      "blocked_calls": 0,
-      "open": false
-    }
-  },
-  "wall_clock_s": 35.6
+  "evaluator": null,
+  "llm": null,
+  "backend": null,
+  "wall_clock_s": null,
+  "run_mode": "deterministic",
+  "provenance": {
+    "rebuilt_from": "results/deterministic_results.json",
+    "note": "summary rebuilt from an existing results file; evaluator/llm/backend telemetry is only known during a live run, so those blocks are null rather than guessed",
+    "llm_activity": {
+      "RAG": {
+        "records": 100,
+        "records_with_calls": 0,
+        "records_answering": 0,
+        "calls": 0,
+        "total_tokens": 27838,
+        "output_tokens": 0,
+        "unusable_adjudications": 0,
+        "llm_contributed": false
+      },
+      "GraphRAG": {
+        "records": 100,
+        "records_with_calls": 0,
+        "records_answering": 0,
+        "calls": 0,
+        "total_tokens": 91350,
+        "output_tokens": 0,
+        "unusable_adjudications": 0,
+        "llm_contributed": false
+      },
+      "Agentic GraphRAG": {
+        "records": 100,
+        "records_with_calls": 0,
+        "records_answering": 0,
+        "calls": 0,
+        "total_tokens": 0,
+        "output_tokens": 0,
+        "unusable_adjudications": 0,
+        "llm_contributed": false
+      }
+    },
+    "warnings": [
+      "no pipeline recorded a provider call: this results file is a deterministic run (see --no-llm)"
+    ]
+  }
 }

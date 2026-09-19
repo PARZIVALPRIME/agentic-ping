@@ -15,7 +15,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.stdout.reconfigure(encoding="utf-8")
 
-HTML = os.path.join(ROOT, "dashboard", "index.html")
+HTML = os.path.join(ROOT, "dashboard",
+                    sys.argv[1] if len(sys.argv) > 1 else "index.html")
 JS = os.path.join(ROOT, "dashboard", "dashboard.js")
 fails = 0
 
@@ -38,7 +39,7 @@ html = open(HTML, encoding="utf-8").read()
 # 2. embedded payload parses as JSON
 m = re.search(r"const DATA = (\{.*?\});\n", html, re.S)
 check("DATA payload present", bool(m))
-entries, summary = [], {}
+entries, summary, data = [], {}, {}
 if m:
     try:
         data = json.loads(m.group(1))
@@ -52,6 +53,35 @@ if m:
 # 3. json escaping: '</script>' must not appear inside the payload
 payload = m.group(1) if m else ""
 check("no </script> breakout in payload", "</script>" not in payload)
+
+# 3b. provenance: "0 LLM calls" must never be reported without a reason. Every
+# pipeline present in the summary has to carry a provider-contribution slot whose
+# counters are internally consistent, and a pipeline that called the provider yet
+# got no text back must be called out in the page's warnings.
+activity = (data.get("llm_activity") if m else None) or {}
+warnings = (data.get("llm_warnings") if m else None) or []
+if activity:
+    bad = [n for n, a in activity.items()
+           if not (0 <= int(a.get("records_answering") or 0)
+                   <= int(a.get("records_with_calls") or 0)
+                   <= int(a.get("records") or 0))]
+    check("provider counters are consistent", not bad,
+          f"inconsistent: {bad}" if bad else f"{len(activity)} pipeline slot(s)")
+    wrong = [n for n, a in activity.items()
+             if bool(a.get("llm_contributed"))
+             != (int(a.get("records_answering") or 0) > 0)]
+    check("llm_contributed matches the counters", not wrong, str(wrong))
+    silent = [n for n, a in activity.items()
+              if int(a.get("calls") or 0) > 0 and not int(a.get("records_answering") or 0)]
+    unexplained = [n for n in silent
+                   if not any(n in w for w in warnings)]
+    check("a failed provider call is explained", not unexplained,
+          f"no warning names {unexplained}" if unexplained else
+          (f"declared: {silent}" if silent else "no silent provider failures"))
+    missing = [n for n in (summary.get("pipelines") or {}) if n not in activity]
+    check("every pipeline reports its provider share", not missing, str(missing))
+else:
+    print("SKIP no llm_activity in payload — page predates the provenance block")
 
 # 4. js syntax via node (optional)
 node = shutil.which("node")
@@ -96,14 +126,19 @@ console.log('helpers ok; entries=' + entries.length +
   ' undefined_eval=' + undef);
 """
     )
-    harness_path = os.path.join(ROOT, "tools", "_dash_harness.js")
+    # unique per process: two validators (or two pages) may run at once
+    harness_path = os.path.join(ROOT, "tools",
+                                f"_dash_harness_{os.getpid()}.js")
     with open(harness_path, "w", encoding="utf-8") as fh:
         fh.write(harness)
     r = subprocess.run([node, harness_path], capture_output=True, text=True,
                        encoding="utf-8", errors="replace")
     check("dashboard helpers run on real data", r.returncode == 0,
           (r.stdout or r.stderr).strip()[-300:])
-    os.remove(harness_path)
+    try:
+        os.remove(harness_path)
+    except OSError:
+        pass          # Windows may still hold the handle; leftovers are ignored
 else:
     print("SKIP node not found — JS syntax check skipped")
 

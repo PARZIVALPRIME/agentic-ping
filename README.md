@@ -35,13 +35,19 @@ python -m benchmark.dashboard_generator      # rebuild dashboard/index.html
 
 | Mode | Command | Speed | Use for |
 |---|---|---|---|
-| LLM-assisted | `python run_benchmark.py` | ~15–30 min (provider rate limits) | the headline numbers: LLM classification, slot extraction, answer adjudication, LLM-as-judge |
-| Deterministic | `python run_benchmark.py --no-llm` | **~1 min** | reproducible baseline, verifying the harness, running with no quota |
+| LLM-assisted | `python run_benchmark.py --out results/llm_results.json --summary results/llm_results_summary.json` | ~15–30 min (provider rate limits) | the headline numbers: LLM classification, slot extraction, answer adjudication, LLM-as-judge |
+| Deterministic | `python run_benchmark.py --no-llm --out results/deterministic_results.json --summary results/deterministic_results_summary.json` | **~1 min** | reproducible baseline, verifying the harness, running with no quota |
 
 Both modes run all three pipelines end-to-end — the LLM is an accelerator, never
 a requirement. If the provider starts rate-limiting mid-run, a circuit breaker
 trips and the remaining questions finish deterministically instead of stalling
 (`llm.circuit` in `results/*_summary.json` shows how often this happened).
+
+Keep the two modes in **separate result files**, because they are separate
+claims. `results/llm_results.json` is the LLM-assisted run (the headline);
+`results/deterministic_results.json` is the `--no-llm` baseline. Overwriting one
+with the other is how a deterministic "0 LLM calls" table ends up published as an
+LLM result — see below.
 
 ### Is the LLM actually contributing?
 
@@ -80,6 +86,44 @@ python run_benchmark.py --summarize-only --out results/public_results.json
 
 Provider/evaluator/backend telemetry is only known during a live run, so a
 rebuilt summary reports those blocks as `null` rather than guessing them.
+
+#### "Why does my dashboard show 0 LLM calls?"
+
+Because the page was built from the wrong file. A `--no-llm` run writes
+`"llm": {"available": false, "error": "no provider/API key configured"}` into its
+own summary, and its per-record counters are zero by construction. If that file
+is fed to the generator as `index.html`, the dashboard faithfully reports a
+deterministic run — it is not a bug in the LLM path. Two checks settle it:
+
+```powershell
+python -c "import json;s=json.load(open('results/metrics_summary.json'));print(s['llm'])"
+python tools/audit_results.py            # non-zero exit => numbers are not an LLM result
+```
+
+A live run looks like this instead (`avg_llm_calls` comes straight from the
+summary, and every pipeline shows model output):
+
+```
+pipeline              n     acc  w/calls   tokens    out   p50 ms  unacct status
+RAG                  10     30%       10     8536    591     1584       0 llm
+GraphRAG             10     50%       10    17482    897     1465       0 llm
+Agentic GraphRAG     10     90%        7    25132   1344    55031       0 partial-llm
+```
+
+The agentic pipeline shows `7/10` because its deterministic solvers legitimately
+resolve some questions before the ReAct loop needs a call, and one record stopped
+with `provider_unavailable` after the circuit breaker tripped — that is the
+fallback working as designed, and the audit reports it as `partial-llm` rather
+than hiding it.
+
+If a **live** run still shows zero output tokens, the calls are reaching the
+provider but the replies are unusable. One round-trip tells you which of the
+three causes it is (no call made / reply not parseable / JSON with no answer):
+
+```powershell
+python tools/probe_llm_json.py            # verdict + token accounting
+python tools/probe_llm_json.py --raw      # also dump the raw completion
+```
 
 ### If a run looks stuck
 
@@ -133,18 +177,30 @@ per-pipeline OK tally, the last progress lines and any stderr. Results are
 rewritten after **every** question (`results/*.json`), so an interrupted run
 loses at most one question — `--resume` / `-Resume` skips what is already done.
 
-Outputs land in `results/` (`public_results.json`, `metrics_summary.json`),
-the dashboard in `dashboard/index.html` (open directly in a browser — no
-server needed).
+Outputs land in `results/` — `llm_results.json` + `llm_results_summary.json`
+(LLM-assisted) and `deterministic_results.json` +
+`deterministic_results_summary.json` (`--no-llm`) — and the dashboards in
+`dashboard/` (`index.html` for the LLM-assisted run, `baseline.html` for the
+deterministic one; open either directly in a browser, no server needed).
 
 Rebuild the dashboard from any results file:
 
 ```powershell
 python -m benchmark.dashboard_generator                                   # results/public_results.json
+python -m benchmark.dashboard_generator results/llm_results.json `
+    --summary results/llm_results_summary.json --require-llm              # dashboard/index.html
 python -m benchmark.dashboard_generator results/deterministic_results.json `
-    --summary results/deterministic_results_summary.json
+    --summary results/deterministic_results_summary.json `
+    --name baseline.html                                                 # dashboard/baseline.html
 python tools\validate_dashboard.py                                        # sanity-check the generated page
 ```
+
+The page links `styles.css` / `dashboard.js` relatively and `--name` picks the
+file inside `--out`, so one `dashboard/` directory can hold both runs:
+`index.html` (LLM-assisted) next to `baseline.html` (deterministic). Pass
+`--require-llm` on the headline page and the generator **refuses** to build it
+from a file in which no pipeline recorded provider output — a deterministic run
+can no longer be published as an LLM result by accident.
 
 ## TigerGraph backend (optional)
 

@@ -29,3 +29,5 @@ htmlcov/
 .hypothesis/
 .idea/
 .vscode/
+results/*.log
+tools/bench_run.txt

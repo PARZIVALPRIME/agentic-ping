@@ -1082,36 +1082,45 @@
   "llm": null,
   "backend": null,
   "wall_clock_s": null,
+  "run_mode": "provider-failed",
   "provenance": {
     "rebuilt_from": "results/public_results.json",
-    "rebuilt_at": "2026-09-19 19:33:56",
-    "provider_stats": "unavailable",
-    "note": "summary rebuilt from an existing results file; the evaluator/llm/backend blocks are only known during a live run, so they are null rather than guessed",
+    "note": "summary rebuilt from an existing results file; evaluator/llm/backend telemetry is only known during a live run, so those blocks are null rather than guessed",
     "llm_activity": {
       "RAG": {
         "records": 100,
         "records_with_calls": 100,
+        "records_answering": 0,
+        "calls": 100,
         "total_tokens": 27838,
         "output_tokens": 0,
-        "unusable_adjudications": 100
+        "unusable_adjudications": 100,
+        "llm_contributed": false
       },
       "GraphRAG": {
         "records": 100,
         "records_with_calls": 100,
+        "records_answering": 0,
+        "calls": 100,
         "total_tokens": 91350,
         "output_tokens": 0,
-        "unusable_adjudications": 100
+        "unusable_adjudications": 100,
+        "llm_contributed": false
       },
       "Agentic GraphRAG": {
         "records": 100,
         "records_with_calls": 0,
+        "records_answering": 0,
+        "calls": 0,
         "total_tokens": 0,
         "output_tokens": 0,
-        "unusable_adjudications": 100
+        "unusable_adjudications": 100,
+        "llm_contributed": false
       }
     },
     "warnings": [
-      "mixed LLM activity: no provider calls recorded for Agentic GraphRAG - those records came from the deterministic path"
+      "mixed LLM activity: no provider calls recorded for Agentic GraphRAG - those records came from the deterministic path",
+      "provider calls returned no completion text (GraphRAG 100 call(s), RAG 100 call(s)): those answers came from the deterministic path - check the API key, quota and circuit breaker"
     ]
   }
 }
