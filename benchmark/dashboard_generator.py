@@ -68,6 +68,14 @@ HTML_HEAD = """<!DOCTYPE html>
   </section>
 
   <section class="panel">
+    <h2>Graph backend</h2>
+    <p class="hint">Which store answered the graph calls, and what the TigerGraph
+       query push-down actually served. A run that lost the remote path halfway
+       through says so here instead of looking identical to a database-backed one.</p>
+    <div id="backend"></div>
+  </section>
+
+  <section class="panel">
     <h2>Agentic investigation traces</h2>
     <p class="hint">Pick a question to replay the agent's plan, steps and evidence.</p>
     <div class="trace-controls">

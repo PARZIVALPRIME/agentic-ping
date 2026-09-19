@@ -1,0 +1,2076 @@
+[
+  {
+    "qid": "pub-001",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+    "gold": {
+      "answers": [
+        "5"
+      ],
+      "doc_ids": [
+        "Q47091419",
+        "Q47105341",
+        "Q47155365",
+        "Q47155371",
+        "Q47155408",
+        "Q47155425",
+        "Q47155467",
+        "Q47155505",
+        "Q47155541",
+        "Q47155555",
+        "Q47155815"
+      ]
+    },
+    "pipelines": {
+      "RAG": {
+        "pipeline": "RAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "3",
+        "citations": [
+          "Q47155425",
+          "Q47091419",
+          "Q47105341",
+          "Q47155365"
+        ],
+        "latency_ms": 47.1,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 395,
+        "input_tokens": 424,
+        "output_tokens": 0,
+        "total_tokens": 424,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.4,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q47155425",
+              "Q47091419",
+              "Q47105341",
+              "Q47155408",
+              "Q47155365"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 45.65
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.89
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 395,
+            "output_tokens": 0,
+            "total_tokens": 395,
+            "detail": "5 chunks"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q47155425",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47091419",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47105341",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47155365",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's pursuit",
+            "competitors": "58"
+          }
+        ],
+        "metadata": {
+          "retriever": "vector",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q47155425",
+            "Q47091419",
+            "Q47105341",
+            "Q47155408",
+            "Q47155365"
+          ],
+          "retrieved_titles": [
+            "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "Biathlon at the 2018 Winter Olympics – Men's individual",
+            "Biathlon at the 2018 Winter Olympics – Women's pursuit"
+          ],
+          "extraction_method": "extractive",
+          "docs_with_infobox": 4
+        },
+        "unresolved": [
+          "cannot_verify_candidate_set_completeness"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.3636,
+          "judge_reason": ""
+        }
+      },
+      "GraphRAG": {
+        "pipeline": "GraphRAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "5",
+        "citations": [
+          "Q47091419",
+          "Q47155425",
+          "Q47105341",
+          "Q14643284",
+          "Q107861710",
+          "Q47155555",
+          "Q47155815",
+          "Q47155505",
+          "Q47155541",
+          "Q47155408"
+        ],
+        "latency_ms": 187.05,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "hybrid_search",
+          "structural_retrieve"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 969,
+        "input_tokens": 998,
+        "output_tokens": 0,
+        "total_tokens": 998,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.55,
+        "plan": [
+          "hybrid_search",
+          "graph_expand",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q47091419",
+              "Q47155425",
+              "Q47105341",
+              "Q47155365",
+              "Q47155371"
+            ]
+          },
+          {
+            "step": 2,
+            "agent": "GraphTraverser",
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q47091419",
+              "Q47155425",
+              "Q47105341",
+              "Q14643284",
+              "Q107861710",
+              "Q47155555",
+              "Q47155815",
+              "Q47155505",
+              "Q47155541",
+              "Q47155408"
+            ],
+            "new_docs": 7
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 94.92
+          },
+          {
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 91.21
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.31
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:graph_expanded",
+            "input_tokens": 969,
+            "output_tokens": 0,
+            "total_tokens": 969,
+            "detail": "10 documents"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q47091419",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47155425",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47105341",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q14643284",
+            "title": "Biathlon at the 2014 Winter Olympics – Women's sprint",
+            "competitors": "84"
+          },
+          {
+            "doc_id": "Q107861710",
+            "title": "Biathlon at the 2022 Winter Olympics – Women's sprint",
+            "competitors": "89"
+          },
+          {
+            "doc_id": "Q47155555",
+            "title": "Biathlon at the 2018 Winter Olympics – Mixed relay",
+            "competitors": "80"
+          },
+          {
+            "doc_id": "Q47155815",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's mass start",
+            "competitors": "30"
+          },
+          {
+            "doc_id": "Q47155505",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's relay",
+            "competitors": "72"
+          },
+          {
+            "doc_id": "Q47155541",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's relay",
+            "competitors": "73"
+          },
+          {
+            "doc_id": "Q47155408",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's individual",
+            "competitors": "86"
+          }
+        ],
+        "metadata": {
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q47091419",
+            "Q47155425",
+            "Q47105341",
+            "Q47155365",
+            "Q47155371"
+          ],
+          "expanded_doc_ids": [
+            "Q47091419",
+            "Q47155425",
+            "Q47105341",
+            "Q14643284",
+            "Q107861710",
+            "Q47155555",
+            "Q47155815",
+            "Q47155505",
+            "Q47155541",
+            "Q47155408"
+          ],
+          "graph_relations": [
+            "graph:NEXT_EDITION",
+            "graph:PREV_EDITION",
+            "graph:SAME_SPORT_GAMES",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "Biathlon at the 2014 Winter Olympics – Women's sprint",
+            "Biathlon at the 2022 Winter Olympics – Women's sprint",
+            "Biathlon at the 2018 Winter Olympics – Mixed relay",
+            "Biathlon at the 2018 Winter Olympics – Men's mass start",
+            "Biathlon at the 2018 Winter Olympics – Women's relay",
+            "Biathlon at the 2018 Winter Olympics – Men's relay",
+            "Biathlon at the 2018 Winter Olympics – Men's individual"
+          ],
+          "docs_with_infobox": 10
+        },
+        "unresolved": [
+          "cannot_verify_candidate_set_completeness"
+        ],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 0.8,
+          "citation_recall": 0.7273,
+          "judge_reason": ""
+        }
+      },
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "5",
+        "citations": [
+          "Q47155555",
+          "Q47091419",
+          "Q47105341",
+          "Q47155425",
+          "Q47155408"
+        ],
+        "latency_ms": 0.62,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "count_threshold",
+          "verify_by_recount",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Aggregator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 11,
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Aggregator.count_threshold",
+          "Aggregator.verify_by_recount",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 11,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Biathlon; games->GAMES::2018::Winter",
+            "observation": {
+              "sport": "Biathlon",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2018::Winter",
+              "edition_chain": [],
+              "implied_event_pages": 11
+            },
+            "confidence_after": 0.0,
+            "new_documents": 11,
+            "latency_ms": 0.14,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 11,
+              "new_documents": 0,
+              "sample_titles": [
+                "Biathlon at the 2018 Winter Olympics – Mixed relay",
+                "Biathlon at the 2018 Winter Olympics – Men's mass start",
+                "Biathlon at the 2018 Winter Olympics – Women's relay",
+                "Biathlon at the 2018 Winter Olympics – Women's sprint",
+                "Biathlon at the 2018 Winter Olympics – Women's pursuit"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.12,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "detail": "filtered 11 enumerated events on competitors gt 73 -> 5 pass (field coverage 100%)",
+            "observation": {
+              "count": 5,
+              "candidates": 11,
+              "threshold": 73,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Aggregator",
+            "operation": "verify_by_recount",
+            "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
+            "observation": {
+              "recount": 5,
+              "documents_with_field": 11,
+              "recount_matches": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "candidate_set_size": 11,
+                "field_completeness": 1.0,
+                "exhaustive": true,
+                "independent_recount": 5,
+                "recount_matches": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
+            "observation": {
+              "answer": "5",
+              "source": "structured",
+              "rationale": "5 of 11 enumerated events had more than 73 competitors",
+              "citations": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.05,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Biathlon; games->GAMES::2018::Winter",
+            "latency_ms": 0.14
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
+            "latency_ms": 0.12
+          },
+          {
+            "operation": "count_threshold",
+            "agent": "Aggregator",
+            "detail": "filtered 11 enumerated events on competitors gt 73 -> 5 pass (field coverage 100%)",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "verify_by_recount",
+            "agent": "Aggregator",
+            "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
+            "latency_ms": 0.05
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "observation": {
+              "count": 5,
+              "candidates": 11,
+              "threshold": 73,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "5",
+              "source": "structured",
+              "rationale": "5 of 11 enumerated events had more than 73 competitors",
+              "citations": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'aggregation' template",
+            "rule_type": "aggregation",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+            "qtype": "aggregation",
+            "sport": "Biathlon",
+            "year": 2018,
+            "season": "Winter",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 73,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2018
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'aggregation'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "5 of 11 enumerated events had more than 73 competitors",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 11,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.4545,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-002",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+    "gold": {
+      "answers": [
+        "Chen Ding"
+      ],
+      "doc_ids": [
+        "Q1050909",
+        "Q26233122"
+      ]
+    },
+    "pipelines": {
+      "RAG": {
+        "pipeline": "RAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "",
+        "citations": [],
+        "latency_ms": 80.41,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 4,
+        "context_tokens": 208,
+        "input_tokens": 239,
+        "output_tokens": 0,
+        "total_tokens": 239,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q853023",
+              "Q776944",
+              "Q853023",
+              "Q936622",
+              "Q26233122"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 79.85
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.05
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 31,
+            "output_tokens": 0,
+            "total_tokens": 31,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 208,
+            "output_tokens": 0,
+            "total_tokens": 208,
+            "detail": "5 chunks"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q853023",
+            "Q776944",
+            "Q853023",
+            "Q936622",
+            "Q26233122"
+          ],
+          "retrieved_titles": [
+            "Athletics at the 2008 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 1996 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2008 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2004 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk"
+          ],
+          "extraction_method": "extractive",
+          "docs_with_infobox": 1
+        },
+        "unresolved": [
+          "no_prior_edition_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.0,
+          "citation_recall": 0.0,
+          "judge_reason": ""
+        }
+      },
+      "GraphRAG": {
+        "pipeline": "GraphRAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Chen Ding",
+        "citations": [
+          "Q1050909"
+        ],
+        "latency_ms": 325.7,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "hybrid_search",
+          "structural_retrieve"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 915,
+        "input_tokens": 946,
+        "output_tokens": 0,
+        "total_tokens": 946,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.8,
+        "plan": [
+          "hybrid_search",
+          "graph_expand",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q26233122",
+              "Q1050909",
+              "Q936622",
+              "Q936622",
+              "Q776944"
+            ]
+          },
+          {
+            "step": 2,
+            "agent": "GraphTraverser",
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q26233122",
+              "Q1050909",
+              "Q26208755",
+              "Q26233821",
+              "Q26219843",
+              "Q26208467",
+              "Q26234145",
+              "Q26273359",
+              "Q26234144",
+              "Q26234119"
+            ],
+            "new_docs": 8
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 154.18
+          },
+          {
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 170.64
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.28
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 31,
+            "output_tokens": 0,
+            "total_tokens": 31,
+            "detail": ""
+          },
+          {
+            "operation": "context:graph_expanded",
+            "input_tokens": 915,
+            "output_tokens": 0,
+            "total_tokens": 915,
+            "detail": "10 documents"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q1050909",
+            "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+            "gold": "Chen Ding"
+          }
+        ],
+        "metadata": {
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q26233122",
+            "Q1050909",
+            "Q936622",
+            "Q936622",
+            "Q776944"
+          ],
+          "expanded_doc_ids": [
+            "Q26233122",
+            "Q1050909",
+            "Q26208755",
+            "Q26233821",
+            "Q26219843",
+            "Q26208467",
+            "Q26234145",
+            "Q26273359",
+            "Q26234144",
+            "Q26234119"
+          ],
+          "graph_relations": [
+            "graph:SAME_SPORT_GAMES",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2016 Summer Olympics – Men's javelin throw",
+            "Athletics at the 2016 Summer Olympics – Women's high jump",
+            "Athletics at the 2016 Summer Olympics – Women's 1500 metres",
+            "Athletics at the 2016 Summer Olympics – Men's 3000 metres steeplechase",
+            "Athletics at the 2016 Summer Olympics – Women's heptathlon",
+            "Athletics at the 2016 Summer Olympics – Women's 100 metres hurdles",
+            "Athletics at the 2016 Summer Olympics – Women's javelin throw",
+            "Athletics at the 2016 Summer Olympics – Women's hammer throw"
+          ],
+          "docs_with_infobox": 10
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.5,
+          "judge_reason": ""
+        }
+      },
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Chen Ding",
+        "citations": [
+          "Q1050909",
+          "Q26233122"
+        ],
+        "latency_ms": 173.22,
+        "retrieval_steps": 4,
+        "tools_called": [
+          "link_entities",
+          "resolve_anchor",
+          "resolve_event",
+          "verify_chain",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "TemporalReasoner",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 8,
+        "docs_retrieved": 60,
+        "context_tokens": 618,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "TemporalReasoner.resolve_anchor",
+          "TemporalReasoner.resolve_event",
+          "TemporalReasoner.verify_chain",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 65,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
+            "observation": {
+              "sport": "Athletics",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2012::Summer",
+              "edition_chain": [
+                "2016 Summer",
+                "2012 Summer"
+              ],
+              "implied_event_pages": 60
+            },
+            "confidence_after": 0.0,
+            "new_documents": 60,
+            "latency_ms": 0.22,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_anchor",
+            "detail": "latest Summer Games strictly before 2016 is 2012",
+            "observation": {
+              "anchor_year": 2016,
+              "resolved_year": 2012,
+              "season": "Summer",
+              "reasoning": "latest Summer Games strictly before 2016 is 2012"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
+            "observation": {
+              "sport": "Athletics",
+              "score": 1.0,
+              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+              "num_events_in_games": 42,
+              "candidates": [
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "score": 1.0
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                  "score": 0.828
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                  "score": 0.827
+                }
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 8.97,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "TemporalReasoner",
+            "operation": "verify_chain",
+            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
+            "observation": {
+              "consistent": true,
+              "details": [
+                "corpus infobox 'next' field points to 2016",
+                "edition chain confirms 2012 is immediately before 2016"
+              ],
+              "edition_years": [
+                1988,
+                1992,
+                1996,
+                2000,
+                2004,
+                2008,
+                2012,
+                2016
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.16,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?\" (widening=0) -> 12 passages (8 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q26233122",
+                "Q1050909",
+                "Q936622",
+                "Q936622",
+                "Q776944",
+                "Q3628781",
+                "Q853023",
+                "Q26233320"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 8,
+            "latency_ms": 163.34,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "sport": "Athletics",
+                "matched": {
+                  "doc_id": "Q1050909",
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "url": "https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk",
+                  "sport": "Athletics",
+                  "year": 2012,
+                  "season": "Summer",
+                  "games_label": "2012 Summer",
+                  "event_name": "Men's 20 kilometres walk",
+                  "competitors": 56,
+                  "nations": 34,
+                  "venue": "The Mall",
+                  "venues": "",
+                  "date_raw": "4 August 2012",
+                  "dates_raw": "",
+                  "gold": "Chen Ding",
+                  "silver": "Erick Barrondo",
+                  "bronze": "Wang Zhen",
+                  "win_value": "1:18:46 OR",
+                  "win_label": "",
+                  "prev": "2008",
+                  "next": "2016",
+                  "approx_tokens": 1261,
+                  "prev_doc_id": "Q853023",
+                  "next_doc_id": "Q26233122",
+                  "months_found": [
+                    "august"
+                  ],
+                  "days_found": [
+                    "4"
+                  ]
+                },
+                "score": 1.0,
+                "candidates": [
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                    "score": 1.0
+                  },
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                    "score": 0.828
+                  },
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                    "score": 0.827
+                  }
+                ],
+                "num_events_in_games": 42,
+                "anchor_confirmed": true,
+                "event_match_score": 1.0
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 7,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+            "observation": {
+              "answer": "Chen Ding",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+              "citations": [
+                "Q1050909",
+                "Q26233122"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.04,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
+            "latency_ms": 0.22
+          },
+          {
+            "operation": "resolve_anchor",
+            "agent": "TemporalReasoner",
+            "detail": "latest Summer Games strictly before 2016 is 2012",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "resolve_event",
+            "agent": "TemporalReasoner",
+            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
+            "latency_ms": 8.97
+          },
+          {
+            "operation": "verify_chain",
+            "agent": "TemporalReasoner",
+            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
+            "latency_ms": 0.16
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
+            "latency_ms": 163.34
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
+            "latency_ms": 0.04
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "observation": {
+              "sport": "Athletics",
+              "score": 1.0,
+              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+              "num_events_in_games": 42,
+              "candidates": [
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "score": 1.0
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                  "score": 0.828
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                  "score": 0.827
+                }
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Chen Ding",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+              "citations": [
+                "Q1050909",
+                "Q26233122"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "temporal",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'temporal' template",
+            "rule_type": "temporal",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+            "qtype": "temporal",
+            "sport": "Athletics",
+            "year": 0,
+            "season": "Summer",
+            "event_desc": "men s 20 kilometres walk",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": 2016,
+            "years_mentioned": [
+              2016
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'temporal'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 60,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-003",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+    "gold": {
+      "answers": [
+        "8"
+      ],
+      "doc_ids": [
+        "Q4354074",
+        "Q4354615",
+        "Q4357642",
+        "Q5395306",
+        "Q5481589",
+        "Q722895",
+        "Q7500827",
+        "Q7500829",
+        "Q7500830",
+        "Q7500832",
+        "Q7500834",
+        "Q7500836",
+        "Q7500838",
+        "Q7500840",
+        "Q7500842",
+        "Q7500847",
+        "Q7500849"
+      ]
+    },
+    "pipelines": {
+      "RAG": {
+        "pipeline": "RAG",
+        "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+        "qtype": "aggregation",
+        "answer": "",
+        "citations": [],
+        "latency_ms": 55.77,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 216,
+        "input_tokens": 245,
+        "output_tokens": 0,
+        "total_tokens": 245,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q2065523",
+              "Q7500753",
+              "Q7500836",
+              "Q7500748",
+              "Q7500737"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 55.41
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.02
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 216,
+            "output_tokens": 0,
+            "total_tokens": 216,
+            "detail": "5 chunks"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q2065523",
+            "Q7500753",
+            "Q7500836",
+            "Q7500748",
+            "Q7500737"
+          ],
+          "retrieved_titles": [
+            "Cycling at the 2004 Summer Olympics – Women's individual road race",
+            "Shooting at the 1988 Summer Olympics – Women's 10 metre air rifle",
+            "Shooting at the 2004 Summer Olympics – Men's trap",
+            "Shooting at the 1988 Summer Olympics – Mixed skeet",
+            "Shooting at the 1988 Summer Olympics – Men's 10 metre air rifle"
+          ],
+          "extraction_method": "extractive",
+          "docs_with_infobox": 0
+        },
+        "unresolved": [
+          "no_candidate_docs_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.0,
+          "citation_recall": 0.0,
+          "judge_reason": ""
+        }
+      },
+      "GraphRAG": {
+        "pipeline": "GraphRAG",
+        "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+        "qtype": "aggregation",
+        "answer": "2",
+        "citations": [
+          "Q7500836",
+          "Q7500761",
+          "Q4443767",
+          "Q775967",
+          "Q722895",
+          "Q7500847",
+          "Q7500840",
+          "Q7500842",
+          "Q7500832",
+          "Q7500834"
+        ],
+        "latency_ms": 234.74,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "hybrid_search",
+          "structural_retrieve"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 932,
+        "input_tokens": 961,
+        "output_tokens": 0,
+        "total_tokens": 961,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.512,
+        "plan": [
+          "hybrid_search",
+          "graph_expand",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q7500836",
+              "Q7500836",
+              "Q7500761",
+              "Q7500827",
+              "Q7500830"
+            ]
+          },
+          {
+            "step": 2,
+            "agent": "GraphTraverser",
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q7500836",
+              "Q7500761",
+              "Q4443767",
+              "Q775967",
+              "Q722895",
+              "Q7500847",
+              "Q7500840",
+              "Q7500842",
+              "Q7500832",
+              "Q7500834"
+            ],
+            "new_docs": 8
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 112.55
+          },
+          {
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 121.16
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.29
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:graph_expanded",
+            "input_tokens": 932,
+            "output_tokens": 0,
+            "total_tokens": 932,
+            "detail": "10 documents"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q7500836",
+            "title": "Shooting at the 2004 Summer Olympics – Men's trap",
+            "competitors": "35"
+          },
+          {
+            "doc_id": "Q7500761",
+            "title": "Shooting at the 1992 Summer Olympics – Men's 50 metre pistol",
+            "competitors": "44"
+          },
+          {
+            "doc_id": "Q4443767",
+            "title": "Shooting at the 2000 Summer Olympics – Men's trap",
+            "competitors": "41"
+          },
+          {
+            "doc_id": "Q775967",
+            "title": "Shooting at the 2008 Summer Olympics – Men's trap",
+            "competitors": "35"
+          },
+          {
+            "doc_id": "Q722895",
+            "title": "Shooting at the 2004 Summer Olympics – Men's 10 metre running target",
+            "competitors": "19"
+          },
+          {
+            "doc_id": "Q7500847",
+            "title": "Shooting at the 2004 Summer Olympics – Women's skeet",
+            "competitors": "12"
+          },
+          {
+            "doc_id": "Q7500840",
+            "title": "Shooting at the 2004 Summer Olympics – Women's 50 metre rifle three positions",
+            "competitors": "32"
+          },
+          {
+            "doc_id": "Q7500842",
+            "title": "Shooting at the 2004 Summer Olympics – Women's double trap",
+            "competitors": "15"
+          },
+          {
+            "doc_id": "Q7500832",
+            "title": "Shooting at the 2004 Summer Olympics – Men's 50 metre rifle prone",
+            "competitors": "46"
+          },
+          {
+            "doc_id": "Q7500834",
+            "title": "Shooting at the 2004 Summer Olympics – Men's skeet",
+            "competitors": "41"
+          }
+        ],
+        "metadata": {
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q7500836",
+            "Q7500836",
+            "Q7500761",
+            "Q7500827",
+            "Q7500830"
+          ],
+          "expanded_doc_ids": [
+            "Q7500836",
+            "Q7500761",
+            "Q4443767",
+            "Q775967",
+            "Q722895",
+            "Q7500847",
+            "Q7500840",
+            "Q7500842",
+            "Q7500832",
+            "Q7500834"
+          ],
+          "graph_relations": [
+            "graph:NEXT_EDITION",
+            "graph:PREV_EDITION",
+            "graph:SAME_SPORT_GAMES",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Shooting at the 2004 Summer Olympics – Men's trap",
+            "Shooting at the 1992 Summer Olympics – Men's 50 metre pistol",
+            "Shooting at the 2000 Summer Olympics – Men's trap",
+            "Shooting at the 2008 Summer Olympics – Men's trap",
+            "Shooting at the 2004 Summer Olympics – Men's 10 metre running target",
+            "Shooting at the 2004 Summer Olympics – Women's skeet",
+            "Shooting at the 2004 Summer Olympics – Women's 50 metre rifle three positions",
+            "Shooting at the 2004 Summer Olympics – Women's double trap",
+            "Shooting at the 2004 Summer Olympics – Men's 50 metre rifle prone",
+            "Shooting at the 2004 Summer Olympics – Men's skeet"
+          ],
+          "docs_with_infobox": 10
+        },
+        "unresolved": [
+          "cannot_verify_candidate_set_completeness"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.7,
+          "citation_recall": 0.4118,
+          "judge_reason": ""
+        }
+      },
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+        "qtype": "aggregation",
+        "answer": "8",
+        "citations": [
+          "Q7500827",
+          "Q7500832",
+          "Q7500834",
+          "Q5395306",
+          "Q7500829",
+          "Q4354074",
+          "Q4354615",
+          "Q5481589"
+        ],
+        "latency_ms": 0.56,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "count_threshold",
+          "verify_by_recount",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Aggregator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 17,
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Aggregator.count_threshold",
+          "Aggregator.verify_by_recount",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 17,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Shooting; games->GAMES::2004::Summer",
+            "observation": {
+              "sport": "Shooting",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2004::Summer",
+              "edition_chain": [],
+              "implied_event_pages": 17
+            },
+            "confidence_after": 0.0,
+            "new_documents": 17,
+            "latency_ms": 0.13,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 17,
+              "new_documents": 0,
+              "sample_titles": [
+                "Shooting at the 2004 Summer Olympics – Men's 10 metre running target",
+                "Shooting at the 2004 Summer Olympics – Women's skeet",
+                "Shooting at the 2004 Summer Olympics – Women's 50 metre rifle three positions",
+                "Shooting at the 2004 Summer Olympics – Men's 50 metre pistol",
+                "Shooting at the 2004 Summer Olympics – Women's double trap"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.11,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
+            "observation": {
+              "count": 8,
+              "candidates": 17,
+              "threshold": 37,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q7500827",
+                "Q7500832",
+                "Q7500834",
+                "Q5395306",
+                "Q7500829",
+                "Q4354074",
+                "Q4354615",
+                "Q5481589"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Aggregator",
+            "operation": "verify_by_recount",
+            "detail": "independent recount -> 8 (documents with the field: 17); matches the primary count",
+            "observation": {
+              "recount": 8,
+              "documents_with_field": 17,
+              "recount_matches": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "candidate_set_size": 17,
+                "field_completeness": 1.0,
+                "exhaustive": true,
+                "independent_recount": 8,
+                "recount_matches": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
+            "observation": {
+              "answer": "8",
+              "source": "structured",
+              "rationale": "8 of 17 enumerated events had more than 37 competitors",
+              "citations": [
+                "Q7500827",
+                "Q7500832",
+                "Q7500834",
+                "Q5395306",
+                "Q7500829",
+                "Q4354074",
+                "Q4354615",
+                "Q5481589"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.06,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Shooting; games->GAMES::2004::Summer",
+            "latency_ms": 0.13
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
+            "latency_ms": 0.11
+          },
+          {
+            "operation": "count_threshold",
+            "agent": "Aggregator",
+            "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "verify_by_recount",
+            "agent": "Aggregator",
+            "detail": "independent recount -> 8 (documents with the field: 17); matches the primary count",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
+            "latency_ms": 0.06
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "observation": {
+              "count": 8,
+              "candidates": 17,
+              "threshold": 37,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q7500827",
+                "Q7500832",
+                "Q7500834",
+                "Q5395306",
+                "Q7500829",
+                "Q4354074",
+                "Q4354615",
+                "Q5481589"
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "8",
+              "source": "structured",
+              "rationale": "8 of 17 enumerated events had more than 37 competitors",
+              "citations": [
+                "Q7500827",
+                "Q7500832",
+                "Q7500834",
+                "Q5395306",
+                "Q7500829",
+                "Q4354074",
+                "Q4354615",
+                "Q5481589"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'aggregation' template",
+            "rule_type": "aggregation",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+            "qtype": "aggregation",
+            "sport": "Shooting",
+            "year": 2004,
+            "season": "Summer",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 37,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2004
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'aggregation'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "8 of 17 enumerated events had more than 37 competitors",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 17,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.4706,
+          "judge_reason": ""
+        }
+      }
+    }
+  }
+]

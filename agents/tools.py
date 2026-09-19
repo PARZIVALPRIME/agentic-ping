@@ -134,37 +134,15 @@ class GraphTools:
     def _filter(self, query: str = "", sport: str = "", year_from: Optional[int] = None,
                 year_to: Optional[int] = None, season: str = "",
                 venue: str = "") -> List[Any]:
-        """Candidate event set from the graph indexes, then attribute filters."""
-        events = list(self.kg.events.values())
-        if sport:
-            by_sport = self.kg.events_for_sport(sport)
-            if by_sport:
-                events = by_sport
-        if venue:
-            by_venue = self.kg.events_at_venue(venue)
-            if by_venue:
-                events = by_venue
-        if year_from is not None:
-            events = [e for e in events if e.year and e.year >= int(year_from)]
-        if year_to is not None:
-            events = [e for e in events if e.year and e.year <= int(year_to)]
-        if season:
-            events = [e for e in events if e.season.lower() == season.lower()]
-        if query:
-            from kg.textutil import normalize
+        """Candidate event set for the graph tools.
 
-            q = normalize(query)
-            terms = [t for t in q.split() if len(t) > 2]
-            scored = []
-            for ev in events:
-                hay = normalize(f"{ev.title} {ev.event_name} {ev.sport} {ev.venue}")
-                hits = sum(1 for t in terms if t in hay)
-                if hits:
-                    scored.append((hits, ev))
-            if scored:
-                scored.sort(key=lambda p: (-p[0], p[1].title))
-                events = [ev for _h, ev in scored]
-        return events
+        Delegates to ``KnowledgeGraph.filter_events`` instead of filtering here:
+        that single call site is what lets a backend answer the query itself
+        (``tg/backend.py`` pushes it into TigerGraph) while the tool layer, the
+        ranking it sees, and the offline pipeline stay identical.
+        """
+        return self.kg.filter_events(query=query, sport=sport, year_from=year_from,
+                                     year_to=year_to, season=season, venue=venue)
 
     # ── executors ──────────────────────────────────────────────────────
     def search_events(self, query: str = "", sport: str = "", year_from=None,

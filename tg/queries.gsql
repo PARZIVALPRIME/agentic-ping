@@ -1,0 +1,115 @@
+// ===========================================================================
+// OlympicsKG - installed queries used by tg/backend.py
+// ===========================================================================
+// These are the push-down layer: the agent's tool calls are answered by the
+// database rather than by a local scan. Install after the schema:
+//   gsql queries.gsql                     (Community Edition)
+//   python tools/tg_ingest.py --install   (posts schema+queries via GSQL server)
+//
+// Contract with tg/backend.py (kept deliberately loose so the backend tolerates
+// RESTPP shape differences):
+//   tg_filter_events  PRINTs a ListAccum of Event vertices. A *list* (not a
+//                     vertex set) because a set is serialised as a JSON object
+//                     and its ORDER BY would not survive the trip; the backend
+//                     relies on corpus order to verify the answer against its
+//                     local mirror. Attributes come along, so the backend
+//                     hydrates real server rows rather than local ones.
+//   tg_neighbours     PRINTs a SetAccum<EDGE>; because the traversal is
+//                     undirected the backend derives "in"/"out" per edge from
+//                     from_id/to_id, so one block per edge type is enough.
+//   tg_event          one Event vertex by id (used by ingest verification).
+//   tg_stats          PRINTs the per-type counts used by the ingest verifier.
+//
+// year_from/year_to use 0 as "unset": GSQL parameters cannot be NULL in a
+// defaulted signature, and every event year is > 0.
+// ===========================================================================
+
+CREATE QUERY tg_filter_events(
+  STRING sport="", STRING venue="", STRING season="",
+  INT year_from=0, INT year_to=0, INT max_rows=100000
+) FOR GRAPH OlympicsKG SYNTAX V2 {
+  // Attribute filters execute in the database; the agent layer only ranks and
+  // trims the returned rows (see TigerGraphBackend.filter_events).
+  //
+  // Two accumulators are printed on purpose:
+  //   @@ids   ordered doc_ids - ORDER BY v.seq reproduces the corpus order of the
+  //           local scan, and a plain string list survives JSON round-trips, so
+  //           the backend can compare remote and local answers object-for-object.
+  //   @@rows  the vertices themselves, so the answer carries server attributes
+  //           instead of being re-hydrated from the local mirror.
+  ListAccum<STRING> @@ids;
+  SetAccum<VERTEX<Event>> @@rows;
+  Events = {Event.*};
+  Events = SELECT v FROM Events:v
+    WHERE (sport    == "" OR lower(v.sport)  == lower(sport))
+      AND (venue    == "" OR lower(v.venue)  == lower(venue))
+      AND (season   == "" OR lower(v.season) == lower(season))
+      AND (year_from == 0 OR v.year >= year_from)
+      AND (year_to   == 0 OR v.year <= year_to)
+    ACCUM @@ids += v.doc_id, @@rows += v
+    ORDER BY v.seq ASC
+    LIMIT max_rows;
+  PRINT @@ids, @@rows;
+}
+
+CREATE QUERY tg_neighbours(
+  STRING vertex_id, STRING edge_type="", INT max_rows=200
+) FOR GRAPH OlympicsKG SYNTAX V2 {
+  // Undirected hops around one vertex, one block per edge type. Works from any
+  // vertex type, so SPORT::/VENUE::/ATHLETE::/GAMES:: lookups also return the
+  // events attached to them - that is what the multi-hop and temporal tools use.
+  SetAccum<EDGE> @@edges;
+
+  SEvent  = {Event.*};   SEvent  = SELECT s FROM SEvent:s  WHERE s.doc_id     == vertex_id;
+  SAth    = {Athlete.*}; SAth    = SELECT s FROM SAth:s    WHERE s.athlete_id == vertex_id;
+  SSport  = {Sport.*};   SSport  = SELECT s FROM SSport:s  WHERE s.sid        == vertex_id;
+  SVenue  = {Venue.*};   SVenue  = SELECT s FROM SVenue:s  WHERE s.vid        == vertex_id;
+  SGames  = {Games.*};   SGames  = SELECT s FROM SGames:s  WHERE s.gid        == vertex_id;
+
+  IF edge_type == "" OR edge_type == "PREV" THEN
+    E1 = SELECT t FROM SEvent:s -(PREV:e)- Event:t    LIMIT max_rows ACCUM @@edges += e;
+    E2 = SELECT t FROM SEvent:s -(NEXT:e)- Event:t    LIMIT max_rows ACCUM @@edges += e;
+  END;
+
+  IF edge_type == "" OR edge_type == "PART_OF" THEN
+    E3 = SELECT t FROM SEvent:s -(PART_OF:e)- Games:t  LIMIT max_rows ACCUM @@edges += e;
+    E4 = SELECT t FROM SGames:s -(PART_OF:e)- Event:t  LIMIT max_rows ACCUM @@edges += e;
+  END;
+
+  IF edge_type == "" OR edge_type == "IN_SPORT" THEN
+    E5 = SELECT t FROM SEvent:s -(IN_SPORT:e)- Sport:t LIMIT max_rows ACCUM @@edges += e;
+    E6 = SELECT t FROM SSport:s -(IN_SPORT:e)- Event:t LIMIT max_rows ACCUM @@edges += e;
+  END;
+
+  IF edge_type == "" OR edge_type == "HELD_AT" THEN
+    E7 = SELECT t FROM SEvent:s -(HELD_AT:e)- Venue:t  LIMIT max_rows ACCUM @@edges += e;
+    E8 = SELECT t FROM SVenue:s -(HELD_AT:e)- Event:t  LIMIT max_rows ACCUM @@edges += e;
+  END;
+
+  IF edge_type == "" OR edge_type == "WON_BY" THEN
+    E9  = SELECT t FROM SEvent:s -(WON_BY:e)- Athlete:t LIMIT max_rows ACCUM @@edges += e;
+    E10 = SELECT t FROM SAth:s   -(WON_BY:e)- Event:t   LIMIT max_rows ACCUM @@edges += e;
+  END;
+
+  PRINT @@edges;
+}
+
+CREATE QUERY tg_event(STRING doc_id) FOR GRAPH OlympicsKG SYNTAX V2 {
+  // One Event vertex by id - what the ingest verifier checks a loaded document
+  // against, and a cheap "is this doc in the graph" probe for the tools.
+  ListAccum<VERTEX<Event>> @@rows;
+  Events = {Event.*};
+  Events = SELECT v FROM Events:v WHERE v.doc_id == doc_id
+           ACCUM @@rows += v;
+  PRINT @@rows;
+}
+
+CREATE QUERY tg_stats() FOR GRAPH OlympicsKG SYNTAX V2 {
+  SumAccum<INT> @@events, @@athletes, @@games, @@sports, @@venues;
+  Events   = {Event.*};   @@events   = Events.size();
+  Athletes = {Athlete.*}; @@athletes = Athletes.size();
+  Games    = {Games.*};   @@games    = Games.size();
+  Sports   = {Sport.*};   @@sports   = Sports.size();
+  Venues   = {Venue.*};   @@venues   = Venues.size();
+  PRINT @@events, @@athletes, @@games, @@sports, @@venues;
+}

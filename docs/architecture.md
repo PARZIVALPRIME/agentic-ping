@@ -155,12 +155,38 @@ flowchart LR
     RES --> DG[dashboard_generator.py] --> HTML[(dashboard/index.html)]
 ```
 
+## Graph backend: local mirror or TigerGraph
+
+`kg/backend.py::open_graph` is the one place that decides who answers the graph
+calls. With `TG_ENABLED` unset nothing about the system changes — the local
+JSON graph (`kg/`) built from `corpus.jsonl`, served from `.cache/`. With
+`TG_ENABLED=true` the same graph is served by TigerGraph (`tg/`): the corpus
+graph is still built and kept as a **mirror**, and `TigerGraphBackend` pushes
+only the two hot paths down (`filter_events`, `neighbours`), so the pipelines
+and the agent's `GraphTools` cannot tell which one answered.
+
+Three properties make that safe for a measured benchmark:
+
+| Property | Mechanism |
+|---|---|
+| **No silent wrong answers** | the first remote answer per call site is verified against the mirror (remote ids ⊆ the uncapped mirror answer, exact match when the answer fits the row budget); a mismatch is recorded as an ingest defect, not served to the agent |
+| **No failed runs** | any error — server down, schema/query missing, partial ingest — degrades *per entry point* to the mirror with a printed reason and a counter; `--no-tg` forces local outright |
+| **No silent truncation** | `TG_MAX_ROWS` is a safety valve: a budget below the candidate set produces a loud run note, and tool parity (agent sees identical output on both backends) is checked with a lossless budget |
+
+Counters for every remote answer, fallback and disagreement are recorded in
+`summary["backend"]` (visible on the dashboard), so "which store actually
+answered" is always a reported fact. Offline verification needs no server:
+`tools/test_tg_backend.py` drives the real client against an in-process RESTPP
+double (`tg/fake_server.py`); `tools/probe_tg_live.py` proves the same wiring
+against any `TG_HOST`.
+
 ## Deployment posture
 
-The system is **self-contained**: the knowledge graph and sparse TF-IDF index
-are built once from `corpus.jsonl` and cached under `.cache/`, so at query time
-there is no database, container or vector service to run — only an outbound
-HTTPS call to the LLM API (Groq, `openai/gpt-oss-120b`). Swapping in a
-TigerGraph / dense-embedding backend is a drop-in behind `retrieval/` and
-`kg/`, because pipelines only consume the `Index` and `KnowledgeGraph`
-interfaces.
+The system is **self-contained by default**: the knowledge graph and sparse
+TF-IDF index are built once from `corpus.jsonl` and cached under `.cache/`, so
+at query time there is no database, container or vector service to run — only
+an outbound HTTPS call to the LLM API (Groq, `openai/gpt-oss-120b`). The
+TigerGraph backend is wired in the same way a dense-embedding backend would be:
+a drop-in behind `kg/` and `retrieval/`, because pipelines only consume the
+`Index` and `KnowledgeGraph` interfaces — enabling it is a configuration
+change (`TG_ENABLED`), and losing it mid-run is a fallback, not a failure.

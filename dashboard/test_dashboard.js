@@ -41,7 +41,7 @@ function makeNode(tag) {
 }
 
 const ids = ["meta", "cards", "byType", "legend", "costScatter", "delta",
-  "traceSelect", "traceMeta", "trace", "typeFilter", "outcomeFilter",
+  "backend", "traceSelect", "traceMeta", "trace", "typeFilter", "outcomeFilter",
   "search", "resultsTable", "footMeta"];
 const registry = {};
 ids.forEach(id => { registry[id] = makeNode(id === "typeFilter" || id === "outcomeFilter" || id === "traceSelect" ? "select" : "div"); });
@@ -74,11 +74,19 @@ function check(label, cond, detail = "") {
   if (!cond) failed++;
 }
 const cards = registry.cards.children;
-check("stat cards rendered (3)", cards.length === 3, `${cards.length}`);
+/* Data-driven on purpose: a summary may legitimately hold one pipeline (a
+   --pipelines agentic run), and the check that matters is that the renderers
+   follow the data rather than a hard-coded expectation. */
+const summary = DATA.summary || {};
+const npipes = Object.keys(summary.pipelines || {}).length;
+const ndelta = (summary.when_agents_matter || []).length;
+check("stat cards match pipelines in summary", cards.length === npipes,
+  `${cards.length} cards vs ${npipes} pipelines`);
 check("byType svg present", registry.byType.children.length === 1);
-check("legend entries match pipelines", registry.legend.children.length === 3);
+check("legend entries match pipelines", registry.legend.children.length === npipes);
 check("costScatter svg present", registry.costScatter.children.length === 1);
-check("delta grid populated", registry.delta.children.length === 2);
+check("delta panel reflects when_agents_matter", registry.delta.children.length === (ndelta ? 2 : 1),
+  `${registry.delta.children.length} nodes, ${ndelta} rows`);
 check("trace options == entries", registry.traceSelect.options.length === DATA.entries.length);
 check("trace waterfall has steps", registry.trace.children.length > 1, `${registry.trace.children.length} nodes`);
 const tbody = registry.resultsTable.children.find(c => c.tagName === "tbody");
@@ -86,6 +94,11 @@ check("results table has rows", !!tbody && tbody.children.length === DATA.entrie
   `${tbody ? tbody.children.length : 0} rows`);
 check("meta filled", registry.meta.innerHTML.includes("questions"));
 check("footer filled", registry.footMeta.textContent.length > 20);
+check("backend panel rendered", registry.backend.children.length > 0,
+  `${registry.backend.children.length} nodes`);
+check("trace names the graph store",
+  (registry.traceMeta.textContent || "").includes("graph:"),
+  registry.traceMeta.textContent);
 
 console.log(failed ? `\n${failed} CHECK(S) FAILED` : "\nALL DASHBOARD CHECKS PASSED");
 process.exit(failed ? 1 : 0);

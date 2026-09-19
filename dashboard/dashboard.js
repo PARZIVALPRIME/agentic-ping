@@ -196,7 +196,8 @@ function renderTrace(i) {
   document.getElementById("traceMeta").textContent =
     `stop: ${ag.stop_reason || "–"} · confidence ${ag.confidence ?? "–"} · ` +
     `${(ag.agents_invoked || []).length} agents · ${(ag.steps || []).length} steps` +
-    (ag.strategy_changed ? " · strategy adapted" : "");
+    (ag.strategy_changed ? " · strategy adapted" : "") +
+    ` · ${backendLabel()}`;
   host.innerHTML = "";
   const maxMs = Math.max(...(ag.steps || []).map(s => s.latency_ms || 0), 1);
   (ag.steps || []).forEach(s => {
@@ -286,6 +287,70 @@ function renderTable() {
     .style.cssText = "text-align:left;color:var(--muted);font-size:11px;padding:6px 2px";
 }
 
+/* ─ graph backend: which store answered the graph calls ──────────── */
+function backendOf() {
+  return (DATA.summary || {}).backend || {};
+}
+
+/* One line naming the store, used wherever a result needs that context. */
+function backendLabel() {
+  const b = backendOf();
+  if (b.active === "tigergraph") return `graph: TigerGraph (${b.graphname || "?"})`;
+  if (b.active === "local" && b.requested === "tigergraph") {
+    return "graph: local mirror (TigerGraph fallback)";
+  }
+  return b.active ? "graph: local corpus graph" : "graph: not recorded";
+}
+
+function renderBackend() {
+  const host = document.getElementById("backend");
+  host.innerHTML = "";
+  const b = backendOf();
+  if (!b.active) {
+    el("p", { class: "hint", text: "This summary predates the backend record — "
+      + "re-run the benchmark to capture which store answered." }, host);
+    return;
+  }
+  const tg = b.active === "tigergraph";
+  const st = b.remote_stats || {};
+  const c = st.counters || {};
+  const v = st.verified || {};
+  const served = (c.filter_events || 0) + (c.neighbours || 0);
+  const mark = x => x === true ? "verified"
+    : x === false ? "MISMATCH (mirror served)" : "not answered remotely";
+
+  const flag = el("p", { class: "hint" }, host);
+  flag.innerHTML = `<span class="chip ${tg ? "up" : "same"}">`
+    + `${tg ? "TigerGraph" : "local corpus graph"}</span> `;
+  el("span", { text: `requested: ${b.requested || "local"}` }, flag);
+  if (b.graphname) el("span", { text: ` · graph ${b.graphname}` }, flag);
+  if (b.reason) el("span", { text: ` · reason: ${b.reason}` }, flag);
+
+  const grid = el("div", { class: "cards" }, host);
+  const tile = (label, big, sub) => {
+    const card = el("div", { class: "card" }, grid);
+    el("h3", { text: label }, card);
+    el("div", { class: "big", text: big }, card);
+    if (sub) el("div", { class: "row", text: sub }, card);
+  };
+  tile("remote answers", short(served),
+    `filter_events ${c.filter_events || 0} · neighbours ${c.neighbours || 0}`);
+  tile("rows from the server", short(c.remote_rows || 0),
+    `${short(st.client_requests || 0)} RESTPP requests`);
+  tile("mirror fallbacks", short(c.fallbacks || 0),
+    `filter_events ${mark(v.filter_events)} · neighbours ${mark(v.neighbours)}`);
+  tile("remote path", st.remote_enabled === false ? "degraded" : "active",
+    st.remote_enabled === false ? "every call served by the mirror"
+      : "queries pushed down to the database");
+
+  const detail = el("div", { class: "hint", style: "margin-top:10px" }, host);
+  const disabled = st.disabled || {};
+  Object.keys(disabled).forEach(k => {
+    el("div", { text: `fell back from ${k}: ${disabled[k]}` }, detail);
+  });
+  (st.notes || []).filter(Boolean).forEach(n => el("div", { text: `· ${n}` }, detail));
+}
+
 /* ─ boot ──────────────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
   renderMeta();
@@ -293,6 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderByType();
   renderCostScatter();
   renderDelta();
+  renderBackend();
   fillTraceSelect();
   const tfs = document.getElementById("typeFilter");
   QTYPES.forEach(t => el("option", { value: t, text: t }, tfs));

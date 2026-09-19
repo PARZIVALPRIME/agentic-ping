@@ -21,6 +21,9 @@ from typing import Any, Dict, List, Optional
 
 from benchmark.evaluator import Evaluator
 from benchmark.metrics import MetricsCollector
+# Imported at module level (not inside main) because the runner records the
+# active backend in the summary and the CLI prints it on every run.
+from kg.backend import describe_backend, open_graph
 
 # Line-buffered so `python run_benchmark.py > log.txt` shows progress live.
 # Without this the log file stays empty for minutes and the run *looks* hung.
@@ -177,6 +180,10 @@ class BenchmarkRunner:
             "evaluator": self.evaluator.stats(),
             "llm": self.llm.stats() if hasattr(self.llm, "stats") else {},
             "wall_clock_s": round(time.time() - t_start, 1),
+            # Which graph store actually answered. Recorded in the summary so a
+            # TigerGraph run is distinguishable from a local one after the fact -
+            # a backend that silently fell back would otherwise look identical.
+            "backend": describe_backend(),
         })
         if summary_path:
             with open(summary_path, "w", encoding="utf-8") as fh:
@@ -198,15 +205,24 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
          pipelines: Optional[List[str]] = None,
          limit: int = 0, offset: int = 0, llm_judge: bool = True,
          resume: bool = False, no_llm: bool = False,
-         types: Optional[List[str]] = None, per_type: int = 0) -> Dict[str, Any]:
+         types: Optional[List[str]] = None, per_type: int = 0,
+         no_tg: bool = False) -> Dict[str, Any]:
     from config import config
-    from kg.builder import load_or_build
     from pipelines import build_pipelines
     from retrieval import load_index
     from utils.llm import LLMHelper, build_llm
 
     log("building KG / index ...")
-    kg = load_or_build(config.benchmark.corpus_path)
+    # open_graph decides local vs TigerGraph from config (TG_ENABLED), and always
+    # keeps the corpus-built graph as the mirror/fallback. --no-tg forces local.
+    kg = open_graph(config.benchmark.corpus_path, config,
+                    cache_path=config.benchmark.kg_cache_path,
+                    force_local=no_tg,
+                    verbose=bool(getattr(config.tg, "verbose", False)))
+    backend = describe_backend()
+    log(f"graph backend: {backend['active']}"
+        + (f" (graph={backend['graphname']})" if backend["active"] == "tigergraph"
+           else f" [{backend['reason']}]"))
     index = load_index(config.benchmark.corpus_path, kg,
                        vector_backend=config.benchmark.vector_backend)
     if no_llm:
@@ -280,6 +296,11 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
               f"lat={ps.get('avg_latency_ms')}ms "
               f"steps={ps.get('avg_retrieval_steps')}")
     print(f"evaluator: {s.get('evaluator')}")
+    if s.get("backend"):
+        b = s["backend"]
+        extra = (f" graph={b['graphname']}" if b["active"] == "tigergraph"
+                 else f" ({b['reason']})")
+        print(f"backend: {b['active']}{extra}")
     if s.get("llm"):
         print(f"llm: {s['llm']}")
     return out
@@ -301,6 +322,8 @@ def cli(argv=None) -> None:
     ap.add_argument("--no-llm", action="store_true",
                     help="deterministic mode: make no provider calls (always fast)")
     ap.add_argument("--no-llm-judge", action="store_true")
+    ap.add_argument("--no-tg", action="store_true",
+                    help="force the local corpus-built graph even if TG_ENABLED=true")
     ap.add_argument("--agent-mode", default="",
                     choices=["", "react", "hybrid", "plan"],
                     help="agentic pipeline mode: react (LLM tool-calling only), "
@@ -328,7 +351,8 @@ def cli(argv=None) -> None:
          llm_judge=not args.no_llm_judge, resume=args.resume,
          no_llm=args.no_llm,
          types=[t for t in args.types.split(",") if t],
-         per_type=args.per_type)
+         per_type=args.per_type,
+         no_tg=args.no_tg)
 
 
 if __name__ == "__main__":

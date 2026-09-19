@@ -107,6 +107,41 @@ python -m benchmark.dashboard_generator results/deterministic_results.json `
 python tools\validate_dashboard.py                                        # sanity-check the generated page
 ```
 
+## TigerGraph backend (optional)
+
+The graph the agent queries is built from `corpus.jsonl` and cached, but the
+same graph can be served by TigerGraph instead — the graph tools then answer
+from the database rather than from a local scan, and nothing else in a run
+changes. The corpus graph is always built and kept as a **mirror**: every
+remote answer is verified against it on first use, and any failure (server
+down, schema missing, query missing, partial ingest) degrades to the mirror
+with a printed reason and a recorded counter. A TigerGraph run therefore cannot
+silently score worse than a local one.
+
+```powershell
+python tools/tg_ingest.py --status              # what the server has now
+python tools/tg_ingest.py --install --push      # schema + queries + the corpus graph
+$env:TG_ENABLED="true"; $env:TG_HOST="http://localhost"   # + TG_USERNAME/TG_PASSWORD
+python run_benchmark.py                         # --no-tg forces the local graph
+```
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `TG_ENABLED` | *(unset)* | serve the graph from TigerGraph |
+| `TG_HOST` / `TG_RESTPP_PORT` | `https://...tgcloud.io` / `443` | RESTPP endpoint (Community: `http://localhost`, port `9000`) |
+| `TG_GRAPHNAME` / `TG_USERNAME` / `TG_PASSWORD` / `TG_TOKEN` | `OlympicsKG` / `tigergraph` / — / — | graph and credentials |
+| `TG_MAX_ROWS` | `100000` | row budget per query — a **safety valve**, not a tuning knob: a budget below the largest candidate set (2210 rows here) is reported loudly, never silently applied |
+| `TG_TIMEOUT` / `TG_RETRIES` | `30` / `2` | per-request timeout and retries |
+
+No TigerGraph install? The suite ships an in-process RESTPP double:
+
+```powershell
+python tools/test_tg_backend.py                       # 48 offline checks, no server needed
+python tools/tg_fake_server.py --port 19123           # offline RESTPP double
+$env:TG_ENABLED="true"; $env:TG_HOST="http://127.0.0.1:19123"
+python tools/probe_tg_live.py                         # the exact benchmark wiring, proven live
+```
+
 ## Architecture
 
 ```
@@ -133,6 +168,7 @@ are built once from `corpus.jsonl` and cached under `.cache/` (`kg/`,
 | `agents/` | planner, orchestrator and the specialised agentic agents |
 | `reasoning/` | query parser + deterministic solvers (counts, superlatives, temporal) |
 | `kg/`, `retrieval/` | knowledge-graph builder and TF-IDF vector index |
+| `tg/` | the TigerGraph backend: schema, queries, loader, client, offline test double |
 | `benchmark/` | runner, evaluation ladder, metrics aggregation, dashboard generator |
 | `dashboard/` | self-contained HTML/CSS/JS metrics dashboard |
 | `results/` | benchmark outputs + cached KG/index |

@@ -220,6 +220,43 @@ class KnowledgeGraph:
                 out.extend(self.events[d] for d in ids)
         return out
 
+    def filter_events(self, query: str = "", sport: str = "", year_from=None,
+                      year_to=None, season: str = "", venue: str = "",
+                      cap: int = 0) -> List["EventNode"]:
+        """Event set for a structured filter (the one query the tools rely on).
+
+        This lives on the graph model rather than in the tools so that a remote
+        backend (``tg/backend.py``) can override it and push the same filter down
+        to the database, while callers keep one call site.
+
+        Ordering is part of the contract: corpus/graph order unless ``query`` is
+        given, in which case the candidates are ranked by term overlap and then
+        title. ``cap`` is the row budget and is applied *before* ranking, so a
+        capped local answer covers the same rows as a capped remote answer - that
+        is what lets the TigerGraph backend verify its first reply against this
+        method object-for-object.
+        """
+        events = list(self.events.values())
+        if sport:
+            by_sport = self.events_for_sport(sport)
+            if by_sport:
+                events = by_sport
+        if venue:
+            by_venue = self.events_at_venue(venue)
+            if by_venue:
+                events = by_venue
+        if year_from is not None:
+            events = [e for e in events if e.year and e.year >= int(year_from)]
+        if year_to is not None:
+            events = [e for e in events if e.year and e.year <= int(year_to)]
+        if season:
+            events = [e for e in events if e.season.lower() == season.lower()]
+        if cap and int(cap) > 0:
+            events = events[:int(cap)]
+        if query:
+            events = rank_events_by_terms(events, query)
+        return events
+
     def neighbours(self, doc_id: str) -> List[tuple]:
         """Return (edge_type, direction, other_id) triples for a vertex."""
         out = []
@@ -245,3 +282,30 @@ class KnowledgeGraph:
         from .textutil import normalize
 
         return f"ATHLETE::{normalize(name)}"
+
+
+def rank_events_by_terms(events: List[EventNode], query: str) -> List[EventNode]:
+    """Rank candidate events by term overlap with ``query``.
+
+    The only piece of filtering that stays in Python when a remote backend
+    answers the query (see ``tg/backend.py``): the database applies the
+    attribute filters, this orders the survivors so the agent sees the most
+    relevant rows first. Events with no matching term are dropped, matching the
+    local-only behaviour, and the original order is kept when nothing matches so
+    a broad query still returns candidates.
+    """
+    from .textutil import normalize
+
+    terms = [t for t in normalize(query).split() if len(t) > 2]
+    if not terms:
+        return events
+    scored = []
+    for ev in events:
+        hay = normalize(f"{ev.title} {ev.event_name} {ev.sport} {ev.venue}")
+        hits = sum(1 for t in terms if t in hay)
+        if hits:
+            scored.append((hits, ev))
+    if not scored:
+        return events
+    scored.sort(key=lambda pair: (-pair[0], pair[1].title))
+    return [ev for _hits, ev in scored]

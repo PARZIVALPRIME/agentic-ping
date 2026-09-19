@@ -1,0 +1,131 @@
+// ===========================================================================
+// OlympicsKG - TigerGraph schema for the Agentic GraphRAG benchmark
+// ===========================================================================
+// Mirrors the graph the benchmark builds from corpus.jsonl (kg/model.py) so the
+// same agent can be served by TigerGraph instead of the local JSON graph.
+//
+//   Event    doc_id      one Wikipedia event page  (2210 vertices)
+//   Athlete  ATHLETE::.. medal winner             (from infobox gold/silver/bronze)
+//   Games    GAMES::y::s an edition                (e.g. GAMES::2012::Summer)
+//   Sport    SPORT::..   e.g. SPORT::Canoeing
+//   Venue    VENUE::..   e.g. VENUE::Eton Dorney
+//
+//   PREV / NEXT      Event -> Event   (infobox prev/next edition)
+//   PART_OF          Event -> Games
+//   IN_SPORT         Event -> Sport
+//   HELD_AT          Event -> Venue
+//   WON_BY           Event -> Athlete (attribute: medal = gold|silver|bronze)
+//
+// Install with either:
+//   gsql schema.gsql                       (Community Edition, in the container)
+//   python tools/tg_ingest.py --install    (posts this file to /gsqlserver)
+// On Savanna, paste the CREATE statements into the GSQL editor, then run
+//   python tools/tg_ingest.py --push       to load the corpus-built graph.
+//
+// Vertex ids come straight from the benchmark, so the same doc_ids appear here
+// and in results/*.json citations. No id mapping layer exists on purpose.
+// ===========================================================================
+
+DROP GRAPH OlympicsKG
+CREATE GRAPH OlympicsKG (*)
+
+USE GLOBAL
+CREATE VERTEX Event (
+  PRIMARY_ID doc_id STRING,
+  title STRING, url STRING, sport STRING, year INT, season STRING,
+  games_label STRING, event_name STRING, competitors INT, nations INT,
+  venue STRING, venues STRING, date_raw STRING, dates_raw STRING,
+  gold STRING, silver STRING, bronze STRING,
+  win_value STRING, win_label STRING, prev STRING, next STRING,
+  approx_tokens INT,
+  // Derived by the builder and needed by temporal reasoning / hydration:
+  prev_doc_id STRING, next_doc_id STRING,
+  months_found LIST<STRING>, days_found LIST<STRING>,
+  // seq = position in the corpus graph. It exists so tg_filter_events can return
+  // rows in the same order as the local scan, which is what makes the backend's
+  // remote-vs-mirror verification an exact comparison instead of a fuzzy one.
+  seq INT,
+  // Article text, shipped only when the ingest runs with --with-text.
+  text STRING
+) WITH primary_id_as_attribute="true"
+
+CREATE VERTEX Athlete (
+  PRIMARY_ID athlete_id STRING,
+  name STRING
+) WITH primary_id_as_attribute="true"
+
+CREATE VERTEX Games (
+  PRIMARY_ID gid STRING,
+  year INT, season STRING, label STRING
+) WITH primary_id_as_attribute="true"
+
+CREATE VERTEX Sport (
+  PRIMARY_ID sid STRING,
+  name STRING
+) WITH primary_id_as_attribute="true"
+
+CREATE VERTEX Venue (
+  PRIMARY_ID vid STRING,
+  name STRING
+) WITH primary_id_as_attribute="true"
+
+CREATE DIRECTED EDGE PREV (FROM Event, TO Event)
+CREATE DIRECTED EDGE NEXT (FROM Event, TO Event)
+CREATE DIRECTED EDGE PART_OF (
+  FROM Event, TO Games,
+  year INT, season STRING, label STRING
+)
+CREATE DIRECTED EDGE IN_SPORT (FROM Event, TO Sport)
+CREATE DIRECTED EDGE HELD_AT (FROM Event, TO Venue)
+CREATE DIRECTED EDGE WON_BY (
+  FROM Event, TO Athlete,
+  medal STRING
+)
+
+// Loader for RESTPP upserts (what tools/tg_ingest.py --push uses); no files
+// need to be visible to the server, which is what makes Savanna work.
+CREATE LOADING JOB load_olympics FOR GRAPH OlympicsKG {
+  DEFINE FILENAME f_event;
+  DEFINE FILENAME f_athlete;
+  DEFINE FILENAME f_games;
+  DEFINE FILENAME f_sport;
+  DEFINE FILENAME f_venue;
+  DEFINE FILENAME f_prev;
+  DEFINE FILENAME f_next;
+  DEFINE FILENAME f_part_of;
+  DEFINE FILENAME f_in_sport;
+  DEFINE FILENAME f_held_at;
+  DEFINE FILENAME f_won_by;
+
+  // NOTE: a positional LOAD maps values to attributes in the order they are
+  // DECLARED above, so this list must stay in sync with the Event attribute
+  // order. tools/tg_ingest.py writes the CSV in exactly that order
+  // (tg/loader.py EVENT_ATTRS + the primary id), and the RESTPP push path -
+  // the primary path - names its attributes and so cannot drift.
+  LOAD f_event TO VERTEX Event VALUES (
+    $doc_id, $title, $url, $sport, $year, $season, $games_label, $event_name,
+    $competitors, $nations, $venue, $venues, $date_raw, $dates_raw,
+    $gold, $silver, $bronze, $win_value, $win_label, $prev, $next,
+    $approx_tokens, $prev_doc_id, $next_doc_id, $months_found, $days_found,
+    $seq, $text) USING header="true", separator="|";
+  LOAD f_athlete TO VERTEX Athlete VALUES ($athlete_id, $name)
+    USING header="true", separator="|";
+  LOAD f_games TO VERTEX Games VALUES ($gid, $year, $season, $label)
+    USING header="true", separator="|";
+  LOAD f_sport TO VERTEX Sport VALUES ($sid, $name)
+    USING header="true", separator="|";
+  LOAD f_venue TO VERTEX Venue VALUES ($vid, $name)
+    USING header="true", separator="|";
+  LOAD f_prev TO EDGE PREV VALUES ($src, $dst)
+    USING header="true", separator="|";
+  LOAD f_next TO EDGE NEXT VALUES ($src, $dst)
+    USING header="true", separator="|";
+  LOAD f_part_of TO EDGE PART_OF VALUES ($src, $dst, $year, $season, $label)
+    USING header="true", separator="|";
+  LOAD f_in_sport TO EDGE IN_SPORT VALUES ($src, $dst)
+    USING header="true", separator="|";
+  LOAD f_held_at TO EDGE HELD_AT VALUES ($src, $dst)
+    USING header="true", separator="|";
+  LOAD f_won_by TO EDGE WON_BY VALUES ($src, $dst, $medal)
+    USING header="true", separator="|";
+}

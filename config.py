@@ -30,6 +30,22 @@ def _env(*names: str, default: str = "") -> str:
     return default
 
 
+def _int_env(name: str, default: int) -> int:
+    """Integer env var; unparseable values fall back instead of raising."""
+    try:
+        return int(_env(name, default=str(default)))
+    except (TypeError, ValueError):
+        return default
+
+
+def _float_env(name: str, default: float) -> float:
+    """Float env var; unparseable values fall back instead of raising."""
+    try:
+        return float(_env(name, default=str(default)))
+    except (TypeError, ValueError):
+        return default
+
+
 @dataclass
 class TigerGraphConfig:
     """TigerGraph connection configuration (Savanna or Community Edition)."""
@@ -46,6 +62,11 @@ class TigerGraphConfig:
     gs_port: str = field(default_factory=lambda: _env("TG_GS_PORT", default="14240"))
     token: str = field(default_factory=lambda: _env("TG_TOKEN", "TGRAPH_TOKEN"))
     enabled: bool = field(default_factory=lambda: _env("TG_ENABLED", default="").lower()
+                          in ("1", "true", "yes"))
+    max_rows: int = field(default_factory=lambda: _int_env("TG_MAX_ROWS", 100000))
+    timeout: float = field(default_factory=lambda: _float_env("TG_TIMEOUT", 30.0))
+    retries: int = field(default_factory=lambda: _int_env("TG_RETRIES", 2))
+    verbose: bool = field(default_factory=lambda: _env("TG_VERBOSE", default="").lower()
                           in ("1", "true", "yes"))
 
 
@@ -133,6 +154,12 @@ class BenchmarkConfig:
     hidden_questions_path: str = field(
         default_factory=lambda: _env("HIDDEN_QUESTIONS_PATH", default=HIDDEN_DEFAULT))
     corpus_path: str = field(default_factory=lambda: _env("CORPUS_PATH", default=CORPUS_DEFAULT))
+    # Where the corpus-built knowledge graph is cached. Explicit here (rather than
+    # relying on kg.builder's default) because a TigerGraph run builds the same
+    # mirror and must reuse the same cache file.
+    kg_cache_path: str = field(
+        default_factory=lambda: _env("KG_CACHE_PATH",
+                                     default="results/knowledge_graph.json"))
     results_dir: str = field(default_factory=lambda: _env("RESULTS_DIR", default="results"))
     top_k: int = field(default_factory=lambda: int(_env("RETRIEVAL_TOP_K", default="10")))
     rag_top_k: int = field(default_factory=lambda: int(_env("RAG_TOP_K", default="5")))
