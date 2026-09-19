@@ -1,0 +1,182 @@
+{
+  "num_questions": 3,
+  "pipelines": {
+    "RAG": {
+      "num_questions": 3,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 1,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 0,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 1,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 0,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 46.82,
+      "avg_context_tokens": 423.0,
+      "avg_input_tokens": 446.6667,
+      "avg_output_tokens": 0.0,
+      "avg_total_tokens": 446.6667,
+      "avg_llm_calls": 0.0,
+      "avg_retrieval_steps": 1.0,
+      "avg_chunks_retrieved": 5.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 1340,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "resolved": 2,
+        "insufficient_retrieved_evidence": 1
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "GraphRAG": {
+      "num_questions": 3,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 1,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 0,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 1,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 0,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 193.6167,
+      "avg_context_tokens": 1017.0,
+      "avg_input_tokens": 1040.6667,
+      "avg_output_tokens": 0.0,
+      "avg_total_tokens": 1040.6667,
+      "avg_llm_calls": 0.0,
+      "avg_retrieval_steps": 2.0,
+      "avg_chunks_retrieved": 10.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 3122,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "resolved": 3
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "Agentic GraphRAG": {
+      "num_questions": 3,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 1,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 0,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 1,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 0,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 60.6533,
+      "avg_context_tokens": 495.3333,
+      "avg_input_tokens": 0.0,
+      "avg_output_tokens": 0.0,
+      "avg_total_tokens": 0.0,
+      "avg_llm_calls": 0.0,
+      "avg_retrieval_steps": 3.0,
+      "avg_chunks_retrieved": 6.3333,
+      "avg_candidates_considered": 12.6667,
+      "total_tokens": 0,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "confidence_reached": 3
+      },
+      "strategy_adapted": 3,
+      "agents_used": [
+        "Aggregator",
+        "EntityLinker",
+        "EvidenceEvaluator",
+        "GraphTraverser",
+        "LookupResolver",
+        "Synthesizer",
+        "VectorSearcher"
+      ]
+    }
+  },
+  "when_agents_matter": [],
+  "evaluator": {
+    "llm_judge_enabled": false,
+    "judge_calls": 0,
+    "judge_flips": 0,
+    "judge_tokens": 0
+  },
+  "llm": {
+    "available": false,
+    "provider": null,
+    "chat_model": null,
+    "eval_model": null,
+    "num_calls": 0,
+    "failed_calls": 0,
+    "degraded": false,
+    "error": "no provider/API key configured",
+    "min_interval_s": 1.5,
+    "tpm_budget": 6000,
+    "rate_limit_events": 0,
+    "pace_sleeps": 0,
+    "pace_slept_s": 0.0,
+    "circuit": {
+      "threshold": 3,
+      "cooldown_s": 60.0,
+      "trips": 0,
+      "blocked_calls": 0,
+      "open": false
+    }
+  },
+  "wall_clock_s": 0.9
+}

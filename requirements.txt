@@ -1,0 +1,28 @@
+# Agentic GraphRAG Hackathon — Python dependencies
+#
+# Verified against the live import graph (see tools/audit_imports.py).
+# The benchmark runs with CORE only; everything under OPTIONAL is a
+# drop-in backend that the code imports lazily.
+
+# ── CORE: required for the benchmark ────────────────────────────────
+openai>=1.40              # llm_service.py — Groq/OpenAI-compatible chat + JSON mode
+python-dotenv>=1.0        # config.py — .env loading
+numpy>=1.26               # retrieval/vector.py — sparse TF-IDF vector space
+tenacity>=8.2             # llm_service.py — retry/backoff on rate limits
+tiktoken>=0.7             # utils/metrics.py — exact token accounting (falls back to approx.)
+
+# ── OPTIONAL: enable extra retrieval backends ───────────────────────
+# Dense neural embeddings (retrieval/vector.py: SentenceTransformerEmbedder).
+# Without it the index uses sparse TF-IDF, which is the reported default.
+sentence-transformers>=3.0
+
+# ── OPTIONAL: TigerGraph Savanna / Community Edition backend ────────
+# Only needed if you set TG_ENABLED=true to back the KG with TigerGraph.
+# The default pipeline builds the knowledge graph locally (kg/builder.py).
+# pyTigerGraph[gds]>=1.8
+# requests>=2.31
+
+# ── OPTIONAL: Google Gemini provider ────────────────────────────────
+# Uncomment to use LLM_PROVIDER=google instead of Groq.
+# google-genai>=1.0
+

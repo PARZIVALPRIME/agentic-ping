@@ -1,0 +1,109 @@
+﻿
+HIDDEN SET: resolved 50/50 = 100.0%
+  aggregation   15/ 15 = 100.0%
+  lookup         7/  7 = 100.0%
+  multi_hop     10/ 10 = 100.0%
+  superlative   10/ 10 = 100.0%
+  temporal       8/  8 = 100.0%
+
+--- per-question predictions ---
+OK eval-001 [multi_hop  ] Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?
+      -> 'Li TingSun Tiantian'  conf=0.94 cites=['Q942805']  unresolved=[]
+OK eval-002 [lookup     ] How many nations competed in Fencing at the 1988 Summer Olympics ΓÇô Men's foil?
+      -> '29'  conf=0.95 cites=['Q5443136']  unresolved=[]
+OK eval-003 [aggregation] According to the provided corpus, how many cycling events at the 2008 Summer Olympics had more than 30 competitors?
+      -> '8'  conf=1.0 cites=['Q1063589', 'Q1064728', 'Q938805', 'Q938833', 'Q1064571', 'Q1064381', 'Q1077323', 'Q609985', 'Q635304', 'Q628945', 'Q577260', 'Q1005322', 'Q1202526', 'Q1005363', 'Q1005614', 'Q727488', 'Q1202770', 'Q1203058']  unresolved=[]
+OK eval-004 [multi_hop  ] Who won the gold medal in the event held at Sydney International Shooting Centre on 22 September 2000?
+      -> 'Mariya Grozdeva'  conf=0.94 cites=['Q7500817']  unresolved=[]
+OK eval-005 [superlative] According to the provided corpus, which sailing event at the 2016 Summer Olympics had the highest number of competitors?
+      -> "Sailing at the 2016 Summer Olympics ΓÇô Men's 470"  conf=0.95 cites=['Q26263261']  unresolved=[]
+OK eval-006 [aggregation] According to the provided corpus, how many cross-country skiing events at the 2010 Winter Olympics had more than 62 competitors?
+      -> '4'  conf=1.0 cites=['Q571263', 'Q595962', 'Q384953', 'Q916724', 'Q220386', 'Q916711', 'Q848689', 'Q916916', 'Q843851', 'Q848655']  unresolved=[]
+OK eval-007 [temporal   ] Who won the gold medal in the men's heavyweight boxing event at the Summer Olympics held immediately before 2016?
+      -> 'Oleksandr Usyk'  conf=0.95 cites=['Q326384']  unresolved=[]
+OK eval-008 [aggregation] According to the provided corpus, how many sailing events at the 1996 Summer Olympics had more than 46 competitors?
+      -> '4'  conf=1.0 cites=['Q7400319', 'Q7400320', 'Q7400325', 'Q7400317', 'Q7400316', 'Q7400318', 'Q7400322', 'Q7400321', 'Q7400324', 'Q7400323']  unresolved=[]
+OK eval-009 [superlative] According to the provided corpus, which sailing event at the 2004 Summer Olympics had the highest number of competitors?
+      -> "Sailing at the 2004 Summer Olympics ΓÇô Men's 470"  conf=0.95 cites=['Q7400344']  unresolved=[]
+OK eval-010 [lookup     ] How many nations competed in Boxing at the 1996 Summer Olympics ΓÇô Flyweight?
+      -> '32'  conf=0.95 cites=['Q10497009']  unresolved=[]
+OK eval-011 [aggregation] According to the provided corpus, how many weightlifting events at the 1992 Summer Olympics had more than 24 competitors?
+      -> '4'  conf=1.0 cites=['Q7979974', 'Q7979972', 'Q7979977', 'Q7979978', 'Q7979968', 'Q7979967', 'Q7979973', 'Q7979969', 'Q7979975', 'Q7979971']  unresolved=[]
+OK eval-012 [lookup     ] How many nations competed in Swimming at the 2016 Summer Olympics ΓÇô Men's 100 metre butterfly?
+      -> '32'  conf=0.95 cites=['Q25991452']  unresolved=[]
+OK eval-013 [aggregation] According to the provided corpus, how many cycling events at the 2016 Summer Olympics had more than 27 competitors?
+      -> '6'  conf=0.881 cites=['Q24760634', 'Q26262523', 'Q26259596', 'Q26265815', 'Q26262252', 'Q26263572', 'Q26260960', 'Q26291516', 'Q25476845', 'Q25476835', 'Q25476761', 'Q24761058', 'Q25476545', 'Q25476541', 'Q26260943', 'Q24906792']  unresolved=[]
+OK eval-014 [multi_hop  ] Who won the gold medal in the event held at San Sicario on February 15, 2006?
+      -> 'Michaela Dorfmeister'  conf=0.94 cites=['Q771123']  unresolved=[]
+OK eval-015 [lookup     ] How many nations competed in Athletics at the 2016 Summer Olympics ΓÇô Men's 400 metres?
+      -> '35'  conf=0.95 cites=['Q26219858']  unresolved=[]
+OK eval-016 [lookup     ] How many nations competed in Athletics at the 2008 Summer Olympics ΓÇô Women's shot put?
+      -> '22'  conf=0.95 cites=['Q848278']  unresolved=[]
+OK eval-017 [multi_hop  ] Who won the gold medal in the event held at Eton Dorney on 28 July ΓÇô 4 August 2012?
+      -> 'Miroslava Knapkov├í'  conf=0.94 cites=['Q1222270']  unresolved=[]
+OK eval-018 [multi_hop  ] Who won the gold medal in the event held at Olympic Stadium on 16ΓÇô18 August 2016?
+      -> 'Sara Kolak'  conf=0.94 cites=['Q26234144']  unresolved=[]
+OK eval-019 [aggregation] According to the provided corpus, how many alpine skiing events at the 1998 Winter Olympics had more than 45 competitors?
+      -> '4'  conf=1.0 cites=['Q1222533', 'Q1222474', 'Q1222646', 'Q1222214', 'Q1005749', 'Q1005810', 'Q1222717', 'Q1005643', 'Q1005296', 'Q1005576']  unresolved=[]
+OK eval-020 [multi_hop  ] Who won the gold medal in the event held at Royal Artillery Barracks on 5 August 2012?
+      -> 'Jin Jong-oh'  conf=0.94 cites=['Q2353475']  unresolved=[]
+OK eval-021 [temporal   ] Who won the gold medal in the men's 200 metre backstroke swimming event at the Summer Olympics held immediately before 2016?
+      -> 'Tyler Clary'  conf=0.95 cites=['Q2071160']  unresolved=[]
+OK eval-022 [lookup     ] How many nations competed in Cross-country skiing at the 2014 Winter Olympics ΓÇô Men's sprint?
+      -> '40'  conf=0.95 cites=['Q15055036']  unresolved=[]
+OK eval-023 [aggregation] According to the provided corpus, how many shooting events at the 2000 Summer Olympics had more than 42 competitors?
+      -> '7'  conf=1.0 cites=['Q7500819', 'Q7500816', 'Q7500813', 'Q7500822', 'Q7500809', 'Q7500810', 'Q7500807', 'Q7500814', 'Q7500821', 'Q7500817', 'Q7500812', 'Q4443763', 'Q4443764', 'Q4443765', 'Q4443767', 'Q4354069', 'Q4443766']  unresolved=[]
+OK eval-024 [superlative] According to the provided corpus, which cross-country skiing event at the 1998 Winter Olympics had the highest number of competitors?
+      -> "Cross-country skiing at the 1998 Winter Olympics ΓÇô Men's 10 kilometre classical"  conf=0.95 cites=['Q1004937']  unresolved=[]
+OK eval-025 [superlative] According to the provided corpus, which rowing event at the 2016 Summer Olympics had the highest number of competitors?
+      -> "Rowing at the 2016 Summer Olympics ΓÇô Women's eight"  conf=0.95 cites=['Q22968979']  unresolved=[]
+OK eval-026 [lookup     ] How many nations competed in Fencing at the 2000 Summer Olympics ΓÇô Men's foil?
+      -> '22'  conf=0.95 cites=['Q632472']  unresolved=[]
+OK eval-027 [superlative] According to the provided corpus, which cycling event at the 2012 Summer Olympics had the highest number of competitors?
+      -> "Cycling at the 2012 Summer Olympics ΓÇô Men's individual road race"  conf=0.95 cites=['Q754412']  unresolved=[]
+OK eval-028 [aggregation] According to the provided corpus, how many wrestling events at the 2012 Summer Olympics had more than 19 competitors?
+      -> '3'  conf=1.0 cites=['Q305439', 'Q2171151', 'Q2048869', 'Q2091137', 'Q2096231', 'Q2550697', 'Q2299006', 'Q2358274', 'Q2521962', 'Q677063', 'Q2358214', 'Q2358254', 'Q767959', 'Q2521952', 'Q2289605']  unresolved=[]
+OK eval-029 [aggregation] According to the provided corpus, how many boxing events at the 2012 Summer Olympics had more than 26 competitors?
+      -> '3'  conf=1.0 cites=['Q326384', 'Q31850', 'Q326382', 'Q348720', 'Q348714', 'Q332673', 'Q2070431', 'Q2070048', 'Q2070058', 'Q2000524', 'Q31844']  unresolved=[]
+OK eval-030 [superlative] According to the provided corpus, which alpine skiing event at the 1994 Winter Olympics had the highest number of competitors?
+      -> "Alpine skiing at the 1994 Winter Olympics ΓÇô Men's super-G"  conf=0.95 cites=['Q1005746']  unresolved=[]
+OK eval-031 [temporal   ] Who won the gold medal in the men's 62 kg weightlifting event at the Summer Olympics held immediately before 2016?
+      -> 'Kim Un-guk'  conf=0.95 cites=['Q1139399']  unresolved=[]
+OK eval-032 [multi_hop  ] Who won the gold medal in the event held at Pacific Coliseum on February 20, 2010?
+      -> 'Lee Jung-su'  conf=0.94 cites=['Q938791']  unresolved=[]
+OK eval-033 [aggregation] According to the provided corpus, how many alpine skiing events at the 1988 Winter Olympics had more than 57 competitors?
+      -> '4'  conf=1.0 cites=['Q1222524', 'Q1222466', 'Q1222641', 'Q1222203', 'Q1005744', 'Q1005284', 'Q1005571', 'Q1005804', 'Q1222713', 'Q1005639']  unresolved=[]
+OK eval-034 [temporal   ] Who won the gold medal in the men's freestyle 120 kg wrestling event at the Summer Olympics held immediately before 2012?
+      -> 'Bakhtiyar Akhmedov'  conf=0.95 cites=['Q581364']  unresolved=[]
+OK eval-035 [superlative] According to the provided corpus, which rowing event at the 2012 Summer Olympics had the highest number of competitors?
+      -> "Rowing at the 2012 Summer Olympics ΓÇô Women's eight"  conf=0.95 cites=['Q370500']  unresolved=[]
+OK eval-036 [aggregation] According to the provided corpus, how many short-track speed skating events at the 2018 Winter Olympics had more than 34 competitors?
+      -> '3'  conf=1.0 cites=['Q47455933', 'Q47310015', 'Q47309900', 'Q47309816', 'Q47309929', 'Q47309958', 'Q47309836', 'Q47309990']  unresolved=[]
+OK eval-037 [superlative] According to the provided corpus, which sailing event at the 1996 Summer Olympics had the highest number of competitors?
+      -> "Sailing at the 1996 Summer Olympics ΓÇô Men's 470"  conf=0.95 cites=['Q7400319']  unresolved=[]
+OK eval-038 [aggregation] According to the provided corpus, how many athletics events at the 2008 Summer Olympics had more than 40 competitors?
+      -> '21'  conf=1.0 cites=['Q743905', 'Q1005784', 'Q744487', 'Q1043342', 'Q657467', 'Q693595', 'Q947750', 'Q288549', 'Q1043354', 'Q1043361', 'Q1043347', 'Q544177', 'Q257545', 'Q1066390', 'Q656634', 'Q517035', 'Q1084677', 'Q917323', 'Q899312', 'Q932865', 'Q247070', 'Q917348', 'Q853003', 'Q917333', 'Q904345', 'Q922361', 'Q847592', 'Q853040', 'Q853023', 'Q947678', 'Q848278', 'Q903439', 'Q830711', 'Q853049', 'Q853072', 'Q766954', 'Q754844', 'Q916976', 'Q848291', 'Q922248', 'Q917328', 'Q677027', 'Q947691']  unresolved=[]
+OK eval-039 [aggregation] According to the provided corpus, how many boxing events at the 1992 Summer Olympics had more than 30 competitors?
+      -> '3'  conf=1.0 cites=['Q10572415', 'Q10495989', 'Q10719576', 'Q58412558', 'Q10426127', 'Q10572431', 'Q10684073', 'Q10581228', 'Q10706347', 'Q10572439', 'Q10497008', 'Q10572463']  unresolved=[]
+OK eval-040 [multi_hop  ] Who won the gold medal in the event held at Stadium Australia on 27 September 2000 (heats)29 September 2000 (semi-finals)30 September 2000 (final)?
+      -> 'Nouria M├⌐rah-Benida'  conf=0.94 cites=['Q3628760']  unresolved=[]
+OK eval-041 [aggregation] According to the provided corpus, how many alpine skiing events at the 2006 Winter Olympics had more than 63 competitors?
+      -> '4'  conf=1.0 cites=['Q917752', 'Q917747', 'Q917743', 'Q917760', 'Q771123', 'Q2574045', 'Q585893', 'Q1005801', 'Q1042644', 'Q615345']  unresolved=[]
+OK eval-042 [temporal   ] Who won the gold medal in the mixed trap shooting event at the Summer Olympics held immediately before 1992?
+      -> 'Dmitry Monakov'  conf=0.95 cites=['Q7500750']  unresolved=[]
+OK eval-043 [multi_hop  ] Who won the gold medal in the event held at Carioca Arena 3 on 11 August 2016?
+      -> 'Loredana DinuSimona GhermanSimona PopAna Maria Popescu'  conf=0.94 cites=['Q25384917']  unresolved=[]
+OK eval-044 [temporal   ] Who won the gold medal in the women's 75 kg weightlifting event at the Summer Olympics held immediately before 2016?
+      -> 'Lydia Valent├¡n'  conf=0.95 cites=['Q1997032']  unresolved=[]
+OK eval-045 [temporal   ] Who won the gold medal in the women's moguls freestyle skiing event at the Winter Olympics held immediately before 2014?
+      -> 'Hannah Kearney'  conf=0.95 cites=['Q905561']  unresolved=[]
+OK eval-046 [temporal   ] Who won the gold medal in the light flyweight boxing event at the Summer Olympics held immediately before 2004?
+      -> 'Brahim Asloum'  conf=0.95 cites=['Q4951841']  unresolved=[]
+OK eval-047 [superlative] According to the provided corpus, which cycling event at the 2004 Summer Olympics had the highest number of competitors?
+      -> "Cycling at the 2004 Summer Olympics ΓÇô Men's individual road race"  conf=0.95 cites=['Q2445057']  unresolved=[]
+OK eval-048 [aggregation] According to the provided corpus, how many cycling events at the 2012 Summer Olympics had more than 30 competitors?
+      -> '7'  conf=1.0 cites=['Q939000', 'Q2194130', 'Q754412', 'Q2036655', 'Q843287', 'Q2437166', 'Q2269155', 'Q2718015', 'Q2718019', 'Q580474', 'Q2070832', 'Q2297621', 'Q2329168', 'Q2269694', 'Q2362858', 'Q1005298', 'Q2297633', 'Q916174']  unresolved=[]
+OK eval-049 [superlative] According to the provided corpus, which shooting event at the 1988 Summer Olympics had the highest number of competitors?
+      -> "Shooting at the 1988 Summer Olympics ΓÇô Men's 50 metre rifle prone"  conf=0.95 cites=['Q7500747']  unresolved=[]
+OK eval-050 [multi_hop  ] Who won the gold medal in the event held at Olympic Stadium on 6ΓÇô9 August at the 2012 Summer Olympics?
+      -> 'David Rudisha'  conf=0.94 cites=['Q1049551']  unresolved=[]

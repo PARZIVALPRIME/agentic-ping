@@ -1,0 +1,29 @@
+{
+  "_comment": "Optional overrides. The system runs with zero configuration (deterministic offline mode); set values in .env instead. See .env.example.",
+  "llm": {
+    "provider": "groq",
+    "api_key_env": "GROQ_API_KEY",
+    "chat_model": "openai/gpt-oss-120b",
+    "fast_model": "llama-3.1-8b-instant",
+    "eval_model": "openai/gpt-oss-120b",
+    "temperature": 0.0
+  },
+  "retrieval": {
+    "vector_backend": "auto",
+    "top_k": 8,
+    "graph_hops": 2
+  },
+  "agentic": {
+    "max_steps": 15,
+    "confidence_threshold": 0.9,
+    "stale_limit": 2
+  },
+  "tigergraph": {
+    "_comment": "Optional backend. The KG is built locally by default; set TG_ENABLED=true and the TG_* vars in .env to use Savanna / Community Edition.",
+    "host": "https://your-tigergraph-host:14240",
+    "graph_name": "OlympicsKG",
+    "token": "",
+    "username": "",
+    "password": ""
+  }
+}

@@ -1,0 +1,72 @@
+building KG / index ...
+llm available: True (openai/gpt-oss-120b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG']
+resuming: 7 questions already completed
+[  8/50] eval-008 aggregation RAG=- GraphRAG=- Agentic=- tok=2090 elapsed=79s
+[  9/50] eval-009 superlative RAG=- GraphRAG=- Agentic=- tok=1807 elapsed=112s
+[ 10/50] eval-010 lookup      RAG=- GraphRAG=- Agentic=- tok=1177 elapsed=126s
+[ 11/50] eval-011 aggregation RAG=- GraphRAG=- Agentic=- tok=1409 elapsed=137s
+[ 12/50] eval-012 lookup      RAG=- GraphRAG=- Agentic=- tok=1208 elapsed=152s
+[ 13/50] eval-013 aggregation RAG=- GraphRAG=- Agentic=- tok=1165 elapsed=163s
+[ 14/50] eval-014 multi_hop   RAG=- GraphRAG=- Agentic=- tok=1200 elapsed=175s
+[ 15/50] eval-015 lookup      RAG=- GraphRAG=- Agentic=- tok=1051 elapsed=241s
+[ 16/50] eval-016 lookup      RAG=- GraphRAG=- Agentic=- tok=1179 elapsed=255s
+[ 17/50] eval-017 multi_hop   RAG=- GraphRAG=- Agentic=- tok=1404 elapsed=266s
+[ 18/50] eval-018 multi_hop   RAG=- GraphRAG=- Agentic=- tok=1229 elapsed=278s
+[ 19/50] eval-019 aggregation RAG=- GraphRAG=- Agentic=- tok=1099 elapsed=291s
+[ 20/50] eval-020 multi_hop   RAG=- GraphRAG=- Agentic=- tok=1086 elapsed=303s
+[ 21/50] eval-021 temporal    RAG=- GraphRAG=- Agentic=- tok=1330 elapsed=315s
+[ 22/50] eval-022 lookup      RAG=- GraphRAG=- Agentic=- tok=1300 elapsed=330s
+[ 23/50] eval-023 aggregation RAG=- GraphRAG=- Agentic=- tok=1266 elapsed=342s
+[ 24/50] eval-024 superlative RAG=- GraphRAG=- Agentic=- tok=1318 elapsed=353s
+[ 25/50] eval-025 superlative RAG=- GraphRAG=- Agentic=- tok=1134 elapsed=363s
+[ 26/50] eval-026 lookup      RAG=- GraphRAG=- Agentic=- tok=1259 elapsed=411s
+[ 27/50] eval-027 superlative RAG=- GraphRAG=- Agentic=- tok=1074 elapsed=421s
+[ 28/50] eval-028 aggregation RAG=- GraphRAG=- Agentic=- tok=1154 elapsed=432s
+[ 29/50] eval-029 aggregation RAG=- GraphRAG=- Agentic=- tok=1046 elapsed=442s
+[ 30/50] eval-030 superlative RAG=- GraphRAG=- Agentic=- tok=1109 elapsed=453s
+[ 31/50] eval-031 temporal    RAG=- GraphRAG=- Agentic=- tok=958 elapsed=464s
+[ 32/50] eval-032 multi_hop   RAG=- GraphRAG=- Agentic=- tok=1252 elapsed=478s
+[ 33/50] eval-033 aggregation RAG=- GraphRAG=- Agentic=- tok=1122 elapsed=490s
+[ 34/50] eval-034 temporal    RAG=- GraphRAG=- Agentic=- tok=1060 elapsed=503s
+[ 35/50] eval-035 superlative RAG=- GraphRAG=- Agentic=- tok=1213 elapsed=526s
+[ 36/50] eval-036 aggregation RAG=- GraphRAG=- Agentic=- tok=1369 elapsed=536s
+[ 37/50] eval-037 superlative RAG=- GraphRAG=- Agentic=- tok=1204 elapsed=547s
+[ 38/50] eval-038 aggregation RAG=- GraphRAG=- Agentic=- tok=1379 elapsed=558s
+[ 39/50] eval-039 aggregation RAG=- GraphRAG=- Agentic=- tok=1122 elapsed=569s
+[ 40/50] eval-040 multi_hop   RAG=- GraphRAG=- Agentic=- tok=1532 elapsed=579s
+[ 41/50] eval-041 aggregation RAG=- GraphRAG=- Agentic=- tok=1106 elapsed=590s
+[ 42/50] eval-042 temporal    RAG=- GraphRAG=- Agentic=- tok=1168 elapsed=600s
+[ 43/50] eval-043 multi_hop   RAG=- GraphRAG=- Agentic=- tok=1014 elapsed=611s
+[ 44/50] eval-044 temporal    RAG=- GraphRAG=- Agentic=- tok=1078 elapsed=622s
+[ 45/50] eval-045 temporal    RAG=- GraphRAG=- Agentic=- tok=1105 elapsed=633s
+[ 46/50] eval-046 temporal    RAG=- GraphRAG=- Agentic=- tok=1096 elapsed=644s
+[ 47/50] eval-047 superlative RAG=- GraphRAG=- Agentic=- tok=1740 elapsed=666s
+[ 48/50] eval-048 aggregation RAG=- GraphRAG=- Agentic=- tok=1230 elapsed=678s
+[ 49/50] eval-049 superlative RAG=- GraphRAG=- Agentic=- tok=1268 elapsed=691s
+[ 50/50] eval-050 multi_hop   RAG=- GraphRAG=- Agentic=- tok=1091 elapsed=701s
+
+============================================================================
+RESULTS (50 questions) -> results/hidden_results.json
+  RAG                (no gold answers)
+     lookup         0/7  
+     multi_hop      0/10 
+     temporal       0/8  
+     aggregation    0/15 
+     superlative    0/10 
+     avg tok=297.96 lat=5976.4072ms steps=1.0
+  GraphRAG           (no gold answers)
+     lookup         0/7  
+     multi_hop      0/10 
+     temporal       0/8  
+     aggregation    0/15 
+     superlative    0/10 
+     avg tok=928.32 lat=3929.5798ms steps=2.0
+  Agentic GraphRAG   (no gold answers)
+     lookup         0/7  
+     multi_hop      0/10 
+     temporal       0/8  
+     aggregation    0/15 
+     superlative    0/10 
+     avg tok=34.22 lat=6470.5976ms steps=2.86
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}

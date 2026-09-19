@@ -1,0 +1,103 @@
+﻿docs=2951 with_infobox=2933
+
+=== FIELD COVERAGE ===
+games                      2189  e.g. ['2012 Summer', '2010 Winter', '2012 Summer']
+event                      2187  e.g. ["Men's canoe sprint K-2 1,000 metres", "Men's 5000 metres", "Women's road time trial"]
+gold                       2187  e.g. ['Rudolf DombiRoland K├╢k├⌐ny', 'Sven Kramer', 'Kristin Armstrong']
+silver                     2180  e.g. ['Fernando PimentaEmanuel Silva', 'Lee Seung-hoon', 'Judith Arndt']
+bronze                     2180  e.g. ['Martin HollsteinAndreas Ihle', 'Ivan Skobrev', 'Olga Zabelinskaya']
+competitors                2156  e.g. ['24', '28', '24']
+nations                    2154  e.g. ['12', '16', '16']
+next                       2141  e.g. ['2016', '2014', '2016']
+venue                      2113  e.g. ['Eton Dorney', 'Richmond Olympic Oval', 'London and Surrey']
+prev                       2045  e.g. ['2008', '2006', '2008']
+win_value                  1384  e.g. ['3:09.646', '6:14.60 speed skating', '37:34.82']
+date                       1260  e.g. ['6 to 8 August', '13 February 2010', '1 August']
+dates                       927  e.g. ['August 18 (heats)August 20 (semifinals)August 21 (final)', '23ΓÇô26 August', 'August 21ΓÇô22']
+name                        691  e.g. ['Jab We Met', 'VIA Technologies, Inc.', 'Dead Ringers']
+country                     565  e.g. ['India', 'Canada, United States', 'United States']
+language                    550  e.g. ['Hindi', 'English', 'English']
+director                    548  e.g. ['Imtiaz Ali', 'David Cronenberg', 'Ronald F. Maxwell']
+released                    547  e.g. ['21 September 2007 (India)', '1988-09-08', '2003-02-21']
+starring                    546  e.g. ['Kareena KapoorShahid Kapoor', 'Jeremy Irons, Genevi├¿ve Bujold', 'Jeff Daniels Stephen Lang Robert DuvallMira SorvinoKevin ConwayC. Thomas HowellF']
+producer                    545  e.g. ['Dhillin Mehta', 'Marc BoymanDavid Cronenberg', 'Moctesuma EsparzaRobert A. KatzMace NeufeldRobert Rehme']
+cinematography              544  e.g. ['Natarajan Subramaniam', 'Peter Suschitzky', 'Kees Van Oostrum']
+runtime                     544  e.g. ['142 minutes', '115 minutes', "219 minutes280 minutes(Director's cut)"]
+editing                     540  e.g. ['Aarti Bajaj', 'Ronald Sanders', 'Corky Ehlers']
+music                       536  e.g. ['Songs:PritamSandesh ShandilyaScore:Sanjoy Chowdhury', 'Howard Shore', 'John FrizzellRandy Edelman']
+gross                       517  e.g. ['50.9 crore', '$14 million', '$12.8 million']
+distributor                 516  e.g. ['Viacom 18 Motion Pictures', 'Astral Films (Canada), 20th Century Fox (United States)', 'Warner Bros. Pictures']
+budget                      497  e.g. ['15 crore', '$13 million', '$56 million']
+win_label                   465  e.g. ['Winning total', 'Winning points', 'Winning total']
+studio                      461  e.g. ['Zee Music Company', 'Morgan Creek Productions, Telefilm Canada, Mantle Clinic II', 'Ted Turner Pictures']
+longnames                   373  e.g. ['yes', 'yes', 'yes']
+writer                      292  e.g. ['Imtiaz Ali', 'David CronenbergNorman Snider', 'Sanjay Leela Bhansali, Prakash Kapadia']
+screenplay                  262  e.g. ['Ronald F. Maxwell', 'Rajkumar HiraniVidhu Vinod ChopraLajan Joseph', 'Brian Helgeland']
+based_on                    223  e.g. ['Twins1977 novel Bari WoodJack Geasland', 'Gods and Generals(1996 novel) Jeff Shaara', 'White Nights Fyodor Dostoevsky']
+type                        176  e.g. ['Soundtrack', 'Public', 'Public']
+birth_date                  147  e.g. ['1952-10-07', '1950-03-04', '1910-03-23']
+birth_place                 147  e.g. ['Leningrad, Russian SFSR, Soviet Union', 'Haskell, Texas, U.S.', 'Shinagawa, Tokyo, Japan']
+artist                      141  e.g. ['Pritam', 'Monty Sharma', 'Anu Malik']
+label                       136  e.g. ['T-Series', 'Sony BMG', 'Universal']
+story                       133  e.g. ['Rajkumar Hirani', 'James Webb', 'Bong Joon Ho']
+genre                       125  e.g. ['Feature film soundtrack', 'Stock photography', 'Feature film soundtrack']
+spouse                      123  e.g. ['Lyudmila Shkrebneva 1983 2014', 'Anita Thigpen 1982', 'Y┼ìko Yaguchi 1945 1985']
+children                    107  e.g. ['At least 3, including Maria and Katerina', '2', '2, including Kazuko']
+birth_name                  105  e.g. ['James Richard Perry', 'Cameron Bruce Crowe', 'William Oliver Stone']
+length                       84  e.g. ['45:01', '47:44', '33:39']
+education                    82  e.g. ['Leningrad State University (LLB), Leningrad Mining Institute (Candidate of Scien', 'Texas A&M University (BS)', 'New York University (BFA)']
+teams                        80  e.g. ['21', '16 (boats)', '10']
+occupation                   79  e.g. ['Film director, screenwriter, producer, editor, painter', 'Filmmaker, journalist', 'Film director, producer, screenwriter, author']
+predecessor                  71  e.g. ['Dmitry Medvedev', 'Ernest Moniz', 'Lamar Alexander']
+term_start                   70  e.g. ['7 May 2012', 'March 2, 2017', 'January 21, 1993']
+party                        69  e.g. ['Independent(1991ΓÇô1995, 2001ΓÇô2008, since 2012)', 'Republican (since 1989)', 'Democratic']
+term_end                     68  e.g. ['December 1, 2019', 'January 20, 2001', 'December 3, 1990']
+successor                    67  e.g. ['Dan Brouillette', 'Rod Paige', 'Wally Hickel']
+next_year                    66  e.g. ['2007', '2009', '2004']
+next_title                   65  e.g. ['Dus Kahaniyaan', 'TBA', 'Murder']
+recorded                     64  e.g. ['May 2005 ΓÇô June 2006', '2003', 'December 1995-July 1996']
+prev_title                   64  e.g. ['Bhool Bhulaiyaa', 'Black', 'LOC: Kargil']
+prev_year                    63  e.g. ['2007', '2005', '2003']
+death_date                   61  e.g. ['1998 9 6', '2019 10 29', '2009 9 29']
+death_place                  61  e.g. ['Setagaya, Tokyo, Japan', 'Charlottesville, Virginia, U.S.', 'Enid, Oklahoma, U.S.']
+years_active                 60  e.g. ['1936ΓÇô1993', '1972ΓÇôpresent', '1971ΓÇôpresent']
+production_companies         52  e.g. ['Estudios Picasso, Tequila Gang, Esperanto Filmoj, Sententia Entertainment', 'Peak Films', 'Magnum Pictures, Trancas International']
+awards                       50  e.g. ['Full list', 'Full list', 'Full list']
+order                        42  e.g. ['14th', '6th Governor of Alaska', '69th and 71st Governor of North Carolina']
+office                       40  e.g. ['President of Russia', 'United States Secretary of Energy', '6th United States Secretary of Education']
+location                     37  e.g. ['Lebanon, northern Israel and the Golan Heights', 'World Trade CenterManhattan, New York City, U.S.', "Hainan Island, People's Republic of China, South China Sea"]
+venues                       34  e.g. ['Canada Hockey PlaceUBC Thunderbird Arena', '20', '10']
+branch                       32  e.g. ['KGB, FSB, Russian Armed Forces', 'United States Air Force', 'United States Navy']
+vertical                     32  e.g. ['615', '1075', '853']
+top_elevation                32  e.g. ['1440', '2045', '1678']
+base_elevation               32  e.g. ['825', '970', '825']
+website                      30  e.g. ['https://www.viatech.com/en/ ViaTech.com', 'https://www.bhp.com', 'https://gettyimages.com/']
+service_years                27  e.g. ['1975ΓÇô1991, 1997ΓÇô1999, 2000ΓÇôpresent', '1972ΓÇô1977', '1954ΓÇô1955']
+lieutenant                   25  e.g. ['Steve McAlpine', 'Dennis Wicker', 'Joel Pritchard']
+champ                        25  e.g. ['PUR Monica Puig', 'GBR Andy Murray', 'SUI Belinda Bencic']
+runner                       25  e.g. ['GER Angelique Kerber', 'ARG Juan Mart├¡n del Potro', 'CZE Mark├⌐ta Vondrou┼íov├í']
+score                        25  e.g. ['6ΓÇô4, 4ΓÇô6, 6ΓÇô1', '7ΓÇô5, 4ΓÇô6, 6ΓÇô2, 7ΓÇô5', '7ΓÇô5, 2ΓÇô6, 6ΓÇô3']
+quadrennial                  25  e.g. ['yes', 'yes', 'yes']
+multi                        25  e.g. ['yes', 'yes', 'yes']
+rank                         24  e.g. ['Colonel, 1st class Active State Councillor of the Russian Federation', 'Captain', 'First lieutenant']
+relatives                    23  e.g. ['Putin family', 'Finis L. Bates (grandfather)', 'Roland Ratsiraka (nephew)']
+
+=== TITLE PATTERNS ===
+Counter({'<event> at the <games>': 2211, 'other': 739, '<x> at <y>': 1})
+
+sample titles:
+   Canoeing at the 2012 Summer Olympics ΓÇô Men's K-2 1000 metres
+   Speed skating at the 2010 Winter Olympics ΓÇô Men's 5000 metres
+   Cycling at the 2012 Summer Olympics ΓÇô Women's road time trial
+   Gymnastics at the 2016 Summer Olympics ΓÇô Women's artistic individual all-around
+   Athletics at the 2008 Summer Olympics ΓÇô Men's 110 metres hurdles
+   Athletics at the 2004 Summer Olympics ΓÇô Men's 400 metres hurdles
+   Athletics at the 2008 Summer Olympics ΓÇô Men's decathlon
+   Alpine skiing at the 1992 Winter Olympics ΓÇô Men's slalom
+   Athletics at the 2000 Summer Olympics ΓÇô Men's 400 metres
+   Sailing at the 1988 Summer Olympics ΓÇô Women's 470
+   Short-track speed skating at the 2014 Winter Olympics ΓÇô Men's 5000 metre relay
+   Boxing at the 1996 Summer Olympics ΓÇô Bantamweight
+   Weightlifting at the 2016 Summer Olympics ΓÇô Men's +105 kg
+   Swimming at the 2008 Summer Olympics ΓÇô Men's 200 metre breaststroke
+   Cross-country skiing at the 1994 Winter Olympics ΓÇô Women's 15 kilometre freestyle

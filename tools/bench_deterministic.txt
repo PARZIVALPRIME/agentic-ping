@@ -1,0 +1,130 @@
+[15:47:08] building KG / index ...
+[15:47:29] LLM disabled (--no-llm): deterministic reasoning only
+[15:47:29] llm available: False (None) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[15:47:29] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG']
+[15:47:29]   1/100 pub-001 aggregation RAG=F Graph=OK Agent=OK tok=1422 took=0.2s elapsed=0s eta=0.3m
+[15:47:30]   2/100 pub-002 temporal    RAG=F Graph=OK Agent=OK tok=1185 took=0.5s elapsed=1s eta=0.6m
+[15:47:30]   3/100 pub-003 aggregation RAG=F Graph=F Agent=OK tok=1206 took=0.3s elapsed=1s eta=0.5m
+[15:47:30]   4/100 pub-004 superlative RAG=F Graph=F Agent=OK tok=1098 took=0.3s elapsed=1s eta=0.5m
+[15:47:30]   5/100 pub-005 multi_hop   RAG=OK Graph=OK Agent=OK tok=1270 took=0.2s elapsed=1s eta=0.5m
+[15:47:31]   6/100 pub-006 temporal    RAG=F Graph=OK Agent=OK tok=848 took=0.4s elapsed=2s eta=0.5m
+[15:47:31]   7/100 pub-007 temporal    RAG=F Graph=F Agent=OK tok=1211 took=0.5s elapsed=2s eta=0.5m
+[15:47:32]   8/100 pub-008 superlative RAG=F Graph=OK Agent=OK tok=1113 took=0.3s elapsed=3s eta=0.5m
+[15:47:32]   9/100 pub-009 lookup      RAG=OK Graph=F Agent=OK tok=1200 took=0.4s elapsed=3s eta=0.5m
+[15:47:32]  10/100 pub-010 aggregation RAG=F Graph=OK Agent=OK tok=1483 took=0.3s elapsed=3s eta=0.5m
+[15:47:32]  11/100 pub-011 multi_hop   RAG=F Graph=OK Agent=OK tok=1044 took=0.2s elapsed=4s eta=0.5m
+[15:47:33]  12/100 pub-012 aggregation RAG=F Graph=F Agent=OK tok=1338 took=0.3s elapsed=4s eta=0.5m
+[15:47:33]  13/100 pub-013 temporal    RAG=F Graph=F Agent=OK tok=1189 took=0.5s elapsed=4s eta=0.5m
+[15:47:34]  14/100 pub-014 multi_hop   RAG=OK Graph=OK Agent=OK tok=1146 took=0.5s elapsed=5s eta=0.5m
+[15:47:34]  15/100 pub-015 multi_hop   RAG=F Graph=OK Agent=OK tok=1077 took=0.5s elapsed=5s eta=0.5m
+[15:47:35]  16/100 pub-016 temporal    RAG=F Graph=OK Agent=OK tok=1274 took=0.4s elapsed=6s eta=0.5m
+[15:47:35]  17/100 pub-017 multi_hop   RAG=F Graph=OK Agent=OK tok=1093 took=0.2s elapsed=6s eta=0.5m
+[15:47:35]  18/100 pub-018 temporal    RAG=OK Graph=OK Agent=OK tok=1206 took=0.5s elapsed=6s eta=0.5m
+[15:47:36]  19/100 pub-019 aggregation RAG=F Graph=OK Agent=OK tok=1344 took=0.3s elapsed=7s eta=0.5m
+[15:47:36]  20/100 pub-020 aggregation RAG=F Graph=F Agent=OK tok=1223 took=0.2s elapsed=7s eta=0.5m
+[15:47:36]  21/100 pub-021 superlative RAG=F Graph=OK Agent=OK tok=1167 took=0.2s elapsed=7s eta=0.4m
+[15:47:36]  22/100 pub-022 multi_hop   RAG=OK Graph=OK Agent=OK tok=1361 took=0.2s elapsed=7s eta=0.4m
+[15:47:37]  23/100 pub-023 multi_hop   RAG=OK Graph=OK Agent=OK tok=1422 took=0.4s elapsed=8s eta=0.4m
+[15:47:37]  24/100 pub-024 aggregation RAG=F Graph=F Agent=OK tok=1172 took=0.2s elapsed=8s eta=0.4m
+[15:47:37]  25/100 pub-025 lookup      RAG=OK Graph=OK Agent=OK tok=946 took=0.4s elapsed=8s eta=0.4m
+[15:47:38]  26/100 pub-026 temporal    RAG=F Graph=F Agent=OK tok=1123 took=0.5s elapsed=9s eta=0.4m
+[15:47:38]  27/100 pub-027 aggregation RAG=F Graph=OK Agent=OK tok=1203 took=0.3s elapsed=9s eta=0.4m
+[15:47:38]  28/100 pub-028 multi_hop   RAG=OK Graph=F Agent=OK tok=1597 took=0.2s elapsed=9s eta=0.4m
+[15:47:39]  29/100 pub-029 lookup      RAG=OK Graph=OK Agent=OK tok=1190 took=0.5s elapsed=10s eta=0.4m
+[15:47:39]  30/100 pub-030 multi_hop   RAG=F Graph=OK Agent=OK tok=982 took=0.3s elapsed=10s eta=0.4m
+[15:47:39]  31/100 pub-031 multi_hop   RAG=F Graph=OK Agent=OK tok=1022 took=0.2s elapsed=10s eta=0.4m
+[15:47:40]  32/100 pub-032 lookup      RAG=OK Graph=OK Agent=OK tok=1396 took=0.4s elapsed=11s eta=0.4m
+[15:47:40]  33/100 pub-033 aggregation RAG=F Graph=F Agent=OK tok=986 took=0.3s elapsed=11s eta=0.4m
+[15:47:40]  34/100 pub-034 lookup      RAG=OK Graph=F Agent=OK tok=1391 took=0.4s elapsed=11s eta=0.4m
+[15:47:41]  35/100 pub-035 lookup      RAG=OK Graph=OK Agent=OK tok=1215 took=0.5s elapsed=12s eta=0.4m
+[15:47:41]  36/100 pub-036 temporal    RAG=OK Graph=F Agent=OK tok=1116 took=0.5s elapsed=12s eta=0.4m
+[15:47:41]  37/100 pub-037 superlative RAG=F Graph=F Agent=OK tok=1107 took=0.3s elapsed=13s eta=0.4m
+[15:47:42]  38/100 pub-038 multi_hop   RAG=F Graph=OK Agent=OK tok=1069 took=0.2s elapsed=13s eta=0.3m
+[15:47:42]  39/100 pub-039 temporal    RAG=F Graph=F Agent=OK tok=1127 took=0.5s elapsed=13s eta=0.3m
+[15:47:43]  40/100 pub-040 temporal    RAG=OK Graph=OK Agent=OK tok=1382 took=0.4s elapsed=14s eta=0.3m
+[15:47:43]  41/100 pub-041 multi_hop   RAG=OK Graph=OK Agent=OK tok=1196 took=0.6s elapsed=14s eta=0.3m
+[15:47:44]  42/100 pub-042 lookup      RAG=F Graph=OK Agent=OK tok=1055 took=0.4s elapsed=15s eta=0.3m
+[15:47:44]  43/100 pub-043 multi_hop   RAG=OK Graph=F Agent=OK tok=1168 took=0.2s elapsed=15s eta=0.3m
+[15:47:44]  44/100 pub-044 superlative RAG=F Graph=F Agent=OK tok=1149 took=0.3s elapsed=15s eta=0.3m
+[15:47:44]  45/100 pub-045 aggregation RAG=F Graph=F Agent=OK tok=1168 took=0.3s elapsed=15s eta=0.3m
+[15:47:45]  46/100 pub-046 lookup      RAG=OK Graph=OK Agent=OK tok=1271 took=0.5s elapsed=16s eta=0.3m
+[15:47:45]  47/100 pub-047 lookup      RAG=F Graph=OK Agent=OK tok=1183 took=0.5s elapsed=16s eta=0.3m
+[15:47:46]  48/100 pub-048 temporal    RAG=F Graph=F Agent=OK tok=968 took=0.5s elapsed=17s eta=0.3m
+[15:47:46]  49/100 pub-049 temporal    RAG=F Graph=OK Agent=OK tok=1247 took=0.5s elapsed=17s eta=0.3m
+[15:47:47]  50/100 pub-050 multi_hop   RAG=OK Graph=OK Agent=OK tok=1106 took=0.4s elapsed=18s eta=0.3m
+[15:47:47]  51/100 pub-051 aggregation RAG=F Graph=F Agent=OK tok=1344 took=0.3s elapsed=18s eta=0.3m
+[15:47:47]  52/100 pub-052 lookup      RAG=OK Graph=OK Agent=OK tok=1426 took=0.4s elapsed=18s eta=0.3m
+[15:47:48]  53/100 pub-053 superlative RAG=F Graph=OK Agent=OK tok=1152 took=0.3s elapsed=19s eta=0.3m
+[15:47:48]  54/100 pub-054 lookup      RAG=OK Graph=OK Agent=OK tok=1183 took=0.5s elapsed=19s eta=0.3m
+[15:47:49]  55/100 pub-055 temporal    RAG=F Graph=F Agent=OK tok=939 took=0.5s elapsed=20s eta=0.3m
+[15:47:49]  56/100 pub-056 temporal    RAG=F Graph=OK Agent=OK tok=1234 took=0.4s elapsed=20s eta=0.3m
+[15:47:50]  57/100 pub-057 temporal    RAG=OK Graph=F Agent=OK tok=1259 took=0.5s elapsed=21s eta=0.3m
+[15:47:50]  58/100 pub-058 aggregation RAG=F Graph=F Agent=OK tok=1346 took=0.3s elapsed=21s eta=0.3m
+[15:47:50]  59/100 pub-059 temporal    RAG=F Graph=F Agent=OK tok=1332 took=0.4s elapsed=21s eta=0.2m
+[15:47:51]  60/100 pub-060 multi_hop   RAG=F Graph=OK Agent=OK tok=1016 took=0.5s elapsed=22s eta=0.2m
+[15:47:51]  61/100 pub-061 lookup      RAG=OK Graph=OK Agent=OK tok=1154 took=0.4s elapsed=22s eta=0.2m
+[15:47:52]  62/100 pub-062 temporal    RAG=F Graph=F Agent=OK tok=1153 took=0.5s elapsed=23s eta=0.2m
+[15:47:52]  63/100 pub-063 lookup      RAG=F Graph=F Agent=OK tok=1161 took=0.5s elapsed=23s eta=0.2m
+[15:47:52]  64/100 pub-064 multi_hop   RAG=OK Graph=OK Agent=OK tok=1515 took=0.3s elapsed=24s eta=0.2m
+[15:47:53]  65/100 pub-065 aggregation RAG=F Graph=F Agent=OK tok=1106 took=0.2s elapsed=24s eta=0.2m
+[15:47:53]  66/100 pub-066 superlative RAG=F Graph=F Agent=OK tok=1327 took=0.3s elapsed=24s eta=0.2m
+[15:47:54]  67/100 pub-067 multi_hop   RAG=OK Graph=OK Agent=OK tok=1284 took=0.5s elapsed=25s eta=0.2m
+[15:47:54]  68/100 pub-068 lookup      RAG=OK Graph=F Agent=OK tok=1092 took=0.5s elapsed=25s eta=0.2m
+[15:47:54]  69/100 pub-069 aggregation RAG=F Graph=OK Agent=OK tok=1220 took=0.3s elapsed=25s eta=0.2m
+[15:47:55]  70/100 pub-070 aggregation RAG=F Graph=OK Agent=OK tok=1020 took=0.3s elapsed=26s eta=0.2m
+[15:47:55]  71/100 pub-071 lookup      RAG=OK Graph=OK Agent=OK tok=1446 took=0.4s elapsed=26s eta=0.2m
+[15:47:55]  72/100 pub-072 temporal    RAG=F Graph=OK Agent=OK tok=1053 took=0.4s elapsed=26s eta=0.2m
+[15:47:56]  73/100 pub-073 multi_hop   RAG=OK Graph=OK Agent=OK tok=1471 took=0.3s elapsed=27s eta=0.2m
+[15:47:56]  74/100 pub-074 lookup      RAG=OK Graph=OK Agent=OK tok=1428 took=0.5s elapsed=27s eta=0.2m
+[15:47:57]  75/100 pub-075 lookup      RAG=OK Graph=OK Agent=OK tok=1267 took=0.5s elapsed=28s eta=0.2m
+[15:47:57]  76/100 pub-076 multi_hop   RAG=OK Graph=OK Agent=OK tok=1239 took=0.2s elapsed=28s eta=0.1m
+[15:47:57]  77/100 pub-077 multi_hop   RAG=OK Graph=OK Agent=OK tok=920 took=0.2s elapsed=28s eta=0.1m
+[15:47:57]  78/100 pub-078 aggregation RAG=F Graph=F Agent=OK tok=1277 took=0.3s elapsed=28s eta=0.1m
+[15:47:58]  79/100 pub-079 multi_hop   RAG=OK Graph=OK Agent=OK tok=1505 took=0.5s elapsed=29s eta=0.1m
+[15:47:58]  80/100 pub-080 lookup      RAG=OK Graph=OK Agent=OK tok=808 took=0.5s elapsed=29s eta=0.1m
+[15:47:59]  81/100 pub-081 multi_hop   RAG=OK Graph=OK Agent=OK tok=1288 took=0.3s elapsed=30s eta=0.1m
+[15:47:59]  82/100 pub-082 aggregation RAG=F Graph=F Agent=OK tok=1222 took=0.3s elapsed=30s eta=0.1m
+[15:47:59]  83/100 pub-083 multi_hop   RAG=OK Graph=OK Agent=OK tok=1115 took=0.2s elapsed=30s eta=0.1m
+[15:47:59]  84/100 pub-084 superlative RAG=F Graph=OK Agent=OK tok=1199 took=0.3s elapsed=31s eta=0.1m
+[15:48:00]  85/100 pub-085 superlative RAG=F Graph=F Agent=OK tok=1114 took=0.3s elapsed=31s eta=0.1m
+[15:48:00]  86/100 pub-086 multi_hop   RAG=F Graph=OK Agent=OK tok=1046 took=0.2s elapsed=31s eta=0.1m
+[15:48:00]  87/100 pub-087 aggregation RAG=F Graph=F Agent=OK tok=1224 took=0.3s elapsed=31s eta=0.1m
+[15:48:01]  88/100 pub-088 superlative RAG=F Graph=OK Agent=OK tok=1167 took=0.3s elapsed=32s eta=0.1m
+[15:48:01]  89/100 pub-089 aggregation RAG=F Graph=F Agent=OK tok=1040 took=0.3s elapsed=32s eta=0.1m
+[15:48:01]  90/100 pub-090 temporal    RAG=OK Graph=F Agent=OK tok=1137 took=0.5s elapsed=33s eta=0.1m
+[15:48:02]  91/100 pub-091 lookup      RAG=OK Graph=F Agent=OK tok=1142 took=0.5s elapsed=33s eta=0.1m
+[15:48:02]  92/100 pub-092 aggregation RAG=F Graph=F Agent=OK tok=1283 took=0.3s elapsed=33s eta=0.0m
+[15:48:03]  93/100 pub-093 aggregation RAG=F Graph=OK Agent=OK tok=1045 took=0.3s elapsed=34s eta=0.0m
+[15:48:03]  94/100 pub-094 temporal    RAG=OK Graph=OK Agent=OK tok=1155 took=0.5s elapsed=34s eta=0.0m
+[15:48:03]  95/100 pub-095 multi_hop   RAG=F Graph=F Agent=OK tok=1109 took=0.3s elapsed=34s eta=0.0m
+[15:48:04]  96/100 pub-096 multi_hop   RAG=OK Graph=OK Agent=OK tok=1233 took=0.3s elapsed=35s eta=0.0m
+[15:48:04]  97/100 pub-097 temporal    RAG=F Graph=OK Agent=OK tok=1071 took=0.5s elapsed=35s eta=0.0m
+[15:48:05]  98/100 pub-098 multi_hop   RAG=F Graph=F Agent=OK tok=1108 took=0.3s elapsed=36s eta=0.0m
+[15:48:05]  99/100 pub-099 multi_hop   RAG=F Graph=OK Agent=OK tok=1146 took=0.2s elapsed=36s eta=0.0m
+[15:48:05] 100/100 pub-100 temporal    RAG=F Graph=OK Agent=OK tok=1212 took=0.6s elapsed=36s eta=0.0m
+
+============================================================================
+RESULTS (100 questions) -> results/deterministic_results.json
+  RAG                acc=39.0% (39/100)
+     lookup        16/19  = 84%
+     multi_hop     17/28  = 61%
+     temporal       6/22  = 27%
+     aggregation    0/21  = 0%
+     superlative    0/10  = 0%
+     avg tok=278.38 lat=48.2015ms steps=1.0
+  GraphRAG           acc=61.0% (61/100)
+     lookup        14/19  = 74%
+     multi_hop     24/28  = 86%
+     temporal      11/22  = 50%
+     aggregation    7/21  = 33%
+     superlative    5/10  = 50%
+     avg tok=913.5 lat=200.3683ms steps=2.0
+  Agentic GraphRAG   acc=100.0% (100/100)
+     lookup        19/19  = 100%
+     multi_hop     28/28  = 100%
+     temporal      22/22  = 100%
+     aggregation   21/21  = 100%
+     superlative   10/10  = 100%
+     avg tok=0.0 lat=71.0599ms steps=3.19
+evaluator: {'llm_judge_enabled': False, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+llm: {'available': False, 'provider': None, 'chat_model': None, 'eval_model': None, 'num_calls': 0, 'failed_calls': 0, 'degraded': False, 'error': 'no provider/API key configured', 'min_interval_s': 1.5, 'tpm_budget': 6000, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'trips': 0, 'blocked_calls': 0, 'open': False}}

@@ -1,0 +1,7 @@
+﻿qtype           n  citation_recall  citation_precision  any_hit
+aggregation    21            1.000               0.986 21/21
+lookup         19            1.000               1.000 19/19
+multi_hop      28            1.000               1.000 28/28
+superlative    10            1.000               1.000 10/10
+temporal       22            0.977               0.977 22/22
+ALL           100            0.995               0.992 100/100

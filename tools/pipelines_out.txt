@@ -1,0 +1,15 @@
+﻿llm available: False | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+
+=== RAG: 39/100 = 39.0% | avg 62ms | avg 278 tok
+   lookup        16/ 19 = 84%
+   multi_hop     17/ 28 = 61%
+   temporal       6/ 22 = 27%
+   aggregation    0/ 21 = 0%
+   superlative    0/ 10 = 0%
+
+=== GraphRAG: 61/100 = 61.0% | avg 266ms | avg 914 tok
+   lookup        14/ 19 = 74%
+   multi_hop     24/ 28 = 86%
+   temporal      11/ 22 = 50%
+   aggregation    7/ 21 = 33%
+   superlative    5/ 10 = 50%

@@ -1,0 +1,128 @@
+building KG / index ...
+llm available: True (openai/gpt-oss-120b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG']
+[  1/100] pub-001 aggregation RAG=F GraphRAG=OK Agentic=OK tok=1422 elapsed=11s
+[  2/100] pub-002 temporal    RAG=F GraphRAG=OK Agentic=OK tok=1185 elapsed=22s
+[  3/100] pub-003 aggregation RAG=F GraphRAG=F Agentic=OK tok=1206 elapsed=32s
+[  4/100] pub-004 superlative RAG=F GraphRAG=F Agentic=OK tok=1098 elapsed=43s
+[  5/100] pub-005 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1270 elapsed=53s
+[  6/100] pub-006 temporal    RAG=F GraphRAG=OK Agentic=OK tok=848 elapsed=64s
+[  7/100] pub-007 temporal    RAG=F GraphRAG=F Agentic=OK tok=1211 elapsed=78s
+[  8/100] pub-008 superlative RAG=F GraphRAG=OK Agentic=OK tok=1113 elapsed=89s
+[  9/100] pub-009 lookup      RAG=OK GraphRAG=F Agentic=OK tok=1200 elapsed=173s
+[ 10/100] pub-010 aggregation RAG=F GraphRAG=OK Agentic=OK tok=1483 elapsed=183s
+[ 11/100] pub-011 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=1044 elapsed=193s
+[ 12/100] pub-012 aggregation RAG=F GraphRAG=F Agentic=OK tok=1338 elapsed=204s
+[ 13/100] pub-013 temporal    RAG=F GraphRAG=F Agentic=OK tok=1189 elapsed=215s
+[ 14/100] pub-014 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1146 elapsed=227s
+[ 15/100] pub-015 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=1077 elapsed=237s
+[ 16/100] pub-016 temporal    RAG=F GraphRAG=OK Agentic=OK tok=1274 elapsed=248s
+[ 17/100] pub-017 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=1093 elapsed=258s
+[ 18/100] pub-018 temporal    RAG=OK GraphRAG=OK Agentic=OK tok=1206 elapsed=269s
+[ 19/100] pub-019 aggregation RAG=F GraphRAG=OK Agentic=OK tok=1344 elapsed=280s
+[ 20/100] pub-020 aggregation RAG=F GraphRAG=F Agentic=OK tok=1223 elapsed=291s
+[ 21/100] pub-021 superlative RAG=F GraphRAG=OK Agentic=OK tok=1167 elapsed=302s
+[ 22/100] pub-022 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1361 elapsed=312s
+[ 23/100] pub-023 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1422 elapsed=324s
+[ 24/100] pub-024 aggregation RAG=F GraphRAG=F Agentic=OK tok=1172 elapsed=335s
+[ 25/100] pub-025 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=946 elapsed=346s
+[ 26/100] pub-026 temporal    RAG=F GraphRAG=F Agentic=OK tok=1123 elapsed=357s
+[ 27/100] pub-027 aggregation RAG=F GraphRAG=OK Agentic=OK tok=1203 elapsed=367s
+[ 28/100] pub-028 multi_hop   RAG=OK GraphRAG=F Agentic=OK tok=1597 elapsed=377s
+[ 29/100] pub-029 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1190 elapsed=422s
+[ 30/100] pub-030 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=982 elapsed=433s
+[ 31/100] pub-031 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=1022 elapsed=443s
+[ 32/100] pub-032 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1396 elapsed=458s
+[ 33/100] pub-033 aggregation RAG=F GraphRAG=F Agentic=OK tok=986 elapsed=468s
+[ 34/100] pub-034 lookup      RAG=OK GraphRAG=F Agentic=OK tok=1391 elapsed=539s
+[ 35/100] pub-035 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1215 elapsed=551s
+[ 36/100] pub-036 temporal    RAG=OK GraphRAG=F Agentic=OK tok=1116 elapsed=562s
+[ 37/100] pub-037 superlative RAG=F GraphRAG=F Agentic=OK tok=1107 elapsed=575s
+[ 38/100] pub-038 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=1069 elapsed=585s
+[ 39/100] pub-039 temporal    RAG=F GraphRAG=F Agentic=OK tok=1127 elapsed=597s
+[ 40/100] pub-040 temporal    RAG=OK GraphRAG=OK Agentic=OK tok=1382 elapsed=607s
+[ 41/100] pub-041 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1196 elapsed=619s
+[ 42/100] pub-042 lookup      RAG=F GraphRAG=OK Agentic=OK tok=1055 elapsed=635s
+[ 43/100] pub-043 multi_hop   RAG=OK GraphRAG=F Agentic=OK tok=1168 elapsed=645s
+[ 44/100] pub-044 superlative RAG=F GraphRAG=F Agentic=OK tok=1149 elapsed=689s
+[ 45/100] pub-045 aggregation RAG=F GraphRAG=F Agentic=OK tok=1168 elapsed=701s
+[ 46/100] pub-046 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1271 elapsed=726s
+[ 47/100] pub-047 lookup      RAG=F GraphRAG=OK Agentic=OK tok=1183 elapsed=740s
+[ 48/100] pub-048 temporal    RAG=F GraphRAG=F Agentic=OK tok=968 elapsed=755s
+[ 49/100] pub-049 temporal    RAG=F GraphRAG=OK Agentic=OK tok=1247 elapsed=766s
+[ 50/100] pub-050 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1106 elapsed=777s
+[ 51/100] pub-051 aggregation RAG=F GraphRAG=F Agentic=OK tok=1344 elapsed=790s
+[ 52/100] pub-052 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1426 elapsed=811s
+[ 53/100] pub-053 superlative RAG=F GraphRAG=OK Agentic=OK tok=1152 elapsed=822s
+[ 54/100] pub-054 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1183 elapsed=838s
+[ 55/100] pub-055 temporal    RAG=F GraphRAG=F Agentic=OK tok=939 elapsed=849s
+[ 56/100] pub-056 temporal    RAG=F GraphRAG=OK Agentic=OK tok=1234 elapsed=859s
+[ 57/100] pub-057 temporal    RAG=OK GraphRAG=F Agentic=OK tok=1259 elapsed=870s
+[ 58/100] pub-058 aggregation RAG=F GraphRAG=F Agentic=OK tok=1346 elapsed=882s
+[ 59/100] pub-059 temporal    RAG=F GraphRAG=F Agentic=OK tok=1332 elapsed=893s
+[ 60/100] pub-060 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=1016 elapsed=903s
+[ 61/100] pub-061 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1154 elapsed=942s
+[ 62/100] pub-062 temporal    RAG=F GraphRAG=F Agentic=OK tok=1153 elapsed=954s
+[ 63/100] pub-063 lookup      RAG=F GraphRAG=F Agentic=OK tok=1161 elapsed=979s
+[ 64/100] pub-064 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1515 elapsed=990s
+[ 65/100] pub-065 aggregation RAG=F GraphRAG=F Agentic=OK tok=1106 elapsed=1001s
+[ 66/100] pub-066 superlative RAG=F GraphRAG=F Agentic=OK tok=1327 elapsed=1011s
+[ 67/100] pub-067 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1284 elapsed=1022s
+[ 68/100] pub-068 lookup      RAG=OK GraphRAG=F Agentic=OK tok=1092 elapsed=1088s
+[ 69/100] pub-069 aggregation RAG=F GraphRAG=OK Agentic=OK tok=1220 elapsed=1098s
+[ 70/100] pub-070 aggregation RAG=F GraphRAG=OK Agentic=OK tok=1020 elapsed=1111s
+[ 71/100] pub-071 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1446 elapsed=1126s
+[ 72/100] pub-072 temporal    RAG=F GraphRAG=OK Agentic=OK tok=1053 elapsed=1136s
+[ 73/100] pub-073 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1471 elapsed=1146s
+[ 74/100] pub-074 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1428 elapsed=1201s
+[ 75/100] pub-075 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=1267 elapsed=1217s
+[ 76/100] pub-076 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1239 elapsed=1234s
+[ 77/100] pub-077 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=920 elapsed=1244s
+[ 78/100] pub-078 aggregation RAG=F GraphRAG=F Agentic=OK tok=1277 elapsed=1255s
+[ 79/100] pub-079 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1505 elapsed=1266s
+[ 80/100] pub-080 lookup      RAG=OK GraphRAG=OK Agentic=OK tok=808 elapsed=1337s
+[ 81/100] pub-081 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1288 elapsed=1347s
+[ 82/100] pub-082 aggregation RAG=F GraphRAG=F Agentic=OK tok=1222 elapsed=1357s
+[ 83/100] pub-083 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1115 elapsed=1368s
+[ 84/100] pub-084 superlative RAG=F GraphRAG=OK Agentic=OK tok=1199 elapsed=1379s
+[ 85/100] pub-085 superlative RAG=F GraphRAG=F Agentic=OK tok=1114 elapsed=1452s
+[ 86/100] pub-086 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=1046 elapsed=1462s
+[ 87/100] pub-087 aggregation RAG=F GraphRAG=F Agentic=OK tok=1224 elapsed=1474s
+[ 88/100] pub-088 superlative RAG=F GraphRAG=OK Agentic=OK tok=1167 elapsed=1485s
+[ 89/100] pub-089 aggregation RAG=F GraphRAG=F Agentic=OK tok=1040 elapsed=1496s
+[ 90/100] pub-090 temporal    RAG=OK GraphRAG=F Agentic=OK tok=1137 elapsed=1507s
+[ 91/100] pub-091 lookup      RAG=OK GraphRAG=F Agentic=OK tok=1142 elapsed=1598s
+[ 92/100] pub-092 aggregation RAG=F GraphRAG=F Agentic=OK tok=1283 elapsed=1612s
+[ 93/100] pub-093 aggregation RAG=F GraphRAG=OK Agentic=OK tok=1045 elapsed=1623s
+[ 94/100] pub-094 temporal    RAG=OK GraphRAG=OK Agentic=OK tok=1155 elapsed=1634s
+[ 95/100] pub-095 multi_hop   RAG=F GraphRAG=F Agentic=OK tok=1109 elapsed=1645s
+[ 96/100] pub-096 multi_hop   RAG=OK GraphRAG=OK Agentic=OK tok=1233 elapsed=1659s
+[ 97/100] pub-097 temporal    RAG=F GraphRAG=OK Agentic=OK tok=1071 elapsed=1670s
+[ 98/100] pub-098 multi_hop   RAG=F GraphRAG=F Agentic=OK tok=1108 elapsed=1683s
+[ 99/100] pub-099 multi_hop   RAG=F GraphRAG=OK Agentic=OK tok=1146 elapsed=1694s
+[100/100] pub-100 temporal    RAG=F GraphRAG=OK Agentic=OK tok=1212 elapsed=1710s
+
+============================================================================
+RESULTS (100 questions) -> results/public_results.json
+  RAG                acc=39.0% (39/100)
+     lookup        16/19  = 84%
+     multi_hop     17/28  = 61%
+     temporal       6/22  = 27%
+     aggregation    0/21  = 0%
+     superlative    0/10  = 0%
+     avg tok=278.38 lat=3615.8386ms steps=1.0
+  GraphRAG           acc=61.0% (61/100)
+     lookup        14/19  = 74%
+     multi_hop     24/28  = 86%
+     temporal      11/22  = 50%
+     aggregation    7/21  = 33%
+     superlative    5/10  = 50%
+     avg tok=913.5 lat=3963.4033ms steps=2.0
+  Agentic GraphRAG   acc=100.0% (100/100)
+     lookup        19/19  = 100%
+     multi_hop     28/28  = 100%
+     temporal      22/22  = 100%
+     aggregation   21/21  = 100%
+     superlative   10/10  = 100%
+     avg tok=0.0 lat=6670.1354ms steps=3.19
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 9, 'judge_flips': 0, 'judge_tokens': 1691}

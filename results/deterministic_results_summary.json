@@ -1,0 +1,1110 @@
+{
+  "num_questions": 100,
+  "pipelines": {
+    "RAG": {
+      "num_questions": 100,
+      "num_evaluated": 100,
+      "correct": 39,
+      "accuracy": 0.39,
+      "by_type": {
+        "lookup": {
+          "n": 19,
+          "correct": 16,
+          "accuracy": 0.8421
+        },
+        "multi_hop": {
+          "n": 28,
+          "correct": 17,
+          "accuracy": 0.6071
+        },
+        "temporal": {
+          "n": 22,
+          "correct": 6,
+          "accuracy": 0.2727
+        },
+        "aggregation": {
+          "n": 21,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 0,
+          "accuracy": 0.0
+        }
+      },
+      "avg_latency_ms": 46.7055,
+      "avg_context_tokens": 251.34,
+      "avg_input_tokens": 278.38,
+      "avg_output_tokens": 0.0,
+      "avg_total_tokens": 278.38,
+      "avg_llm_calls": 0.0,
+      "avg_retrieval_steps": 1.0,
+      "avg_chunks_retrieved": 5.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 27838,
+      "avg_citation_precision": 0.42,
+      "avg_citation_recall": 0.3671,
+      "match_types": {
+        "none": 61,
+        "exact": 39
+      },
+      "stop_reasons": {
+        "resolved": 42,
+        "insufficient_retrieved_evidence": 58
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "GraphRAG": {
+      "num_questions": 100,
+      "num_evaluated": 100,
+      "correct": 61,
+      "accuracy": 0.61,
+      "by_type": {
+        "lookup": {
+          "n": 19,
+          "correct": 14,
+          "accuracy": 0.7368
+        },
+        "multi_hop": {
+          "n": 28,
+          "correct": 24,
+          "accuracy": 0.8571
+        },
+        "temporal": {
+          "n": 22,
+          "correct": 11,
+          "accuracy": 0.5
+        },
+        "aggregation": {
+          "n": 21,
+          "correct": 7,
+          "accuracy": 0.3333
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 5,
+          "accuracy": 0.5
+        }
+      },
+      "avg_latency_ms": 196.2908,
+      "avg_context_tokens": 886.46,
+      "avg_input_tokens": 913.5,
+      "avg_output_tokens": 0.0,
+      "avg_total_tokens": 913.5,
+      "avg_llm_calls": 0.0,
+      "avg_retrieval_steps": 2.0,
+      "avg_chunks_retrieved": 9.9,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 91350,
+      "avg_citation_precision": 0.7175,
+      "avg_citation_recall": 0.5562,
+      "match_types": {
+        "exact": 61,
+        "none": 39
+      },
+      "stop_reasons": {
+        "resolved": 93,
+        "insufficient_retrieved_evidence": 7
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "Agentic GraphRAG": {
+      "num_questions": 100,
+      "num_evaluated": 100,
+      "correct": 100,
+      "accuracy": 1.0,
+      "by_type": {
+        "lookup": {
+          "n": 19,
+          "correct": 19,
+          "accuracy": 1.0
+        },
+        "multi_hop": {
+          "n": 28,
+          "correct": 28,
+          "accuracy": 1.0
+        },
+        "temporal": {
+          "n": 22,
+          "correct": 22,
+          "accuracy": 1.0
+        },
+        "aggregation": {
+          "n": 21,
+          "correct": 21,
+          "accuracy": 1.0
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 10,
+          "accuracy": 1.0
+        }
+      },
+      "avg_latency_ms": 69.308,
+      "avg_context_tokens": 386.08,
+      "avg_input_tokens": 0.0,
+      "avg_output_tokens": 0.0,
+      "avg_total_tokens": 0.0,
+      "avg_llm_calls": 0.0,
+      "avg_retrieval_steps": 3.19,
+      "avg_chunks_retrieved": 5.91,
+      "avg_candidates_considered": 23.75,
+      "total_tokens": 0,
+      "avg_citation_precision": 0.995,
+      "avg_citation_recall": 0.7798,
+      "match_types": {
+        "exact": 100
+      },
+      "stop_reasons": {
+        "confidence_reached": 68,
+        "no_new_information": 32
+      },
+      "strategy_adapted": 100,
+      "agents_used": [
+        "Aggregator",
+        "Comparator",
+        "EntityLinker",
+        "EvidenceEvaluator",
+        "GraphTraverser",
+        "LookupResolver",
+        "Synthesizer",
+        "TemporalReasoner",
+        "VectorSearcher"
+      ]
+    }
+  },
+  "when_agents_matter": [
+    {
+      "qid": "pub-001",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 998,
+      "delta": 0
+    },
+    {
+      "qid": "pub-002",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 946,
+      "delta": 0
+    },
+    {
+      "qid": "pub-003",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 961,
+      "delta": 1
+    },
+    {
+      "qid": "pub-004",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 826,
+      "delta": 1
+    },
+    {
+      "qid": "pub-005",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 860,
+      "delta": 0
+    },
+    {
+      "qid": "pub-006",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 672,
+      "delta": 0
+    },
+    {
+      "qid": "pub-007",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 957,
+      "delta": 1
+    },
+    {
+      "qid": "pub-008",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 904,
+      "delta": 0
+    },
+    {
+      "qid": "pub-009",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 930,
+      "delta": 1
+    },
+    {
+      "qid": "pub-010",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1108,
+      "delta": 0
+    },
+    {
+      "qid": "pub-011",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 852,
+      "delta": 0
+    },
+    {
+      "qid": "pub-012",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1091,
+      "delta": 1
+    },
+    {
+      "qid": "pub-013",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 978,
+      "delta": 1
+    },
+    {
+      "qid": "pub-014",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 874,
+      "delta": 0
+    },
+    {
+      "qid": "pub-015",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 892,
+      "delta": 0
+    },
+    {
+      "qid": "pub-016",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 923,
+      "delta": 0
+    },
+    {
+      "qid": "pub-017",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 925,
+      "delta": 0
+    },
+    {
+      "qid": "pub-018",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 875,
+      "delta": 0
+    },
+    {
+      "qid": "pub-019",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1065,
+      "delta": 0
+    },
+    {
+      "qid": "pub-020",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1015,
+      "delta": 1
+    },
+    {
+      "qid": "pub-021",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 931,
+      "delta": 0
+    },
+    {
+      "qid": "pub-022",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 877,
+      "delta": 0
+    },
+    {
+      "qid": "pub-023",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 937,
+      "delta": 0
+    },
+    {
+      "qid": "pub-024",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 920,
+      "delta": 1
+    },
+    {
+      "qid": "pub-025",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 734,
+      "delta": 0
+    },
+    {
+      "qid": "pub-026",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 882,
+      "delta": 1
+    },
+    {
+      "qid": "pub-027",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 901,
+      "delta": 0
+    },
+    {
+      "qid": "pub-028",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1093,
+      "delta": 1
+    },
+    {
+      "qid": "pub-029",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 935,
+      "delta": 0
+    },
+    {
+      "qid": "pub-030",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 827,
+      "delta": 0
+    },
+    {
+      "qid": "pub-031",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 803,
+      "delta": 0
+    },
+    {
+      "qid": "pub-032",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1047,
+      "delta": 0
+    },
+    {
+      "qid": "pub-033",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 787,
+      "delta": 1
+    },
+    {
+      "qid": "pub-034",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1114,
+      "delta": 1
+    },
+    {
+      "qid": "pub-035",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 958,
+      "delta": 0
+    },
+    {
+      "qid": "pub-036",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 813,
+      "delta": 1
+    },
+    {
+      "qid": "pub-037",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 831,
+      "delta": 1
+    },
+    {
+      "qid": "pub-038",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 859,
+      "delta": 0
+    },
+    {
+      "qid": "pub-039",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 967,
+      "delta": 1
+    },
+    {
+      "qid": "pub-040",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1032,
+      "delta": 0
+    },
+    {
+      "qid": "pub-041",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 898,
+      "delta": 0
+    },
+    {
+      "qid": "pub-042",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 922,
+      "delta": 0
+    },
+    {
+      "qid": "pub-043",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 936,
+      "delta": 1
+    },
+    {
+      "qid": "pub-044",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 874,
+      "delta": 1
+    },
+    {
+      "qid": "pub-045",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 910,
+      "delta": 1
+    },
+    {
+      "qid": "pub-046",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 945,
+      "delta": 0
+    },
+    {
+      "qid": "pub-047",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 979,
+      "delta": 0
+    },
+    {
+      "qid": "pub-048",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 738,
+      "delta": 1
+    },
+    {
+      "qid": "pub-049",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 920,
+      "delta": 0
+    },
+    {
+      "qid": "pub-050",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 848,
+      "delta": 0
+    },
+    {
+      "qid": "pub-051",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 931,
+      "delta": 1
+    },
+    {
+      "qid": "pub-052",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1002,
+      "delta": 0
+    },
+    {
+      "qid": "pub-053",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 976,
+      "delta": 0
+    },
+    {
+      "qid": "pub-054",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 861,
+      "delta": 0
+    },
+    {
+      "qid": "pub-055",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 762,
+      "delta": 1
+    },
+    {
+      "qid": "pub-056",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 938,
+      "delta": 0
+    },
+    {
+      "qid": "pub-057",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 965,
+      "delta": 1
+    },
+    {
+      "qid": "pub-058",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1083,
+      "delta": 1
+    },
+    {
+      "qid": "pub-059",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 975,
+      "delta": 1
+    },
+    {
+      "qid": "pub-060",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 819,
+      "delta": 0
+    },
+    {
+      "qid": "pub-061",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 826,
+      "delta": 0
+    },
+    {
+      "qid": "pub-062",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 956,
+      "delta": 1
+    },
+    {
+      "qid": "pub-063",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 970,
+      "delta": 1
+    },
+    {
+      "qid": "pub-064",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 976,
+      "delta": 0
+    },
+    {
+      "qid": "pub-065",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 925,
+      "delta": 1
+    },
+    {
+      "qid": "pub-066",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 791,
+      "delta": 1
+    },
+    {
+      "qid": "pub-067",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1018,
+      "delta": 0
+    },
+    {
+      "qid": "pub-068",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 877,
+      "delta": 1
+    },
+    {
+      "qid": "pub-069",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 901,
+      "delta": 0
+    },
+    {
+      "qid": "pub-070",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 851,
+      "delta": 0
+    },
+    {
+      "qid": "pub-071",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 989,
+      "delta": 0
+    },
+    {
+      "qid": "pub-072",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 867,
+      "delta": 0
+    },
+    {
+      "qid": "pub-073",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1018,
+      "delta": 0
+    },
+    {
+      "qid": "pub-074",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1080,
+      "delta": 0
+    },
+    {
+      "qid": "pub-075",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1013,
+      "delta": 0
+    },
+    {
+      "qid": "pub-076",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1006,
+      "delta": 0
+    },
+    {
+      "qid": "pub-077",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 440,
+      "delta": 0
+    },
+    {
+      "qid": "pub-078",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1043,
+      "delta": 1
+    },
+    {
+      "qid": "pub-079",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1108,
+      "delta": 0
+    },
+    {
+      "qid": "pub-080",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 569,
+      "delta": 0
+    },
+    {
+      "qid": "pub-081",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 978,
+      "delta": 0
+    },
+    {
+      "qid": "pub-082",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 965,
+      "delta": 1
+    },
+    {
+      "qid": "pub-083",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 904,
+      "delta": 0
+    },
+    {
+      "qid": "pub-084",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 996,
+      "delta": 0
+    },
+    {
+      "qid": "pub-085",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 800,
+      "delta": 1
+    },
+    {
+      "qid": "pub-086",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 851,
+      "delta": 0
+    },
+    {
+      "qid": "pub-087",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 969,
+      "delta": 1
+    },
+    {
+      "qid": "pub-088",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 976,
+      "delta": 0
+    },
+    {
+      "qid": "pub-089",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 830,
+      "delta": 1
+    },
+    {
+      "qid": "pub-090",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 789,
+      "delta": 1
+    },
+    {
+      "qid": "pub-091",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 823,
+      "delta": 1
+    },
+    {
+      "qid": "pub-092",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 918,
+      "delta": 1
+    },
+    {
+      "qid": "pub-093",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 887,
+      "delta": 0
+    },
+    {
+      "qid": "pub-094",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 828,
+      "delta": 0
+    },
+    {
+      "qid": "pub-095",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 943,
+      "delta": 1
+    },
+    {
+      "qid": "pub-096",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 818,
+      "delta": 0
+    },
+    {
+      "qid": "pub-097",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 832,
+      "delta": 0
+    },
+    {
+      "qid": "pub-098",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 876,
+      "delta": 1
+    },
+    {
+      "qid": "pub-099",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 955,
+      "delta": 0
+    },
+    {
+      "qid": "pub-100",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 0,
+      "graphrag_tokens": 1006,
+      "delta": 0
+    }
+  ],
+  "evaluator": {
+    "llm_judge_enabled": false,
+    "judge_calls": 0,
+    "judge_flips": 0,
+    "judge_tokens": 0
+  },
+  "llm": {
+    "available": false,
+    "provider": null,
+    "chat_model": null,
+    "eval_model": null,
+    "num_calls": 0,
+    "failed_calls": 0,
+    "degraded": false,
+    "error": "no provider/API key configured",
+    "min_interval_s": 1.5,
+    "tpm_budget": 6000,
+    "rate_limit_events": 0,
+    "pace_sleeps": 0,
+    "pace_slept_s": 0.0,
+    "circuit": {
+      "threshold": 3,
+      "cooldown_s": 60.0,
+      "trips": 0,
+      "blocked_calls": 0,
+      "open": false
+    }
+  },
+  "wall_clock_s": 35.6
+}

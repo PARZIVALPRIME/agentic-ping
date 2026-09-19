@@ -1,0 +1,1764 @@
+[
+  {
+    "qid": "eval-001",
+    "qtype": "multi_hop",
+    "question": "Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?",
+    "gold": null,
+    "pipelines": {
+      "RAG": {
+        "pipeline": "RAG",
+        "question": "Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?",
+        "qtype": "multi_hop",
+        "answer": "Nicolás Massú",
+        "citations": [
+          "Q734997"
+        ],
+        "latency_ms": 26.36,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 3,
+        "context_tokens": 455,
+        "input_tokens": 477,
+        "output_tokens": 0,
+        "total_tokens": 477,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.85,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q942805",
+              "Q734997",
+              "Q734997",
+              "Q1183979",
+              "Q734997"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 25.56
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.3
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 22,
+            "output_tokens": 0,
+            "total_tokens": 22,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 455,
+            "output_tokens": 0,
+            "total_tokens": 455,
+            "detail": "5 chunks"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q734997",
+            "title": "Tennis at the 2004 Summer Olympics – Men's singles",
+            "venue": "Athens Olympic Tennis Centre, Athens",
+            "date": "15–22 August 2004",
+            "gold": "Nicolás Massú"
+          }
+        ],
+        "metadata": {
+          "retriever": "vector",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q942805",
+            "Q734997",
+            "Q734997",
+            "Q1183979",
+            "Q734997"
+          ],
+          "retrieved_titles": [
+            "Tennis at the 2004 Summer Olympics – Women's doubles",
+            "Tennis at the 2004 Summer Olympics – Men's singles",
+            "Tennis at the 2004 Summer Olympics – Men's singles",
+            "Tennis at the 2004 Summer Olympics – Women's singles",
+            "Tennis at the 2004 Summer Olympics – Men's singles"
+          ],
+          "extraction_method": "extractive",
+          "docs_with_infobox": 1
+        },
+        "unresolved": [],
+        "evaluation": null
+      },
+      "GraphRAG": {
+        "pipeline": "GraphRAG",
+        "question": "Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?",
+        "qtype": "multi_hop",
+        "answer": "Li TingSun Tiantian",
+        "citations": [
+          "Q942805"
+        ],
+        "latency_ms": 129.5,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "hybrid_search",
+          "structural_retrieve"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 1154,
+        "input_tokens": 1176,
+        "output_tokens": 0,
+        "total_tokens": 1176,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.85,
+        "plan": [
+          "hybrid_search",
+          "graph_expand",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q734997",
+              "Q942805",
+              "Q1183979",
+              "Q942805",
+              "Q734997"
+            ]
+          },
+          {
+            "step": 2,
+            "agent": "GraphTraverser",
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q1183979",
+              "Q942805",
+              "Q942244",
+              "Q752413",
+              "Q220866",
+              "Q26037158",
+              "Q23747965",
+              "Q589310",
+              "Q752428",
+              "Q757054"
+            ],
+            "new_docs": 8
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 63.58
+          },
+          {
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 63.79
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 1.48
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 22,
+            "output_tokens": 0,
+            "total_tokens": 22,
+            "detail": ""
+          },
+          {
+            "operation": "context:graph_expanded",
+            "input_tokens": 1154,
+            "output_tokens": 0,
+            "total_tokens": 1154,
+            "detail": "10 documents"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q942805",
+            "title": "Tennis at the 2004 Summer Olympics – Women's doubles",
+            "venue": "Olympic Tennis Centre",
+            "date": "15 to 22 August 2004",
+            "gold": "Li TingSun Tiantian"
+          }
+        ],
+        "metadata": {
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q734997",
+            "Q942805",
+            "Q1183979",
+            "Q942805",
+            "Q734997"
+          ],
+          "expanded_doc_ids": [
+            "Q1183979",
+            "Q942805",
+            "Q942244",
+            "Q752413",
+            "Q220866",
+            "Q26037158",
+            "Q23747965",
+            "Q589310",
+            "Q752428",
+            "Q757054"
+          ],
+          "graph_relations": [
+            "graph:NEXT_EDITION",
+            "graph:PREV_EDITION",
+            "graph:SAME_SPORT_GAMES",
+            "graph:SAME_VENUE",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Tennis at the 2004 Summer Olympics – Women's singles",
+            "Tennis at the 2004 Summer Olympics – Women's doubles",
+            "Tennis at the 2000 Summer Olympics – Women's singles",
+            "Tennis at the 2008 Summer Olympics – Women's singles",
+            "Tennis at the 2008 Summer Olympics – Women's doubles",
+            "Tennis at the 2016 Summer Olympics – Women's singles",
+            "Tennis at the 2016 Summer Olympics – Men's singles",
+            "Tennis at the 2000 Summer Olympics – Men's singles",
+            "Tennis at the 2008 Summer Olympics – Men's singles",
+            "Tennis at the 2008 Summer Olympics – Men's doubles"
+          ],
+          "docs_with_infobox": 10
+        },
+        "unresolved": [],
+        "evaluation": null
+      },
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?",
+        "qtype": "multi_hop",
+        "answer": "Li TingSun Tiantian",
+        "citations": [
+          "Q942805"
+        ],
+        "latency_ms": 63.25,
+        "retrieval_steps": 4,
+        "tools_called": [
+          "link_entities",
+          "resolve_venue_date",
+          "traverse_graph",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "LookupResolver",
+          "GraphTraverser",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 9,
+        "docs_retrieved": 3,
+        "context_tokens": 752,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.9,
+        "plan": [
+          "EntityLinker.link_entities",
+          "LookupResolver.resolve_venue_date",
+          "GraphTraverser.traverse_graph",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 10,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "venue->1 vertex/vertices (score 1.0)",
+            "observation": {
+              "sport": null,
+              "sport_score": 0.0,
+              "venue_score": 1.0,
+              "games": null,
+              "edition_chain": [],
+              "implied_event_pages": 3
+            },
+            "confidence_after": 0.0,
+            "new_documents": 3,
+            "latency_ms": 0.05,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "LookupResolver",
+            "operation": "resolve_venue_date",
+            "detail": "venue->['olympic tennis centre'] (score 1.0); date match 1.0 over 3 candidates -> \"Tennis at the 2004 Summer Olympics – Women's doubles\"",
+            "observation": {
+              "matched": "Tennis at the 2004 Summer Olympics – Women's doubles",
+              "score": 1.0,
+              "venue_affinity": 1.0,
+              "num_candidates": 3,
+              "disambiguation": {
+                "ambiguous": true,
+                "top": "Tennis at the 2004 Summer Olympics – Women's doubles",
+                "runner_up": "Tennis at the 2016 Summer Olympics – Women's singles",
+                "date_score_gap": 0.05,
+                "separating_signal": "venue/sport affinity"
+              },
+              "top_candidates": [
+                "Tennis at the 2004 Summer Olympics – Women's doubles",
+                "Tennis at the 2016 Summer Olympics – Women's singles",
+                "Tennis at the 2016 Summer Olympics – Men's singles"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.47,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=HELD_AT -> 3 event pages (0 new)",
+            "observation": {
+              "strategy": "HELD_AT",
+              "relations": [
+                "HELD_AT"
+              ],
+              "events": 3,
+              "new_documents": 0,
+              "sample_titles": [
+                "Tennis at the 2016 Summer Olympics – Women's singles",
+                "Tennis at the 2016 Summer Olympics – Men's singles",
+                "Tennis at the 2004 Summer Olympics – Women's doubles"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?' (widening=0) -> 12 passages (9 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q734997",
+                "Q942805",
+                "Q1183979",
+                "Q942805",
+                "Q734997",
+                "Q1183979",
+                "Q220866",
+                "Q26037158"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 9,
+            "latency_ms": 62.24,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.90, sufficient",
+            "observation": {
+              "confidence": 0.9,
+              "sufficient": true,
+              "signals": {
+                "score": 1.0,
+                "venue_affinity": 1.0,
+                "venue_score": 1.0,
+                "num_candidates": 3
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Li TingSun Tiantian' citing 1 document(s) :: gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer Olympics)",
+            "observation": {
+              "answer": "Li TingSun Tiantian",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer Olympics)",
+              "citations": [
+                "Q942805"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.05,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "venue->1 vertex/vertices (score 1.0)",
+            "latency_ms": 0.05
+          },
+          {
+            "operation": "resolve_venue_date",
+            "agent": "LookupResolver",
+            "detail": "venue->['olympic tennis centre'] (score 1.0); date match 1.0 over 3 candidates -> \"Tennis at the 2004 Summer Olympics – Women's doubles\"",
+            "latency_ms": 0.47
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=HELD_AT -> 3 event pages (0 new)",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?' (widening=0) -> 12 passages",
+            "latency_ms": 62.24
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.90, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Li TingSun Tiantian' citing 1 document(s) :: gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer O",
+            "latency_ms": 0.05
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "LookupResolver",
+            "operation": "resolve_venue_date",
+            "observation": {
+              "matched": "Tennis at the 2004 Summer Olympics – Women's doubles",
+              "score": 1.0,
+              "venue_affinity": 1.0,
+              "num_candidates": 3,
+              "disambiguation": {
+                "ambiguous": true,
+                "top": "Tennis at the 2004 Summer Olympics – Women's doubles",
+                "runner_up": "Tennis at the 2016 Summer Olympics – Women's singles",
+                "date_score_gap": 0.05,
+                "separating_signal": "venue/sport affinity"
+              },
+              "top_candidates": [
+                "Tennis at the 2004 Summer Olympics – Women's doubles",
+                "Tennis at the 2016 Summer Olympics – Women's singles",
+                "Tennis at the 2016 Summer Olympics – Men's singles"
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Li TingSun Tiantian",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer Olympics)",
+              "citations": [
+                "Q942805"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "classification": {
+            "qtype": "multi_hop",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'multi_hop' template",
+            "rule_type": "multi_hop",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?",
+            "qtype": "multi_hop",
+            "sport": "",
+            "year": 0,
+            "season": "",
+            "event_desc": "",
+            "venue": "Olympic Tennis Centre",
+            "date_text": "15 to 22 August 2004",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2004
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'multi_hop'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer Olympics)",
+          "adjudication": {},
+          "docs_touched": 3,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": null
+      }
+    }
+  },
+  {
+    "qid": "eval-002",
+    "qtype": "lookup",
+    "question": "How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?",
+    "gold": null,
+    "pipelines": {
+      "RAG": {
+        "pipeline": "RAG",
+        "question": "How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?",
+        "qtype": "lookup",
+        "answer": "29",
+        "citations": [
+          "Q5443136"
+        ],
+        "latency_ms": 58.5,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 4,
+        "context_tokens": 278,
+        "input_tokens": 298,
+        "output_tokens": 0,
+        "total_tokens": 298,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.95,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q5443136",
+              "Q5443136",
+              "Q5443138",
+              "Q5443144",
+              "Q5443145"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 58.04
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.21
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 20,
+            "output_tokens": 0,
+            "total_tokens": 20,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 278,
+            "output_tokens": 0,
+            "total_tokens": 278,
+            "detail": "5 chunks"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q5443136",
+            "title": "Fencing at the 1988 Summer Olympics – Men's foil",
+            "fields": {
+              "event": "Men's foil",
+              "games": "1988 Summer",
+              "venue": "Olympic Fencing Gymnasium",
+              "dates": "20–21 September 1988",
+              "competitors": "68",
+              "nations": "29",
+              "gold": "Stefano Cerioni",
+              "silver": "Udo Wagner",
+              "bronze": "Aleksandr Romankov",
+              "prev": "1984",
+              "next": "1992"
+            }
+          }
+        ],
+        "metadata": {
+          "retriever": "vector",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q5443136",
+            "Q5443136",
+            "Q5443138",
+            "Q5443144",
+            "Q5443145"
+          ],
+          "retrieved_titles": [
+            "Fencing at the 1988 Summer Olympics – Men's foil",
+            "Fencing at the 1988 Summer Olympics – Men's foil",
+            "Fencing at the 1988 Summer Olympics – Men's team foil",
+            "Fencing at the 1988 Summer Olympics – Women's foil",
+            "Fencing at the 1988 Summer Olympics – Women's team foil"
+          ],
+          "extraction_method": "extractive",
+          "docs_with_infobox": 1
+        },
+        "unresolved": [],
+        "evaluation": null
+      },
+      "GraphRAG": {
+        "pipeline": "GraphRAG",
+        "question": "How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?",
+        "qtype": "lookup",
+        "answer": "16",
+        "citations": [
+          "Q5443138"
+        ],
+        "latency_ms": 232.37,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "hybrid_search",
+          "structural_retrieve"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 1020,
+        "input_tokens": 1040,
+        "output_tokens": 0,
+        "total_tokens": 1040,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.921,
+        "plan": [
+          "hybrid_search",
+          "graph_expand",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q5443138",
+              "Q5443144",
+              "Q5443136",
+              "Q5443145",
+              "Q5443136"
+            ]
+          },
+          {
+            "step": 2,
+            "agent": "GraphTraverser",
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q5443138",
+              "Q5443144",
+              "Q38605",
+              "Q5443137",
+              "Q5443140",
+              "Q5443142",
+              "Q5443139",
+              "Q38410",
+              "Q5443145",
+              "Q38599"
+            ],
+            "new_docs": 7
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 115.28
+          },
+          {
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 115.28
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 1.29
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 20,
+            "output_tokens": 0,
+            "total_tokens": 20,
+            "detail": ""
+          },
+          {
+            "operation": "context:graph_expanded",
+            "input_tokens": 1020,
+            "output_tokens": 0,
+            "total_tokens": 1020,
+            "detail": "10 documents"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q5443138",
+            "title": "Fencing at the 1988 Summer Olympics – Men's team foil",
+            "fields": {
+              "event": "Men's team foil",
+              "games": "1988 Summer",
+              "venue": "Olympic Fencing Gymnasium",
+              "dates": "26-27 September 1988",
+              "competitors": "76",
+              "nations": "16",
+              "gold": "Aleksandr Romankov Ilgar Mammadov Vladimer Aptsiauri Anvar Ibragimov Boris Koretsky",
+              "silver": "Matthias Gey Thorsten Weidner Matthias Behr Ulrich Schreck Thomas Endres",
+              "bronze": "Zsolt Érsek Pál Szekeres István Szelei István Busa Róbert Gátai",
+              "prev": "1984",
+              "next": "1992"
+            }
+          }
+        ],
+        "metadata": {
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q5443138",
+            "Q5443144",
+            "Q5443136",
+            "Q5443145",
+            "Q5443136"
+          ],
+          "expanded_doc_ids": [
+            "Q5443138",
+            "Q5443144",
+            "Q38605",
+            "Q5443137",
+            "Q5443140",
+            "Q5443142",
+            "Q5443139",
+            "Q38410",
+            "Q5443145",
+            "Q38599"
+          ],
+          "graph_relations": [
+            "graph:NEXT_EDITION",
+            "graph:SAME_SPORT_GAMES",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Fencing at the 1988 Summer Olympics – Men's team foil",
+            "Fencing at the 1988 Summer Olympics – Women's foil",
+            "Fencing at the 1992 Summer Olympics – Men's team foil",
+            "Fencing at the 1988 Summer Olympics – Men's sabre",
+            "Fencing at the 1988 Summer Olympics – Men's team épée",
+            "Fencing at the 1988 Summer Olympics – Men's épée",
+            "Fencing at the 1988 Summer Olympics – Men's team sabre",
+            "Fencing at the 1992 Summer Olympics – Women's foil",
+            "Fencing at the 1988 Summer Olympics – Women's team foil",
+            "Fencing at the 1992 Summer Olympics – Men's foil"
+          ],
+          "docs_with_infobox": 10
+        },
+        "unresolved": [],
+        "evaluation": null
+      },
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?",
+        "qtype": "lookup",
+        "answer": "29",
+        "citations": [
+          "Q5443136"
+        ],
+        "latency_ms": 118.14,
+        "retrieval_steps": 3,
+        "tools_called": [
+          "link_entities",
+          "resolve_article",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "LookupResolver",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 1,
+        "context_tokens": 734,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.95,
+        "plan": [
+          "EntityLinker.link_entities",
+          "LookupResolver.resolve_article",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 10,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "no graph vertices linked; will fall back to text retrieval",
+            "observation": {
+              "sport": null,
+              "sport_score": 0.0,
+              "venue_score": 0.0,
+              "games": null,
+              "edition_chain": [],
+              "implied_event_pages": 0
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "LookupResolver",
+            "operation": "resolve_article",
+            "detail": "resolved title \"Fencing at the 1988 Summer Olympics – Men's foil\" (score 1.0); field 'nations' = '29'",
+            "observation": {
+              "matched": "Fencing at the 1988 Summer Olympics – Men's foil",
+              "score": 1.0,
+              "value": "29",
+              "searched_titles": null
+            },
+            "confidence_after": 0.0,
+            "new_documents": 1,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?\" (widening=0) -> 12 passages (10 new documents)",
+            "observation": {
+              "query": "How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q5443138",
+                "Q5443144",
+                "Q5443136",
+                "Q5443145",
+                "Q5443136",
+                "Q38605",
+                "Q25800",
+                "Q5443140"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 10,
+            "latency_ms": 117.7,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.95, sufficient",
+            "observation": {
+              "confidence": 0.95,
+              "sufficient": true,
+              "signals": {
+                "title_score": 1.0
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.95,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='29' citing 1 document(s) :: Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+            "observation": {
+              "answer": "29",
+              "source": "structured",
+              "rationale": "Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+              "citations": [
+                "Q5443136"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.95,
+            "new_documents": 0,
+            "latency_ms": 0.04,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "no graph vertices linked; will fall back to text retrieval",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "resolve_article",
+            "agent": "LookupResolver",
+            "detail": "resolved title \"Fencing at the 1988 Summer Olympics – Men's foil\" (score 1.0); field 'nations' = '29'",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?\" (widening=0) -> 12 passages (10 new doc",
+            "latency_ms": 117.7
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.95, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='29' citing 1 document(s) :: Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+            "latency_ms": 0.04
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "LookupResolver",
+            "operation": "resolve_article",
+            "observation": {
+              "matched": "Fencing at the 1988 Summer Olympics – Men's foil",
+              "score": 1.0,
+              "value": "29",
+              "searched_titles": null
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "29",
+              "source": "structured",
+              "rationale": "Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+              "citations": [
+                "Q5443136"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "classification": {
+            "qtype": "lookup",
+            "method": "rules",
+            "confidence": 0.7,
+            "reason": "rule-based match for the 'lookup' template",
+            "rule_type": "lookup",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?",
+            "qtype": "lookup",
+            "sport": "",
+            "year": 0,
+            "season": "",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "Fencing at the 1988 Summer Olympics – Men's foil",
+            "before_year": null,
+            "years_mentioned": [
+              1988
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'lookup'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+          "adjudication": {},
+          "docs_touched": 1,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": null
+      }
+    }
+  },
+  {
+    "qid": "eval-003",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many cycling events at the 2008 Summer Olympics had more than 30 competitors?",
+    "gold": null,
+    "pipelines": {
+      "RAG": {
+        "pipeline": "RAG",
+        "question": "According to the provided corpus, how many cycling events at the 2008 Summer Olympics had more than 30 competitors?",
+        "qtype": "aggregation",
+        "answer": "",
+        "citations": [],
+        "latency_ms": 55.6,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 536,
+        "input_tokens": 565,
+        "output_tokens": 0,
+        "total_tokens": 565,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q10522587",
+              "Q1064728",
+              "Q2065523",
+              "Q1063589",
+              "Q916174"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 55.13
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.02
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 536,
+            "output_tokens": 0,
+            "total_tokens": 536,
+            "detail": "5 chunks"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q10522587",
+            "Q1064728",
+            "Q2065523",
+            "Q1063589",
+            "Q916174"
+          ],
+          "retrieved_titles": [
+            "Cycling at the 1988 Summer Olympics – Men's track time trial",
+            "Cycling at the 2008 Summer Olympics – Women's individual road race",
+            "Cycling at the 2004 Summer Olympics – Women's individual road race",
+            "Cycling at the 2008 Summer Olympics – Men's individual road race",
+            "Cycling at the 2012 Summer Olympics – Men's road time trial"
+          ],
+          "extraction_method": "extractive",
+          "docs_with_infobox": 0
+        },
+        "unresolved": [
+          "no_candidate_docs_retrieved"
+        ],
+        "evaluation": null
+      },
+      "GraphRAG": {
+        "pipeline": "GraphRAG",
+        "question": "According to the provided corpus, how many cycling events at the 2008 Summer Olympics had more than 30 competitors?",
+        "qtype": "aggregation",
+        "answer": "3",
+        "citations": [
+          "Q1063589",
+          "Q1064728",
+          "Q938805",
+          "Q2445057",
+          "Q754412",
+          "Q938833",
+          "Q1064571",
+          "Q1064381",
+          "Q1077323",
+          "Q609985"
+        ],
+        "latency_ms": 218.98,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "hybrid_search",
+          "structural_retrieve"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 877,
+        "input_tokens": 906,
+        "output_tokens": 0,
+        "total_tokens": 906,
+        "llm_calls": 0,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.55,
+        "plan": [
+          "hybrid_search",
+          "graph_expand",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q1063589",
+              "Q1064728",
+              "Q938805",
+              "Q10522587",
+              "Q2269155"
+            ]
+          },
+          {
+            "step": 2,
+            "agent": "GraphTraverser",
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q1063589",
+              "Q1064728",
+              "Q938805",
+              "Q2445057",
+              "Q754412",
+              "Q938833",
+              "Q1064571",
+              "Q1064381",
+              "Q1077323",
+              "Q609985"
+            ],
+            "new_docs": 7
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 106.2
+          },
+          {
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 111.84
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.37
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:graph_expanded",
+            "input_tokens": 877,
+            "output_tokens": 0,
+            "total_tokens": 877,
+            "detail": "10 documents"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q1063589",
+            "title": "Cycling at the 2008 Summer Olympics – Men's individual road race",
+            "competitors": "143"
+          },
+          {
+            "doc_id": "Q1064728",
+            "title": "Cycling at the 2008 Summer Olympics – Women's individual road race",
+            "competitors": "66"
+          },
+          {
+            "doc_id": "Q938805",
+            "title": "Cycling at the 2008 Summer Olympics – Women's cross-country",
+            "competitors": "30"
+          },
+          {
+            "doc_id": "Q2445057",
+            "title": "Cycling at the 2004 Summer Olympics – Men's individual road race",
+            "competitors": "144"
+          },
+          {
+            "doc_id": "Q754412",
+            "title": "Cycling at the 2012 Summer Olympics – Men's individual road race",
+            "competitors": "144"
+          },
+          {
+            "doc_id": "Q938833",
+            "title": "Cycling at the 2008 Summer Olympics – Men's cross-country",
+            "competitors": "50"
+          },
+          {
+            "doc_id": "Q1064571",
+            "title": "Cycling at the 2008 Summer Olympics – Women's sprint",
+            "competitors": "12"
+          },
+          {
+            "doc_id": "Q1064381",
+            "title": "Cycling at the 2008 Summer Olympics – Women's BMX",
+            "competitors": "16"
+          },
+          {
+            "doc_id": "Q1077323",
+            "title": "Cycling at the 2008 Summer Olympics – Women's points race",
+            "competitors": "22"
+          },
+          {
+            "doc_id": "Q609985",
+            "title": "Cycling at the 2008 Summer Olympics – Women's road time trial",
+            "competitors": "25"
+          }
+        ],
+        "metadata": {
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q1063589",
+            "Q1064728",
+            "Q938805",
+            "Q10522587",
+            "Q2269155"
+          ],
+          "expanded_doc_ids": [
+            "Q1063589",
+            "Q1064728",
+            "Q938805",
+            "Q2445057",
+            "Q754412",
+            "Q938833",
+            "Q1064571",
+            "Q1064381",
+            "Q1077323",
+            "Q609985"
+          ],
+          "graph_relations": [
+            "graph:NEXT_EDITION",
+            "graph:PREV_EDITION",
+            "graph:SAME_SPORT_GAMES",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Cycling at the 2008 Summer Olympics – Men's individual road race",
+            "Cycling at the 2008 Summer Olympics – Women's individual road race",
+            "Cycling at the 2008 Summer Olympics – Women's cross-country",
+            "Cycling at the 2004 Summer Olympics – Men's individual road race",
+            "Cycling at the 2012 Summer Olympics – Men's individual road race",
+            "Cycling at the 2008 Summer Olympics – Men's cross-country",
+            "Cycling at the 2008 Summer Olympics – Women's sprint",
+            "Cycling at the 2008 Summer Olympics – Women's BMX",
+            "Cycling at the 2008 Summer Olympics – Women's points race",
+            "Cycling at the 2008 Summer Olympics – Women's road time trial"
+          ],
+          "docs_with_infobox": 10
+        },
+        "unresolved": [
+          "cannot_verify_candidate_set_completeness"
+        ],
+        "evaluation": null
+      },
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many cycling events at the 2008 Summer Olympics had more than 30 competitors?",
+        "qtype": "aggregation",
+        "answer": "8",
+        "citations": [
+          "Q1063589",
+          "Q1064728",
+          "Q938833",
+          "Q635304",
+          "Q628945",
+          "Q1005322",
+          "Q1005614",
+          "Q727488"
+        ],
+        "latency_ms": 0.57,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "count_threshold",
+          "verify_by_recount",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Aggregator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 18,
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Aggregator.count_threshold",
+          "Aggregator.verify_by_recount",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 18,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Cycling; games->GAMES::2008::Summer",
+            "observation": {
+              "sport": "Cycling",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2008::Summer",
+              "edition_chain": [],
+              "implied_event_pages": 18
+            },
+            "confidence_after": 0.0,
+            "new_documents": 18,
+            "latency_ms": 0.14,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 18 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 18,
+              "new_documents": 0,
+              "sample_titles": [
+                "Cycling at the 2008 Summer Olympics – Men's individual road race",
+                "Cycling at the 2008 Summer Olympics – Women's individual road race",
+                "Cycling at the 2008 Summer Olympics – Women's cross-country",
+                "Cycling at the 2008 Summer Olympics – Men's cross-country",
+                "Cycling at the 2008 Summer Olympics – Women's sprint"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.12,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "detail": "filtered 18 enumerated events on competitors gt 30 -> 8 pass (field coverage 100%)",
+            "observation": {
+              "count": 8,
+              "candidates": 18,
+              "threshold": 30,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q1063589",
+                "Q1064728",
+                "Q938833",
+                "Q635304",
+                "Q628945",
+                "Q1005322",
+                "Q1005614",
+                "Q727488"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Aggregator",
+            "operation": "verify_by_recount",
+            "detail": "independent recount -> 8 (documents with the field: 18); matches the primary count",
+            "observation": {
+              "recount": 8,
+              "documents_with_field": 18,
+              "recount_matches": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "candidate_set_size": 18,
+                "field_completeness": 1.0,
+                "exhaustive": true,
+                "independent_recount": 8,
+                "recount_matches": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 18 enumerated events had more than 30 competitors",
+            "observation": {
+              "answer": "8",
+              "source": "structured",
+              "rationale": "8 of 18 enumerated events had more than 30 competitors",
+              "citations": [
+                "Q1063589",
+                "Q1064728",
+                "Q938833",
+                "Q635304",
+                "Q628945",
+                "Q1005322",
+                "Q1005614",
+                "Q727488"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.05,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Cycling; games->GAMES::2008::Summer",
+            "latency_ms": 0.14
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 18 event pages (0 new)",
+            "latency_ms": 0.12
+          },
+          {
+            "operation": "count_threshold",
+            "agent": "Aggregator",
+            "detail": "filtered 18 enumerated events on competitors gt 30 -> 8 pass (field coverage 100%)",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "verify_by_recount",
+            "agent": "Aggregator",
+            "detail": "independent recount -> 8 (documents with the field: 18); matches the primary count",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 18 enumerated events had more than 30 competitors",
+            "latency_ms": 0.05
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "observation": {
+              "count": 8,
+              "candidates": 18,
+              "threshold": 30,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q1063589",
+                "Q1064728",
+                "Q938833",
+                "Q635304",
+                "Q628945",
+                "Q1005322",
+                "Q1005614",
+                "Q727488"
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "8",
+              "source": "structured",
+              "rationale": "8 of 18 enumerated events had more than 30 competitors",
+              "citations": [
+                "Q1063589",
+                "Q1064728",
+                "Q938833",
+                "Q635304",
+                "Q628945",
+                "Q1005322",
+                "Q1005614",
+                "Q727488"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'aggregation' template",
+            "rule_type": "aggregation",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many cycling events at the 2008 Summer Olympics had more than 30 competitors?",
+            "qtype": "aggregation",
+            "sport": "Cycling",
+            "year": 2008,
+            "season": "Summer",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 30,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2008
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'aggregation'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "8 of 18 enumerated events had more than 30 competitors",
+          "adjudication": {},
+          "docs_touched": 18,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": null
+      }
+    }
+  }
+]

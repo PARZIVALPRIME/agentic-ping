@@ -1,0 +1,210 @@
+﻿
+===== aggregation (21) =====
+pub-001: According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?
+    GOLD: ['5']  docs=11
+pub-003: According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?
+    GOLD: ['8']  docs=17
+pub-010: According to the provided corpus, how many cycling events at the 2000 Summer Olympics had more than 30 competitors?
+    GOLD: ['4']  docs=10
+pub-012: According to the provided corpus, how many rowing events at the 2020 Summer Olympics had more than 36 competitors?
+    GOLD: ['6']  docs=14
+pub-019: According to the provided corpus, how many fencing events at the 1988 Summer Olympics had more than 68 competitors?
+    GOLD: ['3']  docs=8
+pub-020: According to the provided corpus, how many alpine skiing events at the 2014 Winter Olympics had more than 63 competitors?
+    GOLD: ['4']  docs=10
+pub-024: According to the provided corpus, how many biathlon events at the 2002 Winter Olympics had more than 74 competitors?
+    GOLD: ['3']  docs=8
+pub-027: According to the provided corpus, how many fencing events at the 2008 Summer Olympics had more than 32 competitors?
+    GOLD: ['4']  docs=10
+pub-033: According to the provided corpus, how many judo events at the 2004 Summer Olympics had more than 32 competitors?
+    GOLD: ['4']  docs=14
+pub-045: According to the provided corpus, how many athletics events at the 2004 Summer Olympics had more than 41 competitors?
+    GOLD: ['20']  docs=43
+pub-051: According to the provided corpus, how many canoeing events at the 2012 Summer Olympics had more than 25 competitors?
+    GOLD: ['6']  docs=16
+pub-058: According to the provided corpus, how many rowing events at the 1996 Summer Olympics had more than 39 competitors?
+    GOLD: ['5']  docs=12
+pub-065: According to the provided corpus, how many biathlon events at the 2014 Winter Olympics had more than 68 competitors?
+    GOLD: ['5']  docs=11
+pub-069: According to the provided corpus, how many fencing events at the 2000 Summer Olympics had more than 39 competitors?
+    GOLD: ['3']  docs=10
+pub-070: According to the provided corpus, how many speed skating events at the 2010 Winter Olympics had more than 36 competitors?
+    GOLD: ['3']  docs=10
+pub-078: According to the provided corpus, how many athletics events at the 1996 Summer Olympics had more than 49 competitors?
+    GOLD: ['7']  docs=16
+pub-082: According to the provided corpus, how many swimming events at the 1996 Summer Olympics had more than 42 competitors?
+    GOLD: ['12']  docs=26
+pub-087: According to the provided corpus, how many athletics events at the 1988 Summer Olympics had more than 41 competitors?
+    GOLD: ['17']  docs=38
+pub-089: According to the provided corpus, how many boxing events at the 1988 Summer Olympics had more than 39 competitors?
+    GOLD: ['5']  docs=12
+pub-092: According to the provided corpus, how many shooting events at the 1992 Summer Olympics had more than 44 competitors?
+    GOLD: ['6']  docs=13
+pub-093: According to the provided corpus, how many biathlon events at the 2006 Winter Olympics had more than 72 competitors?
+    GOLD: ['4']  docs=9
+
+===== temporal (22) =====
+pub-002: Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Chen Ding']  docs=2
+pub-006: Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?
+    GOLD: ['Rafaela Silva']  docs=2
+pub-007: Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Renaud Lavillenie']  docs=2
+pub-013: Who won the gold medal in the women's 200 metre freestyle swimming event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Allison Schmitt']  docs=2
+pub-016: Who won the gold medal in the men's sprint biathlon event at the Winter Olympics held immediately before 2022?
+    GOLD: ['Arnd Peiffer']  docs=2
+pub-018: Who won the gold medal in the men's freestyle 82 kg wrestling event at the Summer Olympics held immediately before 1996?
+    GOLD: ['Kevin Jackson']  docs=2
+pub-026: Who won the gold medal in the men's cross-country cycling event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Jaroslav Kulhav├╜']  docs=2
+pub-036: Who won the gold medal in the men's light flyweight boxing event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Zou Shiming']  docs=2
+pub-039: Who won the gold medal in the women's discus throw athletics event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Sandra Perkovi─ç']  docs=2
+pub-040: Who won the gold medal in the individual normal hill/10 km nordic combined event at the Winter Olympics held immediately before 2014?
+    GOLD: ['Jason Lamy Chappuis']  docs=2
+pub-048: Who won the gold medal in the men's 68 kg taekwondo event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Servet Tazeg├╝l']  docs=2
+pub-049: Who won the gold medal in the men's pursuit biathlon event at the Winter Olympics held immediately before 2022?
+    GOLD: ['Martin Fourcade']  docs=2
+pub-055: Who won the gold medal in the men's 80 kg taekwondo event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Sebasti├ín Crismanich']  docs=2
+pub-056: Who won the gold medal in the men's 30 kilometre pursuit cross-country skiing event at the Winter Olympics held immediately before 2010?
+    GOLD: ['Yevgeny Dementyev']  docs=2
+pub-057: Who won the gold medal in the women's 200 metres athletics event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Allyson Felix']  docs=2
+pub-059: Who won the gold medal in the women's sprint biathlon event at the Winter Olympics held immediately before 2022?
+    GOLD: ['Laura Dahlmeier']  docs=2
+pub-062: Who won the gold medal in the women's 10,000 metres athletics event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Tirunesh Dibaba']  docs=2
+pub-072: Who won the gold medal in the women's 500 metres speed skating event at the Winter Olympics held immediately before 2014?
+    GOLD: ['Lee Sang-hwa']  docs=2
+pub-090: Who won the gold medal in the men's greco-roman 96 kg wrestling event at the Summer Olympics held immediately before 2012?
+    GOLD: ['Aslanbek Khushtov']  docs=2
+pub-094: Who won the gold medal in the men's greco-roman 48 kg wrestling event at the Summer Olympics held immediately before 1996?
+    GOLD: ['Oleg Kucherenko']  docs=2
+pub-097: Who won the gold medal in the women's ├⌐p├⌐e fencing event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Yana Shemyakina']  docs=2
+pub-100: Who won the gold medal in the women's 200 metre backstroke swimming event at the Summer Olympics held immediately before 2016?
+    GOLD: ['Missy Franklin']  docs=2
+
+===== superlative (10) =====
+pub-004: According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?
+    GOLD: ["Athletics at the 2008 Summer Olympics ΓÇô Men's marathon"]  docs=43
+pub-008: According to the provided corpus, which sailing event at the 2000 Summer Olympics had the highest number of competitors?
+    GOLD: ['Sailing at the 2000 Summer Olympics ΓÇô Soling']  docs=8
+pub-021: According to the provided corpus, which alpine skiing event at the 1988 Winter Olympics had the highest number of competitors?
+    GOLD: ["Alpine skiing at the 1988 Winter Olympics ΓÇô Men's giant slalom"]  docs=10
+pub-037: According to the provided corpus, which shooting event at the 2008 Summer Olympics had the highest number of competitors?
+    GOLD: ["Shooting at the 2008 Summer Olympics ΓÇô Men's 50 metre rifle prone"]  docs=14
+pub-044: According to the provided corpus, which fencing event at the 2008 Summer Olympics had the highest number of competitors?
+    GOLD: ["Fencing at the 2008 Summer Olympics ΓÇô Men's ├⌐p├⌐e"]  docs=10
+pub-053: According to the provided corpus, which shooting event at the 2016 Summer Olympics had the highest number of competitors?
+    GOLD: ["Shooting at the 2016 Summer Olympics ΓÇô Women's 10 metre air rifle"]  docs=14
+pub-066: According to the provided corpus, which weightlifting event at the 1992 Summer Olympics had the highest number of competitors?
+    GOLD: ["Weightlifting at the 1992 Summer Olympics ΓÇô Men's 75 kg"]  docs=10
+pub-084: According to the provided corpus, which fencing event at the 1992 Summer Olympics had the highest number of competitors?
+    GOLD: ["Fencing at the 1992 Summer Olympics ΓÇô Men's ├⌐p├⌐e"]  docs=8
+pub-085: According to the provided corpus, which sailing event at the 2008 Summer Olympics had the highest number of competitors?
+    GOLD: ["Sailing at the 2008 Summer Olympics ΓÇô Men's 470"]  docs=11
+pub-088: According to the provided corpus, which alpine skiing event at the 1992 Winter Olympics had the highest number of competitors?
+    GOLD: ["Alpine skiing at the 1992 Winter Olympics ΓÇô Men's giant slalom"]  docs=10
+
+===== multi_hop (28) =====
+pub-005: Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?
+    GOLD: ['Naim S├╝leymano─ƒlu']  docs=1
+pub-011: Who won the gold medal in the event held at Richmond Olympic Oval on 14 February 2010?
+    GOLD: ['Martina S├íbl├¡kov├í']  docs=1
+pub-014: Who won the gold medal in the event held at Riocentro ΓÇô Pavilion 4 on 11ΓÇô19 August at the 2016 Summer Olympics?
+    GOLD: ['Carolina Mar├¡n']  docs=1
+pub-015: Who won the gold medal in the event held at London Velopark on 3 to 4 August at the 2012 Summer Olympics?
+    GOLD: ['Dani KingLaura TrottJoanna Rowsell']  docs=1
+pub-017: Who won the gold medal in the event held at Royal Artillery Barracks on 28 July 2012?
+    GOLD: ['Yi Siling']  docs=1
+pub-022: Who won the gold medal in the event held at Beijing Science and TechnologyUniversity Gymnasium on August 12, 2008?
+    GOLD: ['Ayumi Tanimoto']  docs=1
+pub-023: Who won the gold medal in the event held at Estadi Ol├¡mpic Llu├¡s Companys, Barcelona on August 9 at the 1992 Summer Olympics?
+    GOLD: ['Hwang Young-Cho']  docs=1
+pub-028: Who won the gold medal in the event held at Olympic Aquatic Centre on August 14, 2004 (heats & final)?
+    GOLD: ['Michael Phelps']  docs=1
+pub-030: Who won the gold medal in the event held at Carioca Arena 3 on 6 August 2016?
+    GOLD: ['Emese Sz├ísz']  docs=1
+pub-031: Who won the gold medal in the event held at Nikaia Olympic Weightlifting Hall on 24 August 2004?
+    GOLD: ['Dmitry Berestov']  docs=1
+pub-038: Who won the gold medal in the event held at Sydney Convention and Exhibition Centre on 23 September 2000?
+    GOLD: ['Pyrros Dimas']  docs=1
+pub-041: Who won the gold medal in the event held at Mountain Bike Centre on 21 August at the 2016 Summer Olympics?
+    GOLD: ['Nino Schurter']  docs=1
+pub-043: Who won the gold medal in the event held at Val-d'Is├¿re on 16 February 1992?
+    GOLD: ['Kjetil Andr├⌐ Aamodt']  docs=1
+pub-050: Who won the gold medal in the event held at Adler Arena Skating Center on 11 February 2014?
+    GOLD: ['Lee Sang-hwa']  docs=1
+pub-060: Who won the gold medal in the event held at ExCeL Exhibition Centre on 30 July at the 2012 Summer Olympics?
+    GOLD: ['Yana Shemyakina']  docs=1
+pub-064: Who won the gold medal in the event held at ANZ Stadium on 22 September 2000 (heats)25 September 2000 (final)?
+    GOLD: ['Gabriela Szabo']  docs=1
+pub-067: Who won the gold medal in the event held at North Greenwich Arena on 4 August at the 2012 Summer Olympics?
+    GOLD: ['Rosannagh MacLennan']  docs=1
+pub-073: Who won the gold medal in the event held at Sydney International Shooting Centre on 21 September 2000 (slow)22 September 2000 (fast)?
+    GOLD: ['Yang Ling']  docs=1
+pub-076: Who won the gold medal in the event held at Sestriere on February 24, 2006?
+    GOLD: ['Julia Mancuso']  docs=1
+pub-077: Who won the gold medal in the event held at Xiaohaituo Bobsleigh and Luge TrackBeijing on 13, 14 February 2022?
+    GOLD: ['Kaillie Humphries']  docs=1
+pub-079: Who won the gold medal in the event held at Centennial Parklands, Sydney on 26 September at the 2000 Summer Olympics?
+    GOLD: ['Leontien Zijlaard']  docs=1
+pub-081: Who won the gold medal in the event held at Beijing Shooting Range Hall on August 10, 2008?
+    GOLD: ['Guo Wenjun']  docs=1
+pub-083: Who won the gold medal in the event held at Kvitfjell and Hafjell on February 20ΓÇô21, 1994?
+    GOLD: ['Pernilla Wiberg']  docs=1
+pub-086: Who won the gold medal in the event held at Richmond Olympic Oval on 17 February 2010?
+    GOLD: ['Shani Davis']  docs=1
+pub-095: Who won the gold medal in the event held at Beijing National Stadium on 16 August 2008?
+    GOLD: ['Valerie Vili']  docs=1
+pub-096: Who won the gold medal in the event held at Riocentro ΓÇô Pavilion 6 on 10ΓÇô21 August 2016?
+    GOLD: ['Fazliddin Gaibnazarov']  docs=1
+pub-098: Who won the gold medal in the event held at Sydney Convention and Exhibition Centre on 18 September to 1 October 2000?
+    GOLD: ['Bekzat Sattarkhanov']  docs=1
+pub-099: Who won the gold medal in the event held at Laura Biathlon & Ski Complex on 22 February 2014?
+    GOLD: ['Erik LesserDaniel B├╢hmArnd PeifferSimon Schempp']  docs=1
+
+===== lookup (19) =====
+pub-009: How many nations competed in Sailing at the 2016 Summer Olympics ΓÇô Women's RS:X?
+    GOLD: ['26']  docs=1
+pub-025: How many nations competed in Judo at the 2016 Summer Olympics ΓÇô Women's 57 kg?
+    GOLD: ['23']  docs=1
+pub-029: How many nations competed in Shooting at the 2012 Summer Olympics ΓÇô Men's 50 metre rifle three positions?
+    GOLD: ['28']  docs=1
+pub-032: How many nations competed in Gymnastics at the 2016 Summer Olympics ΓÇô Men's horizontal bar?
+    GOLD: ['34']  docs=1
+pub-034: How many nations competed in Figure skating at the 2010 Winter Olympics ΓÇô Women's singles?
+    GOLD: ['23']  docs=1
+pub-035: How many nations competed in Shooting at the 1996 Summer Olympics ΓÇô Men's 50 metre rifle three positions?
+    GOLD: ['30']  docs=1
+pub-042: How many nations competed in Alpine skiing at the 1992 Winter Olympics ΓÇô Men's giant slalom?
+    GOLD: ['47']  docs=1
+pub-046: How many nations competed in Cross-country skiing at the 2010 Winter Olympics ΓÇô Men's 15 kilometre freestyle?
+    GOLD: ['50']  docs=1
+pub-047: How many nations competed in Athletics at the 1992 Summer Olympics ΓÇô Men's 3000 metres steeplechase?
+    GOLD: ['24']  docs=1
+pub-052: How many nations competed in Biathlon at the 2022 Winter Olympics ΓÇô Women's relay?
+    GOLD: ['20']  docs=1
+pub-054: How many nations competed in Marathon swimming at the 2016 Summer Olympics ΓÇô Women's 10 kilometre?
+    GOLD: ['24']  docs=1
+pub-061: How many nations competed in Boxing at the 1988 Summer Olympics ΓÇô Light flyweight?
+    GOLD: ['34']  docs=1
+pub-063: How many nations competed in Swimming at the 1988 Summer Olympics ΓÇô Men's 200 metre freestyle?
+    GOLD: ['41']  docs=1
+pub-068: How many nations competed in Cycling at the 2012 Summer Olympics ΓÇô Women's cross-country?
+    GOLD: ['24']  docs=1
+pub-071: How many nations competed in Biathlon at the 2018 Winter Olympics ΓÇô Women's pursuit?
+    GOLD: ['24']  docs=1
+pub-074: How many nations competed in Cross-country skiing at the 2006 Winter Olympics ΓÇô Women's 4 ├ù 5 kilometre relay?
+    GOLD: ['17']  docs=1
+pub-075: How many nations competed in Swimming at the 2000 Summer Olympics ΓÇô Men's 1500 metre freestyle?
+    GOLD: ['32']  docs=1
+pub-080: How many nations competed in Beach volleyball at the 2008 Summer Olympics ΓÇô Women's tournament?
+    GOLD: ['17']  docs=1
+pub-091: How many nations competed in Wrestling at the 1992 Summer Olympics ΓÇô Men's freestyle 100 kg?
+    GOLD: ['18']  docs=1

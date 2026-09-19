@@ -1,0 +1,49 @@
+﻿[kg] parsed 2951 docs -> 2210 event pages, 741 non-event docs
+
+--- temporal pub-002 gold docs Q1050909, Q26233122 ---
+Q1050909 | Athletics at the 2012 Summer Olympics ΓÇô Men's 20 kilometres walk
+   sport='Athletics' yr=2012 season='Summer' event="Men's 20 kilometres walk" prev='2008' next='2016' gold='Chen Ding'
+Q26233122 | Athletics at the 2016 Summer Olympics ΓÇô Men's 20 kilometres walk
+   sport='Athletics' yr=2016 season='Summer' event="Men's 20 kilometres walk" prev='2012' next='2020' gold='Wang Zhen'
+
+--- multi_hop gold docs ---
+Q25239316 | Weightlifting at the 1988 Summer Olympics ΓÇô Men's 60 kg
+   venue='Olympic Weightlifting Gymnasium' date='20 September 1988' dates='' games='1988 Summer'
+Q26233122 | Athletics at the 2016 Summer Olympics ΓÇô Men's 20 kilometres walk
+   venue='Pontal' date='12 August 2016' dates='' games='2016 Summer'
+
+--- lookup pub-009 gold Q... titles containing 'RS:X' ---
+   Sailing at the 2016 Summer Olympics ΓÇô Women's RS:X | nations= 26
+   Sailing at the 2016 Summer Olympics ΓÇô Men's RS:X | nations= 36
+   Sailing at the 2012 Summer Olympics ΓÇô Women's RS:X | nations= 27
+   Sailing at the 2008 Summer Olympics ΓÇô Men's RS:X | nations= 35
+
+--- nordic combined / speed skating event names sample ---
+  [Nordic combined] 1992 Winter event='Team' gold='Reiichi MikataTakanori KonoKenji Ogiwara'
+  [Nordic combined] 2010 Winter event='Individual normal hill/10 km' gold='Jason Lamy Chappuis'
+  [Nordic combined] 2010 Winter event='Team large hill/4 ├ù 5 km' gold='Bernhard GruberFelix GottwaldMario StecherDavid Kreiner'
+  [Nordic combined] 1988 Winter event='Individual' gold='Hippolyt Kempf'
+  [Nordic combined] 2010 Winter event='Individual large hill/10 km' gold='Bill Demong'
+  [Nordic combined] 2002 Winter event='Team' gold='Jari MantilaHannu ManninenJaakko TallusSamppa Lajunen'
+
+  [Speed skating] 2010 Winter event="Men's 5000 metres" gold='Sven Kramer'
+  [Speed skating] 2002 Winter event="Women's 3000 metres" gold='Claudia Pechstein'
+  [Speed skating] 2014 Winter event="Men's 1000 metres" gold='Stefan Groothuis'
+  [Speed skating] 2010 Winter event="Men's 10,000 metres" gold='Lee Seung-hoon'
+  [Speed skating] 2010 Winter event="Women's 1500 metres" gold='Ireen W├╝st'
+  [Speed skating] 2010 Winter event="Women's 3000 metres" gold='Martina S├íbl├¡kov├í'
+
+  [Fencing] 2016 Summer event="Women's foil" gold='Inna Deriglazova'
+  [Fencing] 2008 Summer event="Women's team foil" gold='Svetlana BoykoAida ChanaevaVictoria NikichinaEvgenia Lamonova'
+  [Fencing] 2008 Summer event="Men's team sabre" gold='Nicolas LopezJulien PilletBoris Sanson'
+  [Fencing] 2008 Summer event="Women's foil" gold='Valentina Vezzali'
+  [Fencing] 2008 Summer event="Men's team ├⌐p├⌐e" gold='Fabrice JeannetJ├⌐r├┤me JeannetUlrich Robeiri'
+  [Fencing] 2008 Summer event="Women's ├⌐p├⌐e" gold='Britta Heidemann'
+
+  [Wrestling] 2016 Summer event="Men's Greco-Roman 98 kg" gold='Artur Aleksanyan'
+  [Wrestling] 2016 Summer event="Men's Greco-Roman 75 kg" gold='Roman Vlasov'
+  [Wrestling] 2016 Summer event="Men's Greco-Roman 130 kg" gold='Mija├¡n L├│pez'
+  [Wrestling] 2016 Summer event="Men's Greco-Roman 66 kg" gold='Davor ┼átefanek'
+  [Wrestling] 2016 Summer event="Men's Greco-Roman 85 kg" gold='Davit Chakvetadze'
+  [Wrestling] 2016 Summer event="Men's freestyle 97 kg" gold='Kyle Snyder'
+
