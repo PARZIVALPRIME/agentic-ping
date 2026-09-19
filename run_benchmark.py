@@ -8,7 +8,18 @@ Examples:
 
 All arguments are handled by ``benchmark.runner``'s argparse block:
     questions [positional] | --out | --summary | --pipelines | --limit |
-    --offset | --no-llm-judge
+    --offset | --resume | --no-llm | --no-llm-judge | --no-tg |
+    --agent-mode (alias --mode) | --types | --per-type | --summarize-only
+
+Common invocations:
+    # deterministic baseline (no provider calls at all)
+    python run_benchmark.py --no-llm --out results/deterministic_results.json
+
+    # agentic-only, LLM tool-calling loop, quota-bounded sample
+    python run_benchmark.py --pipelines agentic --mode react --per-type 2
+
+    # rebuild the summary/dashboard inputs from an existing results file
+    python run_benchmark.py --summarize-only --out results/public_results.json
 """
 import runpy
 

@@ -351,6 +351,42 @@ function renderBackend() {
   (st.notes || []).filter(Boolean).forEach(n => el("div", { text: `· ${n}` }, detail));
 }
 
+/* ─ provider contribution: did the LLM actually answer anything? ──── */
+function provenanceOf() {
+  return (DATA.summary || {}).provenance || {};
+}
+
+function renderLlmActivity() {
+  const host = document.getElementById("llmActivity");
+  host.innerHTML = "";
+  const activity = provenanceOf().llm_activity;
+  if (!activity || !Object.keys(activity).length) {
+    el("p", { class: "hint", text: "This summary has no provider-contribution "
+      + "record — re-run the benchmark, or rebuild it with "
+      + "`--summarize-only`, to capture which pipelines the LLM served." }, host);
+    return;
+  }
+  const grid = el("div", { class: "cards" }, host);
+  Object.keys(activity).forEach(name => {
+    const a = activity[name] || {};
+    const records = a.records || 0;
+    const called = a.records_with_calls || 0;
+    const share = records ? called / records : 0;
+    const label = share === 0 ? "deterministic only"
+      : share === 1 ? "provider on every question"
+        : `provider on ${Math.round(share * 100)}% of questions`;
+    const card = el("div", { class: "card" }, grid);
+    el("h3", { text: name }, card);
+    el("div", { class: "big", text: `${called}/${records}` }, card);
+    el("div", { class: "row", text: `${short(a.total_tokens || 0)} tokens · ${label}` }, card);
+  });
+  (provenanceOf().warnings || []).forEach(w => {
+    const p = el("p", { class: "hint", style: "margin-top:10px" }, host);
+    el("span", { class: "chip down", text: "attention" }, p);
+    el("span", { text: ` ${w}` }, p);
+  });
+}
+
 /* ─ boot ──────────────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
   renderMeta();
@@ -359,6 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCostScatter();
   renderDelta();
   renderBackend();
+  renderLlmActivity();
   fillTraceSelect();
   const tfs = document.getElementById("typeFilter");
   QTYPES.forEach(t => el("option", { value: t, text: t }, tfs));

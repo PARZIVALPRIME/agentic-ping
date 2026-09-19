@@ -41,8 +41,8 @@ function makeNode(tag) {
 }
 
 const ids = ["meta", "cards", "byType", "legend", "costScatter", "delta",
-  "backend", "traceSelect", "traceMeta", "trace", "typeFilter", "outcomeFilter",
-  "search", "resultsTable", "footMeta"];
+  "backend", "llmActivity", "traceSelect", "traceMeta", "trace", "typeFilter",
+  "outcomeFilter", "search", "resultsTable", "footMeta"];
 const registry = {};
 ids.forEach(id => { registry[id] = makeNode(id === "typeFilter" || id === "outcomeFilter" || id === "traceSelect" ? "select" : "div"); });
 
@@ -96,6 +96,8 @@ check("meta filled", registry.meta.innerHTML.includes("questions"));
 check("footer filled", registry.footMeta.textContent.length > 20);
 check("backend panel rendered", registry.backend.children.length > 0,
   `${registry.backend.children.length} nodes`);
+check("provider contribution panel rendered", registry.llmActivity.children.length > 0,
+  `${registry.llmActivity.children.length} nodes`);
 check("trace names the graph store",
   (registry.traceMeta.textContent || "").includes("graph:"),
   registry.traceMeta.textContent);

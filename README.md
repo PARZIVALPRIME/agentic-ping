@@ -24,6 +24,7 @@ Copy-Item .env.example .env    # add your GROQ_API_KEY
 python run_benchmark.py                      # full public benchmark (100 q × 3 pipelines)
 python run_benchmark.py --limit 5            # quick smoke
 python run_benchmark.py --pipelines agentic  # single pipeline
+python run_benchmark.py --pipelines agentic --mode react   # LLM tool-calling only
 python run_benchmark.py --no-llm             # deterministic baseline (no API calls)
 python run_benchmark.py <hidden.jsonl> --out results/hidden_results.json
 
@@ -41,6 +42,44 @@ Both modes run all three pipelines end-to-end — the LLM is an accelerator, nev
 a requirement. If the provider starts rate-limiting mid-run, a circuit breaker
 trips and the remaining questions finish deterministically instead of stalling
 (`llm.circuit` in `results/*_summary.json` shows how often this happened).
+
+### Is the LLM actually contributing?
+
+That fallback is the reason a results file needs auditing before it is
+published. A run whose provider calls *all* fail still finishes: every answer
+comes from the deterministic solvers, the token counters read zero, and the
+headline table can read *"100% accuracy at 0 tokens"* — a deterministic result
+wearing an LLM run's clothes. The tell is latency: the record still spends
+seconds on a call that recorded nothing.
+
+```powershell
+python tools/audit_results.py                     # audit results/public_results.json
+python tools/audit_results.py results/regression_final.json
+```
+
+```
+pipeline              n     acc  w/calls   tokens    out   p50 ms  unacct status
+RAG                 100     39%      100    27838      0     3438       0 llm
+GraphRAG            100     61%      100    91350      0     3650       0 llm
+Agentic GraphRAG    100    100%        0        0      0     3533     100 provider-failed
+```
+
+The exit code is non-zero when a pipeline took part in a run that used the
+provider yet recorded no calls of its own, so the tool gates numbers before they
+reach the dashboard. It also flags results written by an **older revision** of
+the pipelines (a missing `metadata` field means the file no longer describes the
+code shipped beside it) and compares answers against the `--no-llm` baseline.
+
+Every summary carries the same record under `provenance.llm_activity`, and the
+dashboard renders it in the **Provider contribution** panel. Rebuild a summary
+without re-running the pipelines with:
+
+```powershell
+python run_benchmark.py --summarize-only --out results/public_results.json
+```
+
+Provider/evaluator/backend telemetry is only known during a live run, so a
+rebuilt summary reports those blocks as `null` rather than guessing them.
 
 ### If a run looks stuck
 

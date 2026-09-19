@@ -165,8 +165,6 @@ class BenchmarkConfig:
     rag_top_k: int = field(default_factory=lambda: int(_env("RAG_TOP_K", default="5")))
     num_hops: int = field(default_factory=lambda: int(_env("RETRIEVAL_NUM_HOPS", default="2")))
     vector_backend: str = field(default_factory=lambda: _env("VECTOR_BACKEND", default="auto"))
-    kg_cache_path: str = field(
-        default_factory=lambda: _env("KG_CACHE_PATH", default="results/knowledge_graph.json"))
     rebuild_kg: bool = field(default_factory=lambda: _env("REBUILD_KG", default="").lower()
                              in ("1", "true", "yes"))
 

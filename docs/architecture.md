@@ -155,6 +155,29 @@ flowchart LR
     RES --> DG[dashboard_generator.py] --> HTML[(dashboard/index.html)]
 ```
 
+## Results provenance: no silent deterministic fallback
+
+The harness has one property that is easy to get wrong when reading its
+output: **a run always finishes.** If the provider rate-limits, returns
+unusable completions or the key is absent, every pipeline degrades to the
+deterministic solvers and still writes a complete, well-formed results file.
+Accuracy in that file is real, but it is *deterministic* accuracy, and the token
+columns are zero.
+
+So the contribution of the LLM is recorded explicitly rather than inferred:
+
+| Layer | What it records |
+|---|---|
+| per-question record | `llm_calls`, `tokens_per_operation` (caller-prefixed: `agent.react`, `classifier.classify`, `agent.adjudicate.*`) |
+| summary | `llm` (calls, failures, pacer sleeps, circuit trips) and `llm_activity` (provider calls per pipeline) |
+| dashboard | the **Provider contribution** panel, plus `provenance.warnings` |
+| audit | `tools/audit_results.py` — non-zero exit when a pipeline took part in a provider-using run but recorded no calls of its own, or when a file was written by an older revision of the pipelines |
+
+`--summarize-only` rebuilds a summary from an existing results file. Provider,
+evaluator and backend telemetry is only known *during* a run, so a rebuilt
+summary reports those blocks as `null` and says so in `provenance`, instead of
+guessing values it cannot know.
+
 ## Graph backend: local mirror or TigerGraph
 
 `kg/backend.py::open_graph` is the one place that decides who answers the graph

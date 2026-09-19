@@ -76,6 +76,16 @@ HTML_HEAD = """<!DOCTYPE html>
   </section>
 
   <section class="panel">
+    <h2>Provider contribution</h2>
+    <p class="hint">Which pipelines the LLM actually contributed to. A run whose
+       provider calls all failed still finishes — every answer then comes from
+       the deterministic solvers and the token counters read zero — so the
+       contribution is reported here rather than left to be inferred from the
+       accuracy table.</p>
+    <div id="llmActivity"></div>
+  </section>
+
+  <section class="panel">
     <h2>Agentic investigation traces</h2>
     <p class="hint">Pick a question to replay the agent's plan, steps and evidence.</p>
     <div class="trace-controls">

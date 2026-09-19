@@ -63,6 +63,77 @@ def load_entries(path: str) -> List[Dict[str, Any]]:
         return []
 
 
+def _llm_activity(entries: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Per-pipeline LLM activity, derived only from what the records contain.
+
+    A results file records tokens per pipeline, so "did the LLM actually
+    contribute to this run?" is answerable after the fact. It needs to be: a
+    run whose provider calls all failed still writes a complete file, with
+    every answer coming from the deterministic path and every counter at zero.
+    """
+    activity: Dict[str, Dict[str, Any]] = {}
+    for entry in entries:
+        for name, rec in (entry.get("pipelines") or {}).items():
+            slot = activity.setdefault(name, {"records": 0, "records_with_calls": 0,
+                                              "total_tokens": 0, "output_tokens": 0,
+                                              "unusable_adjudications": 0})
+            slot["records"] += 1
+            slot["total_tokens"] += int(rec.get("total_tokens") or 0)
+            slot["output_tokens"] += int(rec.get("output_tokens") or 0)
+            if int(rec.get("llm_calls") or 0) > 0:
+                slot["records_with_calls"] += 1
+            adj = (rec.get("metadata") or {}).get("adjudication")
+            if isinstance(adj, dict) and adj.get("reason") == "verdict_unusable":
+                slot["unusable_adjudications"] += 1
+    return activity
+
+
+def summarize_entries(entries: List[Dict[str, Any]], summary_path: Optional[str] = None,
+                      source: str = "") -> Dict[str, Any]:
+    """Rebuild a summary from an existing results file (``--summarize-only``).
+
+    Provider/evaluator/backend telemetry is written by a live run and is not
+    reconstructable from the answers, so those blocks are reported as ``null``
+    instead of being guessed. ``provenance`` says so explicitly, and carries
+    the LLM activity it *can* derive, so a rebuilt summary cannot be mistaken
+    for a run in which the provider answered.
+    """
+    collector = MetricsCollector()
+    collector.entries.extend(entries)
+    activity = _llm_activity(entries)
+    active = {name: slot for name, slot in activity.items()
+              if slot["records_with_calls"] > 0}
+    warnings: List[str] = []
+    if activity and not active:
+        warnings.append("no pipeline recorded a provider call: this results file "
+                       "is a deterministic run (see --no-llm)")
+    elif active and len(active) < len(activity):
+        idle = ", ".join(sorted(set(activity) - set(active)))
+        warnings.append("mixed LLM activity: no provider calls recorded for "
+                        f"{idle} - those records came from the deterministic path")
+    summary = collector.summarize(extra={
+        "evaluator": None,
+        "llm": None,
+        "backend": None,
+        "wall_clock_s": None,
+        "provenance": {
+            "rebuilt_from": source,
+            "rebuilt_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "provider_stats": "unavailable",
+            "note": ("summary rebuilt from an existing results file; the "
+                     "evaluator/llm/backend blocks are only known during a live "
+                     "run, so they are null rather than guessed"),
+            "llm_activity": activity,
+            "warnings": warnings,
+        },
+    })
+    if summary_path:
+        os.makedirs(os.path.dirname(summary_path) or ".", exist_ok=True)
+        with open(summary_path, "w", encoding="utf-8") as fh:
+            json.dump(summary, fh, indent=2, ensure_ascii=False)
+    return summary
+
+
 def _gold_of(q: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """Normalise the gold fields; hidden questions carry no answers."""
     answers = q.get("answer") or q.get("answers") or []
@@ -184,6 +255,11 @@ class BenchmarkRunner:
             # TigerGraph run is distinguishable from a local one after the fact -
             # a backend that silently fell back would otherwise look identical.
             "backend": describe_backend(),
+            # Which pipelines the provider actually contributed to. A run whose
+            # calls all failed still finishes and looks successful, so the
+            # summary states the contribution explicitly instead of leaving it to
+            # be inferred from the reports.
+            "llm_activity": _llm_activity(collector.entries),
         })
         if summary_path:
             with open(summary_path, "w", encoding="utf-8") as fh:
@@ -324,17 +400,39 @@ def cli(argv=None) -> None:
     ap.add_argument("--no-llm-judge", action="store_true")
     ap.add_argument("--no-tg", action="store_true",
                     help="force the local corpus-built graph even if TG_ENABLED=true")
-    ap.add_argument("--agent-mode", default="",
+    ap.add_argument("--agent-mode", "--mode", default="",
                     choices=["", "react", "hybrid", "plan"],
                     help="agentic pipeline mode: react (LLM tool-calling only), "
                          "hybrid (LLM + deterministic rescue), plan (deterministic "
                          "planner/executor, no tool loop)")
+    ap.add_argument("--summarize-only", action="store_true",
+                    help="rebuild --summary from an existing --out results file "
+                         "without running anything; provider telemetry is "
+                         "reported as null because it is only known during a run")
     ap.add_argument("--types", default="",
                     help="comma filter on qtype, e.g. 'temporal,aggregation' "
                          "(useful for quota-bounded LLM samples)")
     ap.add_argument("--per-type", type=int, default=0,
                     help="with --limit 0: take at most N questions per qtype")
     args = ap.parse_args(argv)
+
+    if args.summarize_only:
+        # Rebuilding a summary must not need the KG, the provider or a key: it
+        # only aggregates what an earlier run already wrote down.
+        entries = load_entries(args.out)
+        if not entries:
+            raise SystemExit(f"--summarize-only: no results found at {args.out}")
+        summary = summarize_entries(entries, args.summary, source=args.out)
+        print(f"summary rebuilt from {args.out} "
+              f"({summary['num_questions']} questions) -> {args.summary}")
+        print(f"  pipelines : {', '.join(summary['pipelines'])}")
+        for name, slot in (summary["provenance"]["llm_activity"] or {}).items():
+            print(f"  {name:<18s} provider calls in "
+                  f"{slot['records_with_calls']}/{slot['records']} records, "
+                  f"{slot['total_tokens']} tokens")
+        for warning in summary["provenance"]["warnings"]:
+            print(f"  WARNING: {warning}")
+        return
 
     if args.agent_mode or args.types or args.per_type:
         from config import config
