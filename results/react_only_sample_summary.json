@@ -1,0 +1,90 @@
+{
+  "num_questions": 5,
+  "pipelines": {
+    "Agentic GraphRAG": {
+      "num_questions": 5,
+      "num_evaluated": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "by_type": {
+        "lookup": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "temporal": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "aggregation": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "superlative": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        }
+      },
+      "avg_latency_ms": 37049.358,
+      "avg_context_tokens": 78.8,
+      "avg_input_tokens": 4661.2,
+      "avg_output_tokens": 204.4,
+      "avg_total_tokens": 4865.6,
+      "avg_llm_calls": 3.0,
+      "avg_retrieval_steps": 2.0,
+      "avg_chunks_retrieved": 8.4,
+      "avg_candidates_considered": 30.0,
+      "total_tokens": 24328,
+      "avg_citation_precision": 0.4625,
+      "avg_citation_recall": 0.9,
+      "match_types": {
+        "exact": 4,
+        "fuzzy": 1
+      },
+      "stop_reasons": {
+        "submitted_answer": 5
+      },
+      "strategy_adapted": 5,
+      "agents_used": [
+        "ReActAgent"
+      ]
+    }
+  },
+  "when_agents_matter": [],
+  "evaluator": {
+    "llm_judge_enabled": true,
+    "judge_calls": 0,
+    "judge_flips": 0,
+    "judge_tokens": 0
+  },
+  "llm": {
+    "available": true,
+    "provider": "groq",
+    "chat_model": "openai/gpt-oss-120b",
+    "eval_model": "qwen/qwen3.8-27b",
+    "num_calls": 15,
+    "failed_calls": 0,
+    "degraded": false,
+    "min_interval_s": 1.5,
+    "tpm_budget": 8000,
+    "rate_limit_events": 0,
+    "pace_sleeps": 14,
+    "pace_slept_s": 174.2,
+    "circuit": {
+      "threshold": 3,
+      "cooldown_s": 60.0,
+      "trips": 0,
+      "blocked_calls": 0,
+      "open": false
+    }
+  },
+  "wall_clock_s": 185.3
+}

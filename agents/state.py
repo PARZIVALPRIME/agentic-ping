@@ -98,6 +98,7 @@ class AgentState:
         self.proposed_gaps: List[str] = []   # gaps already targeted by a recovery step
         self.stop_reason: str = ""
         self.iterations = 0
+        self.tool_calls: List[Dict[str, Any]] = []  # records from the ReAct loop
         self._t0 = time.perf_counter()
 
     # ── plan management ────────────────────────────────────────────────
@@ -131,6 +132,8 @@ class AgentState:
             doc_id = getattr(node, "doc_id", None)
             if doc_id is None and isinstance(node, dict):
                 doc_id = node.get("doc_id")
+            if doc_id is None and isinstance(node, str):
+                doc_id = node          # the tool layer reports bare doc_ids
             if not doc_id:
                 continue
             if doc_id not in self.documents:
@@ -221,6 +224,8 @@ class AgentState:
             "strategy_changes": list(self.strategy_changes),
             "stop_reason": self.stop_reason,
             "answer": self.answer,
+            "iterations": self.iterations,
+            "tool_calls": list(self.tool_calls),
             "citations": list(self.citations),
             "synth_source": self.synth_source,
             "adjudication": self.adjudication,

@@ -83,6 +83,38 @@ class LLMHelper:
                         detail=(model or self._service.model))
         return text, usage.input_tokens, usage.output_tokens
 
+    def chat(self, messages: List[Dict[str, Any]],
+             tools: Optional[List[Dict[str, Any]]] = None,
+             counter: Optional[TokenCounter] = None,
+             model: Optional[str] = None, caller: str = "chat"):
+        """One tool-calling turn; returns ``(text, tool_calls, finish_reason)``.
+
+        ``tool_calls`` is a list of dicts ``{"id", "name", "arguments"}`` with
+        ``arguments`` already parsed. Returns an empty triple when the provider
+        is unavailable or rate-limiting, which lets the caller fall back to
+        deterministic reasoning instead of failing.
+        """
+        if not self.available:
+            return "", [], ""
+        try:
+            turn = self._service.chat(messages, tools=tools, model=model,
+                                      caller=caller)
+            self.num_calls += 1
+        except Exception as exc:
+            self.failed_calls += 1
+            self.last_error = f"{exc.__class__.__name__}: {exc}"[:200]
+            if self.failed_calls <= 3 or self.failed_calls % 50 == 0:
+                logger.warning("LLM chat '%s' failed (%d so far): %s",
+                               caller, self.failed_calls, self.last_error)
+            return "", [], ""
+        if counter is not None:
+            counter.add(caller, turn.usage.input_tokens, turn.usage.output_tokens,
+                        detail=(model or self._service.model))
+        calls = [{"id": tc.id, "name": tc.name,
+                  "arguments": tc.parsed_args(), "raw": tc.arguments}
+                 for tc in turn.tool_calls]
+        return turn.text, calls, turn.finish_reason
+
     def complete_json(self, prompt: str, system_prompt: str = "", caller: str = "llm",
                       counter: Optional[TokenCounter] = None,
                       model: Optional[str] = None) -> Dict[str, Any]:

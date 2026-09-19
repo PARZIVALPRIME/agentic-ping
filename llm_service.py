@@ -58,6 +58,10 @@ class _Pacer:
         self._window: List[Tuple[float, int]] = []   # (timestamp, tokens)
         self.min_interval = float(os.getenv("LLM_MIN_INTERVAL_S", "0") or 0)
         self.tpm = int(os.getenv("LLM_TPM", "0") or 0)
+        # Askers only know the prompt size; the provider meters prompt+completion.
+        # We reserve a small completion estimate up front and top it up with the
+        # real usage afterwards, otherwise long agent runs 429 just below the cap.
+        self.output_reserve = int(os.getenv("LLM_OUTPUT_RESERVE", "250") or 0)
         self.rate_limit_events = 0
         self.pace_sleeps = 0
         self.pace_slept_s = 0.0
@@ -66,6 +70,7 @@ class _Pacer:
         """Sleep until this request fits inside both pacing budgets."""
         if self.min_interval <= 0 and self.tpm <= 0:
             return
+        asked = max(prompt_tokens, 0) + self.output_reserve
         with self._lock:
             slept = 0.0
             now = time.monotonic()
@@ -77,22 +82,30 @@ class _Pacer:
                     slept += delay
                     now = time.monotonic()
             if self.tpm > 0:
-                cutoff = now - 60.0                      # sliding one-minute window
-                self._window = [(t, n) for (t, n) in self._window if t > cutoff]
-                used = sum(n for _t, n in self._window)
-                if used + prompt_tokens > self.tpm and self._window:
-                    delay = max(0.0, 60.0 - (now - self._window[0][0]))
-                    if delay > 0:
-                        time.sleep(delay)
-                        slept += delay
-                        now = time.monotonic()
-                        self._window = [(t, n) for (t, n) in self._window
-                                        if t > now - 60.0]
-                self._window.append((now, max(prompt_tokens, 0)))
+                # Loop: a single sleep only expires the oldest entry, which is
+                # not necessarily enough to make room for this request.
+                for _ in range(60):
+                    self._window = [(t, n) for (t, n) in self._window
+                                    if t > now - 60.0]
+                    used = sum(n for _t, n in self._window)
+                    if used + asked <= self.tpm or not self._window:
+                        break
+                    delay = max(0.5, 60.0 - (now - self._window[0][0]))
+                    time.sleep(delay)
+                    slept += delay
+                    now = time.monotonic()
+                self._window.append((now, asked))
             self._last = time.monotonic()
             if slept > 0:
                 self.pace_sleeps += 1
                 self.pace_slept_s += slept
+
+    def record_output(self, output_tokens: int) -> None:
+        """Top up the window with the completion tokens a call actually used."""
+        if self.tpm <= 0 or output_tokens <= 0:
+            return
+        with self._lock:
+            self._window.append((time.monotonic(), int(output_tokens)))
 
     def note_rate_limit(self) -> None:
         with self._lock:
@@ -262,9 +275,38 @@ class TokenUsage:
 
 
 @dataclass
+class ToolCall:
+    """One function call requested by the model."""
+    id: str
+    name: str
+    arguments: str = "{}"      # raw JSON string as returned by the provider
+
+    def parsed_args(self) -> Dict[str, Any]:
+        try:
+            out = json.loads(self.arguments or "{}")
+            return out if isinstance(out, dict) else {}
+        except json.JSONDecodeError:
+            return {}
+
+
+@dataclass
+class ChatTurn:
+    """Result of one tool-calling chat turn."""
+    text: str = ""
+    tool_calls: List[ToolCall] = field(default_factory=list)
+    usage: TokenUsage = field(default_factory=TokenUsage)
+    finish_reason: str = ""
+
+
 class TokenTracker:
     """Accumulates token usage across multiple calls."""
-    calls: List[TokenUsage] = field(default_factory=list)
+
+    def __init__(self) -> None:
+        # NOTE: this must be an instance attribute. Using dataclasses.field()
+        # in a plain class leaves a Field object on the class, so every
+        # `self.calls.append(...)` raised AttributeError - which silently turned
+        # every LLM call into a failure and reported zero token usage.
+        self.calls: List[TokenUsage] = []
 
     def record(self, usage: TokenUsage):
         self.calls.append(usage)
@@ -383,8 +425,59 @@ class LLMService:
             out = self._complete_gemini(prompt, system_prompt, caller, t0)
         else:
             out = self._complete_openai_compat(prompt, system_prompt, caller, t0)
+        PACER.record_output(out[1].output_tokens)
         CIRCUIT.record_success()
         return out
+
+    # ── tool calling ───────────────────────────────────────────────────
+    @retry(**RETRY_POLICY)
+    def chat(self, messages: List[Dict[str, Any]],
+             tools: Optional[List[Dict[str, Any]]] = None,
+             tool_choice: str = "auto",
+             caller: str = "chat",
+             model: Optional[str] = None) -> ChatTurn:
+        """One tool-calling turn against an OpenAI-compatible endpoint.
+
+        ``messages`` is the full conversation in OpenAI format (system/user/
+        assistant/tool). ``model`` overrides the configured model for this call
+        only (per-call, so a caller can run on a cheaper model without changing
+        what the judge or the other agents use). Returns the assistant turn:
+        either text, function calls to execute, or both.
+        """
+        use_model = model or self.model
+        t0 = time.time()
+        CIRCUIT.check()
+        size = sum(_estimate_tokens(str(m.get("content") or "")) for m in messages)
+        size += sum(_estimate_tokens(json.dumps(t.get("function", {})))
+                    for t in (tools or []))
+        PACER.wait(size)
+
+        kwargs: Dict[str, Any] = dict(self._generation_kwargs())
+        if tools:
+            kwargs["tools"] = tools
+            kwargs["tool_choice"] = tool_choice
+        response = self._client.chat.completions.create(
+            model=use_model, messages=messages,
+            temperature=self.temperature, **kwargs)
+
+        choice = response.choices[0]
+        msg = choice.message
+        calls: List[ToolCall] = []
+        for tc in (getattr(msg, "tool_calls", None) or []):
+            calls.append(ToolCall(id=getattr(tc, "id", "") or "",
+                                  name=tc.function.name,
+                                  arguments=tc.function.arguments or "{}"))
+        usage = TokenUsage(
+            input_tokens=response.usage.prompt_tokens if response.usage else 0,
+            output_tokens=response.usage.completion_tokens if response.usage else 0,
+            total_tokens=response.usage.total_tokens if response.usage else 0,
+            model=use_model,
+            latency_ms=(time.time() - t0) * 1000, caller=caller)
+        self.tracker.record(usage)
+        PACER.record_output(usage.output_tokens)
+        CIRCUIT.record_success()
+        return ChatTurn(text=(msg.content or ""), tool_calls=calls,
+                        usage=usage, finish_reason=choice.finish_reason or "")
 
     def _generation_kwargs(self) -> Dict[str, Any]:
         """Provider-specific generation limits, omitted when unset."""

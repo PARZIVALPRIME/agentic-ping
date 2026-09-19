@@ -90,6 +90,13 @@ class BenchmarkRunner:
         os.makedirs(results_dir, exist_ok=True)
 
     # ── core loop ──────────────────────────────────────────────────────
+    def _pacer_seconds(self) -> float:
+        """Seconds the client token pacer has slept so far (0 if unavailable)."""
+        try:
+            return float((self.llm.stats() or {}).get("pace_slept_s", 0.0) or 0.0)
+        except Exception:
+            return 0.0
+
     def run(self, questions: List[Dict[str, Any]], out_path: str,
             summary_path: Optional[str] = None,
             initial_entries: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
@@ -98,6 +105,7 @@ class BenchmarkRunner:
             collector.entries.extend(initial_entries)
         done = {e.get("qid") for e in collector.entries}
         t_start = time.time()
+        pacer_seen = self._pacer_seconds()
         for i, q in enumerate(questions, 1):
             qid = q.get("qid", f"q{i}")
             if qid in done:
@@ -149,11 +157,21 @@ class BenchmarkRunner:
             print(f"[{time.strftime('%H:%M:%S')}] {i:>3}/{len(questions)} {qid} "
                   f"{qtype:<11s} {tag} tok={toks} took={took:.1f}s "
                   f"elapsed={time.time()-t_start:.0f}s eta={eta/60:.1f}m", flush=True)
-            slow = [name for name, rec in marks if rec.get("latency_ms", 0) > 60000]
+            slow = [name for name, rec in marks
+                    if rec.get("latency_ms", 0) > 60000]
             if slow:
+                # Long latency is not automatically rate limiting: the client
+                # token pacer deliberately sleeps to stay inside the provider's
+                # tokens-per-minute budget. Report which of the two it was.
+                now_pacer = self._pacer_seconds()
+                paced_here = now_pacer - pacer_seen
+                pacer_seen = now_pacer
+                cause = (f"client-side token pacing ({paced_here:.0f}s slept"
+                         f" this question, staying within TPM)"
+                         if paced_here > 0.5 else
+                         "provider latency or retries")
                 print(f"           note: slow pipeline(s) {', '.join(slow)} - "
-                      f"provider likely rate limiting (see llm.circuit in summary)",
-                      flush=True)
+                      f"{cause}; see llm.circuit in the summary", flush=True)
 
         summary = collector.summarize(extra={
             "evaluator": self.evaluator.stats(),
@@ -179,7 +197,8 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
          summary_path: str = "results/metrics_summary.json",
          pipelines: Optional[List[str]] = None,
          limit: int = 0, offset: int = 0, llm_judge: bool = True,
-         resume: bool = False, no_llm: bool = False) -> Dict[str, Any]:
+         resume: bool = False, no_llm: bool = False,
+         types: Optional[List[str]] = None, per_type: int = 0) -> Dict[str, Any]:
     from config import config
     from kg.builder import load_or_build
     from pipelines import build_pipelines
@@ -208,6 +227,24 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
     log(f"pipelines: {[p.name for p in all_pipes]}")
 
     questions = load_questions(questions_path)[offset:]
+    if types:
+        wanted = {t.strip().lower() for t in types}
+        questions = [q for q in questions if str(q.get("qtype", "")).lower() in wanted]
+        log(f"qtype filter {sorted(wanted)} -> {len(questions)} questions")
+    if per_type:
+        # Quota-bounded sampling: LLM runs cost tokens per question, so a
+        # stratified sample (N per question type) keeps every category covered
+        # while fitting inside a daily budget.
+        picked: List[Dict[str, Any]] = []
+        counts: Dict[str, int] = {}
+        for q in questions:
+            qtype = str(q.get("qtype", "unknown"))
+            if counts.get(qtype, 0) < per_type:
+                counts[qtype] = counts.get(qtype, 0) + 1
+                picked.append(q)
+        questions = picked
+        log(f"per-type sample ({per_type}/type) -> {len(questions)} questions: "
+            f"{counts}")
     if limit:
         questions = questions[:limit]
 
@@ -264,7 +301,22 @@ def cli(argv=None) -> None:
     ap.add_argument("--no-llm", action="store_true",
                     help="deterministic mode: make no provider calls (always fast)")
     ap.add_argument("--no-llm-judge", action="store_true")
+    ap.add_argument("--agent-mode", default="",
+                    choices=["", "react", "hybrid", "plan"],
+                    help="agentic pipeline mode: react (LLM tool-calling only), "
+                         "hybrid (LLM + deterministic rescue), plan (deterministic "
+                         "planner/executor, no tool loop)")
+    ap.add_argument("--types", default="",
+                    help="comma filter on qtype, e.g. 'temporal,aggregation' "
+                         "(useful for quota-bounded LLM samples)")
+    ap.add_argument("--per-type", type=int, default=0,
+                    help="with --limit 0: take at most N questions per qtype")
     args = ap.parse_args(argv)
+
+    if args.agent_mode or args.types or args.per_type:
+        from config import config
+        if args.agent_mode:
+            config.agent.mode = args.agent_mode
 
     qpath = args.questions
     if not qpath:
@@ -274,7 +326,9 @@ def cli(argv=None) -> None:
          pipelines=[p for p in args.pipelines.split(",") if p],
          limit=args.limit, offset=args.offset,
          llm_judge=not args.no_llm_judge, resume=args.resume,
-         no_llm=args.no_llm)
+         no_llm=args.no_llm,
+         types=[t for t in args.types.split(",") if t],
+         per_type=args.per_type)
 
 
 if __name__ == "__main__":

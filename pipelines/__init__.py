@@ -33,6 +33,10 @@ def build_pipelines(index, llm=None, config=None):
         "confidence_threshold": agent_cfg.confidence_threshold,
         "stale_step_limit": agent_cfg.stale_step_limit,
         "max_widen_attempts": agent_cfg.max_widen_attempts,
+        "agent_mode": agent_cfg.mode,
+        "react_max_steps": agent_cfg.react_max_steps,
+        "react_retries": agent_cfg.react_retries,
+        "react_model": agent_cfg.react_model,
     } if agent_cfg is not None else None)
 
     return [

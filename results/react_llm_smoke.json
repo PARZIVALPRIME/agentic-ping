@@ -1,0 +1,977 @@
+[
+  {
+    "qid": "pub-001",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+    "gold": {
+      "answers": [
+        "5"
+      ],
+      "doc_ids": [
+        "Q47091419",
+        "Q47105341",
+        "Q47155365",
+        "Q47155371",
+        "Q47155408",
+        "Q47155425",
+        "Q47155467",
+        "Q47155505",
+        "Q47155541",
+        "Q47155555",
+        "Q47155815"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "5",
+        "citations": [
+          "Q47155555",
+          "Q47155815",
+          "Q47155505",
+          "Q47091419",
+          "Q47155365",
+          "Q47105341",
+          "Q47155425",
+          "Q47155541",
+          "Q47155408",
+          "Q47155467",
+          "Q47155371"
+        ],
+        "latency_ms": 2389.71,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "get_event_values",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 11,
+        "context_tokens": 0,
+        "input_tokens": 2171,
+        "output_tokens": 167,
+        "total_tokens": 2338,
+        "llm_calls": 2,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 2,
+        "candidates_considered": 11,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "detail": "field=competitors, season=Winter, sport=Biathlon, year_from=2018, year_to=2018",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Winter",
+                "sport": "Biathlon",
+                "year_from": 2018,
+                "year_to": 2018
+              },
+              "summary": "field=competitors values=11/11",
+              "result": "{\"field\": \"competitors\", \"num_matching_events\": 11, \"num_with_value\": 11, \"num_missing\": 0, \"values\": [80, 30, 72, 87, 58, 87, 87, 73, 86, 30, 60], \"pairs\": [{\"doc_id\": \"Q47155555\", \"value\": 80}, {\"doc_id\": \"Q47155815\", \"value\": 30}, {\"doc_id\": \"Q47155505\", \"value\": 72}, {\"doc_id\": \"Q47091419\", \"value\": 87}, {\"doc_id\": \"Q47155365\", \"value\": 58}, {\"doc_id\": \"Q47105341\", \"value\": 87}, {\"doc_id\": \"Q47155425\", \"value\": 87}, {\"doc_id\": \"Q47155541\", \"value\": 73}, {\"doc_id\": \"Q47155408\", \"value\": 86}, {\"doc_id\": \"Q47155467\", \"value\": 30}, {\"doc_id\": \"Q47155371\", \"value\": 60}], \"note\": \"values are in graph order, not sorted - sort/count them yourself\", \"doc_ids\": [\"Q47155555\", \"Q47155815\", \"Q47155505\", \"Q47091419\", \"Q47155365\", \"Q47105341\", \"Q47155425\", \"Q47155541\", \"Q47155408\", \"Q47155467\", \"Q47155371\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 11,
+            "latency_ms": 0.11,
+            "input_tokens": 890,
+            "output_tokens": 77
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=5, doc_ids=['Q47155555', 'Q47091419', 'Q47105341', 'Q47155425', 'Q47155408'], reasoning=Counted biathlon events in 2018 with competitors >73.",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "5",
+                "doc_ids": [
+                  "Q47155555",
+                  "Q47091419",
+                  "Q47105341",
+                  "Q47155425",
+                  "Q47155408"
+                ],
+                "reasoning": "Counted biathlon events in 2018 with competitors >73."
+              },
+              "summary": "answer=5",
+              "result": "{\"accepted\": true, \"answer\": \"5\", \"reasoning\": \"Counted biathlon events in 2018 with competitors >73.\", \"confidence\": 0.9, \"doc_ids\": [\"Q47155555\", \"Q47091419\", \"Q47105341\", \"Q47155425\", \"Q47155408\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 1281,
+            "output_tokens": 90
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:get_event_values",
+            "agent": "ReActAgent",
+            "detail": "field=competitors, season=Winter, sport=Biathlon, year_from=2018, year_to=2018",
+            "latency_ms": 0.11
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=5, doc_ids=['Q47155555', 'Q47091419', 'Q47105341', 'Q47155425', 'Q47155408'], reasoning=Counted biathlon events in 2018 with competitors >73.",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 890,
+            "output_tokens": 77,
+            "total_tokens": 967,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1281,
+            "output_tokens": 90,
+            "total_tokens": 1371,
+            "detail": "openai/gpt-oss-20b"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Winter",
+                "sport": "Biathlon",
+                "year_from": 2018,
+                "year_to": 2018
+              },
+              "summary": "field=competitors values=11/11",
+              "result": "{\"field\": \"competitors\", \"num_matching_events\": 11, \"num_with_value\": 11, \"num_missing\": 0, \"values\": [80, 30, 72, 87, 58, 87, 87, 73, 86, 30, 60], \"pairs\": [{\"doc_id\": \"Q47155555\", \"value\": 80}, {\"doc_id\": \"Q47155815\", \"value\": 30}, {\"doc_id\": \"Q47155505\", \"value\": 72}, {\"doc_id\": \"Q47091419\", \"value\": 87}, {\"doc_id\": \"Q47155365\", \"value\": 58}, {\"doc_id\": \"Q47105341\", \"value\": 87}, {\"doc_id\": \"Q47155425\", \"value\": 87}, {\"doc_id\": \"Q47155541\", \"value\": 73}, {\"doc_id\": \"Q47155408\", \"value\": 86}, {\"doc_id\": \"Q47155467\", \"value\": 30}, {\"doc_id\": \"Q47155371\", \"value\": 60}], \"note\": \"values are in graph order, not sorted - sort/count them yourself\", \"doc_ids\": [\"Q47155555\", \"Q47155815\", \"Q47155505\", \"Q47091419\", \"Q47155365\", \"Q47105341\", \"Q47155425\", \"Q47155541\", \"Q47155408\", \"Q47155467\", \"Q47155371\"]}"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "5",
+                "doc_ids": [
+                  "Q47155555",
+                  "Q47091419",
+                  "Q47105341",
+                  "Q47155425",
+                  "Q47155408"
+                ],
+                "reasoning": "Counted biathlon events in 2018 with competitors >73."
+              },
+              "summary": "answer=5",
+              "result": "{\"accepted\": true, \"answer\": \"5\", \"reasoning\": \"Counted biathlon events in 2018 with competitors >73.\", \"confidence\": 0.9, \"doc_ids\": [\"Q47155555\", \"Q47091419\", \"Q47105341\", \"Q47155425\", \"Q47155408\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "ReActAgent",
+            "mode": "hybrid",
+            "stop_reason": "submitted_answer",
+            "steps": 2
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 2
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+            "qtype": "aggregation",
+            "sport": "Biathlon",
+            "year": 2018,
+            "season": "Winter",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 73,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2018
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "Counted biathlon events in 2018 with competitors >73.",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Winter",
+                "sport": "Biathlon",
+                "year_from": 2018,
+                "year_to": 2018
+              },
+              "latency_ms": 0.11,
+              "error": "",
+              "doc_ids": [
+                "Q47155555",
+                "Q47155815",
+                "Q47155505",
+                "Q47091419",
+                "Q47155365",
+                "Q47105341",
+                "Q47155425",
+                "Q47155541",
+                "Q47155408",
+                "Q47155467",
+                "Q47155371"
+              ],
+              "summary": "field=competitors values=11/11"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "5",
+                "doc_ids": [
+                  "Q47155555",
+                  "Q47091419",
+                  "Q47105341",
+                  "Q47155425",
+                  "Q47155408"
+                ],
+                "reasoning": "Counted biathlon events in 2018 with competitors >73."
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ],
+              "summary": "answer=5"
+            }
+          ],
+          "docs_touched": 11,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-002",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+    "gold": {
+      "answers": [
+        "Chen Ding"
+      ],
+      "doc_ids": [
+        "Q1050909",
+        "Q26233122"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Chen Ding",
+        "citations": [
+          "Q1050909",
+          "Q2070009",
+          "Q956242",
+          "Q1753402",
+          "Q734020",
+          "Q2000999",
+          "Q591384",
+          "Q1649415",
+          "Q1771990",
+          "Q1636766"
+        ],
+        "latency_ms": 58542.66,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "search_events",
+          "get_event_details",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 2,
+        "input_tokens": 4344,
+        "output_tokens": 175,
+        "total_tokens": 4519,
+        "llm_calls": 3,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 3,
+        "candidates_considered": 10,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "limit=10, query=men's 20 kilometres walk, season=Summer, sport=Athletics, year_from=2010, year_to=2014",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "limit": 10,
+                "query": "men's 20 kilometres walk",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2010,
+                "year_to": 2014
+              },
+              "summary": "42 event(s), 10 shown",
+              "result": "{\"count\": 42, \"returned\": 10, \"events\": [{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q2070009\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 50 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q956242\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Women's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q1753402\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 10,000 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 10,…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 10,
+            "latency_ms": 0.87,
+            "input_tokens": 890,
+            "output_tokens": 77
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q1050909",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)",
+              "result": "{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"games\": \"2012 Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\", \"date\": \"4 August 2012\", \"competitors\": 56, \"nations\": 34, \"gold\": \"Chen Ding\", \"silver\": \"Erick Barrondo\", \"bronze\": \"Wang Zhen\", \"win\": \"1:18:46 OR\", \"prev\": \"Q853023\", \"next\": \"Q26233122\", \"doc_ids\": [\"Q1050909\"], \"text\": \"[Infobox Olympic event]\\n event: Men's 20 kilometres walk\\n games: 2012 Summer\\n venue: The Mall\\n date: 4 August 2012\\n competitors: 56\\n nations: 34\\n gold: Chen Ding\\n goldNOC: CHN\\n silver: Erick Barrondo\\n silverNOC: GUA\\n bronze: Wang Zhen\\n bronzeNOC: CHN\\n win_value: 1:18:46 OR\\n pre…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 1476,
+            "output_tokens": 36
+          },
+          {
+            "index": 3,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=Chen Ding, doc_ids=['Q1050909'], reasoning=The 2012 Summer Olympics were the edition immediately before 2016. The event page shows Chen Ding won gold.",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "doc_ids": [
+                  "Q1050909"
+                ],
+                "reasoning": "The 2012 Summer Olympics were the edition immediately before 2016. The event page shows Chen Ding won gold."
+              },
+              "summary": "answer=Chen Ding",
+              "result": "{\"accepted\": true, \"answer\": \"Chen Ding\", \"reasoning\": \"The 2012 Summer Olympics were the edition immediately before 2016. The event page shows Chen Ding won gold.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1050909\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 1978,
+            "output_tokens": 62
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "limit=10, query=men's 20 kilometres walk, season=Summer, sport=Athletics, year_from=2010, year_to=2014",
+            "latency_ms": 0.87
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q1050909",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=Chen Ding, doc_ids=['Q1050909'], reasoning=The 2012 Summer Olympics were the edition immediately before 2016. The event page shows Chen Ding won gold.",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 890,
+            "output_tokens": 77,
+            "total_tokens": 967,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1476,
+            "output_tokens": 36,
+            "total_tokens": 1512,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1978,
+            "output_tokens": 62,
+            "total_tokens": 2040,
+            "detail": "openai/gpt-oss-20b"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "limit": 10,
+                "query": "men's 20 kilometres walk",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2010,
+                "year_to": 2014
+              },
+              "summary": "42 event(s), 10 shown",
+              "result": "{\"count\": 42, \"returned\": 10, \"events\": [{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q2070009\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 50 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q956242\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Women's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q1753402\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 10,000 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 10,…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)",
+              "result": "{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"games\": \"2012 Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\", \"date\": \"4 August 2012\", \"competitors\": 56, \"nations\": 34, \"gold\": \"Chen Ding\", \"silver\": \"Erick Barrondo\", \"bronze\": \"Wang Zhen\", \"win\": \"1:18:46 OR\", \"prev\": \"Q853023\", \"next\": \"Q26233122\", \"doc_ids\": [\"Q1050909\"], \"text\": \"[Infobox Olympic event]\\n event: Men's 20 kilometres walk\\n games: 2012 Summer\\n venue: The Mall\\n date: 4 August 2012\\n competitors: 56\\n nations: 34\\n gold: Chen Ding\\n goldNOC: CHN\\n silver: Erick Barrondo\\n silverNOC: GUA\\n bronze: Wang Zhen\\n bronzeNOC: CHN\\n win_value: 1:18:46 OR\\n pre…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "doc_ids": [
+                  "Q1050909"
+                ],
+                "reasoning": "The 2012 Summer Olympics were the edition immediately before 2016. The event page shows Chen Ding won gold."
+              },
+              "summary": "answer=Chen Ding",
+              "result": "{\"accepted\": true, \"answer\": \"Chen Ding\", \"reasoning\": \"The 2012 Summer Olympics were the edition immediately before 2016. The event page shows Chen Ding won gold.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1050909\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "temporal",
+            "method": "ReActAgent",
+            "mode": "hybrid",
+            "stop_reason": "submitted_answer",
+            "steps": 3
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 3
+          },
+          "spec": {
+            "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+            "qtype": "temporal",
+            "sport": "Athletics",
+            "year": 0,
+            "season": "Summer",
+            "event_desc": "men s 20 kilometres walk",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": 2016,
+            "years_mentioned": [
+              2016
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "The 2012 Summer Olympics were the edition immediately before 2016. The event page shows Chen Ding won gold.",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "search_events",
+              "args": {
+                "limit": 10,
+                "query": "men's 20 kilometres walk",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2010,
+                "year_to": 2014
+              },
+              "latency_ms": 0.87,
+              "error": "",
+              "doc_ids": [
+                "Q1050909",
+                "Q2070009",
+                "Q956242",
+                "Q1753402",
+                "Q734020",
+                "Q2000999",
+                "Q591384",
+                "Q1649415",
+                "Q1771990",
+                "Q1636766"
+              ],
+              "summary": "42 event(s), 10 shown"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "latency_ms": 0.02,
+              "error": "",
+              "doc_ids": [
+                "Q1050909"
+              ],
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "doc_ids": [
+                  "Q1050909"
+                ],
+                "reasoning": "The 2012 Summer Olympics were the edition immediately before 2016. The event page shows Chen Ding won gold."
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q1050909"
+              ],
+              "summary": "answer=Chen Ding"
+            }
+          ],
+          "docs_touched": 10,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 0.1,
+          "citation_recall": 0.5,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-003",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+    "gold": {
+      "answers": [
+        "8"
+      ],
+      "doc_ids": [
+        "Q4354074",
+        "Q4354615",
+        "Q4357642",
+        "Q5395306",
+        "Q5481589",
+        "Q722895",
+        "Q7500827",
+        "Q7500829",
+        "Q7500830",
+        "Q7500832",
+        "Q7500834",
+        "Q7500836",
+        "Q7500838",
+        "Q7500840",
+        "Q7500842",
+        "Q7500847",
+        "Q7500849"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+        "qtype": "aggregation",
+        "answer": "8",
+        "citations": [
+          "Q722895",
+          "Q7500847",
+          "Q7500840",
+          "Q7500827",
+          "Q7500842",
+          "Q7500830",
+          "Q7500832",
+          "Q7500834",
+          "Q7500838",
+          "Q5395306",
+          "Q7500836",
+          "Q7500829",
+          "Q7500849",
+          "Q4354074",
+          "Q4354615",
+          "Q4357642",
+          "Q5481589"
+        ],
+        "latency_ms": 2900.7,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "get_event_values",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 17,
+        "context_tokens": 0,
+        "input_tokens": 2317,
+        "output_tokens": 242,
+        "total_tokens": 2559,
+        "llm_calls": 2,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 2,
+        "candidates_considered": 17,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "detail": "field=competitors, season=Summer, sport=shooting, year_from=2004, year_to=2004",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Summer",
+                "sport": "shooting",
+                "year_from": 2004,
+                "year_to": 2004
+              },
+              "summary": "field=competitors values=17/17",
+              "result": "{\"field\": \"competitors\", \"num_matching_events\": 17, \"num_with_value\": 17, \"num_missing\": 0, \"values\": [19, 12, 32, 42, 15, 17, 46, 41, 37, 40, 35, 47, 17, 44, 47, 25, 41], \"pairs\": [{\"doc_id\": \"Q722895\", \"value\": 19}, {\"doc_id\": \"Q7500847\", \"value\": 12}, {\"doc_id\": \"Q7500840\", \"value\": 32}, {\"doc_id\": \"Q7500827\", \"value\": 42}, {\"doc_id\": \"Q7500842\", \"value\": 15}, {\"doc_id\": \"Q7500830\", \"value\": 17}, {\"doc_id\": \"Q7500832\", \"value\": 46}, {\"doc_id\": \"Q7500834\", \"value\": 41}, {\"doc_id\": \"Q7500838\", \"value\": 37}, {\"doc_id\": \"Q5395306\", \"value\": 40}, {\"doc_id\": \"Q7500836\", \"value\": 35}, {\"doc_id\": \"Q7500829\", \"value\": 47}, {\"doc_id\": \"Q7500849\", \"value\": 17}, {\"doc_id\": \"Q4354074\", \"value\": 44}, {\"doc_id\": \"Q4354615\", \"value\": 47}, {\"doc_id\": \"Q4357642\", \"value\": 25}, {\"doc_id\": \"Q5481589\", \"value\": 41}], \"note\": \"values are in graph order, not sorted - sort/count them yourself\", \"doc_ids\": […"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 17,
+            "latency_ms": 0.12,
+            "input_tokens": 889,
+            "output_tokens": 82
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=8, doc_ids=['Q722895', 'Q7500847', 'Q7500840', 'Q7500827', 'Q7500842', 'Q7500830', 'Q7500832', 'Q7500834', 'Q7500838', 'Q5395306', 'Q7500836', 'Q7500829', 'Q7500849', 'Q4354074', 'Q4354615', 'Q",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "8",
+                "doc_ids": [
+                  "Q722895",
+                  "Q7500847",
+                  "Q7500840",
+                  "Q7500827",
+                  "Q7500842",
+                  "Q7500830",
+                  "Q7500832",
+                  "Q7500834",
+                  "Q7500838",
+                  "Q5395306",
+                  "Q7500836",
+                  "Q7500829",
+                  "Q7500849",
+                  "Q4354074",
+                  "Q4354615",
+                  "Q4357642",
+                  "Q5481589"
+                ],
+                "reasoning": "Counted competitors >37 from the list of 17 shooting events in 2004."
+              },
+              "summary": "answer=8",
+              "result": "{\"accepted\": true, \"answer\": \"8\", \"reasoning\": \"Counted competitors >37 from the list of 17 shooting events in 2004.\", \"confidence\": 0.9, \"doc_ids\": [\"Q722895\", \"Q7500847\", \"Q7500840\", \"Q7500827\", \"Q7500842\", \"Q7500830\", \"Q7500832\", \"Q7500834\", \"Q7500838\", \"Q5395306\", \"Q7500836\", \"Q7500829\", \"Q7500849\", \"Q4354074\", \"Q4354615\", \"Q4357642\", \"Q5481589\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 1428,
+            "output_tokens": 160
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:get_event_values",
+            "agent": "ReActAgent",
+            "detail": "field=competitors, season=Summer, sport=shooting, year_from=2004, year_to=2004",
+            "latency_ms": 0.12
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=8, doc_ids=['Q722895', 'Q7500847', 'Q7500840', 'Q7500827', 'Q7500842', 'Q7500830', 'Q7500832', 'Q7500834', 'Q7500838', 'Q5395306', 'Q7500836', 'Q7500829'",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 889,
+            "output_tokens": 82,
+            "total_tokens": 971,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1428,
+            "output_tokens": 160,
+            "total_tokens": 1588,
+            "detail": "openai/gpt-oss-20b"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Summer",
+                "sport": "shooting",
+                "year_from": 2004,
+                "year_to": 2004
+              },
+              "summary": "field=competitors values=17/17",
+              "result": "{\"field\": \"competitors\", \"num_matching_events\": 17, \"num_with_value\": 17, \"num_missing\": 0, \"values\": [19, 12, 32, 42, 15, 17, 46, 41, 37, 40, 35, 47, 17, 44, 47, 25, 41], \"pairs\": [{\"doc_id\": \"Q722895\", \"value\": 19}, {\"doc_id\": \"Q7500847\", \"value\": 12}, {\"doc_id\": \"Q7500840\", \"value\": 32}, {\"doc_id\": \"Q7500827\", \"value\": 42}, {\"doc_id\": \"Q7500842\", \"value\": 15}, {\"doc_id\": \"Q7500830\", \"value\": 17}, {\"doc_id\": \"Q7500832\", \"value\": 46}, {\"doc_id\": \"Q7500834\", \"value\": 41}, {\"doc_id\": \"Q7500838\", \"value\": 37}, {\"doc_id\": \"Q5395306\", \"value\": 40}, {\"doc_id\": \"Q7500836\", \"value\": 35}, {\"doc_id\": \"Q7500829\", \"value\": 47}, {\"doc_id\": \"Q7500849\", \"value\": 17}, {\"doc_id\": \"Q4354074\", \"value\": 44}, {\"doc_id\": \"Q4354615\", \"value\": 47}, {\"doc_id\": \"Q4357642\", \"value\": 25}, {\"doc_id\": \"Q5481589\", \"value\": 41}], \"note\": \"values are in graph order, not sorted - sort/count them yourself\", \"doc_ids\": […"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "8",
+                "doc_ids": [
+                  "Q722895",
+                  "Q7500847",
+                  "Q7500840",
+                  "Q7500827",
+                  "Q7500842",
+                  "Q7500830",
+                  "Q7500832",
+                  "Q7500834",
+                  "Q7500838",
+                  "Q5395306",
+                  "Q7500836",
+                  "Q7500829",
+                  "Q7500849",
+                  "Q4354074",
+                  "Q4354615",
+                  "Q4357642",
+                  "Q5481589"
+                ],
+                "reasoning": "Counted competitors >37 from the list of 17 shooting events in 2004."
+              },
+              "summary": "answer=8",
+              "result": "{\"accepted\": true, \"answer\": \"8\", \"reasoning\": \"Counted competitors >37 from the list of 17 shooting events in 2004.\", \"confidence\": 0.9, \"doc_ids\": [\"Q722895\", \"Q7500847\", \"Q7500840\", \"Q7500827\", \"Q7500842\", \"Q7500830\", \"Q7500832\", \"Q7500834\", \"Q7500838\", \"Q5395306\", \"Q7500836\", \"Q7500829\", \"Q7500849\", \"Q4354074\", \"Q4354615\", \"Q4357642\", \"Q5481589\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "ReActAgent",
+            "mode": "hybrid",
+            "stop_reason": "submitted_answer",
+            "steps": 2
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 2
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+            "qtype": "aggregation",
+            "sport": "Shooting",
+            "year": 2004,
+            "season": "Summer",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 37,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2004
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "Counted competitors >37 from the list of 17 shooting events in 2004.",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Summer",
+                "sport": "shooting",
+                "year_from": 2004,
+                "year_to": 2004
+              },
+              "latency_ms": 0.12,
+              "error": "",
+              "doc_ids": [
+                "Q722895",
+                "Q7500847",
+                "Q7500840",
+                "Q7500827",
+                "Q7500842",
+                "Q7500830",
+                "Q7500832",
+                "Q7500834",
+                "Q7500838",
+                "Q5395306",
+                "Q7500836",
+                "Q7500829",
+                "Q7500849",
+                "Q4354074",
+                "Q4354615",
+                "Q4357642",
+                "Q5481589"
+              ],
+              "summary": "field=competitors values=17/17"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "8",
+                "doc_ids": [
+                  "Q722895",
+                  "Q7500847",
+                  "Q7500840",
+                  "Q7500827",
+                  "Q7500842",
+                  "Q7500830",
+                  "Q7500832",
+                  "Q7500834",
+                  "Q7500838",
+                  "Q5395306",
+                  "Q7500836",
+                  "Q7500829",
+                  "Q7500849",
+                  "Q4354074",
+                  "Q4354615",
+                  "Q4357642",
+                  "Q5481589"
+                ],
+                "reasoning": "Counted competitors >37 from the list of 17 shooting events in 2004."
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q722895",
+                "Q7500847",
+                "Q7500840",
+                "Q7500827",
+                "Q7500842",
+                "Q7500830",
+                "Q7500832",
+                "Q7500834",
+                "Q7500838",
+                "Q5395306",
+                "Q7500836",
+                "Q7500829",
+                "Q7500849",
+                "Q4354074",
+                "Q4354615",
+                "Q4357642",
+                "Q5481589"
+              ],
+              "summary": "answer=8"
+            }
+          ],
+          "docs_touched": 17,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  }
+]

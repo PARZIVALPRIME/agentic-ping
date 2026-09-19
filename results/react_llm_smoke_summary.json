@@ -1,0 +1,86 @@
+{
+  "num_questions": 3,
+  "pipelines": {
+    "Agentic GraphRAG": {
+      "num_questions": 3,
+      "num_evaluated": 3,
+      "correct": 3,
+      "accuracy": 1.0,
+      "by_type": {
+        "lookup": {
+          "n": 0,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 0,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "aggregation": {
+          "n": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "superlative": {
+          "n": 0,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 21277.69,
+      "avg_context_tokens": 0.6667,
+      "avg_input_tokens": 2944.0,
+      "avg_output_tokens": 194.6667,
+      "avg_total_tokens": 3138.6667,
+      "avg_llm_calls": 2.3333,
+      "avg_retrieval_steps": 1.3333,
+      "avg_chunks_retrieved": 3.3333,
+      "avg_candidates_considered": 12.6667,
+      "total_tokens": 9416,
+      "avg_citation_precision": 0.7,
+      "avg_citation_recall": 0.8333,
+      "match_types": {
+        "exact": 3
+      },
+      "stop_reasons": {
+        "submitted_answer": 3
+      },
+      "strategy_adapted": 3,
+      "agents_used": [
+        "ReActAgent"
+      ]
+    }
+  },
+  "when_agents_matter": [],
+  "evaluator": {
+    "llm_judge_enabled": true,
+    "judge_calls": 0,
+    "judge_flips": 0,
+    "judge_tokens": 0
+  },
+  "llm": {
+    "available": true,
+    "provider": "groq",
+    "chat_model": "openai/gpt-oss-120b",
+    "eval_model": "qwen/qwen3.8-27b",
+    "num_calls": 7,
+    "failed_calls": 0,
+    "degraded": false,
+    "min_interval_s": 1.5,
+    "tpm_budget": 8000,
+    "rate_limit_events": 0,
+    "pace_sleeps": 6,
+    "pace_slept_s": 58.1,
+    "circuit": {
+      "threshold": 3,
+      "cooldown_s": 60.0,
+      "trips": 0,
+      "blocked_calls": 0,
+      "open": false
+    }
+  },
+  "wall_clock_s": 63.8
+}

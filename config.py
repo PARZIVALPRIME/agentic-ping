@@ -113,6 +113,15 @@ class AgentConfig:
         default_factory=lambda: int(_env("AGENT_STALE_STEP_LIMIT", default="2")))
     max_widen_attempts: int = field(
         default_factory=lambda: int(_env("AGENT_MAX_WIDEN_ATTEMPTS", default="2")))
+    # "react"    - the LLM drives every step through tool calls
+    # "hybrid"   - the LLM drives; deterministic solvers only rescue empty answers
+    # "plan"     - deterministic planner/executor only (no tool-calling loop)
+    mode: str = field(default_factory=lambda: _env("AGENT_MODE", default="hybrid"))
+    react_max_steps: int = field(
+        default_factory=lambda: int(_env("AGENT_REACT_MAX_STEPS", default="6")))
+    react_retries: int = field(
+        default_factory=lambda: int(_env("AGENT_REACT_RETRIES", default="2")))
+    react_model: str = field(default_factory=lambda: _env("AGENT_REACT_MODEL", default=""))
 
 
 @dataclass
@@ -160,6 +169,7 @@ class Config:
             "rag_top_k": self.benchmark.rag_top_k,
             "num_hops": self.benchmark.num_hops,
             "agent": {
+                "mode": self.agent.mode,
                 "max_steps": self.agent.max_steps,
                 "confidence_threshold": self.agent.confidence_threshold,
                 "stale_step_limit": self.agent.stale_step_limit,

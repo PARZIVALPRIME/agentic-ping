@@ -40,6 +40,7 @@ from .gap_detector import GapDetector
 from .graph_traverser import GraphTraverser
 from .lookup_resolver import LookupResolver
 from .planner import Planner
+from .react_agent import ReActAgent
 from .state import AgentState, PlannedStep
 from .synthesizer import Synthesizer
 from .temporal_reasoner import TemporalReasoner
@@ -51,6 +52,10 @@ DEFAULT_CFG = {
     "confidence_threshold": 0.9,
     "stale_step_limit": 2,
     "max_widen_attempts": 2,
+    "agent_mode": "hybrid",
+    "react_max_steps": 8,
+    "react_retries": 2,
+    "react_model": "",
 }
 
 KINDS = ("lookup", "multi_hop", "temporal", "aggregation", "superlative")
@@ -79,6 +84,7 @@ class OrchestratorAgent:
         self.evaluator = EvidenceEvaluator(kg)
         self.gap_detector = GapDetector()
         self.synth = Synthesizer(llm)
+        self.react = ReActAgent(kg, index, llm, self.cfg)
 
     # ── main entry point ───────────────────────────────────────────────
     def run(self, question: str, qid: str = "") -> AgentState:
@@ -86,6 +92,26 @@ class OrchestratorAgent:
         state = AgentState(question, spec, qid)
         state.kind = self._kind(spec.qtype)
 
+        mode = str(self.cfg.get("agent_mode", "hybrid") or "hybrid").lower()
+        if mode in ("react", "hybrid") and self.react.available:
+            self.react.run(question, qid, spec, state)
+            state.classification = {
+                "qtype": state.kind, "method": "ReActAgent", "mode": mode,
+                "stop_reason": state.stop_reason, "steps": state.iterations,
+            }
+            state.slot_report = {"method": "react_tool_calling",
+                                 "tool_calls": len(state.tool_calls)}
+            if state.answer or mode == "react":
+                return state
+            state.strategy_changes.append(
+                "fallback: deterministic planner/executor (ReAct produced no answer)")
+
+        self._run_deterministic(question, spec, state)
+        return state
+
+    def _run_deterministic(self, question: str, spec: QuerySpec,
+                           state: AgentState) -> None:
+        """The deterministic planner/executor path (rules + curated solvers)."""
         # 1. classification (rules + LLM refinement on the generic bucket)
         verdict = self.classifier.classify(question, spec, counter=state.tokens)
         if verdict["method"] != "rules" and verdict["qtype"] in KINDS:
@@ -115,7 +141,6 @@ class OrchestratorAgent:
 
         # 4. execute the plan (with adaptive recovery)
         self._execute(state)
-        return state
 
     # ── execution engine ───────────────────────────────────────────────
     def _execute(self, state: AgentState) -> None:

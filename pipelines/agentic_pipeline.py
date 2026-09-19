@@ -59,8 +59,14 @@ class AgenticPipeline:
         result.method = state.synth_source or "structured_agentic"
 
         trace_ops = [s.operation for s in state.trace]
-        result.retrieval_steps = sum(1 for op in trace_ops if op in RETRIEVAL_OPS)
-        result.tools_called = list(dict.fromkeys(trace_ops))
+        tool_names = [op.split("tool:", 1)[1] for op in trace_ops
+                      if op.startswith("tool:")]
+        result.retrieval_steps = sum(1 for op in trace_ops
+                                     if op in RETRIEVAL_OPS
+                                     or (op.startswith("tool:")
+                                         and op != "tool:submit_answer"))
+        result.tools_called = list(dict.fromkeys(
+            tool_names if tool_names else [op for op in trace_ops]))
         result.agents_invoked = list(dict.fromkeys(s.agent for s in state.trace))
         result.chunks_retrieved = len(state.chunks)
         result.docs_retrieved = len(state.documents)
@@ -88,13 +94,20 @@ class AgenticPipeline:
 
         context_text = "\n".join(c.get("text", "") for c in state.chunks.values())
         result.context_tokens = count_tokens(context_text)
-        result.evidence = [
-            {"agent": s.agent, "operation": s.operation, "observation": s.observation}
-            for s in state.trace if s.operation in EVIDENCE_OPS
-        ]
+        tool_steps = [s for s in state.trace if s.operation.startswith("tool:")]
+        if tool_steps:
+            result.evidence = [
+                {"agent": s.agent, "operation": s.operation,
+                 "observation": s.observation} for s in tool_steps]
+        else:
+            result.evidence = [
+                {"agent": s.agent, "operation": s.operation,
+                 "observation": s.observation}
+                for s in state.trace if s.operation in EVIDENCE_OPS]
         result.unresolved = list(state.missing_info)
         result.metadata = {
             "pipeline": self.name,
+            "agent_mode": self.engine.cfg.get("agent_mode"),
             "classification": state.classification,
             "slot_report": state.slot_report,
             "spec": state.spec.to_dict(),
@@ -104,6 +117,7 @@ class AgenticPipeline:
             "synth_source": state.synth_source,
             "rationale": state.rationale,
             "adjudication": state.adjudication,
+            "tool_calls": list(state.tool_calls),
             "docs_touched": len(state.documents),
             "plan_skips": [{"agent": s.agent, "operation": s.operation,
                             "skip_reason": s.skip_reason}

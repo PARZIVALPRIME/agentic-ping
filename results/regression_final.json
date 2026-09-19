@@ -1,0 +1,3627 @@
+[
+  {
+    "qid": "pub-001",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+    "gold": {
+      "answers": [
+        "5"
+      ],
+      "doc_ids": [
+        "Q47091419",
+        "Q47105341",
+        "Q47155365",
+        "Q47155371",
+        "Q47155408",
+        "Q47155425",
+        "Q47155467",
+        "Q47155505",
+        "Q47155541",
+        "Q47155555",
+        "Q47155815"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "5",
+        "citations": [
+          "Q47155555",
+          "Q47091419",
+          "Q47105341",
+          "Q47155425",
+          "Q47155408"
+        ],
+        "latency_ms": 0.77,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "count_threshold",
+          "verify_by_recount",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Aggregator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 11,
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Aggregator.count_threshold",
+          "Aggregator.verify_by_recount",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 11,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Biathlon; games->GAMES::2018::Winter",
+            "observation": {
+              "sport": "Biathlon",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2018::Winter",
+              "edition_chain": [],
+              "implied_event_pages": 11
+            },
+            "confidence_after": 0.0,
+            "new_documents": 11,
+            "latency_ms": 0.14,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 11,
+              "new_documents": 0,
+              "sample_titles": [
+                "Biathlon at the 2018 Winter Olympics – Mixed relay",
+                "Biathlon at the 2018 Winter Olympics – Men's mass start",
+                "Biathlon at the 2018 Winter Olympics – Women's relay",
+                "Biathlon at the 2018 Winter Olympics – Women's sprint",
+                "Biathlon at the 2018 Winter Olympics – Women's pursuit"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.1,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "detail": "filtered 11 enumerated events on competitors gt 73 -> 5 pass (field coverage 100%)",
+            "observation": {
+              "count": 5,
+              "candidates": 11,
+              "threshold": 73,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Aggregator",
+            "operation": "verify_by_recount",
+            "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
+            "observation": {
+              "recount": 5,
+              "documents_with_field": 11,
+              "recount_matches": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "candidate_set_size": 11,
+                "field_completeness": 1.0,
+                "exhaustive": true,
+                "independent_recount": 5,
+                "recount_matches": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
+            "observation": {
+              "answer": "5",
+              "source": "structured",
+              "rationale": "5 of 11 enumerated events had more than 73 competitors",
+              "citations": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.08,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Biathlon; games->GAMES::2018::Winter",
+            "latency_ms": 0.14
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
+            "latency_ms": 0.1
+          },
+          {
+            "operation": "count_threshold",
+            "agent": "Aggregator",
+            "detail": "filtered 11 enumerated events on competitors gt 73 -> 5 pass (field coverage 100%)",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "verify_by_recount",
+            "agent": "Aggregator",
+            "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
+            "latency_ms": 0.08
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "observation": {
+              "count": 5,
+              "candidates": 11,
+              "threshold": 73,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "5",
+              "source": "structured",
+              "rationale": "5 of 11 enumerated events had more than 73 competitors",
+              "citations": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'aggregation' template",
+            "rule_type": "aggregation",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+            "qtype": "aggregation",
+            "sport": "Biathlon",
+            "year": 2018,
+            "season": "Winter",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 73,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2018
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'aggregation'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "5 of 11 enumerated events had more than 73 competitors",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 11,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.4545,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-002",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+    "gold": {
+      "answers": [
+        "Chen Ding"
+      ],
+      "doc_ids": [
+        "Q1050909",
+        "Q26233122"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Chen Ding",
+        "citations": [
+          "Q1050909",
+          "Q26233122"
+        ],
+        "latency_ms": 138.28,
+        "retrieval_steps": 4,
+        "tools_called": [
+          "link_entities",
+          "resolve_anchor",
+          "resolve_event",
+          "verify_chain",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "TemporalReasoner",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 8,
+        "docs_retrieved": 60,
+        "context_tokens": 618,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "TemporalReasoner.resolve_anchor",
+          "TemporalReasoner.resolve_event",
+          "TemporalReasoner.verify_chain",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 65,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
+            "observation": {
+              "sport": "Athletics",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2012::Summer",
+              "edition_chain": [
+                "2016 Summer",
+                "2012 Summer"
+              ],
+              "implied_event_pages": 60
+            },
+            "confidence_after": 0.0,
+            "new_documents": 60,
+            "latency_ms": 0.25,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_anchor",
+            "detail": "latest Summer Games strictly before 2016 is 2012",
+            "observation": {
+              "anchor_year": 2016,
+              "resolved_year": 2012,
+              "season": "Summer",
+              "reasoning": "latest Summer Games strictly before 2016 is 2012"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
+            "observation": {
+              "sport": "Athletics",
+              "score": 1.0,
+              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+              "num_events_in_games": 42,
+              "candidates": [
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "score": 1.0
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                  "score": 0.828
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                  "score": 0.827
+                }
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 8.52,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "TemporalReasoner",
+            "operation": "verify_chain",
+            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
+            "observation": {
+              "consistent": true,
+              "details": [
+                "corpus infobox 'next' field points to 2016",
+                "edition chain confirms 2012 is immediately before 2016"
+              ],
+              "edition_years": [
+                1988,
+                1992,
+                1996,
+                2000,
+                2004,
+                2008,
+                2012,
+                2016
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.15,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?\" (widening=0) -> 12 passages (8 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q26233122",
+                "Q1050909",
+                "Q936622",
+                "Q936622",
+                "Q776944",
+                "Q3628781",
+                "Q853023",
+                "Q26233320"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 8,
+            "latency_ms": 128.75,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "sport": "Athletics",
+                "matched": {
+                  "doc_id": "Q1050909",
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "url": "https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk",
+                  "sport": "Athletics",
+                  "year": 2012,
+                  "season": "Summer",
+                  "games_label": "2012 Summer",
+                  "event_name": "Men's 20 kilometres walk",
+                  "competitors": 56,
+                  "nations": 34,
+                  "venue": "The Mall",
+                  "venues": "",
+                  "date_raw": "4 August 2012",
+                  "dates_raw": "",
+                  "gold": "Chen Ding",
+                  "silver": "Erick Barrondo",
+                  "bronze": "Wang Zhen",
+                  "win_value": "1:18:46 OR",
+                  "win_label": "",
+                  "prev": "2008",
+                  "next": "2016",
+                  "approx_tokens": 1261,
+                  "prev_doc_id": "Q853023",
+                  "next_doc_id": "Q26233122",
+                  "months_found": [
+                    "august"
+                  ],
+                  "days_found": [
+                    "4"
+                  ]
+                },
+                "score": 1.0,
+                "candidates": [
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                    "score": 1.0
+                  },
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                    "score": 0.828
+                  },
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                    "score": 0.827
+                  }
+                ],
+                "num_events_in_games": 42,
+                "anchor_confirmed": true,
+                "event_match_score": 1.0
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 7,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+            "observation": {
+              "answer": "Chen Ding",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+              "citations": [
+                "Q1050909",
+                "Q26233122"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.04,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
+            "latency_ms": 0.25
+          },
+          {
+            "operation": "resolve_anchor",
+            "agent": "TemporalReasoner",
+            "detail": "latest Summer Games strictly before 2016 is 2012",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "resolve_event",
+            "agent": "TemporalReasoner",
+            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
+            "latency_ms": 8.52
+          },
+          {
+            "operation": "verify_chain",
+            "agent": "TemporalReasoner",
+            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
+            "latency_ms": 0.15
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
+            "latency_ms": 128.75
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
+            "latency_ms": 0.04
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "observation": {
+              "sport": "Athletics",
+              "score": 1.0,
+              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+              "num_events_in_games": 42,
+              "candidates": [
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "score": 1.0
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                  "score": 0.828
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                  "score": 0.827
+                }
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Chen Ding",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+              "citations": [
+                "Q1050909",
+                "Q26233122"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "temporal",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'temporal' template",
+            "rule_type": "temporal",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+            "qtype": "temporal",
+            "sport": "Athletics",
+            "year": 0,
+            "season": "Summer",
+            "event_desc": "men s 20 kilometres walk",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": 2016,
+            "years_mentioned": [
+              2016
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'temporal'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 60,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-003",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+    "gold": {
+      "answers": [
+        "8"
+      ],
+      "doc_ids": [
+        "Q4354074",
+        "Q4354615",
+        "Q4357642",
+        "Q5395306",
+        "Q5481589",
+        "Q722895",
+        "Q7500827",
+        "Q7500829",
+        "Q7500830",
+        "Q7500832",
+        "Q7500834",
+        "Q7500836",
+        "Q7500838",
+        "Q7500840",
+        "Q7500842",
+        "Q7500847",
+        "Q7500849"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+        "qtype": "aggregation",
+        "answer": "8",
+        "citations": [
+          "Q7500827",
+          "Q7500832",
+          "Q7500834",
+          "Q5395306",
+          "Q7500829",
+          "Q4354074",
+          "Q4354615",
+          "Q5481589"
+        ],
+        "latency_ms": 0.71,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "count_threshold",
+          "verify_by_recount",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Aggregator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 17,
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Aggregator.count_threshold",
+          "Aggregator.verify_by_recount",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 17,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Shooting; games->GAMES::2004::Summer",
+            "observation": {
+              "sport": "Shooting",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2004::Summer",
+              "edition_chain": [],
+              "implied_event_pages": 17
+            },
+            "confidence_after": 0.0,
+            "new_documents": 17,
+            "latency_ms": 0.15,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 17,
+              "new_documents": 0,
+              "sample_titles": [
+                "Shooting at the 2004 Summer Olympics – Men's 10 metre running target",
+                "Shooting at the 2004 Summer Olympics – Women's skeet",
+                "Shooting at the 2004 Summer Olympics – Women's 50 metre rifle three positions",
+                "Shooting at the 2004 Summer Olympics – Men's 50 metre pistol",
+                "Shooting at the 2004 Summer Olympics – Women's double trap"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.13,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
+            "observation": {
+              "count": 8,
+              "candidates": 17,
+              "threshold": 37,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q7500827",
+                "Q7500832",
+                "Q7500834",
+                "Q5395306",
+                "Q7500829",
+                "Q4354074",
+                "Q4354615",
+                "Q5481589"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Aggregator",
+            "operation": "verify_by_recount",
+            "detail": "independent recount -> 8 (documents with the field: 17); matches the primary count",
+            "observation": {
+              "recount": 8,
+              "documents_with_field": 17,
+              "recount_matches": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "candidate_set_size": 17,
+                "field_completeness": 1.0,
+                "exhaustive": true,
+                "independent_recount": 8,
+                "recount_matches": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
+            "observation": {
+              "answer": "8",
+              "source": "structured",
+              "rationale": "8 of 17 enumerated events had more than 37 competitors",
+              "citations": [
+                "Q7500827",
+                "Q7500832",
+                "Q7500834",
+                "Q5395306",
+                "Q7500829",
+                "Q4354074",
+                "Q4354615",
+                "Q5481589"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.08,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Shooting; games->GAMES::2004::Summer",
+            "latency_ms": 0.15
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
+            "latency_ms": 0.13
+          },
+          {
+            "operation": "count_threshold",
+            "agent": "Aggregator",
+            "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "verify_by_recount",
+            "agent": "Aggregator",
+            "detail": "independent recount -> 8 (documents with the field: 17); matches the primary count",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
+            "latency_ms": 0.08
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "observation": {
+              "count": 8,
+              "candidates": 17,
+              "threshold": 37,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q7500827",
+                "Q7500832",
+                "Q7500834",
+                "Q5395306",
+                "Q7500829",
+                "Q4354074",
+                "Q4354615",
+                "Q5481589"
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "8",
+              "source": "structured",
+              "rationale": "8 of 17 enumerated events had more than 37 competitors",
+              "citations": [
+                "Q7500827",
+                "Q7500832",
+                "Q7500834",
+                "Q5395306",
+                "Q7500829",
+                "Q4354074",
+                "Q4354615",
+                "Q5481589"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'aggregation' template",
+            "rule_type": "aggregation",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+            "qtype": "aggregation",
+            "sport": "Shooting",
+            "year": 2004,
+            "season": "Summer",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 37,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2004
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'aggregation'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "8 of 17 enumerated events had more than 37 competitors",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 17,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.4706,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-004",
+    "qtype": "superlative",
+    "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+    "gold": {
+      "answers": [
+        "Athletics at the 2008 Summer Olympics – Men's marathon"
+      ],
+      "doc_ids": [
+        "Q1005784",
+        "Q1043342",
+        "Q1043347",
+        "Q1043354",
+        "Q1043361",
+        "Q1066390",
+        "Q1084677",
+        "Q247070",
+        "Q257545",
+        "Q288549",
+        "Q517035",
+        "Q544177",
+        "Q656634",
+        "Q657467",
+        "Q677027",
+        "Q693595",
+        "Q743905",
+        "Q744487",
+        "Q754844",
+        "Q766954",
+        "Q830711",
+        "Q847592",
+        "Q848278",
+        "Q848291",
+        "Q853003",
+        "Q853023",
+        "Q853040",
+        "Q853049",
+        "Q853072",
+        "Q899312",
+        "Q903439",
+        "Q904345",
+        "Q916976",
+        "Q917323",
+        "Q917328",
+        "Q917333",
+        "Q917348",
+        "Q922248",
+        "Q922361",
+        "Q932865",
+        "Q947678",
+        "Q947691",
+        "Q947750"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+        "qtype": "superlative",
+        "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+        "citations": [
+          "Q693595"
+        ],
+        "latency_ms": 0.59,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "arg_extreme",
+          "verify_extreme",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Comparator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 43,
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "no_new_information",
+        "confidence": 0.85,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Comparator.arg_extreme",
+          "Comparator.verify_extreme",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 43,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Athletics; games->GAMES::2008::Summer",
+            "observation": {
+              "sport": "Athletics",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2008::Summer",
+              "edition_chain": [],
+              "implied_event_pages": 43
+            },
+            "confidence_after": 0.0,
+            "new_documents": 43,
+            "latency_ms": 0.15,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 43 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 43,
+              "new_documents": 0,
+              "sample_titles": [
+                "Athletics at the 2008 Summer Olympics – Men's 110 metres hurdles",
+                "Athletics at the 2008 Summer Olympics – Men's decathlon",
+                "Athletics at the 2008 Summer Olympics – Men's high jump",
+                "Athletics at the 2008 Summer Olympics – Women's 1500 metres",
+                "Athletics at the 2008 Summer Olympics – Women's discus throw"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.11,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Comparator",
+            "operation": "arg_extreme",
+            "detail": "argmax over 43 events -> \"Athletics at the 2008 Summer Olympics – Men's marathon\" (95); margin over runner-up: 10",
+            "observation": {
+              "winner": "Athletics at the 2008 Summer Olympics – Men's marathon",
+              "winner_doc_id": "Q693595",
+              "winner_value": 95,
+              "runner_up": "Athletics at the 2008 Summer Olympics – Women's 100 metres",
+              "margin": 10,
+              "candidates": 43,
+              "missing_field": 0,
+              "unique_winner": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.04,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Comparator",
+            "operation": "verify_extreme",
+            "detail": "cross-check of the extreme value (no violations) across 43 documents",
+            "observation": {
+              "verified": true,
+              "extreme_value": 95,
+              "violations": [],
+              "documents_with_field": 43
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.85, sufficient",
+            "observation": {
+              "confidence": 0.85,
+              "sufficient": true,
+              "signals": {
+                "candidates": 43,
+                "margin": 10,
+                "unique_winner": true,
+                "extreme_verified": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.85,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer=\"Athletics at the 2008 Summer Olympics – Men's marathon\" citing 1 document(s) :: 'Athletics at the 2008 Summer Olympics – Men's marathon' had the highest competitor count (95) among 43 enumerated events",
+            "observation": {
+              "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+              "source": "structured",
+              "rationale": "'Athletics at the 2008 Summer Olympics – Men's marathon' had the highest competitor count (95) among 43 enumerated events",
+              "citations": [
+                "Q693595"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.85,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Athletics; games->GAMES::2008::Summer",
+            "latency_ms": 0.15
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 43 event pages (0 new)",
+            "latency_ms": 0.11
+          },
+          {
+            "operation": "arg_extreme",
+            "agent": "Comparator",
+            "detail": "argmax over 43 events -> \"Athletics at the 2008 Summer Olympics – Men's marathon\" (95); margin over runner-up: 10",
+            "latency_ms": 0.04
+          },
+          {
+            "operation": "verify_extreme",
+            "agent": "Comparator",
+            "detail": "cross-check of the extreme value (no violations) across 43 documents",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.85, sufficient",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer=\"Athletics at the 2008 Summer Olympics – Men's marathon\" citing 1 document(s) :: 'Athletics at the 2008 Summer Olympics – Men's marathon' ha",
+            "latency_ms": 0.03
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "Comparator",
+            "operation": "arg_extreme",
+            "observation": {
+              "winner": "Athletics at the 2008 Summer Olympics – Men's marathon",
+              "winner_doc_id": "Q693595",
+              "winner_value": 95,
+              "runner_up": "Athletics at the 2008 Summer Olympics – Women's 100 metres",
+              "margin": 10,
+              "candidates": 43,
+              "missing_field": 0,
+              "unique_winner": true
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+              "source": "structured",
+              "rationale": "'Athletics at the 2008 Summer Olympics – Men's marathon' had the highest competitor count (95) among 43 enumerated events",
+              "citations": [
+                "Q693595"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "superlative",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'superlative' template",
+            "rule_type": "superlative",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+            "qtype": "superlative",
+            "sport": "Athletics",
+            "year": 2008,
+            "season": "Summer",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2008
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'superlative'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "'Athletics at the 2008 Summer Olympics – Men's marathon' had the highest competitor count (95) among 43 enumerated events",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 43,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.0233,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-005",
+    "qtype": "multi_hop",
+    "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+    "gold": {
+      "answers": [
+        "Naim Süleymanoğlu"
+      ],
+      "doc_ids": [
+        "Q25239316"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+        "qtype": "multi_hop",
+        "answer": "Naim Süleymanoğlu",
+        "citations": [
+          "Q25239316"
+        ],
+        "latency_ms": 60.71,
+        "retrieval_steps": 4,
+        "tools_called": [
+          "link_entities",
+          "resolve_venue_date",
+          "traverse_graph",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "LookupResolver",
+          "GraphTraverser",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 12,
+        "docs_retrieved": 5,
+        "context_tokens": 740,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.9,
+        "plan": [
+          "EntityLinker.link_entities",
+          "LookupResolver.resolve_venue_date",
+          "GraphTraverser.traverse_graph",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 12,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "venue->1 vertex/vertices (score 1.0)",
+            "observation": {
+              "sport": null,
+              "sport_score": 0.0,
+              "venue_score": 1.0,
+              "games": null,
+              "edition_chain": [],
+              "implied_event_pages": 5
+            },
+            "confidence_after": 0.0,
+            "new_documents": 5,
+            "latency_ms": 0.05,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "LookupResolver",
+            "operation": "resolve_venue_date",
+            "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
+            "observation": {
+              "matched": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+              "score": 1.0,
+              "venue_affinity": 1.0,
+              "num_candidates": 5,
+              "disambiguation": {
+                "ambiguous": true,
+                "top": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+                "runner_up": "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
+                "date_score_gap": 0.05,
+                "separating_signal": "venue/sport affinity"
+              },
+              "top_candidates": [
+                "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+                "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
+                "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.56,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=HELD_AT -> 5 event pages (0 new)",
+            "observation": {
+              "strategy": "HELD_AT",
+              "relations": [
+                "HELD_AT"
+              ],
+              "events": 5,
+              "new_documents": 0,
+              "sample_titles": [
+                "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
+                "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg",
+                "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+                "Weightlifting at the 1988 Summer Olympics – Men's 52 kg",
+                "Weightlifting at the 1988 Summer Olympics – Men's +110 kg"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 passages (12 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q25239316",
+                "Q25239321",
+                "Q25239317",
+                "Q25239314",
+                "Q25239533",
+                "Q10719573",
+                "Q10522554",
+                "Q55615398"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 12,
+            "latency_ms": 59.69,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.90, sufficient",
+            "observation": {
+              "confidence": 0.9,
+              "sufficient": true,
+              "signals": {
+                "score": 1.0,
+                "venue_affinity": 1.0,
+                "venue_score": 1.0,
+                "num_candidates": 5
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Naim Süleymanoğlu' citing 1 document(s) :: gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
+            "observation": {
+              "answer": "Naim Süleymanoğlu",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
+              "citations": [
+                "Q25239316"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "venue->1 vertex/vertices (score 1.0)",
+            "latency_ms": 0.05
+          },
+          {
+            "operation": "resolve_venue_date",
+            "agent": "LookupResolver",
+            "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
+            "latency_ms": 0.56
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=HELD_AT -> 5 event pages (0 new)",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 p",
+            "latency_ms": 59.69
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.90, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Naim Süleymanoğlu' citing 1 document(s) :: gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer ",
+            "latency_ms": 0.03
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "LookupResolver",
+            "operation": "resolve_venue_date",
+            "observation": {
+              "matched": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+              "score": 1.0,
+              "venue_affinity": 1.0,
+              "num_candidates": 5,
+              "disambiguation": {
+                "ambiguous": true,
+                "top": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+                "runner_up": "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
+                "date_score_gap": 0.05,
+                "separating_signal": "venue/sport affinity"
+              },
+              "top_candidates": [
+                "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+                "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
+                "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg"
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Naim Süleymanoğlu",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
+              "citations": [
+                "Q25239316"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "multi_hop",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'multi_hop' template",
+            "rule_type": "multi_hop",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+            "qtype": "multi_hop",
+            "sport": "",
+            "year": 0,
+            "season": "",
+            "event_desc": "",
+            "venue": "Olympic Weightlifting Gymnasium",
+            "date_text": "20 September 1988",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              1988
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'multi_hop'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 5,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-006",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?",
+    "gold": {
+      "answers": [
+        "Rafaela Silva"
+      ],
+      "doc_ids": [
+        "Q26217865",
+        "Q65235550"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?",
+        "qtype": "temporal",
+        "answer": "Rafaela Silva",
+        "citations": [
+          "Q26217865",
+          "Q65235550"
+        ],
+        "latency_ms": 120.1,
+        "retrieval_steps": 4,
+        "tools_called": [
+          "link_entities",
+          "resolve_anchor",
+          "resolve_event",
+          "verify_chain",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "TemporalReasoner",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 60,
+        "context_tokens": 388,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "TemporalReasoner.resolve_anchor",
+          "TemporalReasoner.resolve_event",
+          "TemporalReasoner.verify_chain",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 66,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Judo; games->GAMES::2016::Summer; immediately-previous edition->2016",
+            "observation": {
+              "sport": "Judo",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2016::Summer",
+              "edition_chain": [
+                "2020 Summer",
+                "2016 Summer"
+              ],
+              "implied_event_pages": 60
+            },
+            "confidence_after": 0.0,
+            "new_documents": 60,
+            "latency_ms": 0.43,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_anchor",
+            "detail": "latest Summer Games strictly before 2020 is 2016",
+            "observation": {
+              "anchor_year": 2020,
+              "resolved_year": 2016,
+              "season": "Summer",
+              "reasoning": "latest Summer Games strictly before 2020 is 2016"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.04,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "detail": "matched event \"Judo at the 2016 Summer Olympics – Women's 57 kg\" (score 1.0) among 14 events in 2016 Summer",
+            "observation": {
+              "sport": "Judo",
+              "score": 1.0,
+              "matched": "Judo at the 2016 Summer Olympics – Women's 57 kg",
+              "num_events_in_games": 14,
+              "candidates": [
+                {
+                  "title": "Judo at the 2016 Summer Olympics – Women's 57 kg",
+                  "score": 1.0
+                },
+                {
+                  "title": "Judo at the 2016 Summer Olympics – Women's 70 kg",
+                  "score": 0.778
+                },
+                {
+                  "title": "Judo at the 2016 Summer Olympics – Women's 78 kg",
+                  "score": 0.778
+                }
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 2.14,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "TemporalReasoner",
+            "operation": "verify_chain",
+            "detail": "corpus infobox 'next' field points to 2020; edition chain confirms 2016 is immediately before 2020",
+            "observation": {
+              "consistent": true,
+              "details": [
+                "corpus infobox 'next' field points to 2020",
+                "edition chain confirms 2016 is immediately before 2020"
+              ],
+              "edition_years": [
+                2000,
+                2004,
+                2008,
+                2012,
+                2016,
+                2020
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.07,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?\" (widening=0) -> 12 passages (10 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q65235550",
+                "Q65235550",
+                "Q26217865",
+                "Q65235537",
+                "Q3811005",
+                "Q972253",
+                "Q10466379",
+                "Q10466403"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 10,
+            "latency_ms": 116.83,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "sport": "Judo",
+                "matched": {
+                  "doc_id": "Q26217865",
+                  "title": "Judo at the 2016 Summer Olympics – Women's 57 kg",
+                  "url": "https://en.wikipedia.org/wiki/Judo_at_the_2016_Summer_Olympics_%E2%80%93_Women%27s_57_kg",
+                  "sport": "Judo",
+                  "year": 2016,
+                  "season": "Summer",
+                  "games_label": "2016 Summer",
+                  "event_name": "Women's 57 kg",
+                  "competitors": 23,
+                  "nations": 23,
+                  "venue": "Carioca Arena 2",
+                  "venues": "",
+                  "date_raw": "8 August 2016",
+                  "dates_raw": "",
+                  "gold": "Rafaela Silva",
+                  "silver": "Sumiya Dorjsuren",
+                  "bronze": "Telma Monteiro",
+                  "win_value": "",
+                  "win_label": "",
+                  "prev": "2012",
+                  "next": "2020",
+                  "approx_tokens": 318,
+                  "prev_doc_id": "Q1064016",
+                  "next_doc_id": "Q65235550",
+                  "months_found": [
+                    "august"
+                  ],
+                  "days_found": [
+                    "8"
+                  ]
+                },
+                "score": 1.0,
+                "candidates": [
+                  {
+                    "title": "Judo at the 2016 Summer Olympics – Women's 57 kg",
+                    "score": 1.0
+                  },
+                  {
+                    "title": "Judo at the 2016 Summer Olympics – Women's 70 kg",
+                    "score": 0.778
+                  },
+                  {
+                    "title": "Judo at the 2016 Summer Olympics – Women's 78 kg",
+                    "score": 0.778
+                  }
+                ],
+                "num_events_in_games": 14,
+                "anchor_confirmed": true,
+                "event_match_score": 1.0
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 7,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Rafaela Silva' citing 2 document(s) :: gold medallist read from 'Judo at the 2016 Summer Olympics – Women's 57 kg' (2016 Summer Olympics)",
+            "observation": {
+              "answer": "Rafaela Silva",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Judo at the 2016 Summer Olympics – Women's 57 kg' (2016 Summer Olympics)",
+              "citations": [
+                "Q26217865",
+                "Q65235550"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.04,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Judo; games->GAMES::2016::Summer; immediately-previous edition->2016",
+            "latency_ms": 0.43
+          },
+          {
+            "operation": "resolve_anchor",
+            "agent": "TemporalReasoner",
+            "detail": "latest Summer Games strictly before 2020 is 2016",
+            "latency_ms": 0.04
+          },
+          {
+            "operation": "resolve_event",
+            "agent": "TemporalReasoner",
+            "detail": "matched event \"Judo at the 2016 Summer Olympics – Women's 57 kg\" (score 1.0) among 14 events in 2016 Summer",
+            "latency_ms": 2.14
+          },
+          {
+            "operation": "verify_chain",
+            "agent": "TemporalReasoner",
+            "detail": "corpus infobox 'next' field points to 2020; edition chain confirms 2016 is immediately before 2020",
+            "latency_ms": 0.07
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?\" (widening=",
+            "latency_ms": 116.83
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Rafaela Silva' citing 2 document(s) :: gold medallist read from 'Judo at the 2016 Summer Olympics – Women's 57 kg' (2016 Summer Olympics)",
+            "latency_ms": 0.04
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "observation": {
+              "sport": "Judo",
+              "score": 1.0,
+              "matched": "Judo at the 2016 Summer Olympics – Women's 57 kg",
+              "num_events_in_games": 14,
+              "candidates": [
+                {
+                  "title": "Judo at the 2016 Summer Olympics – Women's 57 kg",
+                  "score": 1.0
+                },
+                {
+                  "title": "Judo at the 2016 Summer Olympics – Women's 70 kg",
+                  "score": 0.778
+                },
+                {
+                  "title": "Judo at the 2016 Summer Olympics – Women's 78 kg",
+                  "score": 0.778
+                }
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Rafaela Silva",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Judo at the 2016 Summer Olympics – Women's 57 kg' (2016 Summer Olympics)",
+              "citations": [
+                "Q26217865",
+                "Q65235550"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "temporal",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'temporal' template",
+            "rule_type": "temporal",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?",
+            "qtype": "temporal",
+            "sport": "Judo",
+            "year": 0,
+            "season": "Summer",
+            "event_desc": "women s 57 kg",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": 2020,
+            "years_mentioned": [
+              2020
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'temporal'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "gold medallist read from 'Judo at the 2016 Summer Olympics – Women's 57 kg' (2016 Summer Olympics)",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 60,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-007",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?",
+    "gold": {
+      "answers": [
+        "Renaud Lavillenie"
+      ],
+      "doc_ids": [
+        "Q2000968",
+        "Q26208457"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Renaud Lavillenie",
+        "citations": [
+          "Q2000968",
+          "Q26208457"
+        ],
+        "latency_ms": 143.25,
+        "retrieval_steps": 4,
+        "tools_called": [
+          "link_entities",
+          "resolve_anchor",
+          "resolve_event",
+          "verify_chain",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "TemporalReasoner",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 6,
+        "docs_retrieved": 60,
+        "context_tokens": 322,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.97,
+        "plan": [
+          "EntityLinker.link_entities",
+          "TemporalReasoner.resolve_anchor",
+          "TemporalReasoner.resolve_event",
+          "TemporalReasoner.verify_chain",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 62,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
+            "observation": {
+              "sport": "Athletics",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2012::Summer",
+              "edition_chain": [
+                "2016 Summer",
+                "2012 Summer"
+              ],
+              "implied_event_pages": 60
+            },
+            "confidence_after": 0.0,
+            "new_documents": 60,
+            "latency_ms": 0.37,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_anchor",
+            "detail": "latest Summer Games strictly before 2016 is 2012",
+            "observation": {
+              "anchor_year": 2016,
+              "resolved_year": 2012,
+              "season": "Summer",
+              "reasoning": "latest Summer Games strictly before 2016 is 2012"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's pole vault\" (score 1.0) among 42 events in 2012 Summer",
+            "observation": {
+              "sport": "Athletics",
+              "score": 1.0,
+              "matched": "Athletics at the 2012 Summer Olympics – Men's pole vault",
+              "num_events_in_games": 42,
+              "candidates": [
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's pole vault",
+                  "score": 1.0
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Women's pole vault",
+                  "score": 0.788
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's marathon",
+                  "score": 0.6
+                }
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 7.34,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "TemporalReasoner",
+            "operation": "verify_chain",
+            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
+            "observation": {
+              "consistent": true,
+              "details": [
+                "corpus infobox 'next' field points to 2016",
+                "edition chain confirms 2012 is immediately before 2016"
+              ],
+              "edition_years": [
+                1988,
+                1996,
+                2000,
+                2004,
+                2008,
+                2012,
+                2016
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.37,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?\" (widening=0) -> 12 passages (6 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q26208457",
+                "Q26086643",
+                "Q26208457",
+                "Q26224939",
+                "Q26208457",
+                "Q2000968",
+                "Q1433109",
+                "Q2000968"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 6,
+            "latency_ms": 134.69,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "sport": "Athletics",
+                "matched": {
+                  "doc_id": "Q2000968",
+                  "title": "Athletics at the 2012 Summer Olympics – Men's pole vault",
+                  "url": "https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_pole_vault",
+                  "sport": "Athletics",
+                  "year": 2012,
+                  "season": "Summer",
+                  "games_label": "2012 Summer",
+                  "event_name": "Men's pole vault",
+                  "competitors": 32,
+                  "nations": 23,
+                  "venue": "Olympic Stadium",
+                  "venues": "",
+                  "date_raw": "8–10 August",
+                  "dates_raw": "",
+                  "gold": "Renaud Lavillenie",
+                  "silver": "Björn Otto",
+                  "bronze": "Raphael Holzdeppe",
+                  "win_value": "5.97 athletics",
+                  "win_label": "Winning height",
+                  "prev": "2008",
+                  "next": "2016",
+                  "approx_tokens": 1724,
+                  "prev_doc_id": "Q903439",
+                  "next_doc_id": "Q26208457",
+                  "months_found": [
+                    "august"
+                  ],
+                  "days_found": [
+                    "8",
+                    "10"
+                  ]
+                },
+                "score": 1.0,
+                "candidates": [
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Men's pole vault",
+                    "score": 1.0
+                  },
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Women's pole vault",
+                    "score": 0.788
+                  },
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Men's marathon",
+                    "score": 0.6
+                  }
+                ],
+                "num_events_in_games": 42,
+                "anchor_confirmed": true,
+                "event_match_score": 1.0
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 7,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Renaud Lavillenie' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's pole vault' (2012 Summer Olympics)",
+            "observation": {
+              "answer": "Renaud Lavillenie",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's pole vault' (2012 Summer Olympics)",
+              "citations": [
+                "Q2000968",
+                "Q26208457"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
+            "latency_ms": 0.37
+          },
+          {
+            "operation": "resolve_anchor",
+            "agent": "TemporalReasoner",
+            "detail": "latest Summer Games strictly before 2016 is 2012",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "resolve_event",
+            "agent": "TemporalReasoner",
+            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's pole vault\" (score 1.0) among 42 events in 2012 Summer",
+            "latency_ms": 7.34
+          },
+          {
+            "operation": "verify_chain",
+            "agent": "TemporalReasoner",
+            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
+            "latency_ms": 0.37
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?\" (w",
+            "latency_ms": 134.69
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Renaud Lavillenie' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's pole vault' (2012 Summer",
+            "latency_ms": 0.03
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "observation": {
+              "sport": "Athletics",
+              "score": 1.0,
+              "matched": "Athletics at the 2012 Summer Olympics – Men's pole vault",
+              "num_events_in_games": 42,
+              "candidates": [
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's pole vault",
+                  "score": 1.0
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Women's pole vault",
+                  "score": 0.788
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's marathon",
+                  "score": 0.6
+                }
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Renaud Lavillenie",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's pole vault' (2012 Summer Olympics)",
+              "citations": [
+                "Q2000968",
+                "Q26208457"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "temporal",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'temporal' template",
+            "rule_type": "temporal",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?",
+            "qtype": "temporal",
+            "sport": "Athletics",
+            "year": 0,
+            "season": "Summer",
+            "event_desc": "men s pole vault",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": 2016,
+            "years_mentioned": [
+              2016
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'temporal'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's pole vault' (2012 Summer Olympics)",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 60,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-008",
+    "qtype": "superlative",
+    "question": "According to the provided corpus, which sailing event at the 2000 Summer Olympics had the highest number of competitors?",
+    "gold": {
+      "answers": [
+        "Sailing at the 2000 Summer Olympics – Soling"
+      ],
+      "doc_ids": [
+        "Q7400327",
+        "Q7400328",
+        "Q7400329",
+        "Q7400330",
+        "Q7400332",
+        "Q7400333",
+        "Q7400334",
+        "Q7400335"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, which sailing event at the 2000 Summer Olympics had the highest number of competitors?",
+        "qtype": "superlative",
+        "answer": "Sailing at the 2000 Summer Olympics – Soling",
+        "citations": [
+          "Q7400333"
+        ],
+        "latency_ms": 0.61,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "arg_extreme",
+          "verify_extreme",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Comparator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 8,
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "no_new_information",
+        "confidence": 0.85,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Comparator.arg_extreme",
+          "Comparator.verify_extreme",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 8,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Sailing; games->GAMES::2000::Summer",
+            "observation": {
+              "sport": "Sailing",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2000::Summer",
+              "edition_chain": [],
+              "implied_event_pages": 8
+            },
+            "confidence_after": 0.0,
+            "new_documents": 8,
+            "latency_ms": 0.14,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 8 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 8,
+              "new_documents": 0,
+              "sample_titles": [
+                "Sailing at the 2000 Summer Olympics – Star",
+                "Sailing at the 2000 Summer Olympics – Finn",
+                "Sailing at the 2000 Summer Olympics – Tornado",
+                "Sailing at the 2000 Summer Olympics – Women's Mistral One Design",
+                "Sailing at the 2000 Summer Olympics – Soling"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.11,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Comparator",
+            "operation": "arg_extreme",
+            "detail": "argmax over 8 events -> 'Sailing at the 2000 Summer Olympics – Soling' (48); margin over runner-up: 5",
+            "observation": {
+              "winner": "Sailing at the 2000 Summer Olympics – Soling",
+              "winner_doc_id": "Q7400333",
+              "winner_value": 48,
+              "runner_up": "Sailing at the 2000 Summer Olympics – Laser",
+              "margin": 5,
+              "candidates": 8,
+              "missing_field": 0,
+              "unique_winner": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Comparator",
+            "operation": "verify_extreme",
+            "detail": "cross-check of the extreme value (no violations) across 8 documents",
+            "observation": {
+              "verified": true,
+              "extreme_value": 48,
+              "violations": [],
+              "documents_with_field": 8
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.85, sufficient",
+            "observation": {
+              "confidence": 0.85,
+              "sufficient": true,
+              "signals": {
+                "candidates": 8,
+                "margin": 5,
+                "unique_winner": true,
+                "extreme_verified": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.85,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Sailing at the 2000 Summer Olympics – Soling' citing 1 document(s) :: 'Sailing at the 2000 Summer Olympics – Soling' had the highest competitor count (48) among 8 enumerated events",
+            "observation": {
+              "answer": "Sailing at the 2000 Summer Olympics – Soling",
+              "source": "structured",
+              "rationale": "'Sailing at the 2000 Summer Olympics – Soling' had the highest competitor count (48) among 8 enumerated events",
+              "citations": [
+                "Q7400333"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.85,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Sailing; games->GAMES::2000::Summer",
+            "latency_ms": 0.14
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 8 event pages (0 new)",
+            "latency_ms": 0.11
+          },
+          {
+            "operation": "arg_extreme",
+            "agent": "Comparator",
+            "detail": "argmax over 8 events -> 'Sailing at the 2000 Summer Olympics – Soling' (48); margin over runner-up: 5",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "verify_extreme",
+            "agent": "Comparator",
+            "detail": "cross-check of the extreme value (no violations) across 8 documents",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.85, sufficient",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Sailing at the 2000 Summer Olympics – Soling' citing 1 document(s) :: 'Sailing at the 2000 Summer Olympics – Soling' had the highest compet",
+            "latency_ms": 0.03
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "Comparator",
+            "operation": "arg_extreme",
+            "observation": {
+              "winner": "Sailing at the 2000 Summer Olympics – Soling",
+              "winner_doc_id": "Q7400333",
+              "winner_value": 48,
+              "runner_up": "Sailing at the 2000 Summer Olympics – Laser",
+              "margin": 5,
+              "candidates": 8,
+              "missing_field": 0,
+              "unique_winner": true
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Sailing at the 2000 Summer Olympics – Soling",
+              "source": "structured",
+              "rationale": "'Sailing at the 2000 Summer Olympics – Soling' had the highest competitor count (48) among 8 enumerated events",
+              "citations": [
+                "Q7400333"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "superlative",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'superlative' template",
+            "rule_type": "superlative",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, which sailing event at the 2000 Summer Olympics had the highest number of competitors?",
+            "qtype": "superlative",
+            "sport": "Sailing",
+            "year": 2000,
+            "season": "Summer",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2000
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'superlative'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "'Sailing at the 2000 Summer Olympics – Soling' had the highest competitor count (48) among 8 enumerated events",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 8,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.125,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-009",
+    "qtype": "lookup",
+    "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+    "gold": {
+      "answers": [
+        "26"
+      ],
+      "doc_ids": [
+        "Q26254891"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+        "qtype": "lookup",
+        "answer": "26",
+        "citations": [
+          "Q26254891"
+        ],
+        "latency_ms": 106.51,
+        "retrieval_steps": 3,
+        "tools_called": [
+          "link_entities",
+          "resolve_article",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "LookupResolver",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 1,
+        "context_tokens": 286,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.95,
+        "plan": [
+          "EntityLinker.link_entities",
+          "LookupResolver.resolve_article",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 5,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "no graph vertices linked; will fall back to text retrieval",
+            "observation": {
+              "sport": null,
+              "sport_score": 0.0,
+              "venue_score": 0.0,
+              "games": null,
+              "edition_chain": [],
+              "implied_event_pages": 0
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "LookupResolver",
+            "operation": "resolve_article",
+            "detail": "resolved title \"Sailing at the 2016 Summer Olympics – Women's RS:X\" (score 1.0); field 'nations' = '26'",
+            "observation": {
+              "matched": "Sailing at the 2016 Summer Olympics – Women's RS:X",
+              "score": 1.0,
+              "value": "26",
+              "searched_titles": null
+            },
+            "confidence_after": 0.0,
+            "new_documents": 1,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?\" (widening=0) -> 12 passages (5 new documents)",
+            "observation": {
+              "query": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q26254891",
+                "Q2558792",
+                "Q3039134",
+                "Q26254891",
+                "Q3039134",
+                "Q2558792",
+                "Q3039134",
+                "Q2563927"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 5,
+            "latency_ms": 106.18,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.95, sufficient",
+            "observation": {
+              "confidence": 0.95,
+              "sufficient": true,
+              "signals": {
+                "title_score": 1.0
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.95,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='26' citing 1 document(s) :: Sailing at the 2016 Summer Olympics – Women's RS:X lists 26 participating nations (infobox field 'nations')",
+            "observation": {
+              "answer": "26",
+              "source": "structured",
+              "rationale": "Sailing at the 2016 Summer Olympics – Women's RS:X lists 26 participating nations (infobox field 'nations')",
+              "citations": [
+                "Q26254891"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.95,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "no graph vertices linked; will fall back to text retrieval",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "resolve_article",
+            "agent": "LookupResolver",
+            "detail": "resolved title \"Sailing at the 2016 Summer Olympics – Women's RS:X\" (score 1.0); field 'nations' = '26'",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?\" (widening=0) -> 12 passages (5 new do",
+            "latency_ms": 106.18
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.95, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='26' citing 1 document(s) :: Sailing at the 2016 Summer Olympics – Women's RS:X lists 26 participating nations (infobox field 'nations')",
+            "latency_ms": 0.03
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "LookupResolver",
+            "operation": "resolve_article",
+            "observation": {
+              "matched": "Sailing at the 2016 Summer Olympics – Women's RS:X",
+              "score": 1.0,
+              "value": "26",
+              "searched_titles": null
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "26",
+              "source": "structured",
+              "rationale": "Sailing at the 2016 Summer Olympics – Women's RS:X lists 26 participating nations (infobox field 'nations')",
+              "citations": [
+                "Q26254891"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "lookup",
+            "method": "rules",
+            "confidence": 0.7,
+            "reason": "rule-based match for the 'lookup' template",
+            "rule_type": "lookup",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+            "qtype": "lookup",
+            "sport": "",
+            "year": 0,
+            "season": "",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "Sailing at the 2016 Summer Olympics – Women's RS:X",
+            "before_year": null,
+            "years_mentioned": [
+              2016
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'lookup'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "Sailing at the 2016 Summer Olympics – Women's RS:X lists 26 participating nations (infobox field 'nations')",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 1,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-010",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many cycling events at the 2000 Summer Olympics had more than 30 competitors?",
+    "gold": {
+      "answers": [
+        "4"
+      ],
+      "doc_ids": [
+        "Q1856784",
+        "Q2133123",
+        "Q2426715",
+        "Q2526348",
+        "Q2774005",
+        "Q3001409",
+        "Q3001459",
+        "Q5198388",
+        "Q5198390",
+        "Q5198393"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many cycling events at the 2000 Summer Olympics had more than 30 competitors?",
+        "qtype": "aggregation",
+        "answer": "4",
+        "citations": [
+          "Q1856784",
+          "Q2133123",
+          "Q3001459",
+          "Q2526348"
+        ],
+        "latency_ms": 0.7,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "count_threshold",
+          "verify_by_recount",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Aggregator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 14,
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "no_new_information",
+        "confidence": 0.623,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Aggregator.count_threshold",
+          "Aggregator.verify_by_recount",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 14,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Cycling; games->GAMES::2000::Summer",
+            "observation": {
+              "sport": "Cycling",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2000::Summer",
+              "edition_chain": [],
+              "implied_event_pages": 14
+            },
+            "confidence_after": 0.0,
+            "new_documents": 14,
+            "latency_ms": 0.15,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 14 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 14,
+              "new_documents": 0,
+              "sample_titles": [
+                "Cycling at the 2000 Summer Olympics – Men's cross-country",
+                "Cycling at the 2000 Summer Olympics – Women's individual road race",
+                "Cycling at the 2000 Summer Olympics – Men's points race",
+                "Cycling at the 2000 Summer Olympics – Men's individual road race",
+                "Cycling at the 2000 Summer Olympics – Women's sprint"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.12,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "detail": "filtered 14 enumerated events on competitors gt 30 -> 4 pass (field coverage 71%)",
+            "observation": {
+              "count": 4,
+              "candidates": 14,
+              "threshold": 30,
+              "comparator": "gt",
+              "field_completeness": 0.714,
+              "exhaustive": false,
+              "missing_field": 4,
+              "kept_doc_ids": [
+                "Q1856784",
+                "Q2133123",
+                "Q3001459",
+                "Q2526348"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Aggregator",
+            "operation": "verify_by_recount",
+            "detail": "independent recount -> 4 (documents with the field: 10); matches the primary count",
+            "observation": {
+              "recount": 4,
+              "documents_with_field": 10,
+              "recount_matches": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.62, insufficient; gaps: some candidate documents do not expose 'competitors'",
+            "observation": {
+              "confidence": 0.623,
+              "sufficient": false,
+              "signals": {
+                "candidate_set_size": 14,
+                "field_completeness": 0.714,
+                "exhaustive": false,
+                "independent_recount": 4,
+                "recount_matches": true
+              },
+              "gaps": [
+                "some candidate documents do not expose 'competitors'"
+              ]
+            },
+            "confidence_after": 0.623,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='4' citing 4 document(s) :: 4 of 14 enumerated events had more than 30 competitors",
+            "observation": {
+              "answer": "4",
+              "source": "structured",
+              "rationale": "4 of 14 enumerated events had more than 30 competitors",
+              "citations": [
+                "Q1856784",
+                "Q2133123",
+                "Q3001459",
+                "Q2526348"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.623,
+            "new_documents": 0,
+            "latency_ms": 0.05,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Cycling; games->GAMES::2000::Summer",
+            "latency_ms": 0.15
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 14 event pages (0 new)",
+            "latency_ms": 0.12
+          },
+          {
+            "operation": "count_threshold",
+            "agent": "Aggregator",
+            "detail": "filtered 14 enumerated events on competitors gt 30 -> 4 pass (field coverage 71%)",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "verify_by_recount",
+            "agent": "Aggregator",
+            "detail": "independent recount -> 4 (documents with the field: 10); matches the primary count",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.62, insufficient; gaps: some candidate documents do not expose 'competitors'",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='4' citing 4 document(s) :: 4 of 14 enumerated events had more than 30 competitors",
+            "latency_ms": 0.05
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "observation": {
+              "count": 4,
+              "candidates": 14,
+              "threshold": 30,
+              "comparator": "gt",
+              "field_completeness": 0.714,
+              "exhaustive": false,
+              "missing_field": 4,
+              "kept_doc_ids": [
+                "Q1856784",
+                "Q2133123",
+                "Q3001459",
+                "Q2526348"
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "4",
+              "source": "structured",
+              "rationale": "4 of 14 enumerated events had more than 30 competitors",
+              "citations": [
+                "Q1856784",
+                "Q2133123",
+                "Q3001459",
+                "Q2526348"
+              ],
+              "adjudication": {}
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'aggregation' template",
+            "rule_type": "aggregation",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many cycling events at the 2000 Summer Olympics had more than 30 competitors?",
+            "qtype": "aggregation",
+            "sport": "Cycling",
+            "year": 2000,
+            "season": "Summer",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 30,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2000
+            ]
+          },
+          "strategy_changes": [
+            "plan: template for 'aggregation'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [
+            "some candidate documents do not expose 'competitors'"
+          ],
+          "synth_source": "structured",
+          "rationale": "4 of 14 enumerated events had more than 30 competitors",
+          "adjudication": {},
+          "tool_calls": [],
+          "docs_touched": 14,
+          "plan_skips": []
+        },
+        "unresolved": [
+          "some candidate documents do not expose 'competitors'"
+        ],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.4,
+          "judge_reason": ""
+        }
+      }
+    }
+  }
+]

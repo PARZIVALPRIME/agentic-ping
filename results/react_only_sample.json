@@ -1,0 +1,1934 @@
+[
+  {
+    "qid": "pub-001",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+    "gold": {
+      "answers": [
+        "5"
+      ],
+      "doc_ids": [
+        "Q47091419",
+        "Q47105341",
+        "Q47155365",
+        "Q47155371",
+        "Q47155408",
+        "Q47155425",
+        "Q47155467",
+        "Q47155505",
+        "Q47155541",
+        "Q47155555",
+        "Q47155815"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "5",
+        "citations": [
+          "Q47155555",
+          "Q47155815",
+          "Q47155505",
+          "Q47091419",
+          "Q47155365",
+          "Q47105341",
+          "Q47155425",
+          "Q47155541",
+          "Q47155408",
+          "Q47155467",
+          "Q47155371"
+        ],
+        "latency_ms": 2233.8,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "get_event_values",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 11,
+        "context_tokens": 0,
+        "input_tokens": 2171,
+        "output_tokens": 167,
+        "total_tokens": 2338,
+        "llm_calls": 2,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 2,
+        "candidates_considered": 11,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "detail": "field=competitors, season=Winter, sport=Biathlon, year_from=2018, year_to=2018",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Winter",
+                "sport": "Biathlon",
+                "year_from": 2018,
+                "year_to": 2018
+              },
+              "summary": "field=competitors values=11/11",
+              "result": "{\"field\": \"competitors\", \"num_matching_events\": 11, \"num_with_value\": 11, \"num_missing\": 0, \"values\": [80, 30, 72, 87, 58, 87, 87, 73, 86, 30, 60], \"pairs\": [{\"doc_id\": \"Q47155555\", \"value\": 80}, {\"doc_id\": \"Q47155815\", \"value\": 30}, {\"doc_id\": \"Q47155505\", \"value\": 72}, {\"doc_id\": \"Q47091419\", \"value\": 87}, {\"doc_id\": \"Q47155365\", \"value\": 58}, {\"doc_id\": \"Q47105341\", \"value\": 87}, {\"doc_id\": \"Q47155425\", \"value\": 87}, {\"doc_id\": \"Q47155541\", \"value\": 73}, {\"doc_id\": \"Q47155408\", \"value\": 86}, {\"doc_id\": \"Q47155467\", \"value\": 30}, {\"doc_id\": \"Q47155371\", \"value\": 60}], \"note\": \"values are in graph order, not sorted - sort/count them yourself\", \"doc_ids\": [\"Q47155555\", \"Q47155815\", \"Q47155505\", \"Q47091419\", \"Q47155365\", \"Q47105341\", \"Q47155425\", \"Q47155541\", \"Q47155408\", \"Q47155467\", \"Q47155371\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 11,
+            "latency_ms": 0.12,
+            "input_tokens": 890,
+            "output_tokens": 77
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=5, doc_ids=['Q47155555', 'Q47091419', 'Q47105341', 'Q47155425', 'Q47155408'], reasoning=Counted biathlon events in 2018 with competitors >73.",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "5",
+                "doc_ids": [
+                  "Q47155555",
+                  "Q47091419",
+                  "Q47105341",
+                  "Q47155425",
+                  "Q47155408"
+                ],
+                "reasoning": "Counted biathlon events in 2018 with competitors >73."
+              },
+              "summary": "answer=5",
+              "result": "{\"accepted\": true, \"answer\": \"5\", \"reasoning\": \"Counted biathlon events in 2018 with competitors >73.\", \"confidence\": 0.9, \"doc_ids\": [\"Q47155555\", \"Q47091419\", \"Q47105341\", \"Q47155425\", \"Q47155408\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 1281,
+            "output_tokens": 90
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:get_event_values",
+            "agent": "ReActAgent",
+            "detail": "field=competitors, season=Winter, sport=Biathlon, year_from=2018, year_to=2018",
+            "latency_ms": 0.12
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=5, doc_ids=['Q47155555', 'Q47091419', 'Q47105341', 'Q47155425', 'Q47155408'], reasoning=Counted biathlon events in 2018 with competitors >73.",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 890,
+            "output_tokens": 77,
+            "total_tokens": 967,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1281,
+            "output_tokens": 90,
+            "total_tokens": 1371,
+            "detail": "openai/gpt-oss-20b"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Winter",
+                "sport": "Biathlon",
+                "year_from": 2018,
+                "year_to": 2018
+              },
+              "summary": "field=competitors values=11/11",
+              "result": "{\"field\": \"competitors\", \"num_matching_events\": 11, \"num_with_value\": 11, \"num_missing\": 0, \"values\": [80, 30, 72, 87, 58, 87, 87, 73, 86, 30, 60], \"pairs\": [{\"doc_id\": \"Q47155555\", \"value\": 80}, {\"doc_id\": \"Q47155815\", \"value\": 30}, {\"doc_id\": \"Q47155505\", \"value\": 72}, {\"doc_id\": \"Q47091419\", \"value\": 87}, {\"doc_id\": \"Q47155365\", \"value\": 58}, {\"doc_id\": \"Q47105341\", \"value\": 87}, {\"doc_id\": \"Q47155425\", \"value\": 87}, {\"doc_id\": \"Q47155541\", \"value\": 73}, {\"doc_id\": \"Q47155408\", \"value\": 86}, {\"doc_id\": \"Q47155467\", \"value\": 30}, {\"doc_id\": \"Q47155371\", \"value\": 60}], \"note\": \"values are in graph order, not sorted - sort/count them yourself\", \"doc_ids\": [\"Q47155555\", \"Q47155815\", \"Q47155505\", \"Q47091419\", \"Q47155365\", \"Q47105341\", \"Q47155425\", \"Q47155541\", \"Q47155408\", \"Q47155467\", \"Q47155371\"]}"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "5",
+                "doc_ids": [
+                  "Q47155555",
+                  "Q47091419",
+                  "Q47105341",
+                  "Q47155425",
+                  "Q47155408"
+                ],
+                "reasoning": "Counted biathlon events in 2018 with competitors >73."
+              },
+              "summary": "answer=5",
+              "result": "{\"accepted\": true, \"answer\": \"5\", \"reasoning\": \"Counted biathlon events in 2018 with competitors >73.\", \"confidence\": 0.9, \"doc_ids\": [\"Q47155555\", \"Q47091419\", \"Q47105341\", \"Q47155425\", \"Q47155408\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "react",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "ReActAgent",
+            "mode": "react",
+            "stop_reason": "submitted_answer",
+            "steps": 2
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 2
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+            "qtype": "aggregation",
+            "sport": "Biathlon",
+            "year": 2018,
+            "season": "Winter",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 73,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2018
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "Counted biathlon events in 2018 with competitors >73.",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Winter",
+                "sport": "Biathlon",
+                "year_from": 2018,
+                "year_to": 2018
+              },
+              "latency_ms": 0.12,
+              "error": "",
+              "doc_ids": [
+                "Q47155555",
+                "Q47155815",
+                "Q47155505",
+                "Q47091419",
+                "Q47155365",
+                "Q47105341",
+                "Q47155425",
+                "Q47155541",
+                "Q47155408",
+                "Q47155467",
+                "Q47155371"
+              ],
+              "summary": "field=competitors values=11/11"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "5",
+                "doc_ids": [
+                  "Q47155555",
+                  "Q47091419",
+                  "Q47105341",
+                  "Q47155425",
+                  "Q47155408"
+                ],
+                "reasoning": "Counted biathlon events in 2018 with competitors >73."
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47155555",
+                "Q47091419",
+                "Q47105341",
+                "Q47155425",
+                "Q47155408"
+              ],
+              "summary": "answer=5"
+            }
+          ],
+          "docs_touched": 11,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-002",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+    "gold": {
+      "answers": [
+        "Chen Ding"
+      ],
+      "doc_ids": [
+        "Q1050909",
+        "Q26233122"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Chen Ding",
+        "citations": [
+          "Q1050909",
+          "Q2070009",
+          "Q956242",
+          "Q1753402",
+          "Q734020",
+          "Q2000999",
+          "Q591384",
+          "Q1649415",
+          "Q1771990",
+          "Q1636766"
+        ],
+        "latency_ms": 58461.71,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "search_events",
+          "get_event_details",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 2,
+        "input_tokens": 4344,
+        "output_tokens": 186,
+        "total_tokens": 4530,
+        "llm_calls": 3,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 3,
+        "candidates_considered": 10,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "limit=10, query=men's 20 kilometres walk, season=Summer, sport=Athletics, year_from=2010, year_to=2014",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "limit": 10,
+                "query": "men's 20 kilometres walk",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2010,
+                "year_to": 2014
+              },
+              "summary": "42 event(s), 10 shown",
+              "result": "{\"count\": 42, \"returned\": 10, \"events\": [{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q2070009\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 50 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q956242\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Women's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q1753402\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 10,000 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 10,…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 10,
+            "latency_ms": 0.93,
+            "input_tokens": 890,
+            "output_tokens": 77
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q1050909",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)",
+              "result": "{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"games\": \"2012 Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\", \"date\": \"4 August 2012\", \"competitors\": 56, \"nations\": 34, \"gold\": \"Chen Ding\", \"silver\": \"Erick Barrondo\", \"bronze\": \"Wang Zhen\", \"win\": \"1:18:46 OR\", \"prev\": \"Q853023\", \"next\": \"Q26233122\", \"doc_ids\": [\"Q1050909\"], \"text\": \"[Infobox Olympic event]\\n event: Men's 20 kilometres walk\\n games: 2012 Summer\\n venue: The Mall\\n date: 4 August 2012\\n competitors: 56\\n nations: 34\\n gold: Chen Ding\\n goldNOC: CHN\\n silver: Erick Barrondo\\n silverNOC: GUA\\n bronze: Wang Zhen\\n bronzeNOC: CHN\\n win_value: 1:18:46 OR\\n pre…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 1476,
+            "output_tokens": 36
+          },
+          {
+            "index": 3,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=Chen Ding, doc_ids=['Q1050909'], reasoning=The 2012 Summer Olympics was the edition immediately before 2016. The gold medalist for the men's 20 kilometres walk in 2012 was Chen Ding.",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "doc_ids": [
+                  "Q1050909"
+                ],
+                "reasoning": "The 2012 Summer Olympics was the edition immediately before 2016. The gold medalist for the men's 20 kilometres walk in 2012 was Chen Ding."
+              },
+              "summary": "answer=Chen Ding",
+              "result": "{\"accepted\": true, \"answer\": \"Chen Ding\", \"reasoning\": \"The 2012 Summer Olympics was the edition immediately before 2016. The gold medalist for the men's 20 kilometres walk in 2012 was Chen Ding.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1050909\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 1978,
+            "output_tokens": 73
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "limit=10, query=men's 20 kilometres walk, season=Summer, sport=Athletics, year_from=2010, year_to=2014",
+            "latency_ms": 0.93
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q1050909",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=Chen Ding, doc_ids=['Q1050909'], reasoning=The 2012 Summer Olympics was the edition immediately before 2016. The gold medalist for the men's 20 kilometre",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 890,
+            "output_tokens": 77,
+            "total_tokens": 967,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1476,
+            "output_tokens": 36,
+            "total_tokens": 1512,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1978,
+            "output_tokens": 73,
+            "total_tokens": 2051,
+            "detail": "openai/gpt-oss-20b"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "limit": 10,
+                "query": "men's 20 kilometres walk",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2010,
+                "year_to": 2014
+              },
+              "summary": "42 event(s), 10 shown",
+              "result": "{\"count\": 42, \"returned\": 10, \"events\": [{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q2070009\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 50 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q956242\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Women's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q1753402\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 10,000 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 10,…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)",
+              "result": "{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"games\": \"2012 Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\", \"date\": \"4 August 2012\", \"competitors\": 56, \"nations\": 34, \"gold\": \"Chen Ding\", \"silver\": \"Erick Barrondo\", \"bronze\": \"Wang Zhen\", \"win\": \"1:18:46 OR\", \"prev\": \"Q853023\", \"next\": \"Q26233122\", \"doc_ids\": [\"Q1050909\"], \"text\": \"[Infobox Olympic event]\\n event: Men's 20 kilometres walk\\n games: 2012 Summer\\n venue: The Mall\\n date: 4 August 2012\\n competitors: 56\\n nations: 34\\n gold: Chen Ding\\n goldNOC: CHN\\n silver: Erick Barrondo\\n silverNOC: GUA\\n bronze: Wang Zhen\\n bronzeNOC: CHN\\n win_value: 1:18:46 OR\\n pre…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "doc_ids": [
+                  "Q1050909"
+                ],
+                "reasoning": "The 2012 Summer Olympics was the edition immediately before 2016. The gold medalist for the men's 20 kilometres walk in 2012 was Chen Ding."
+              },
+              "summary": "answer=Chen Ding",
+              "result": "{\"accepted\": true, \"answer\": \"Chen Ding\", \"reasoning\": \"The 2012 Summer Olympics was the edition immediately before 2016. The gold medalist for the men's 20 kilometres walk in 2012 was Chen Ding.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1050909\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "react",
+          "classification": {
+            "qtype": "temporal",
+            "method": "ReActAgent",
+            "mode": "react",
+            "stop_reason": "submitted_answer",
+            "steps": 3
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 3
+          },
+          "spec": {
+            "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+            "qtype": "temporal",
+            "sport": "Athletics",
+            "year": 0,
+            "season": "Summer",
+            "event_desc": "men s 20 kilometres walk",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": 2016,
+            "years_mentioned": [
+              2016
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "The 2012 Summer Olympics was the edition immediately before 2016. The gold medalist for the men's 20 kilometres walk in 2012 was Chen Ding.",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "search_events",
+              "args": {
+                "limit": 10,
+                "query": "men's 20 kilometres walk",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2010,
+                "year_to": 2014
+              },
+              "latency_ms": 0.93,
+              "error": "",
+              "doc_ids": [
+                "Q1050909",
+                "Q2070009",
+                "Q956242",
+                "Q1753402",
+                "Q734020",
+                "Q2000999",
+                "Q591384",
+                "Q1649415",
+                "Q1771990",
+                "Q1636766"
+              ],
+              "summary": "42 event(s), 10 shown"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "latency_ms": 0.02,
+              "error": "",
+              "doc_ids": [
+                "Q1050909"
+              ],
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "doc_ids": [
+                  "Q1050909"
+                ],
+                "reasoning": "The 2012 Summer Olympics was the edition immediately before 2016. The gold medalist for the men's 20 kilometres walk in 2012 was Chen Ding."
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q1050909"
+              ],
+              "summary": "answer=Chen Ding"
+            }
+          ],
+          "docs_touched": 10,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 0.1,
+          "citation_recall": 0.5,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-004",
+    "qtype": "superlative",
+    "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+    "gold": {
+      "answers": [
+        "Athletics at the 2008 Summer Olympics – Men's marathon"
+      ],
+      "doc_ids": [
+        "Q1005784",
+        "Q1043342",
+        "Q1043347",
+        "Q1043354",
+        "Q1043361",
+        "Q1066390",
+        "Q1084677",
+        "Q247070",
+        "Q257545",
+        "Q288549",
+        "Q517035",
+        "Q544177",
+        "Q656634",
+        "Q657467",
+        "Q677027",
+        "Q693595",
+        "Q743905",
+        "Q744487",
+        "Q754844",
+        "Q766954",
+        "Q830711",
+        "Q847592",
+        "Q848278",
+        "Q848291",
+        "Q853003",
+        "Q853023",
+        "Q853040",
+        "Q853049",
+        "Q853072",
+        "Q899312",
+        "Q903439",
+        "Q904345",
+        "Q916976",
+        "Q917323",
+        "Q917328",
+        "Q917333",
+        "Q917348",
+        "Q922248",
+        "Q922361",
+        "Q932865",
+        "Q947678",
+        "Q947691",
+        "Q947750"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+        "qtype": "superlative",
+        "answer": "Men's marathon",
+        "citations": [
+          "Q743905",
+          "Q1005784",
+          "Q744487",
+          "Q1043342",
+          "Q657467",
+          "Q693595",
+          "Q947750",
+          "Q288549",
+          "Q1043354",
+          "Q1043361",
+          "Q1043347",
+          "Q544177",
+          "Q257545",
+          "Q1066390",
+          "Q656634",
+          "Q517035",
+          "Q1084677",
+          "Q917323",
+          "Q899312",
+          "Q932865",
+          "Q247070",
+          "Q917348",
+          "Q853003",
+          "Q917333",
+          "Q904345",
+          "Q922361",
+          "Q847592",
+          "Q853040",
+          "Q853023",
+          "Q947678",
+          "Q848278",
+          "Q903439",
+          "Q830711",
+          "Q853049",
+          "Q853072",
+          "Q766954",
+          "Q754844",
+          "Q916976",
+          "Q848291",
+          "Q922248",
+          "Q917328",
+          "Q677027",
+          "Q947691"
+        ],
+        "latency_ms": 4566.5,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "get_event_values",
+          "get_event_details",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 0,
+        "docs_retrieved": 43,
+        "context_tokens": 0,
+        "input_tokens": 4690,
+        "output_tokens": 197,
+        "total_tokens": 4887,
+        "llm_calls": 3,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 3,
+        "candidates_considered": 43,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "detail": "field=competitors, season=Summer, sport=Athletics, year_from=2008, year_to=2008",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2008,
+                "year_to": 2008
+              },
+              "summary": "field=competitors values=43/43",
+              "result": "{\"field\": \"competitors\", \"num_matching_events\": 43, \"num_with_value\": 43, \"num_missing\": 0, \"values\": [43, 40, 40, 33, 38, 95, 50, 54, 40, 40, 32, 40, 55, 43, 39, 37, 27, 38, 33, 50, 61, 46, 63, 42, 31, 50, 36, 85, 51, 48, 35, 38, 39, 29, 43, 26, 80, 36, 44, 38, 48, 58, 82], \"pairs\": [{\"doc_id\": \"Q743905\", \"value\": 43}, {\"doc_id\": \"Q1005784\", \"value\": 40}, {\"doc_id\": \"Q744487\", \"value\": 40}, {\"doc_id\": \"Q1043342\", \"value\": 33}, {\"doc_id\": \"Q657467\", \"value\": 38}, {\"doc_id\": \"Q693595\", \"value\": 95}, {\"doc_id\": \"Q947750\", \"value\": 50}, {\"doc_id\": \"Q288549\", \"value\": 54}, {\"doc_id\": \"Q1043354\", \"value\": 40}, {\"doc_id\": \"Q1043361\", \"value\": 40}, {\"doc_id\": \"Q1043347\", \"value\": 32}, {\"doc_id\": \"Q544177\", \"value\": 40}, {\"doc_id\": \"Q257545\", \"value\": 55}, {\"doc_id\": \"Q1066390\", \"value\": 43}, {\"doc_id\": \"Q656634\", \"value\": 39}, {\"doc_id\": \"Q517035\", \"value\": 37}, {\"doc_id\": \"Q1084677\", \"value\":…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 43,
+            "latency_ms": 0.22,
+            "input_tokens": 888,
+            "output_tokens": 95
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q693595",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q693595"
+              },
+              "summary": "Athletics at the 2008 Summer Olympics – Men's marathon (2008 Summer)",
+              "result": "{\"doc_id\": \"Q693595\", \"title\": \"Athletics at the 2008 Summer Olympics \\u2013 Men's marathon\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2008_Summer_Olympics_%E2%80%93_Men%27s_marathon\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2008, \"season\": \"Summer\", \"games\": \"2008 Summer\", \"event_name\": \"Men's marathon\", \"venue\": \"Beijing\", \"date\": \"August 24\", \"competitors\": 95, \"nations\": 56, \"gold\": \"Samuel Wanjiru\", \"silver\": \"Jaouad Gharib\", \"bronze\": \"Tsegay Kebede\", \"win\": \"2:06:32 athletics\", \"prev\": \"Q2443986\", \"next\": \"Q1798983\", \"doc_ids\": [\"Q693595\"], \"text\": \"[Infobox Olympic event]\\n event: Men's marathon\\n games: 2008 Summer\\n venue: Beijing\\n dates: August 24\\n competitors: 95\\n nations: 56\\n win_value: 2:06:32 athletics\\n longnames: yes\\n gold: Samuel Wanjiru\\n goldNOC: KEN\\n silver: Jaouad Gharib\\n silverNOC: MAR\\n bronze: Tsegay Kebede\\n bronzeNOC: ETH\\n prev: 2…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 1662,
+            "output_tokens": 45
+          },
+          {
+            "index": 3,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=Men's marathon, doc_ids=['Q693595'], reasoning=The men's marathon had 95 competitors, the highest among all athletics events in 2008.",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Men's marathon",
+                "doc_ids": [
+                  "Q693595"
+                ],
+                "reasoning": "The men's marathon had 95 competitors, the highest among all athletics events in 2008."
+              },
+              "summary": "answer=Men's marathon",
+              "result": "{\"accepted\": true, \"answer\": \"Men's marathon\", \"reasoning\": \"The men's marathon had 95 competitors, the highest among all athletics events in 2008.\", \"confidence\": 0.9, \"doc_ids\": [\"Q693595\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 2140,
+            "output_tokens": 57
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:get_event_values",
+            "agent": "ReActAgent",
+            "detail": "field=competitors, season=Summer, sport=Athletics, year_from=2008, year_to=2008",
+            "latency_ms": 0.22
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q693595",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=Men's marathon, doc_ids=['Q693595'], reasoning=The men's marathon had 95 competitors, the highest among all athletics events in 2008.",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 888,
+            "output_tokens": 95,
+            "total_tokens": 983,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1662,
+            "output_tokens": 45,
+            "total_tokens": 1707,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2140,
+            "output_tokens": 57,
+            "total_tokens": 2197,
+            "detail": "openai/gpt-oss-20b"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2008,
+                "year_to": 2008
+              },
+              "summary": "field=competitors values=43/43",
+              "result": "{\"field\": \"competitors\", \"num_matching_events\": 43, \"num_with_value\": 43, \"num_missing\": 0, \"values\": [43, 40, 40, 33, 38, 95, 50, 54, 40, 40, 32, 40, 55, 43, 39, 37, 27, 38, 33, 50, 61, 46, 63, 42, 31, 50, 36, 85, 51, 48, 35, 38, 39, 29, 43, 26, 80, 36, 44, 38, 48, 58, 82], \"pairs\": [{\"doc_id\": \"Q743905\", \"value\": 43}, {\"doc_id\": \"Q1005784\", \"value\": 40}, {\"doc_id\": \"Q744487\", \"value\": 40}, {\"doc_id\": \"Q1043342\", \"value\": 33}, {\"doc_id\": \"Q657467\", \"value\": 38}, {\"doc_id\": \"Q693595\", \"value\": 95}, {\"doc_id\": \"Q947750\", \"value\": 50}, {\"doc_id\": \"Q288549\", \"value\": 54}, {\"doc_id\": \"Q1043354\", \"value\": 40}, {\"doc_id\": \"Q1043361\", \"value\": 40}, {\"doc_id\": \"Q1043347\", \"value\": 32}, {\"doc_id\": \"Q544177\", \"value\": 40}, {\"doc_id\": \"Q257545\", \"value\": 55}, {\"doc_id\": \"Q1066390\", \"value\": 43}, {\"doc_id\": \"Q656634\", \"value\": 39}, {\"doc_id\": \"Q517035\", \"value\": 37}, {\"doc_id\": \"Q1084677\", \"value\":…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q693595"
+              },
+              "summary": "Athletics at the 2008 Summer Olympics – Men's marathon (2008 Summer)",
+              "result": "{\"doc_id\": \"Q693595\", \"title\": \"Athletics at the 2008 Summer Olympics \\u2013 Men's marathon\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2008_Summer_Olympics_%E2%80%93_Men%27s_marathon\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2008, \"season\": \"Summer\", \"games\": \"2008 Summer\", \"event_name\": \"Men's marathon\", \"venue\": \"Beijing\", \"date\": \"August 24\", \"competitors\": 95, \"nations\": 56, \"gold\": \"Samuel Wanjiru\", \"silver\": \"Jaouad Gharib\", \"bronze\": \"Tsegay Kebede\", \"win\": \"2:06:32 athletics\", \"prev\": \"Q2443986\", \"next\": \"Q1798983\", \"doc_ids\": [\"Q693595\"], \"text\": \"[Infobox Olympic event]\\n event: Men's marathon\\n games: 2008 Summer\\n venue: Beijing\\n dates: August 24\\n competitors: 95\\n nations: 56\\n win_value: 2:06:32 athletics\\n longnames: yes\\n gold: Samuel Wanjiru\\n goldNOC: KEN\\n silver: Jaouad Gharib\\n silverNOC: MAR\\n bronze: Tsegay Kebede\\n bronzeNOC: ETH\\n prev: 2…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Men's marathon",
+                "doc_ids": [
+                  "Q693595"
+                ],
+                "reasoning": "The men's marathon had 95 competitors, the highest among all athletics events in 2008."
+              },
+              "summary": "answer=Men's marathon",
+              "result": "{\"accepted\": true, \"answer\": \"Men's marathon\", \"reasoning\": \"The men's marathon had 95 competitors, the highest among all athletics events in 2008.\", \"confidence\": 0.9, \"doc_ids\": [\"Q693595\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "react",
+          "classification": {
+            "qtype": "superlative",
+            "method": "ReActAgent",
+            "mode": "react",
+            "stop_reason": "submitted_answer",
+            "steps": 3
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 3
+          },
+          "spec": {
+            "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+            "qtype": "superlative",
+            "sport": "Athletics",
+            "year": 2008,
+            "season": "Summer",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2008
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "The men's marathon had 95 competitors, the highest among all athletics events in 2008.",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "get_event_values",
+              "args": {
+                "field": "competitors",
+                "season": "Summer",
+                "sport": "Athletics",
+                "year_from": 2008,
+                "year_to": 2008
+              },
+              "latency_ms": 0.22,
+              "error": "",
+              "doc_ids": [
+                "Q743905",
+                "Q1005784",
+                "Q744487",
+                "Q1043342",
+                "Q657467",
+                "Q693595",
+                "Q947750",
+                "Q288549",
+                "Q1043354",
+                "Q1043361",
+                "Q1043347",
+                "Q544177",
+                "Q257545",
+                "Q1066390",
+                "Q656634",
+                "Q517035",
+                "Q1084677",
+                "Q917323",
+                "Q899312",
+                "Q932865",
+                "Q247070",
+                "Q917348",
+                "Q853003",
+                "Q917333",
+                "Q904345",
+                "Q922361",
+                "Q847592",
+                "Q853040",
+                "Q853023",
+                "Q947678",
+                "Q848278",
+                "Q903439",
+                "Q830711",
+                "Q853049",
+                "Q853072",
+                "Q766954",
+                "Q754844",
+                "Q916976",
+                "Q848291",
+                "Q922248",
+                "Q917328",
+                "Q677027",
+                "Q947691"
+              ],
+              "summary": "field=competitors values=43/43"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q693595"
+              },
+              "latency_ms": 0.03,
+              "error": "",
+              "doc_ids": [
+                "Q693595"
+              ],
+              "summary": "Athletics at the 2008 Summer Olympics – Men's marathon (2008 Summer)"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Men's marathon",
+                "doc_ids": [
+                  "Q693595"
+                ],
+                "reasoning": "The men's marathon had 95 competitors, the highest among all athletics events in 2008."
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q693595"
+              ],
+              "summary": "answer=Men's marathon"
+            }
+          ],
+          "docs_touched": 43,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "fuzzy",
+          "accuracy_score": 1.0,
+          "similarity": 0.95,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-005",
+    "qtype": "multi_hop",
+    "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+    "gold": {
+      "answers": [
+        "Naim Süleymanoğlu"
+      ],
+      "doc_ids": [
+        "Q25239316"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+        "qtype": "multi_hop",
+        "answer": "Naim Süleymanoğlu",
+        "citations": [
+          "Q25239316",
+          "Q25239321",
+          "Q25239314",
+          "Q25239317",
+          "Q25239533"
+        ],
+        "latency_ms": 56908.19,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "search_passages",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 386,
+        "input_tokens": 2345,
+        "output_tokens": 177,
+        "total_tokens": 2522,
+        "llm_calls": 2,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 2,
+        "candidates_considered": 5,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:search_passages",
+            "detail": "query=Olympic Weightlifting Gymnasium 20 September 1988 gold medal, top_k=5",
+            "observation": {
+              "tool": "search_passages",
+              "args": {
+                "query": "Olympic Weightlifting Gymnasium 20 September 1988 gold medal",
+                "top_k": 5
+              },
+              "summary": "5 passage(s)",
+              "result": "{\"returned\": 5, \"passages\": [{\"doc_id\": \"Q25239316\", \"title\": \"Weightlifting at the 1988 Summer Olympics \\u2013 Men's 60 kg\", \"score\": 0.016, \"text\": \"Infobox of Weightlifting at the 1988 Summer Olympics \\u2013 Men's 60 kg -> event: Men's 60 kg | games: 1988 Summer | venue: Olympic Weightlifting Gymnasium | date: 20 September 1988 | competitors: 17 | nations: 14 | gold: Naim S\\u00fcleymano\\u011flu | silver: Stefan Topurov | bronze: Ye Huanming | prev: 1984 | next: 1992\"}, {\"doc_id\": \"Q25239321\", \"title\": \"Weightlifting at the 1988 Summer Olympics \\u2013 Men's 56 kg\", \"score\": 0.016, \"text\": \"Infobox of Weightlifting at the 1988 Summer Olympics \\u2013 Men's 56 kg -> event: Men's 56 kg | games: 1988 Summer | venue: Olympic Weightlifting Gymnasium | date: 19 September 1988 | competitors: 23 | nations: 17 | gold: Oksen Mirzoyan | silver: He Yingqiang | bronze: Liu Shoubin | prev: 1984 | nex…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 5,
+            "latency_ms": 33.47,
+            "input_tokens": 888,
+            "output_tokens": 53
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=Naim Süleymanoğlu, doc_ids=['Q25239316'], reasoning=The event on 20 September 1988 at the Olympic Weightlifting Gymnasium was the Men's 60 kg weightlifting competition, and the gold medalist wa",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Naim Süleymanoğlu",
+                "doc_ids": [
+                  "Q25239316"
+                ],
+                "reasoning": "The event on 20 September 1988 at the Olympic Weightlifting Gymnasium was the Men's 60 kg weightlifting competition, and the gold medalist was Naim Süleymanoğlu."
+              },
+              "summary": "answer=Naim Süleymanoğlu",
+              "result": "{\"accepted\": true, \"answer\": \"Naim S\\u00fcleymano\\u011flu\", \"reasoning\": \"The event on 20 September 1988 at the Olympic Weightlifting Gymnasium was the Men's 60\\u202fkg weightlifting competition, and the gold medalist was Naim\\u202fS\\u00fcleymano\\u011flu.\", \"confidence\": 0.9, \"doc_ids\": [\"Q25239316\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 1457,
+            "output_tokens": 124
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:search_passages",
+            "agent": "ReActAgent",
+            "detail": "query=Olympic Weightlifting Gymnasium 20 September 1988 gold medal, top_k=5",
+            "latency_ms": 33.47
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=Naim Süleymanoğlu, doc_ids=['Q25239316'], reasoning=The event on 20 September 1988 at the Olympic Weightlifting Gymnasium was the Men's 60 kg weightlifti",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 888,
+            "output_tokens": 53,
+            "total_tokens": 941,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1457,
+            "output_tokens": 124,
+            "total_tokens": 1581,
+            "detail": "openai/gpt-oss-20b"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_passages",
+            "observation": {
+              "tool": "search_passages",
+              "args": {
+                "query": "Olympic Weightlifting Gymnasium 20 September 1988 gold medal",
+                "top_k": 5
+              },
+              "summary": "5 passage(s)",
+              "result": "{\"returned\": 5, \"passages\": [{\"doc_id\": \"Q25239316\", \"title\": \"Weightlifting at the 1988 Summer Olympics \\u2013 Men's 60 kg\", \"score\": 0.016, \"text\": \"Infobox of Weightlifting at the 1988 Summer Olympics \\u2013 Men's 60 kg -> event: Men's 60 kg | games: 1988 Summer | venue: Olympic Weightlifting Gymnasium | date: 20 September 1988 | competitors: 17 | nations: 14 | gold: Naim S\\u00fcleymano\\u011flu | silver: Stefan Topurov | bronze: Ye Huanming | prev: 1984 | next: 1992\"}, {\"doc_id\": \"Q25239321\", \"title\": \"Weightlifting at the 1988 Summer Olympics \\u2013 Men's 56 kg\", \"score\": 0.016, \"text\": \"Infobox of Weightlifting at the 1988 Summer Olympics \\u2013 Men's 56 kg -> event: Men's 56 kg | games: 1988 Summer | venue: Olympic Weightlifting Gymnasium | date: 19 September 1988 | competitors: 23 | nations: 17 | gold: Oksen Mirzoyan | silver: He Yingqiang | bronze: Liu Shoubin | prev: 1984 | nex…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Naim Süleymanoğlu",
+                "doc_ids": [
+                  "Q25239316"
+                ],
+                "reasoning": "The event on 20 September 1988 at the Olympic Weightlifting Gymnasium was the Men's 60 kg weightlifting competition, and the gold medalist was Naim Süleymanoğlu."
+              },
+              "summary": "answer=Naim Süleymanoğlu",
+              "result": "{\"accepted\": true, \"answer\": \"Naim S\\u00fcleymano\\u011flu\", \"reasoning\": \"The event on 20 September 1988 at the Olympic Weightlifting Gymnasium was the Men's 60\\u202fkg weightlifting competition, and the gold medalist was Naim\\u202fS\\u00fcleymano\\u011flu.\", \"confidence\": 0.9, \"doc_ids\": [\"Q25239316\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "react",
+          "classification": {
+            "qtype": "multi_hop",
+            "method": "ReActAgent",
+            "mode": "react",
+            "stop_reason": "submitted_answer",
+            "steps": 2
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 2
+          },
+          "spec": {
+            "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+            "qtype": "multi_hop",
+            "sport": "",
+            "year": 0,
+            "season": "",
+            "event_desc": "",
+            "venue": "Olympic Weightlifting Gymnasium",
+            "date_text": "20 September 1988",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              1988
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "The event on 20 September 1988 at the Olympic Weightlifting Gymnasium was the Men's 60 kg weightlifting competition, and the gold medalist was Naim Süleymanoğlu.",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "search_passages",
+              "args": {
+                "query": "Olympic Weightlifting Gymnasium 20 September 1988 gold medal",
+                "top_k": 5
+              },
+              "latency_ms": 33.47,
+              "error": "",
+              "doc_ids": [
+                "Q25239316",
+                "Q25239321",
+                "Q25239314",
+                "Q25239317",
+                "Q25239533"
+              ],
+              "summary": "5 passage(s)"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Naim Süleymanoğlu",
+                "doc_ids": [
+                  "Q25239316"
+                ],
+                "reasoning": "The event on 20 September 1988 at the Olympic Weightlifting Gymnasium was the Men's 60 kg weightlifting competition, and the gold medalist was Naim Süleymanoğlu."
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q25239316"
+              ],
+              "summary": "answer=Naim Süleymanoğlu"
+            }
+          ],
+          "docs_touched": 5,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 0.2,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-009",
+    "qtype": "lookup",
+    "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+    "gold": {
+      "answers": [
+        "26"
+      ],
+      "doc_ids": [
+        "Q26254891"
+      ]
+    },
+    "pipelines": {
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+        "qtype": "lookup",
+        "answer": "26",
+        "citations": [
+          "Q25396697",
+          "Q25396702",
+          "Q26233297",
+          "Q26219841",
+          "Q26273359",
+          "Q26219843",
+          "Q26233320",
+          "Q26219842",
+          "Q26233317",
+          "Q26219839",
+          "Q26233319",
+          "Q26234091",
+          "Q26234119",
+          "Q26234145",
+          "Q26233821",
+          "Q26234144",
+          "Q26225492",
+          "Q21858030",
+          "Q26224939",
+          "Q26234051",
+          "Q26233995",
+          "Q25301754",
+          "Q25301483",
+          "Q24995398",
+          "Q26218608",
+          "Q26218607",
+          "Q26218605",
+          "Q26269232",
+          "Q26334232",
+          "Q26269219",
+          "Q26335055",
+          "Q26213159",
+          "Q25476761",
+          "Q25476835",
+          "Q24761058",
+          "Q25476545",
+          "Q24906792",
+          "Q26265815",
+          "Q26260960",
+          "Q26262523",
+          "Q26334713",
+          "Q26243423",
+          "Q26237528",
+          "Q26229077",
+          "Q25386275",
+          "Q25386279",
+          "Q25384919",
+          "Q25384917",
+          "Q25386274",
+          "Q26155834",
+          "Q26233801",
+          "Q26245392",
+          "Q26233796",
+          "Q26265496",
+          "Q26265678",
+          "Q26254912",
+          "Q26261256",
+          "Q26233797",
+          "Q26233798",
+          "Q26218599",
+          "Q26212162",
+          "Q26212161",
+          "Q26217865",
+          "Q26218598",
+          "Q26217871",
+          "Q26217896",
+          "Q25991470",
+          "Q26406504",
+          "Q22968977",
+          "Q22968974",
+          "Q22968979",
+          "Q22968972",
+          "Q22968976",
+          "Q22968973",
+          "Q26265754",
+          "Q26254891",
+          "Q26220718",
+          "Q26218171",
+          "Q26235041",
+          "Q26219821",
+          "Q26219862"
+        ],
+        "latency_ms": 63076.59,
+        "retrieval_steps": 4,
+        "tools_called": [
+          "get_event_values",
+          "search_events",
+          "get_event_details",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 27,
+        "docs_retrieved": 81,
+        "context_tokens": 6,
+        "input_tokens": 9756,
+        "output_tokens": 295,
+        "total_tokens": 10051,
+        "llm_calls": 5,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 5,
+        "candidates_considered": 81,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "detail": "field=nations, query=Women's RS:X, season=Summer, year_from=2016, year_to=2016",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "nations",
+                "query": "Women's RS:X",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "summary": "field=nations values=117/123",
+              "result": "{\"field\": \"nations\", \"num_matching_events\": 123, \"num_with_value\": 117, \"num_missing\": 6, \"values\": [40, 12, 24, 56, 34, 25, 31, 45, 32, 36, 33, 23, 19, 21, 27, 20, 26, 80, 24, 25, 25, 14, 35, 17, 12, 12, 12, 28, 27, 15, 14, 21, 13, 23, 39, 18, 18, 17, 9, 9, 19, 18, 8, 8, 27, 20, 8, 9, 19, 34, 14, 8, 9, 8, 14, 24, 13, 7, 8, 17, 23, 22, 23, 26, 24, 18, 24, 26, 15, 13, 7, 20, 7, 32, 20, 26, 33, 37, 30, 27], \"pairs\": [{\"doc_id\": \"Q25396697\", \"value\": 40}, {\"doc_id\": \"Q25396702\", \"value\": 12}, {\"doc_id\": \"Q26233297\", \"value\": 24}, {\"doc_id\": \"Q26219841\", \"value\": 56}, {\"doc_id\": \"Q26273359\", \"value\": 34}, {\"doc_id\": \"Q26219843\", \"value\": 25}, {\"doc_id\": \"Q26233320\", \"value\": 31}, {\"doc_id\": \"Q26219842\", \"value\": 45}, {\"doc_id\": \"Q26233317\", \"value\": 32}, {\"doc_id\": \"Q26219839\", \"value\": 36}, {\"doc_id\": \"Q26233319\", \"value\": 33}, {\"doc_id\": \"Q26234091\", \"value\": 23}, {\"doc_id\": \"Q26234119\", …"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 80,
+            "latency_ms": 4.93,
+            "input_tokens": 883,
+            "output_tokens": 74
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "query=Women's RS:X 2016, season=Summer, year_from=2016, year_to=2016",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "Women's RS:X 2016",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "summary": "281 event(s), 25 shown",
+              "result": "{\"count\": 281, \"returned\": 25, \"events\": [{\"doc_id\": \"Q25396697\", \"title\": \"Archery at the 2016 Summer Olympics \\u2013 Women's individual\", \"sport\": \"Archery\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's individual\", \"venue\": \"Sambadrome Marqu\\u00eas de Sapuca\\u00ed\"}, {\"doc_id\": \"Q25396702\", \"title\": \"Archery at the 2016 Summer Olympics \\u2013 Women's team\", \"sport\": \"Archery\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's team\", \"venue\": \"Sambadrome Marqu\\u00eas de Sapuca\\u00ed\"}, {\"doc_id\": \"Q26233297\", \"title\": \"Athletics at the 2016 Summer Olympics \\u2013 Women's 10,000 metres\", \"sport\": \"Athletics\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's 10,000 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q26219841\", \"title\": \"Athletics at the 2016 Summer Olympics \\u2013 Women's 100 metres\", \"sport\": \"Athletics\", \"year\": 2016, \"season\": \"Summer\", \"eve…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 1,
+            "latency_ms": 5.49,
+            "input_tokens": 1715,
+            "output_tokens": 72
+          },
+          {
+            "index": 3,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "query=Women's RS:X 2016 Sailing, season=Summer, year_from=2016, year_to=2016",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "Women's RS:X 2016 Sailing",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "summary": "281 event(s), 25 shown",
+              "result": "{\"count\": 281, \"returned\": 25, \"events\": [{\"doc_id\": \"Q26265754\", \"title\": \"Sailing at the 2016 Summer Olympics \\u2013 Women's 470\", \"sport\": \"Sailing\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's 470\", \"venue\": \"Marina da Gl\\u00f3ria\"}, {\"doc_id\": \"Q26254891\", \"title\": \"Sailing at the 2016 Summer Olympics \\u2013 Women's RS:X\", \"sport\": \"Sailing\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's RS:X\", \"venue\": \"Marina da Gl\\u00f3ria\"}, {\"doc_id\": \"Q25396697\", \"title\": \"Archery at the 2016 Summer Olympics \\u2013 Women's individual\", \"sport\": \"Archery\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's individual\", \"venue\": \"Sambadrome Marqu\\u00eas de Sapuca\\u00ed\"}, {\"doc_id\": \"Q25396702\", \"title\": \"Archery at the 2016 Summer Olympics \\u2013 Women's team\", \"sport\": \"Archery\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's team\", \"venue\": \"Sambadrome…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 5.1,
+            "input_tokens": 2288,
+            "output_tokens": 60
+          },
+          {
+            "index": 4,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q26254891",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q26254891"
+              },
+              "summary": "Sailing at the 2016 Summer Olympics – Women's RS:X (2016 Summer)",
+              "result": "{\"doc_id\": \"Q26254891\", \"title\": \"Sailing at the 2016 Summer Olympics \\u2013 Women's RS:X\", \"url\": \"https://en.wikipedia.org/wiki/Sailing_at_the_2016_Summer_Olympics_%E2%80%93_Women%27s_RS%3AX\", \"in_graph\": true, \"sport\": \"Sailing\", \"year\": 2016, \"season\": \"Summer\", \"games\": \"2016 Summer\", \"event_name\": \"Women's RS:X\", \"venue\": \"Marina da Gl\\u00f3ria\", \"date\": \"8\\u201314 August 2016\", \"competitors\": 26, \"nations\": 26, \"gold\": \"Charline Picon\", \"silver\": \"Chen Peina\", \"bronze\": \"Stefania Elfutina\", \"win\": \"64 points Winning total\", \"prev\": \"Q3039134\", \"next\": null, \"doc_ids\": [\"Q26254891\"], \"text\": \"[Infobox Olympic event]\\n event: Women's RS:X\\n games: 2016 Summer\\n venue: Marina da Gl\\u00f3ria\\n dates: 8\\u201314 August 2016\\n competitors: 26\\n nations: 26\\n win_label: Winning total\\n win_value: 64 points\\n gold: Charline Picon\\n goldNOC: FRA\\n silver: Chen Peina\\n silverNOC: CHN\\n bron…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 2328,
+            "output_tokens": 38
+          },
+          {
+            "index": 5,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=26, doc_ids=['Q26254891'], reasoning=The event page lists \"nations: 26\".",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "26",
+                "doc_ids": [
+                  "Q26254891"
+                ],
+                "reasoning": "The event page lists \"nations: 26\"."
+              },
+              "summary": "answer=26",
+              "result": "{\"accepted\": true, \"answer\": \"26\", \"reasoning\": \"The event page lists \\\"nations: 26\\\".\", \"confidence\": 0.9, \"doc_ids\": [\"Q26254891\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 2542,
+            "output_tokens": 51
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:get_event_values",
+            "agent": "ReActAgent",
+            "detail": "field=nations, query=Women's RS:X, season=Summer, year_from=2016, year_to=2016",
+            "latency_ms": 4.93
+          },
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "query=Women's RS:X 2016, season=Summer, year_from=2016, year_to=2016",
+            "latency_ms": 5.49
+          },
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "query=Women's RS:X 2016 Sailing, season=Summer, year_from=2016, year_to=2016",
+            "latency_ms": 5.1
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q26254891",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=26, doc_ids=['Q26254891'], reasoning=The event page lists \"nations: 26\".",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 883,
+            "output_tokens": 74,
+            "total_tokens": 957,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 1715,
+            "output_tokens": 72,
+            "total_tokens": 1787,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2288,
+            "output_tokens": 60,
+            "total_tokens": 2348,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2328,
+            "output_tokens": 38,
+            "total_tokens": 2366,
+            "detail": "openai/gpt-oss-20b"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2542,
+            "output_tokens": 51,
+            "total_tokens": 2593,
+            "detail": "openai/gpt-oss-20b"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_values",
+            "observation": {
+              "tool": "get_event_values",
+              "args": {
+                "field": "nations",
+                "query": "Women's RS:X",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "summary": "field=nations values=117/123",
+              "result": "{\"field\": \"nations\", \"num_matching_events\": 123, \"num_with_value\": 117, \"num_missing\": 6, \"values\": [40, 12, 24, 56, 34, 25, 31, 45, 32, 36, 33, 23, 19, 21, 27, 20, 26, 80, 24, 25, 25, 14, 35, 17, 12, 12, 12, 28, 27, 15, 14, 21, 13, 23, 39, 18, 18, 17, 9, 9, 19, 18, 8, 8, 27, 20, 8, 9, 19, 34, 14, 8, 9, 8, 14, 24, 13, 7, 8, 17, 23, 22, 23, 26, 24, 18, 24, 26, 15, 13, 7, 20, 7, 32, 20, 26, 33, 37, 30, 27], \"pairs\": [{\"doc_id\": \"Q25396697\", \"value\": 40}, {\"doc_id\": \"Q25396702\", \"value\": 12}, {\"doc_id\": \"Q26233297\", \"value\": 24}, {\"doc_id\": \"Q26219841\", \"value\": 56}, {\"doc_id\": \"Q26273359\", \"value\": 34}, {\"doc_id\": \"Q26219843\", \"value\": 25}, {\"doc_id\": \"Q26233320\", \"value\": 31}, {\"doc_id\": \"Q26219842\", \"value\": 45}, {\"doc_id\": \"Q26233317\", \"value\": 32}, {\"doc_id\": \"Q26219839\", \"value\": 36}, {\"doc_id\": \"Q26233319\", \"value\": 33}, {\"doc_id\": \"Q26234091\", \"value\": 23}, {\"doc_id\": \"Q26234119\", …"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "Women's RS:X 2016",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "summary": "281 event(s), 25 shown",
+              "result": "{\"count\": 281, \"returned\": 25, \"events\": [{\"doc_id\": \"Q25396697\", \"title\": \"Archery at the 2016 Summer Olympics \\u2013 Women's individual\", \"sport\": \"Archery\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's individual\", \"venue\": \"Sambadrome Marqu\\u00eas de Sapuca\\u00ed\"}, {\"doc_id\": \"Q25396702\", \"title\": \"Archery at the 2016 Summer Olympics \\u2013 Women's team\", \"sport\": \"Archery\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's team\", \"venue\": \"Sambadrome Marqu\\u00eas de Sapuca\\u00ed\"}, {\"doc_id\": \"Q26233297\", \"title\": \"Athletics at the 2016 Summer Olympics \\u2013 Women's 10,000 metres\", \"sport\": \"Athletics\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's 10,000 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q26219841\", \"title\": \"Athletics at the 2016 Summer Olympics \\u2013 Women's 100 metres\", \"sport\": \"Athletics\", \"year\": 2016, \"season\": \"Summer\", \"eve…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "Women's RS:X 2016 Sailing",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "summary": "281 event(s), 25 shown",
+              "result": "{\"count\": 281, \"returned\": 25, \"events\": [{\"doc_id\": \"Q26265754\", \"title\": \"Sailing at the 2016 Summer Olympics \\u2013 Women's 470\", \"sport\": \"Sailing\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's 470\", \"venue\": \"Marina da Gl\\u00f3ria\"}, {\"doc_id\": \"Q26254891\", \"title\": \"Sailing at the 2016 Summer Olympics \\u2013 Women's RS:X\", \"sport\": \"Sailing\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's RS:X\", \"venue\": \"Marina da Gl\\u00f3ria\"}, {\"doc_id\": \"Q25396697\", \"title\": \"Archery at the 2016 Summer Olympics \\u2013 Women's individual\", \"sport\": \"Archery\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's individual\", \"venue\": \"Sambadrome Marqu\\u00eas de Sapuca\\u00ed\"}, {\"doc_id\": \"Q25396702\", \"title\": \"Archery at the 2016 Summer Olympics \\u2013 Women's team\", \"sport\": \"Archery\", \"year\": 2016, \"season\": \"Summer\", \"event_name\": \"Women's team\", \"venue\": \"Sambadrome…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q26254891"
+              },
+              "summary": "Sailing at the 2016 Summer Olympics – Women's RS:X (2016 Summer)",
+              "result": "{\"doc_id\": \"Q26254891\", \"title\": \"Sailing at the 2016 Summer Olympics \\u2013 Women's RS:X\", \"url\": \"https://en.wikipedia.org/wiki/Sailing_at_the_2016_Summer_Olympics_%E2%80%93_Women%27s_RS%3AX\", \"in_graph\": true, \"sport\": \"Sailing\", \"year\": 2016, \"season\": \"Summer\", \"games\": \"2016 Summer\", \"event_name\": \"Women's RS:X\", \"venue\": \"Marina da Gl\\u00f3ria\", \"date\": \"8\\u201314 August 2016\", \"competitors\": 26, \"nations\": 26, \"gold\": \"Charline Picon\", \"silver\": \"Chen Peina\", \"bronze\": \"Stefania Elfutina\", \"win\": \"64 points Winning total\", \"prev\": \"Q3039134\", \"next\": null, \"doc_ids\": [\"Q26254891\"], \"text\": \"[Infobox Olympic event]\\n event: Women's RS:X\\n games: 2016 Summer\\n venue: Marina da Gl\\u00f3ria\\n dates: 8\\u201314 August 2016\\n competitors: 26\\n nations: 26\\n win_label: Winning total\\n win_value: 64 points\\n gold: Charline Picon\\n goldNOC: FRA\\n silver: Chen Peina\\n silverNOC: CHN\\n bron…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "26",
+                "doc_ids": [
+                  "Q26254891"
+                ],
+                "reasoning": "The event page lists \"nations: 26\"."
+              },
+              "summary": "answer=26",
+              "result": "{\"accepted\": true, \"answer\": \"26\", \"reasoning\": \"The event page lists \\\"nations: 26\\\".\", \"confidence\": 0.9, \"doc_ids\": [\"Q26254891\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "react",
+          "classification": {
+            "qtype": "lookup",
+            "method": "ReActAgent",
+            "mode": "react",
+            "stop_reason": "submitted_answer",
+            "steps": 5
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 5
+          },
+          "spec": {
+            "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+            "qtype": "lookup",
+            "sport": "",
+            "year": 0,
+            "season": "",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "Sailing at the 2016 Summer Olympics – Women's RS:X",
+            "before_year": null,
+            "years_mentioned": [
+              2016
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "The event page lists \"nations: 26\".",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "get_event_values",
+              "args": {
+                "field": "nations",
+                "query": "Women's RS:X",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "latency_ms": 4.93,
+              "error": "",
+              "doc_ids": [
+                "Q25396697",
+                "Q25396702",
+                "Q26233297",
+                "Q26219841",
+                "Q26273359",
+                "Q26219843",
+                "Q26233320",
+                "Q26219842",
+                "Q26233317",
+                "Q26219839",
+                "Q26233319",
+                "Q26234091",
+                "Q26234119",
+                "Q26234145",
+                "Q26233821",
+                "Q26234144",
+                "Q26225492",
+                "Q21858030",
+                "Q26224939",
+                "Q26234051",
+                "Q26233995",
+                "Q25301754",
+                "Q25301483",
+                "Q24995398",
+                "Q26218608",
+                "Q26218607",
+                "Q26218605",
+                "Q26269232",
+                "Q26334232",
+                "Q26269219",
+                "Q26335055",
+                "Q26213159",
+                "Q25476761",
+                "Q25476835",
+                "Q24761058",
+                "Q25476545",
+                "Q24906792",
+                "Q26265815",
+                "Q26260960",
+                "Q26262523",
+                "Q26334713",
+                "Q26243423",
+                "Q26237528",
+                "Q26229077",
+                "Q25386275",
+                "Q25386279",
+                "Q25384919",
+                "Q25384917",
+                "Q25386274",
+                "Q26155834",
+                "Q26233801",
+                "Q26245392",
+                "Q26233796",
+                "Q26265496",
+                "Q26265678",
+                "Q26254912",
+                "Q26261256",
+                "Q26233797",
+                "Q26233798",
+                "Q26218599",
+                "Q26212162",
+                "Q26212161",
+                "Q26217865",
+                "Q26218598",
+                "Q26217871",
+                "Q26217896",
+                "Q25991470",
+                "Q26406504",
+                "Q22968977",
+                "Q22968974",
+                "Q22968979",
+                "Q22968972",
+                "Q22968976",
+                "Q22968973",
+                "Q26265754",
+                "Q26254891",
+                "Q26220718",
+                "Q26218171",
+                "Q26235041",
+                "Q26219821"
+              ],
+              "summary": "field=nations values=117/123"
+            },
+            {
+              "tool": "search_events",
+              "args": {
+                "query": "Women's RS:X 2016",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "latency_ms": 5.49,
+              "error": "",
+              "doc_ids": [
+                "Q25396697",
+                "Q25396702",
+                "Q26233297",
+                "Q26219841",
+                "Q26273359",
+                "Q26219843",
+                "Q26233320",
+                "Q26219842",
+                "Q26233317",
+                "Q26219839",
+                "Q26233319",
+                "Q26219862",
+                "Q26234091",
+                "Q26234119",
+                "Q26234145",
+                "Q26233821",
+                "Q26234144",
+                "Q26225492",
+                "Q21858030",
+                "Q26224939",
+                "Q26234051",
+                "Q26233995",
+                "Q25301754",
+                "Q25301483",
+                "Q24995398"
+              ],
+              "summary": "281 event(s), 25 shown"
+            },
+            {
+              "tool": "search_events",
+              "args": {
+                "query": "Women's RS:X 2016 Sailing",
+                "season": "Summer",
+                "year_from": 2016,
+                "year_to": 2016
+              },
+              "latency_ms": 5.1,
+              "error": "",
+              "doc_ids": [
+                "Q26265754",
+                "Q26254891",
+                "Q25396697",
+                "Q25396702",
+                "Q26233297",
+                "Q26219841",
+                "Q26273359",
+                "Q26219843",
+                "Q26233320",
+                "Q26219842",
+                "Q26233317",
+                "Q26219839",
+                "Q26233319",
+                "Q26219862",
+                "Q26234091",
+                "Q26234119",
+                "Q26234145",
+                "Q26233821",
+                "Q26234144",
+                "Q26225492",
+                "Q21858030",
+                "Q26224939",
+                "Q26234051",
+                "Q26233995",
+                "Q25301754"
+              ],
+              "summary": "281 event(s), 25 shown"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q26254891"
+              },
+              "latency_ms": 0.02,
+              "error": "",
+              "doc_ids": [
+                "Q26254891"
+              ],
+              "summary": "Sailing at the 2016 Summer Olympics – Women's RS:X (2016 Summer)"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "26",
+                "doc_ids": [
+                  "Q26254891"
+                ],
+                "reasoning": "The event page lists \"nations: 26\"."
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q26254891"
+              ],
+              "summary": "answer=26"
+            }
+          ],
+          "docs_touched": 81,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 0.0123,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  }
+]

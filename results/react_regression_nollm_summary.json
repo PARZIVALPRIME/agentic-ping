@@ -33,7 +33,7 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 57.223,
+      "avg_latency_ms": 56.432,
       "avg_context_tokens": 235.4,
       "avg_input_tokens": 0.0,
       "avg_output_tokens": 0.0,
