@@ -93,10 +93,17 @@ class LLMConfig:
     groq_api_key: Optional[str] = field(default_factory=lambda: os.getenv("GROQ_API_KEY"))
     groq_base_url: str = field(default_factory=lambda: _env("GROQ_BASE_URL",
                                                             default="https://api.groq.com/openai/v1"))
+    # Local model server (Ollama). No key and no quota are involved: the api_key
+    # below is a placeholder the OpenAI client insists on, and every request goes
+    # to localhost, so a run on this provider spends no provider tokens at all.
+    ollama_base_url: str = field(default_factory=lambda: _env(
+        "OLLAMA_BASE_URL", default="http://localhost:11434/v1"))
+    ollama_api_key: Optional[str] = field(default_factory=lambda: os.getenv("OLLAMA_API_KEY"))
 
     def __post_init__(self) -> None:
         defaults = {
             "groq": "openai/gpt-oss-120b",
+            "ollama": "qwen3.5:2b-q4_K_M",
             "openai": "gpt-4o-mini",
             "gemini": "gemini-2.5-flash",
             "azure": "gpt-4o-mini",
@@ -111,6 +118,10 @@ class LLMConfig:
         if self.provider == "groq" and self.max_tokens == 0:
             self.max_tokens = 900
             self.reasoning_effort = self.reasoning_effort or "low"
+        # A local model has no quota to conserve, but qwen3.5 spends part of its
+        # budget on thinking, so an uncapped completion would ramble for minutes.
+        if self.provider == "ollama" and self.max_tokens == 0:
+            self.max_tokens = 700
 
     @property
     def api_key(self) -> Optional[str]:
@@ -119,7 +130,14 @@ class LLMConfig:
             "gemini": self.google_api_key,
             "azure": self.azure_api_key,
             "groq": self.groq_api_key,
+            # Ollama ignores the key, but the OpenAI client rejects an empty one.
+            "ollama": self.ollama_api_key or "ollama",
         }.get(self.provider)
+
+    @property
+    def is_local(self) -> bool:
+        """True when the model server is on this machine (no quota, no cost)."""
+        return self.provider == "ollama"
 
 
 @dataclass

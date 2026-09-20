@@ -1,0 +1,2275 @@
+[
+  {
+    "qid": "pub-001",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+    "gold": {
+      "answers": [
+        "5"
+      ],
+      "doc_ids": [
+        "Q47091419",
+        "Q47105341",
+        "Q47155365",
+        "Q47155371",
+        "Q47155408",
+        "Q47155425",
+        "Q47155467",
+        "Q47155505",
+        "Q47155541",
+        "Q47155555",
+        "Q47155815"
+      ]
+    },
+    "pipelines": {
+      "RAG": {
+        "pipeline": "RAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "3",
+        "citations": [
+          "Q47155425",
+          "Q47091419",
+          "Q47105341",
+          "Q47155365"
+        ],
+        "latency_ms": 10022.03,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 395,
+        "input_tokens": 1451,
+        "output_tokens": 700,
+        "total_tokens": 2151,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.4,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q47155425",
+              "Q47091419",
+              "Q47105341",
+              "Q47155408",
+              "Q47155365"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 31.0
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.25
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 9990.2
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 395,
+            "output_tokens": 0,
+            "total_tokens": 395,
+            "detail": "5 chunks"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 1027,
+            "output_tokens": 700,
+            "total_tokens": 1727,
+            "detail": "qwen3.5:2b-q4_K_M"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q47155425",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47091419",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47105341",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47155365",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's pursuit",
+            "competitors": "58"
+          }
+        ],
+        "metadata": {
+          "retriever": "vector",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q47155425",
+            "Q47091419",
+            "Q47105341",
+            "Q47155408",
+            "Q47155365"
+          ],
+          "retrieved_titles": [
+            "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "Biathlon at the 2018 Winter Olympics – Men's individual",
+            "Biathlon at the 2018 Winter Olympics – Women's pursuit"
+          ],
+          "extraction_method": "extractive",
+          "docs_with_infobox": 4,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": ""
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "cannot_verify_candidate_set_completeness"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.3636,
+          "judge_reason": ""
+        }
+      },
+      "GraphRAG": {
+        "pipeline": "GraphRAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "5",
+        "citations": [
+          "Q47091419",
+          "Q47155425",
+          "Q47105341",
+          "Q14643284",
+          "Q107861710",
+          "Q47155555",
+          "Q47155815",
+          "Q47155505",
+          "Q47155541",
+          "Q47155408"
+        ],
+        "latency_ms": 10117.9,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "hybrid_search",
+          "structural_retrieve"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 969,
+        "input_tokens": 2272,
+        "output_tokens": 700,
+        "total_tokens": 2972,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.55,
+        "plan": [
+          "hybrid_search",
+          "graph_expand",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q47091419",
+              "Q47155425",
+              "Q47105341",
+              "Q47155365",
+              "Q47155371"
+            ]
+          },
+          {
+            "step": 2,
+            "agent": "GraphTraverser",
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q47091419",
+              "Q47155425",
+              "Q47105341",
+              "Q14643284",
+              "Q107861710",
+              "Q47155555",
+              "Q47155815",
+              "Q47155505",
+              "Q47155541",
+              "Q47155408"
+            ],
+            "new_docs": 7
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 70.88
+          },
+          {
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 81.07
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.31
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against graph context",
+            "latency_ms": 9964.99
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:graph_expanded",
+            "input_tokens": 969,
+            "output_tokens": 0,
+            "total_tokens": 969,
+            "detail": "10 documents"
+          },
+          {
+            "operation": "graphrag.adjudicate",
+            "input_tokens": 1274,
+            "output_tokens": 700,
+            "total_tokens": 1974,
+            "detail": "qwen3.5:2b-q4_K_M"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q47091419",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47155425",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47105341",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q14643284",
+            "title": "Biathlon at the 2014 Winter Olympics – Women's sprint",
+            "competitors": "84"
+          },
+          {
+            "doc_id": "Q107861710",
+            "title": "Biathlon at the 2022 Winter Olympics – Women's sprint",
+            "competitors": "89"
+          },
+          {
+            "doc_id": "Q47155555",
+            "title": "Biathlon at the 2018 Winter Olympics – Mixed relay",
+            "competitors": "80"
+          },
+          {
+            "doc_id": "Q47155815",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's mass start",
+            "competitors": "30"
+          },
+          {
+            "doc_id": "Q47155505",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's relay",
+            "competitors": "72"
+          },
+          {
+            "doc_id": "Q47155541",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's relay",
+            "competitors": "73"
+          },
+          {
+            "doc_id": "Q47155408",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's individual",
+            "competitors": "86"
+          }
+        ],
+        "metadata": {
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q47091419",
+            "Q47155425",
+            "Q47105341",
+            "Q47155365",
+            "Q47155371"
+          ],
+          "expanded_doc_ids": [
+            "Q47091419",
+            "Q47155425",
+            "Q47105341",
+            "Q14643284",
+            "Q107861710",
+            "Q47155555",
+            "Q47155815",
+            "Q47155505",
+            "Q47155541",
+            "Q47155408"
+          ],
+          "graph_relations": [
+            "graph:NEXT_EDITION",
+            "graph:PREV_EDITION",
+            "graph:SAME_SPORT_GAMES",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "Biathlon at the 2014 Winter Olympics – Women's sprint",
+            "Biathlon at the 2022 Winter Olympics – Women's sprint",
+            "Biathlon at the 2018 Winter Olympics – Mixed relay",
+            "Biathlon at the 2018 Winter Olympics – Men's mass start",
+            "Biathlon at the 2018 Winter Olympics – Women's relay",
+            "Biathlon at the 2018 Winter Olympics – Men's relay",
+            "Biathlon at the 2018 Winter Olympics – Men's individual"
+          ],
+          "docs_with_infobox": 10,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": ""
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "cannot_verify_candidate_set_completeness"
+        ],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 0.8,
+          "citation_recall": 0.7273,
+          "judge_reason": ""
+        }
+      },
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "",
+        "citations": [
+          "Q47155408",
+          "Q47155815",
+          "Q47155371"
+        ],
+        "latency_ms": 44025.62,
+        "retrieval_steps": 15,
+        "tools_called": [
+          "search_events",
+          "get_event_details"
+        ],
+        "agents_invoked": [
+          "ReActAgent",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 11,
+        "docs_retrieved": 11,
+        "context_tokens": 2,
+        "input_tokens": 18245,
+        "output_tokens": 2763,
+        "total_tokens": 21008,
+        "llm_calls": 8,
+        "method": "none",
+        "strategy_changed": true,
+        "stop_reason": "max_steps_reached",
+        "confidence": 0.0,
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Aggregator.count_threshold",
+          "Aggregator.verify_by_recount",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 6,
+        "candidates_considered": 11,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "query=biathlon, year_from=2018, year_to=2018, season=Winter, limit=40",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "biathlon",
+                "year_from": 2018,
+                "year_to": 2018,
+                "season": "Winter",
+                "limit": 40
+              },
+              "summary": "11 event(s), 11 shown",
+              "result": "{\"count\": 11, \"returned\": 11, \"events\": [{\"doc_id\": \"Q47155408\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's individual\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's individual\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155815\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's mass start\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's mass start\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155371\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's pursuit\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's pursuit\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155541\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's relay\", \"sport\": \"Biathl…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 11,
+            "latency_ms": 0.77,
+            "input_tokens": 1371,
+            "output_tokens": 190
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155408",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155408"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's individual (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155408\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's individual\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_individual\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's individual\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"15 February 2018\", \"competitors\": 86, \"nations\": 26, \"gold\": \"Johannes Thingnes B\\u00f8\", \"silver\": \"Jakov Fak\", \"bronze\": \"Dominik Landertinger\", \"win\": \"48:03.8\", \"prev\": \"Q15021060\", \"next\": \"Q107802335\", \"doc_ids\": [\"Q47155408\"], \"text\": \"[Infobox Olympic event]\\n event: Men's individual\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 15 February 2018\\n competitors: 86\\n nations: 26\\n win_value: 48:03.8\\n gold: Johannes Thingnes B\\u00f8\\n g…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 2066,
+            "output_tokens": 319
+          },
+          {
+            "index": 3,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155815",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155815"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's mass start (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155815\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's mass start\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_mass_start\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's mass start\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"18 February 2018\", \"competitors\": 30, \"nations\": 13, \"gold\": \"Martin Fourcade\", \"silver\": \"Simon Schempp\", \"bronze\": \"Emil Hegle Svendsen\", \"win\": \"35:47.3\", \"prev\": \"Q15052012\", \"next\": \"Q107861717\", \"doc_ids\": [\"Q47155815\"], \"text\": \"[Infobox Olympic event]\\n event: Men's mass start\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 18 February 2018\\n competitors: 30\\n nations: 13\\n win_value: 35:47.3\\n gold: Martin Fourcade\\n goldNOC: FRA\\n sil…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 2066,
+            "output_tokens": 319
+          },
+          {
+            "index": 4,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155371",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155371"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's pursuit (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155371\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's pursuit\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_pursuit\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's pursuit\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"12 February 2018\", \"competitors\": 60, \"nations\": 25, \"gold\": \"Martin Fourcade\", \"silver\": \"Sebastian Samuelsson\", \"bronze\": \"Benedikt Doll\", \"win\": \"32:51.7\", \"prev\": \"Q14643120\", \"next\": \"Q107861704\", \"doc_ids\": [\"Q47155371\"], \"text\": \"[Infobox Olympic event]\\n event: Men's pursuit\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 12 February 2018\\n competitors: 60\\n nations: 25\\n win_value: 32:51.7\\n gold: Martin Fourcade\\n goldNOC: FRA\\n silver: Sebast…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 2066,
+            "output_tokens": 319
+          },
+          {
+            "index": 5,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155541",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155541"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's relay (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155541\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's relay\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_relay\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's relay\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"23 February 2018\", \"competitors\": 73, \"nations\": 19, \"gold\": \"Peppe FemlingJesper NelinSebastian SamuelssonFredrik Lindstr\\u00f6m\", \"silver\": \"Lars Helge BirkelandTarjei B\\u00f8Johannes Thingnes B\\u00f8Emil Hegle Svendsen\", \"bronze\": \"Erik LesserBenedikt DollArnd PeifferSimon Schempp\", \"win\": \"1:15:16.5\", \"prev\": \"Q15052014\", \"next\": \"Q107861696\", \"doc_ids\": [\"Q47155541\"], \"text\": \"[Infobox Olympic event]\\n event: Men's relay\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 2066,
+            "output_tokens": 319
+          },
+          {
+            "index": 6,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47105341",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47105341"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's sprint (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47105341\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's sprint\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_sprint\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's sprint\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"11 February 2018\", \"competitors\": 87, \"nations\": 26, \"gold\": \"Arnd Peiffer\", \"silver\": \"Michal Kr\\u010dm\\u00e1\\u0159\", \"bronze\": \"Dominik Windisch\", \"win\": \"23:38.8\", \"prev\": \"Q14643126\", \"next\": \"Q107861699\", \"doc_ids\": [\"Q47105341\"], \"text\": \"[Infobox Olympic event]\\n event: Men's sprint\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 11 February 2018\\n competitors: 87\\n nations: 26\\n win_value: 23:38.8\\n gold: Arnd Peiffer\\n goldNOC: GER\\n silver: Micha…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 2066,
+            "output_tokens": 319
+          },
+          {
+            "index": 7,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "query=biathlon, year_from=2018, year_to=2018, season=Winter, limit=40",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "biathlon",
+                "year_from": 2018,
+                "year_to": 2018,
+                "season": "Winter",
+                "limit": 40
+              },
+              "summary": "11 event(s), 11 shown",
+              "result": "{\"count\": 11, \"returned\": 11, \"events\": [{\"doc_id\": \"Q47155408\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's individual\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's individual\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155815\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's mass start\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's mass start\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155371\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's pursuit\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's pursuit\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155541\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's relay\", \"sport\": \"Biathl…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.76,
+            "input_tokens": 3465,
+            "output_tokens": 208
+          },
+          {
+            "index": 8,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155555",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155555"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Mixed relay (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155555\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Mixed relay\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Mixed_relay\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Mixed relay\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"20 February 2018\", \"competitors\": 80, \"nations\": 20, \"gold\": \"Marie Dorin HabertAna\\u00efs BescondSimon DesthieuxMartin Fourcade\", \"silver\": \"Marte OlsbuTiril EckhoffJohannes Thingnes B\\u00f8Emil Hegle Svendsen\", \"bronze\": \"Lisa VittozziDorothea WiererLukas HoferDominik Windisch\", \"win\": \"1:08:34.3\", \"prev\": \"Q15052026\", \"next\": \"Q107802331\", \"doc_ids\": [\"Q47155555\"], \"text\": \"[Infobox Olympic event]\\n event: Mixed relay\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 3674,
+            "output_tokens": 199
+          },
+          {
+            "index": 9,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155556",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155556"
+              },
+              "summary": "error: no document or graph vertex 'Q47155556'",
+              "result": "{\"error\": \"no document or graph vertex 'Q47155556'\"}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 27.75,
+            "input_tokens": 3674,
+            "output_tokens": 199
+          },
+          {
+            "index": 10,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155557",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155557"
+              },
+              "summary": "error: no document or graph vertex 'Q47155557'",
+              "result": "{\"error\": \"no document or graph vertex 'Q47155557'\"}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 31.06,
+            "input_tokens": 3674,
+            "output_tokens": 199
+          },
+          {
+            "index": 11,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155408",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155408"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's individual (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155408\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's individual\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_individual\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's individual\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"15 February 2018\", \"competitors\": 86, \"nations\": 26, \"gold\": \"Johannes Thingnes B\\u00f8\", \"silver\": \"Jakov Fak\", \"bronze\": \"Dominik Landertinger\", \"win\": \"48:03.8\", \"prev\": \"Q15021060\", \"next\": \"Q107802335\", \"doc_ids\": [\"Q47155408\"], \"text\": \"[Infobox Olympic event]\\n event: Men's individual\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 15 February 2018\\n competitors: 86\\n nations: 26\\n win_value: 48:03.8\\n gold: Johannes Thingnes B\\u00f8\\n g…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 3059,
+            "output_tokens": 377
+          },
+          {
+            "index": 12,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155815",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155815"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's mass start (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155815\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's mass start\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_mass_start\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's mass start\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"18 February 2018\", \"competitors\": 30, \"nations\": 13, \"gold\": \"Martin Fourcade\", \"silver\": \"Simon Schempp\", \"bronze\": \"Emil Hegle Svendsen\", \"win\": \"35:47.3\", \"prev\": \"Q15052012\", \"next\": \"Q107861717\", \"doc_ids\": [\"Q47155815\"], \"text\": \"[Infobox Olympic event]\\n event: Men's mass start\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 18 February 2018\\n competitors: 30\\n nations: 13\\n win_value: 35:47.3\\n gold: Martin Fourcade\\n goldNOC: FRA\\n sil…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 3059,
+            "output_tokens": 377
+          },
+          {
+            "index": 13,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155371",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155371"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's pursuit (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155371\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's pursuit\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_pursuit\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's pursuit\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"12 February 2018\", \"competitors\": 60, \"nations\": 25, \"gold\": \"Martin Fourcade\", \"silver\": \"Sebastian Samuelsson\", \"bronze\": \"Benedikt Doll\", \"win\": \"32:51.7\", \"prev\": \"Q14643120\", \"next\": \"Q107861704\", \"doc_ids\": [\"Q47155371\"], \"text\": \"[Infobox Olympic event]\\n event: Men's pursuit\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 12 February 2018\\n competitors: 60\\n nations: 25\\n win_value: 32:51.7\\n gold: Martin Fourcade\\n goldNOC: FRA\\n silver: Sebast…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 3059,
+            "output_tokens": 377
+          },
+          {
+            "index": 14,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47155541",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155541"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's relay (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155541\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's relay\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_relay\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's relay\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"23 February 2018\", \"competitors\": 73, \"nations\": 19, \"gold\": \"Peppe FemlingJesper NelinSebastian SamuelssonFredrik Lindstr\\u00f6m\", \"silver\": \"Lars Helge BirkelandTarjei B\\u00f8Johannes Thingnes B\\u00f8Emil Hegle Svendsen\", \"bronze\": \"Erik LesserBenedikt DollArnd PeifferSimon Schempp\", \"win\": \"1:15:16.5\", \"prev\": \"Q15052014\", \"next\": \"Q107861696\", \"doc_ids\": [\"Q47155541\"], \"text\": \"[Infobox Olympic event]\\n event: Men's relay\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 3059,
+            "output_tokens": 377
+          },
+          {
+            "index": 15,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q47105341",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47105341"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's sprint (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47105341\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's sprint\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_sprint\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's sprint\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"11 February 2018\", \"competitors\": 87, \"nations\": 26, \"gold\": \"Arnd Peiffer\", \"silver\": \"Michal Kr\\u010dm\\u00e1\\u0159\", \"bronze\": \"Dominik Windisch\", \"win\": \"23:38.8\", \"prev\": \"Q14643126\", \"next\": \"Q107861699\", \"doc_ids\": [\"Q47105341\"], \"text\": \"[Infobox Olympic event]\\n event: Men's sprint\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 11 February 2018\\n competitors: 87\\n nations: 26\\n win_value: 23:38.8\\n gold: Arnd Peiffer\\n goldNOC: GER\\n silver: Micha…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 3059,
+            "output_tokens": 377
+          },
+          {
+            "index": 16,
+            "agent": "ReActAgent",
+            "operation": "retry",
+            "detail": "model turn had neither text nor tool calls",
+            "observation": {
+              "stage": 6,
+              "retries_left": 1
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 2435.46,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 17,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[none] answer='' citing 3 document(s) :: aggregation produced no count",
+            "observation": {
+              "answer": "",
+              "source": "none",
+              "rationale": "aggregation produced no count",
+              "citations": [
+                "Q47155408",
+                "Q47155815",
+                "Q47155371"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 10043.28,
+            "input_tokens": 424,
+            "output_tokens": 700
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "query=biathlon, year_from=2018, year_to=2018, season=Winter, limit=40",
+            "latency_ms": 0.77
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155408",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155815",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155371",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155541",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47105341",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "query=biathlon, year_from=2018, year_to=2018, season=Winter, limit=40",
+            "latency_ms": 0.76
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155555",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155556",
+            "latency_ms": 27.75
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155557",
+            "latency_ms": 31.06
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155408",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155815",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155371",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47155541",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q47105341",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "retry",
+            "agent": "ReActAgent",
+            "detail": "model turn had neither text nor tool calls",
+            "latency_ms": 2435.46
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[none] answer='' citing 3 document(s) :: aggregation produced no count",
+            "latency_ms": 10043.28
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 1371,
+            "output_tokens": 190,
+            "total_tokens": 1561,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2066,
+            "output_tokens": 319,
+            "total_tokens": 2385,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 3465,
+            "output_tokens": 208,
+            "total_tokens": 3673,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 3674,
+            "output_tokens": 199,
+            "total_tokens": 3873,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 3059,
+            "output_tokens": 377,
+            "total_tokens": 3436,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 4026,
+            "output_tokens": 70,
+            "total_tokens": 4096,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "classifier.classify",
+            "input_tokens": 160,
+            "output_tokens": 700,
+            "total_tokens": 860,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.synthesize",
+            "input_tokens": 424,
+            "output_tokens": 700,
+            "total_tokens": 1124,
+            "detail": "qwen3.5:2b-q4_K_M"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "biathlon",
+                "year_from": 2018,
+                "year_to": 2018,
+                "season": "Winter",
+                "limit": 40
+              },
+              "summary": "11 event(s), 11 shown",
+              "result": "{\"count\": 11, \"returned\": 11, \"events\": [{\"doc_id\": \"Q47155408\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's individual\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's individual\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155815\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's mass start\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's mass start\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155371\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's pursuit\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's pursuit\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155541\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's relay\", \"sport\": \"Biathl…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155408"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's individual (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155408\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's individual\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_individual\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's individual\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"15 February 2018\", \"competitors\": 86, \"nations\": 26, \"gold\": \"Johannes Thingnes B\\u00f8\", \"silver\": \"Jakov Fak\", \"bronze\": \"Dominik Landertinger\", \"win\": \"48:03.8\", \"prev\": \"Q15021060\", \"next\": \"Q107802335\", \"doc_ids\": [\"Q47155408\"], \"text\": \"[Infobox Olympic event]\\n event: Men's individual\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 15 February 2018\\n competitors: 86\\n nations: 26\\n win_value: 48:03.8\\n gold: Johannes Thingnes B\\u00f8\\n g…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155815"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's mass start (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155815\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's mass start\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_mass_start\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's mass start\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"18 February 2018\", \"competitors\": 30, \"nations\": 13, \"gold\": \"Martin Fourcade\", \"silver\": \"Simon Schempp\", \"bronze\": \"Emil Hegle Svendsen\", \"win\": \"35:47.3\", \"prev\": \"Q15052012\", \"next\": \"Q107861717\", \"doc_ids\": [\"Q47155815\"], \"text\": \"[Infobox Olympic event]\\n event: Men's mass start\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 18 February 2018\\n competitors: 30\\n nations: 13\\n win_value: 35:47.3\\n gold: Martin Fourcade\\n goldNOC: FRA\\n sil…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155371"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's pursuit (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155371\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's pursuit\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_pursuit\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's pursuit\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"12 February 2018\", \"competitors\": 60, \"nations\": 25, \"gold\": \"Martin Fourcade\", \"silver\": \"Sebastian Samuelsson\", \"bronze\": \"Benedikt Doll\", \"win\": \"32:51.7\", \"prev\": \"Q14643120\", \"next\": \"Q107861704\", \"doc_ids\": [\"Q47155371\"], \"text\": \"[Infobox Olympic event]\\n event: Men's pursuit\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 12 February 2018\\n competitors: 60\\n nations: 25\\n win_value: 32:51.7\\n gold: Martin Fourcade\\n goldNOC: FRA\\n silver: Sebast…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155541"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's relay (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155541\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's relay\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_relay\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's relay\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"23 February 2018\", \"competitors\": 73, \"nations\": 19, \"gold\": \"Peppe FemlingJesper NelinSebastian SamuelssonFredrik Lindstr\\u00f6m\", \"silver\": \"Lars Helge BirkelandTarjei B\\u00f8Johannes Thingnes B\\u00f8Emil Hegle Svendsen\", \"bronze\": \"Erik LesserBenedikt DollArnd PeifferSimon Schempp\", \"win\": \"1:15:16.5\", \"prev\": \"Q15052014\", \"next\": \"Q107861696\", \"doc_ids\": [\"Q47155541\"], \"text\": \"[Infobox Olympic event]\\n event: Men's relay\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47105341"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's sprint (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47105341\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's sprint\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_sprint\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's sprint\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"11 February 2018\", \"competitors\": 87, \"nations\": 26, \"gold\": \"Arnd Peiffer\", \"silver\": \"Michal Kr\\u010dm\\u00e1\\u0159\", \"bronze\": \"Dominik Windisch\", \"win\": \"23:38.8\", \"prev\": \"Q14643126\", \"next\": \"Q107861699\", \"doc_ids\": [\"Q47105341\"], \"text\": \"[Infobox Olympic event]\\n event: Men's sprint\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 11 February 2018\\n competitors: 87\\n nations: 26\\n win_value: 23:38.8\\n gold: Arnd Peiffer\\n goldNOC: GER\\n silver: Micha…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "biathlon",
+                "year_from": 2018,
+                "year_to": 2018,
+                "season": "Winter",
+                "limit": 40
+              },
+              "summary": "11 event(s), 11 shown",
+              "result": "{\"count\": 11, \"returned\": 11, \"events\": [{\"doc_id\": \"Q47155408\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's individual\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's individual\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155815\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's mass start\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's mass start\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155371\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's pursuit\", \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"event_name\": \"Men's pursuit\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\"}, {\"doc_id\": \"Q47155541\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's relay\", \"sport\": \"Biathl…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155555"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Mixed relay (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155555\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Mixed relay\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Mixed_relay\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Mixed relay\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"20 February 2018\", \"competitors\": 80, \"nations\": 20, \"gold\": \"Marie Dorin HabertAna\\u00efs BescondSimon DesthieuxMartin Fourcade\", \"silver\": \"Marte OlsbuTiril EckhoffJohannes Thingnes B\\u00f8Emil Hegle Svendsen\", \"bronze\": \"Lisa VittozziDorothea WiererLukas HoferDominik Windisch\", \"win\": \"1:08:34.3\", \"prev\": \"Q15052026\", \"next\": \"Q107802331\", \"doc_ids\": [\"Q47155555\"], \"text\": \"[Infobox Olympic event]\\n event: Mixed relay\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155556"
+              },
+              "summary": "error: no document or graph vertex 'Q47155556'",
+              "result": "{\"error\": \"no document or graph vertex 'Q47155556'\"}"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155557"
+              },
+              "summary": "error: no document or graph vertex 'Q47155557'",
+              "result": "{\"error\": \"no document or graph vertex 'Q47155557'\"}"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155408"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's individual (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155408\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's individual\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_individual\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's individual\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"15 February 2018\", \"competitors\": 86, \"nations\": 26, \"gold\": \"Johannes Thingnes B\\u00f8\", \"silver\": \"Jakov Fak\", \"bronze\": \"Dominik Landertinger\", \"win\": \"48:03.8\", \"prev\": \"Q15021060\", \"next\": \"Q107802335\", \"doc_ids\": [\"Q47155408\"], \"text\": \"[Infobox Olympic event]\\n event: Men's individual\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 15 February 2018\\n competitors: 86\\n nations: 26\\n win_value: 48:03.8\\n gold: Johannes Thingnes B\\u00f8\\n g…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155815"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's mass start (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155815\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's mass start\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_mass_start\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's mass start\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"18 February 2018\", \"competitors\": 30, \"nations\": 13, \"gold\": \"Martin Fourcade\", \"silver\": \"Simon Schempp\", \"bronze\": \"Emil Hegle Svendsen\", \"win\": \"35:47.3\", \"prev\": \"Q15052012\", \"next\": \"Q107861717\", \"doc_ids\": [\"Q47155815\"], \"text\": \"[Infobox Olympic event]\\n event: Men's mass start\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 18 February 2018\\n competitors: 30\\n nations: 13\\n win_value: 35:47.3\\n gold: Martin Fourcade\\n goldNOC: FRA\\n sil…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155371"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's pursuit (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155371\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's pursuit\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_pursuit\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's pursuit\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"12 February 2018\", \"competitors\": 60, \"nations\": 25, \"gold\": \"Martin Fourcade\", \"silver\": \"Sebastian Samuelsson\", \"bronze\": \"Benedikt Doll\", \"win\": \"32:51.7\", \"prev\": \"Q14643120\", \"next\": \"Q107861704\", \"doc_ids\": [\"Q47155371\"], \"text\": \"[Infobox Olympic event]\\n event: Men's pursuit\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 12 February 2018\\n competitors: 60\\n nations: 25\\n win_value: 32:51.7\\n gold: Martin Fourcade\\n goldNOC: FRA\\n silver: Sebast…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155541"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's relay (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47155541\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's relay\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_relay\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's relay\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"23 February 2018\", \"competitors\": 73, \"nations\": 19, \"gold\": \"Peppe FemlingJesper NelinSebastian SamuelssonFredrik Lindstr\\u00f6m\", \"silver\": \"Lars Helge BirkelandTarjei B\\u00f8Johannes Thingnes B\\u00f8Emil Hegle Svendsen\", \"bronze\": \"Erik LesserBenedikt DollArnd PeifferSimon Schempp\", \"win\": \"1:15:16.5\", \"prev\": \"Q15052014\", \"next\": \"Q107861696\", \"doc_ids\": [\"Q47155541\"], \"text\": \"[Infobox Olympic event]\\n event: Men's relay\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47105341"
+              },
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's sprint (2018 Winter)",
+              "result": "{\"doc_id\": \"Q47105341\", \"title\": \"Biathlon at the 2018 Winter Olympics \\u2013 Men's sprint\", \"url\": \"https://en.wikipedia.org/wiki/Biathlon_at_the_2018_Winter_Olympics_%E2%80%93_Men%27s_sprint\", \"in_graph\": true, \"sport\": \"Biathlon\", \"year\": 2018, \"season\": \"Winter\", \"games\": \"2018 Winter\", \"event_name\": \"Men's sprint\", \"venue\": \"Alpensia Biathlon Centre in Pyeongchang, South Korea\", \"date\": \"11 February 2018\", \"competitors\": 87, \"nations\": 26, \"gold\": \"Arnd Peiffer\", \"silver\": \"Michal Kr\\u010dm\\u00e1\\u0159\", \"bronze\": \"Dominik Windisch\", \"win\": \"23:38.8\", \"prev\": \"Q14643126\", \"next\": \"Q107861699\", \"doc_ids\": [\"Q47105341\"], \"text\": \"[Infobox Olympic event]\\n event: Men's sprint\\n games: 2018 Winter\\n venue: Alpensia Biathlon Centre in Pyeongchang, South Korea\\n date: 11 February 2018\\n competitors: 87\\n nations: 26\\n win_value: 23:38.8\\n gold: Arnd Peiffer\\n goldNOC: GER\\n silver: Micha…"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "aggregation",
+            "method": "rules",
+            "confidence": 0.95,
+            "reason": "rule-based match for the 'aggregation' template",
+            "rule_type": "aggregation",
+            "llm_agrees_with_rules": null
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "spec": {
+            "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+            "qtype": "aggregation",
+            "sport": "Biathlon",
+            "year": 2018,
+            "season": "Winter",
+            "event_desc": "",
+            "venue": "",
+            "date_text": "",
+            "threshold": 73,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": null,
+            "years_mentioned": [
+              2018
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)",
+            "retry: unparseable model turn (1 left)",
+            "fallback: deterministic planner/executor (ReAct produced no answer)",
+            "plan: template for 'aggregation'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "none",
+          "rationale": "aggregation produced no count",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "search_events",
+              "args": {
+                "query": "biathlon",
+                "year_from": 2018,
+                "year_to": 2018,
+                "season": "Winter",
+                "limit": 40
+              },
+              "latency_ms": 0.77,
+              "error": "",
+              "doc_ids": [
+                "Q47155408",
+                "Q47155815",
+                "Q47155371",
+                "Q47155541",
+                "Q47105341",
+                "Q47155555",
+                "Q47155425",
+                "Q47155467",
+                "Q47155365",
+                "Q47155505",
+                "Q47091419"
+              ],
+              "summary": "11 event(s), 11 shown"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155408"
+              },
+              "latency_ms": 0.02,
+              "error": "",
+              "doc_ids": [
+                "Q47155408"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's individual (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155815"
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47155815"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's mass start (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155371"
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47155371"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's pursuit (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155541"
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47155541"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's relay (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47105341"
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47105341"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's sprint (2018 Winter)"
+            },
+            {
+              "tool": "search_events",
+              "args": {
+                "query": "biathlon",
+                "year_from": 2018,
+                "year_to": 2018,
+                "season": "Winter",
+                "limit": 40
+              },
+              "latency_ms": 0.76,
+              "error": "",
+              "doc_ids": [
+                "Q47155408",
+                "Q47155815",
+                "Q47155371",
+                "Q47155541",
+                "Q47105341",
+                "Q47155555",
+                "Q47155425",
+                "Q47155467",
+                "Q47155365",
+                "Q47155505",
+                "Q47091419"
+              ],
+              "summary": "11 event(s), 11 shown"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155555"
+              },
+              "latency_ms": 0.03,
+              "error": "",
+              "doc_ids": [
+                "Q47155555"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Mixed relay (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155556"
+              },
+              "latency_ms": 27.75,
+              "error": "",
+              "doc_ids": [],
+              "summary": "error: no document or graph vertex 'Q47155556'"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155557"
+              },
+              "latency_ms": 31.06,
+              "error": "",
+              "doc_ids": [],
+              "summary": "error: no document or graph vertex 'Q47155557'"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155408"
+              },
+              "latency_ms": 0.02,
+              "error": "",
+              "doc_ids": [
+                "Q47155408"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's individual (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155815"
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47155815"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's mass start (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155371"
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47155371"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's pursuit (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47155541"
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47155541"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's relay (2018 Winter)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q47105341"
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q47105341"
+              ],
+              "summary": "Biathlon at the 2018 Winter Olympics – Men's sprint (2018 Winter)"
+            }
+          ],
+          "docs_touched": 11,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.2727,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-002",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+    "gold": {
+      "answers": [
+        "Chen Ding"
+      ],
+      "doc_ids": [
+        "Q1050909",
+        "Q26233122"
+      ]
+    },
+    "pipelines": {
+      "RAG": {
+        "pipeline": "RAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "",
+        "citations": [
+          "Q853023",
+          "Q776944",
+          "Q936622",
+          "Q26233122"
+        ],
+        "latency_ms": 10036.63,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 4,
+        "context_tokens": 208,
+        "input_tokens": 973,
+        "output_tokens": 700,
+        "total_tokens": 1673,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q853023",
+              "Q776944",
+              "Q853023",
+              "Q936622",
+              "Q26233122"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 70.94
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.05
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 9965.09
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 31,
+            "output_tokens": 0,
+            "total_tokens": 31,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 208,
+            "output_tokens": 0,
+            "total_tokens": 208,
+            "detail": "5 chunks"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 734,
+            "output_tokens": 700,
+            "total_tokens": 1434,
+            "detail": "qwen3.5:2b-q4_K_M"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q853023",
+            "Q776944",
+            "Q853023",
+            "Q936622",
+            "Q26233122"
+          ],
+          "retrieved_titles": [
+            "Athletics at the 2008 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 1996 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2008 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2004 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk"
+          ],
+          "extraction_method": "extractive",
+          "docs_with_infobox": 1,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": ""
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_prior_edition_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.25,
+          "citation_recall": 0.5,
+          "judge_reason": ""
+        }
+      },
+      "GraphRAG": {
+        "pipeline": "GraphRAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Chen Ding",
+        "citations": [
+          "Q1050909"
+        ],
+        "latency_ms": 10710.31,
+        "retrieval_steps": 2,
+        "tools_called": [
+          "hybrid_search",
+          "structural_retrieve"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 915,
+        "input_tokens": 2279,
+        "output_tokens": 700,
+        "total_tokens": 2979,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.8,
+        "plan": [
+          "hybrid_search",
+          "graph_expand",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q26233122",
+              "Q1050909",
+              "Q936622",
+              "Q936622",
+              "Q776944"
+            ]
+          },
+          {
+            "step": 2,
+            "agent": "GraphTraverser",
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q26233122",
+              "Q1050909",
+              "Q26208755",
+              "Q26233821",
+              "Q26219843",
+              "Q26208467",
+              "Q26234145",
+              "Q26273359",
+              "Q26234144",
+              "Q26234119"
+            ],
+            "new_docs": 8
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 164.7
+          },
+          {
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 198.25
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.48
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against graph context",
+            "latency_ms": 10346.04
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 31,
+            "output_tokens": 0,
+            "total_tokens": 31,
+            "detail": ""
+          },
+          {
+            "operation": "context:graph_expanded",
+            "input_tokens": 915,
+            "output_tokens": 0,
+            "total_tokens": 915,
+            "detail": "10 documents"
+          },
+          {
+            "operation": "graphrag.adjudicate",
+            "input_tokens": 1333,
+            "output_tokens": 700,
+            "total_tokens": 2033,
+            "detail": "qwen3.5:2b-q4_K_M"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q1050909",
+            "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+            "gold": "Chen Ding"
+          }
+        ],
+        "metadata": {
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q26233122",
+            "Q1050909",
+            "Q936622",
+            "Q936622",
+            "Q776944"
+          ],
+          "expanded_doc_ids": [
+            "Q26233122",
+            "Q1050909",
+            "Q26208755",
+            "Q26233821",
+            "Q26219843",
+            "Q26208467",
+            "Q26234145",
+            "Q26273359",
+            "Q26234144",
+            "Q26234119"
+          ],
+          "graph_relations": [
+            "graph:SAME_SPORT_GAMES",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2016 Summer Olympics – Men's javelin throw",
+            "Athletics at the 2016 Summer Olympics – Women's high jump",
+            "Athletics at the 2016 Summer Olympics – Women's 1500 metres",
+            "Athletics at the 2016 Summer Olympics – Men's 3000 metres steeplechase",
+            "Athletics at the 2016 Summer Olympics – Women's heptathlon",
+            "Athletics at the 2016 Summer Olympics – Women's 100 metres hurdles",
+            "Athletics at the 2016 Summer Olympics – Women's javelin throw",
+            "Athletics at the 2016 Summer Olympics – Women's hammer throw"
+          ],
+          "docs_with_infobox": 10,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": ""
+          },
+          "llm_revised": false
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.5,
+          "judge_reason": ""
+        }
+      },
+      "Agentic GraphRAG": {
+        "pipeline": "Agentic GraphRAG",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Chen Ding",
+        "citations": [
+          "Q3628700",
+          "Q3628701",
+          "Q1408913",
+          "Q1408888",
+          "Q1408709",
+          "Q776944",
+          "Q3628781",
+          "Q3628782",
+          "Q2311908",
+          "Q936622",
+          "Q900405",
+          "Q2318836",
+          "Q853023",
+          "Q247070",
+          "Q947678",
+          "Q1050909",
+          "Q2070009",
+          "Q956242",
+          "Q26233122",
+          "Q26225938",
+          "Q26233320",
+          "Q4786035",
+          "Q4786036",
+          "Q4786037",
+          "Q4786038",
+          "Q903679",
+          "Q1337042",
+          "Q374871",
+          "Q1067383",
+          "Q1753402",
+          "Q734020",
+          "Q2000999",
+          "Q591384",
+          "Q1649415",
+          "Q1771990",
+          "Q1636766",
+          "Q1772012",
+          "Q2071171",
+          "Q1049551",
+          "Q765839",
+          "Q841530",
+          "Q2000949",
+          "Q1986718",
+          "Q1055931",
+          "Q1798983",
+          "Q2000968",
+          "Q593761"
+        ],
+        "latency_ms": 21138.52,
+        "retrieval_steps": 5,
+        "tools_called": [
+          "search_events",
+          "get_event_details",
+          "submit_answer"
+        ],
+        "agents_invoked": [
+          "ReActAgent"
+        ],
+        "chunks_retrieved": 47,
+        "docs_retrieved": 47,
+        "context_tokens": 12,
+        "input_tokens": 13950,
+        "output_tokens": 1352,
+        "total_tokens": 15302,
+        "llm_calls": 6,
+        "method": "react_tool_calling",
+        "strategy_changed": true,
+        "stop_reason": "submitted_answer",
+        "confidence": 0.9,
+        "plan": [],
+        "loop_iterations": 6,
+        "candidates_considered": 47,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "query=men's 20 kilometres walk, season=Summer",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "season": "Summer"
+              },
+              "summary": "1562 event(s), 25 shown",
+              "result": "{\"count\": 1562, \"returned\": 25, \"events\": [{\"doc_id\": \"Q3628700\", \"title\": \"Athletics at the 1988 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 1988, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"Seoul Olympic Stadium (start and finish)\"}, {\"doc_id\": \"Q3628701\", \"title\": \"Athletics at the 1988 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"year\": 1988, \"season\": \"Summer\", \"event_name\": \"Men's 50 kilometres walk\", \"venue\": \"Seoul Olympic Stadium\"}, {\"doc_id\": \"Q1408913\", \"title\": \"Athletics at the 1992 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 1992, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q1408888\", \"title\": \"Athletics at the 1992 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"y…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 25,
+            "latency_ms": 35.54,
+            "input_tokens": 1372,
+            "output_tokens": 177
+          },
+          {
+            "index": 2,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "query=men's 20 kilometres walk, year_from=2014, year_to=2014, season=Summer",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "year_from": 2014,
+                "year_to": 2014,
+                "season": "Summer"
+              },
+              "summary": "0 event(s), 0 shown",
+              "result": "{\"count\": 0, \"returned\": 0, \"events\": [], \"doc_ids\": []}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.34,
+            "input_tokens": 2027,
+            "output_tokens": 189
+          },
+          {
+            "index": 3,
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "detail": "query=men's 20 kilometres walk, year_from=2012, year_to=2012, season=Summer",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "year_from": 2012,
+                "year_to": 2012,
+                "season": "Summer"
+              },
+              "summary": "231 event(s), 25 shown",
+              "result": "{\"count\": 231, \"returned\": 25, \"events\": [{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q2070009\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 50 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q956242\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Women's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q903679\", \"title\": \"Archery at the 2012 Summer Olympics \\u2013 Men's individual\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's individual…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 22,
+            "latency_ms": 4.71,
+            "input_tokens": 2141,
+            "output_tokens": 199
+          },
+          {
+            "index": 4,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q1050909",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)",
+              "result": "{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"games\": \"2012 Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\", \"date\": \"4 August 2012\", \"competitors\": 56, \"nations\": 34, \"gold\": \"Chen Ding\", \"silver\": \"Erick Barrondo\", \"bronze\": \"Wang Zhen\", \"win\": \"1:18:46 OR\", \"prev\": \"Q853023\", \"next\": \"Q26233122\", \"doc_ids\": [\"Q1050909\"], \"text\": \"[Infobox Olympic event]\\n event: Men's 20 kilometres walk\\n games: 2012 Summer\\n venue: The Mall\\n date: 4 August 2012\\n competitors: 56\\n nations: 34\\n gold: Chen Ding\\n goldNOC: CHN\\n silver: Erick Barrondo\\n silverNOC: GUA\\n bronze: Wang Zhen\\n bronzeNOC: CHN\\n win_value: 1:18:46 OR\\n pre…"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 2375,
+            "output_tokens": 151
+          },
+          {
+            "index": 5,
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "detail": "doc_id=Q26233122",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q26233122"
+              },
+              "summary": "Athletics at the 2016 Summer Olympics – Men's 20 kilometres  (2016 Summer)",
+              "result": "{\"doc_id\": \"Q26233122\", \"title\": \"Athletics at the 2016 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2016_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2016, \"season\": \"Summer\", \"games\": \"2016 Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"Pontal\", \"date\": \"12 August 2016\", \"competitors\": 74, \"nations\": 40, \"gold\": \"Wang Zhen\", \"silver\": \"Cai Zelin\", \"bronze\": \"Dane Bird-Smith\", \"win\": \"1:19:14\", \"prev\": \"Q1050909\", \"next\": null, \"doc_ids\": [\"Q26233122\"], \"text\": \"[Infobox Olympic event]\\n event: Men's 20 kilometres walk\\n games: 2016 Summer\\n venue: Pontal\\n date: 12 August 2016\\n competitors: 74\\n nations: 40\\n win_value: 1:19:14\\n gold: Wang Zhen\\n goldNOC: CHN\\n silver: Cai Zelin\\n silverNOC: CHN\\n bronze: Dane Bird-Smith\\n bronzeNOC: AUS\\n prev: 2012\\n …"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 2958,
+            "output_tokens": 264
+          },
+          {
+            "index": 6,
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "detail": "answer=Chen Ding, reasoning=The men's 20 kilometres walk at the Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. According to the event details for Q1050909, Chen D",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "reasoning": "The men's 20 kilometres walk at the Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. According to the event details for Q1050909, Chen Ding won the gold medal with a time of 1:18:46 OR.",
+                "doc_ids": [
+                  "Q1050909"
+                ]
+              },
+              "summary": "answer=Chen Ding",
+              "result": "{\"accepted\": true, \"answer\": \"Chen Ding\", \"reasoning\": \"The men's 20 kilometres walk at the Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. According to the event details for Q1050909, Chen Ding won the gold medal with a time of 1:18:46 OR.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1050909\"]}"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 3077,
+            "output_tokens": 372
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "query=men's 20 kilometres walk, season=Summer",
+            "latency_ms": 35.54
+          },
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "query=men's 20 kilometres walk, year_from=2014, year_to=2014, season=Summer",
+            "latency_ms": 0.34
+          },
+          {
+            "operation": "tool:search_events",
+            "agent": "ReActAgent",
+            "detail": "query=men's 20 kilometres walk, year_from=2012, year_to=2012, season=Summer",
+            "latency_ms": 4.71
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q1050909",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "tool:get_event_details",
+            "agent": "ReActAgent",
+            "detail": "doc_id=Q26233122",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "tool:submit_answer",
+            "agent": "ReActAgent",
+            "detail": "answer=Chen Ding, reasoning=The men's 20 kilometres walk at the Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. According t",
+            "latency_ms": 0.01
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "agent.react",
+            "input_tokens": 1372,
+            "output_tokens": 177,
+            "total_tokens": 1549,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2027,
+            "output_tokens": 189,
+            "total_tokens": 2216,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2141,
+            "output_tokens": 199,
+            "total_tokens": 2340,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2375,
+            "output_tokens": 151,
+            "total_tokens": 2526,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 2958,
+            "output_tokens": 264,
+            "total_tokens": 3222,
+            "detail": "qwen3.5:2b-q4_K_M"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 3077,
+            "output_tokens": 372,
+            "total_tokens": 3449,
+            "detail": "qwen3.5:2b-q4_K_M"
+          }
+        ],
+        "evidence": [
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "season": "Summer"
+              },
+              "summary": "1562 event(s), 25 shown",
+              "result": "{\"count\": 1562, \"returned\": 25, \"events\": [{\"doc_id\": \"Q3628700\", \"title\": \"Athletics at the 1988 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 1988, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"Seoul Olympic Stadium (start and finish)\"}, {\"doc_id\": \"Q3628701\", \"title\": \"Athletics at the 1988 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"year\": 1988, \"season\": \"Summer\", \"event_name\": \"Men's 50 kilometres walk\", \"venue\": \"Seoul Olympic Stadium\"}, {\"doc_id\": \"Q1408913\", \"title\": \"Athletics at the 1992 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 1992, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q1408888\", \"title\": \"Athletics at the 1992 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"y…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "year_from": 2014,
+                "year_to": 2014,
+                "season": "Summer"
+              },
+              "summary": "0 event(s), 0 shown",
+              "result": "{\"count\": 0, \"returned\": 0, \"events\": [], \"doc_ids\": []}"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:search_events",
+            "observation": {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "year_from": 2012,
+                "year_to": 2012,
+                "season": "Summer"
+              },
+              "summary": "231 event(s), 25 shown",
+              "result": "{\"count\": 231, \"returned\": 25, \"events\": [{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q2070009\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 50 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 50 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q956242\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Women's 20 kilometres walk\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 20 kilometres walk\", \"venue\": \"The Mall\"}, {\"doc_id\": \"Q903679\", \"title\": \"Archery at the 2012 Summer Olympics \\u2013 Men's individual\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's individual…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)",
+              "result": "{\"doc_id\": \"Q1050909\", \"title\": \"Athletics at the 2012 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"games\": \"2012 Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"The Mall\", \"date\": \"4 August 2012\", \"competitors\": 56, \"nations\": 34, \"gold\": \"Chen Ding\", \"silver\": \"Erick Barrondo\", \"bronze\": \"Wang Zhen\", \"win\": \"1:18:46 OR\", \"prev\": \"Q853023\", \"next\": \"Q26233122\", \"doc_ids\": [\"Q1050909\"], \"text\": \"[Infobox Olympic event]\\n event: Men's 20 kilometres walk\\n games: 2012 Summer\\n venue: The Mall\\n date: 4 August 2012\\n competitors: 56\\n nations: 34\\n gold: Chen Ding\\n goldNOC: CHN\\n silver: Erick Barrondo\\n silverNOC: GUA\\n bronze: Wang Zhen\\n bronzeNOC: CHN\\n win_value: 1:18:46 OR\\n pre…"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:get_event_details",
+            "observation": {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q26233122"
+              },
+              "summary": "Athletics at the 2016 Summer Olympics – Men's 20 kilometres  (2016 Summer)",
+              "result": "{\"doc_id\": \"Q26233122\", \"title\": \"Athletics at the 2016 Summer Olympics \\u2013 Men's 20 kilometres walk\", \"url\": \"https://en.wikipedia.org/wiki/Athletics_at_the_2016_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk\", \"in_graph\": true, \"sport\": \"Athletics\", \"year\": 2016, \"season\": \"Summer\", \"games\": \"2016 Summer\", \"event_name\": \"Men's 20 kilometres walk\", \"venue\": \"Pontal\", \"date\": \"12 August 2016\", \"competitors\": 74, \"nations\": 40, \"gold\": \"Wang Zhen\", \"silver\": \"Cai Zelin\", \"bronze\": \"Dane Bird-Smith\", \"win\": \"1:19:14\", \"prev\": \"Q1050909\", \"next\": null, \"doc_ids\": [\"Q26233122\"], \"text\": \"[Infobox Olympic event]\\n event: Men's 20 kilometres walk\\n games: 2016 Summer\\n venue: Pontal\\n date: 12 August 2016\\n competitors: 74\\n nations: 40\\n win_value: 1:19:14\\n gold: Wang Zhen\\n goldNOC: CHN\\n silver: Cai Zelin\\n silverNOC: CHN\\n bronze: Dane Bird-Smith\\n bronzeNOC: AUS\\n prev: 2012\\n …"
+            }
+          },
+          {
+            "agent": "ReActAgent",
+            "operation": "tool:submit_answer",
+            "observation": {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "reasoning": "The men's 20 kilometres walk at the Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. According to the event details for Q1050909, Chen Ding won the gold medal with a time of 1:18:46 OR.",
+                "doc_ids": [
+                  "Q1050909"
+                ]
+              },
+              "summary": "answer=Chen Ding",
+              "result": "{\"accepted\": true, \"answer\": \"Chen Ding\", \"reasoning\": \"The men's 20 kilometres walk at the Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. According to the event details for Q1050909, Chen Ding won the gold medal with a time of 1:18:46 OR.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1050909\"]}"
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "temporal",
+            "method": "ReActAgent",
+            "mode": "hybrid",
+            "stop_reason": "submitted_answer",
+            "steps": 6
+          },
+          "slot_report": {
+            "method": "react_tool_calling",
+            "tool_calls": 6
+          },
+          "spec": {
+            "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+            "qtype": "temporal",
+            "sport": "Athletics",
+            "year": 0,
+            "season": "Summer",
+            "event_desc": "men s 20 kilometres walk",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": 2016,
+            "years_mentioned": [
+              2016
+            ]
+          },
+          "strategy_changes": [
+            "strategy: LLM tool-calling loop (ReAct)"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "react_tool_calling",
+          "rationale": "The men's 20 kilometres walk at the Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. According to the event details for Q1050909, Chen Ding won the gold medal with a time of 1:18:46 OR.",
+          "adjudication": {},
+          "tool_calls": [
+            {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "season": "Summer"
+              },
+              "latency_ms": 35.54,
+              "error": "",
+              "doc_ids": [
+                "Q3628700",
+                "Q3628701",
+                "Q1408913",
+                "Q1408888",
+                "Q1408709",
+                "Q776944",
+                "Q3628781",
+                "Q3628782",
+                "Q2311908",
+                "Q936622",
+                "Q900405",
+                "Q2318836",
+                "Q853023",
+                "Q247070",
+                "Q947678",
+                "Q1050909",
+                "Q2070009",
+                "Q956242",
+                "Q26233122",
+                "Q26225938",
+                "Q26233320",
+                "Q4786035",
+                "Q4786036",
+                "Q4786037",
+                "Q4786038"
+              ],
+              "summary": "1562 event(s), 25 shown"
+            },
+            {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "year_from": 2014,
+                "year_to": 2014,
+                "season": "Summer"
+              },
+              "latency_ms": 0.34,
+              "error": "",
+              "doc_ids": [],
+              "summary": "0 event(s), 0 shown"
+            },
+            {
+              "tool": "search_events",
+              "args": {
+                "query": "men's 20 kilometres walk",
+                "year_from": 2012,
+                "year_to": 2012,
+                "season": "Summer"
+              },
+              "latency_ms": 4.71,
+              "error": "",
+              "doc_ids": [
+                "Q1050909",
+                "Q2070009",
+                "Q956242",
+                "Q903679",
+                "Q1337042",
+                "Q374871",
+                "Q1067383",
+                "Q1753402",
+                "Q734020",
+                "Q2000999",
+                "Q591384",
+                "Q1649415",
+                "Q1771990",
+                "Q1636766",
+                "Q1772012",
+                "Q2071171",
+                "Q1049551",
+                "Q765839",
+                "Q841530",
+                "Q2000949",
+                "Q1986718",
+                "Q1055931",
+                "Q1798983",
+                "Q2000968",
+                "Q593761"
+              ],
+              "summary": "231 event(s), 25 shown"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q1050909"
+              },
+              "latency_ms": 0.02,
+              "error": "",
+              "doc_ids": [
+                "Q1050909"
+              ],
+              "summary": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres  (2012 Summer)"
+            },
+            {
+              "tool": "get_event_details",
+              "args": {
+                "doc_id": "Q26233122"
+              },
+              "latency_ms": 0.02,
+              "error": "",
+              "doc_ids": [
+                "Q26233122"
+              ],
+              "summary": "Athletics at the 2016 Summer Olympics – Men's 20 kilometres  (2016 Summer)"
+            },
+            {
+              "tool": "submit_answer",
+              "args": {
+                "answer": "Chen Ding",
+                "reasoning": "The men's 20 kilometres walk at the Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. According to the event details for Q1050909, Chen Ding won the gold medal with a time of 1:18:46 OR.",
+                "doc_ids": [
+                  "Q1050909"
+                ]
+              },
+              "latency_ms": 0.01,
+              "error": "",
+              "doc_ids": [
+                "Q1050909"
+              ],
+              "summary": "answer=Chen Ding"
+            }
+          ],
+          "docs_touched": 47,
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 0.0426,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,271 @@
+{
+  "num_questions": 6,
+  "pipelines": {
+    "RAG": {
+      "num_questions": 6,
+      "num_evaluated": 6,
+      "correct": 1,
+      "accuracy": 0.1667,
+      "by_type": {
+        "lookup": {
+          "n": 0,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "temporal": {
+          "n": 2,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "aggregation": {
+          "n": 2,
+          "correct": 0,
+          "accuracy": 0.0
+        },
+        "superlative": {
+          "n": 1,
+          "correct": 0,
+          "accuracy": 0.0
+        }
+      },
+      "avg_latency_ms": 5072.0133,
+      "avg_context_tokens": 266.0,
+      "avg_input_tokens": 1123.1667,
+      "avg_output_tokens": 41.3333,
+      "avg_total_tokens": 1164.5,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 1.0,
+      "avg_chunks_retrieved": 5.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 6987,
+      "avg_citation_precision": 0.5417,
+      "avg_citation_recall": 0.4948,
+      "match_types": {
+        "none": 5,
+        "exact": 1
+      },
+      "stop_reasons": {
+        "resolved": 2,
+        "insufficient_retrieved_evidence": 4
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "GraphRAG": {
+      "num_questions": 6,
+      "num_evaluated": 6,
+      "correct": 4,
+      "accuracy": 0.6667,
+      "by_type": {
+        "lookup": {
+          "n": 0,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "temporal": {
+          "n": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "aggregation": {
+          "n": 2,
+          "correct": 1,
+          "accuracy": 0.5
+        },
+        "superlative": {
+          "n": 1,
+          "correct": 0,
+          "accuracy": 0.0
+        }
+      },
+      "avg_latency_ms": 17159.5733,
+      "avg_context_tokens": 848.8333,
+      "avg_input_tokens": 2127.3333,
+      "avg_output_tokens": 160.8333,
+      "avg_total_tokens": 2288.1667,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 2.0,
+      "avg_chunks_retrieved": 10.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 13729,
+      "avg_citation_precision": 0.9167,
+      "avg_citation_recall": 0.5271,
+      "match_types": {
+        "exact": 4,
+        "none": 2
+      },
+      "stop_reasons": {
+        "resolved": 6
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "Agentic GraphRAG": {
+      "num_questions": 6,
+      "num_evaluated": 6,
+      "correct": 6,
+      "accuracy": 1.0,
+      "by_type": {
+        "lookup": {
+          "n": 0,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "temporal": {
+          "n": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "aggregation": {
+          "n": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        },
+        "superlative": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        }
+      },
+      "avg_latency_ms": 62687.01,
+      "avg_context_tokens": 203.0,
+      "avg_input_tokens": 8370.8333,
+      "avg_output_tokens": 555.6667,
+      "avg_total_tokens": 8926.5,
+      "avg_llm_calls": 4.1667,
+      "avg_retrieval_steps": 3.5,
+      "avg_chunks_retrieved": 22.8333,
+      "avg_candidates_considered": 23.6667,
+      "total_tokens": 53559,
+      "avg_citation_precision": 0.5342,
+      "avg_citation_recall": 0.8333,
+      "match_types": {
+        "exact": 5,
+        "fuzzy": 1
+      },
+      "stop_reasons": {
+        "submitted_answer": 5,
+        "max_steps": 1
+      },
+      "strategy_adapted": 6,
+      "agents_used": [
+        "EntityLinker",
+        "EvidenceEvaluator",
+        "LookupResolver",
+        "ReActAgent",
+        "Synthesizer",
+        "VectorSearcher"
+      ]
+    }
+  },
+  "when_agents_matter": [
+    {
+      "qid": "pub-001",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 6796,
+      "graphrag_tokens": 2329,
+      "delta": 0
+    },
+    {
+      "qid": "pub-002",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 6700,
+      "graphrag_tokens": 2338,
+      "delta": 0
+    },
+    {
+      "qid": "pub-003",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 7007,
+      "graphrag_tokens": 2934,
+      "delta": 1
+    },
+    {
+      "qid": "pub-004",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": false,
+      "agentic_tokens": 10338,
+      "graphrag_tokens": 2094,
+      "delta": 1
+    },
+    {
+      "qid": "pub-005",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 15904,
+      "graphrag_tokens": 2156,
+      "delta": 0
+    },
+    {
+      "qid": "pub-006",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 6814,
+      "graphrag_tokens": 1878,
+      "delta": 0
+    }
+  ],
+  "evaluator": null,
+  "llm": null,
+  "backend": null,
+  "wall_clock_s": null,
+  "run_mode": "live",
+  "provenance": {
+    "rebuilt_from": "results/q4b_results.json",
+    "note": "summary rebuilt from an existing results file; evaluator/llm/backend telemetry is only known during a live run, so those blocks are null rather than guessed",
+    "llm_activity": {
+      "RAG": {
+        "records": 6,
+        "records_with_calls": 6,
+        "records_answering": 6,
+        "calls": 6,
+        "total_tokens": 6987,
+        "output_tokens": 248,
+        "unusable_adjudications": 4,
+        "llm_contributed": true
+      },
+      "GraphRAG": {
+        "records": 6,
+        "records_with_calls": 6,
+        "records_answering": 6,
+        "calls": 6,
+        "total_tokens": 13729,
+        "output_tokens": 965,
+        "unusable_adjudications": 2,
+        "llm_contributed": true
+      },
+      "Agentic GraphRAG": {
+        "records": 6,
+        "records_with_calls": 6,
+        "records_answering": 6,
+        "calls": 25,
+        "total_tokens": 53559,
+        "output_tokens": 3334,
+        "unusable_adjudications": 0,
+        "llm_contributed": true
+      }
+    },
+    "warnings": []
+  }
+}

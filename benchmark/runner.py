@@ -364,16 +364,22 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
         # "0 LLM calls/q" - which is exactly how a deterministic run gets mistaken
         # for a failed LLM one. Better to stop before spending an hour on it.
         if not llm.available:
+            local = getattr(config.llm, "provider", "") == "ollama"
             raise SystemExit(
                 "no LLM provider available: "
                 f"{llm.error or 'unknown reason'}\n"
                 f"  provider={getattr(config.llm, 'provider', None)!r} "
                 f"model={getattr(config.llm, 'chat_model', '')!r} "
                 f"key={'set' if getattr(config.llm, 'api_key', None) else 'MISSING'}\n"
-                "  fix: put LLM_PROVIDER + the matching *_API_KEY in .env "
-                "(e.g. LLM_PROVIDER=groq, GROQ_API_KEY=gsk_...)\n"
-                "  or pass --no-llm to run the deterministic baseline on purpose.")
-    log(f"llm available: {llm.available} ({llm.chat_model}) | index: {index.stats()}")
+                + ("  fix: start the local server (`ollama serve`) and check "
+                   f"OLLAMA_BASE_URL={getattr(config.llm, 'ollama_base_url', '')!r} "
+                   "with `ollama list`\n"
+                   if local else
+                   "  fix: put LLM_PROVIDER + the matching *_API_KEY in .env "
+                   "(e.g. LLM_PROVIDER=groq, GROQ_API_KEY=gsk_...)\n")
+                + "  or pass --no-llm to run the deterministic baseline on purpose.")
+    log(f"llm available: {llm.available} ({llm.provider}/{llm.chat_model}) "
+        f"| index: {index.stats()}")
 
     all_pipes = build_pipelines(index, llm, config)
     if pipelines:

@@ -65,9 +65,18 @@ class _Pacer:
         self.rate_limit_events = 0
         self.pace_sleeps = 0
         self.pace_slept_s = 0.0
+        # False when the provider has no quota to protect (a local model server),
+        # so a Groq-tuned LLM_TPM in the environment cannot slow local runs down.
+        self.enabled = True
+
+    def disable(self) -> None:
+        """Stop pacing: there is no remote quota to stay under."""
+        self.enabled = False
 
     def wait(self, prompt_tokens: int = 0) -> None:
         """Sleep until this request fits inside both pacing budgets."""
+        if not self.enabled:
+            return
         if self.min_interval <= 0 and self.tpm <= 0:
             return
         asked = max(prompt_tokens, 0) + self.output_reserve
@@ -114,6 +123,7 @@ class _Pacer:
     def stats(self) -> Dict[str, Any]:
         return {"min_interval_s": self.min_interval,
                 "tpm_budget": self.tpm,
+                "enabled": self.enabled,
                 "rate_limit_events": self.rate_limit_events,
                 "pace_sleeps": self.pace_sleeps,
                 "pace_slept_s": round(self.pace_slept_s, 1)}
@@ -145,10 +155,18 @@ class _Circuit:
         self.opened_at = 0.0
         self.trips = 0
         self.blocked_calls = 0
+        # A local server cannot rate-limit us, so the breaker must never refuse a
+        # call there: a trip would silently convert a local run into a
+        # deterministic one, which is exactly the defect this project fixed.
+        self.enabled = True
+
+    def disable(self) -> None:
+        """Never trip: the provider has no quota to run out of."""
+        self.enabled = False
 
     @property
     def is_open(self) -> bool:
-        if self.opened_at <= 0:
+        if not self.enabled or self.opened_at <= 0:
             return False
         return (time.monotonic() - self.opened_at) < self.cooldown
 
@@ -162,6 +180,8 @@ class _Circuit:
                 f"({self.cooldown:.0f}s cooldown, {self.trips} trip(s))")
 
     def record_rate_limit(self) -> None:
+        if not self.enabled:
+            return
         with self._lock:
             self.consecutive += 1
             if self.consecutive >= self.threshold:
@@ -175,6 +195,7 @@ class _Circuit:
 
     def stats(self) -> Dict[str, Any]:
         return {"threshold": self.threshold, "cooldown_s": self.cooldown,
+                "enabled": self.enabled,
                 "trips": self.trips, "blocked_calls": self.blocked_calls,
                 "open": self.is_open}
 
@@ -395,8 +416,34 @@ class LLMService:
                 base_url=base_url,
             )
 
+        elif provider == "ollama":
+            # Ollama serves every local model on an OpenAI-compatible endpoint, so
+            # the same request path works unchanged. Nothing leaves this machine.
+            from openai import OpenAI
+            base_url = kwargs.get("ollama_base_url") or "http://localhost:11434/v1"
+            self._client = OpenAI(api_key=api_key or "ollama", base_url=base_url)
+            # No quota and no 429s to pace against: pacing would only add dead
+            # time, and a tripped breaker would silently zero the counters.
+            PACER.disable()
+            CIRCUIT.disable()
+
         else:
             raise ValueError(f"Unsupported provider: {provider}")
+
+    def ping(self) -> Tuple[bool, str]:
+        """Check the provider is actually answering before a run starts.
+
+        Only meaningful for a local server: a cloud key can be present and still
+        be unusable, but a *missing* Ollama daemon would otherwise fail every
+        call of a long sweep after reporting ``available: True``.
+        """
+        if self.provider != "ollama":
+            return True, ""
+        try:
+            self._client.models.list()
+            return True, ""
+        except Exception as exc:
+            return False, f"{exc.__class__.__name__}: {exc}"[:200]
 
     @retry(**RETRY_POLICY)
     def complete(
@@ -480,10 +527,25 @@ class LLMService:
                         usage=usage, finish_reason=choice.finish_reason or "")
 
     def _generation_kwargs(self) -> Dict[str, Any]:
-        """Provider-specific generation limits, omitted when unset."""
+        """Provider-specific generation limits, omitted when unset.
+
+        Ollama expects the classic ``max_tokens`` name (OpenAI-compatible
+        servers use ``max_completion_tokens``), so the two provider families
+        get different keys.
+
+        ``reasoning_effort`` IS forwarded to Ollama: its OpenAI-compatible
+        endpoint maps it onto thinking-model control, and ``"none"`` is how a
+        thinking-capable local model (qwen3.5:4b) is told to skip its
+        reasoning phase. Without it the model burns the whole ``max_tokens``
+        budget inside <think> and returns empty content - measured 3/5 calls
+        empty at 27-60 s vs 3/5 clean at ~3.6 s with the flag. Only send
+        values the endpoint accepts (``none`` is safe; the 2B non-thinking
+        model ignores it harmlessly).
+        """
         kwargs: Dict[str, Any] = {}
         if self.max_completion_tokens:
-            kwargs["max_completion_tokens"] = self.max_completion_tokens
+            key = "max_tokens" if self.provider == "ollama" else "max_completion_tokens"
+            kwargs[key] = self.max_completion_tokens
         if self.reasoning_effort:
             kwargs["reasoning_effort"] = self.reasoning_effort
         return kwargs
@@ -585,7 +647,8 @@ class LLMService:
 class EmbeddingService:
     """Unified embedding interface with token tracking."""
 
-    def __init__(self, provider: str, api_key: str, model: str):
+    def __init__(self, provider: str, api_key: str, model: str,
+                 base_url: str = ""):
         self.provider = provider
         self.model = model
         self._client = None
@@ -602,6 +665,12 @@ class EmbeddingService:
             # Groq doesn't have embeddings — fall back to OpenAI-compatible
             from openai import OpenAI
             self._client = OpenAI(api_key=api_key)
+
+        elif provider == "ollama":
+            # Local embeddings (e.g. qwen3-embedding:0.6b) - nothing billed.
+            from openai import OpenAI
+            self._client = OpenAI(api_key=api_key or "ollama",
+                                  base_url=base_url or "http://localhost:11434/v1")
 
         else:
             raise ValueError(f"Unsupported embedding provider: {provider}")

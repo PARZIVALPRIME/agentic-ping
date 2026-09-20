@@ -24,7 +24,8 @@ class LLMHelper:
     def __init__(self, provider: Optional[str] = None, api_key: Optional[str] = None,
                  chat_model: Optional[str] = None, fast_model: Optional[str] = None,
                  eval_model: Optional[str] = None, temperature: float = 0.0,
-                 max_tokens: int = 0, reasoning_effort: str = "") -> None:
+                 max_tokens: int = 0, reasoning_effort: str = "",
+                 base_url: Optional[str] = None) -> None:
         self.provider = provider
         self.chat_model = chat_model
         self.fast_model = fast_model or chat_model
@@ -48,7 +49,16 @@ class LLMHelper:
             self._service = LLMService(provider=provider, api_key=api_key,
                                        model=self.chat_model or "", temperature=temperature,
                                        max_completion_tokens=max_tokens or None,
-                                       reasoning_effort=reasoning_effort or None)
+                                       reasoning_effort=reasoning_effort or None,
+                                       ollama_base_url=base_url or "")
+            # A local server that is not running would otherwise report
+            # available=True (the client is lazy) and then fail every call of a
+            # long sweep, which is how a run silently ends up deterministic.
+            reachable, why = self._service.ping()
+            if not reachable:
+                self.error = f"local model server not reachable: {why}"
+                logger.warning("LLM unavailable (%s); running deterministically", self.error)
+                return
             self.available = True
         except Exception as exc:  # missing SDK, bad key, ...
             self.error = f"{exc.__class__.__name__}: {exc}"
@@ -173,6 +183,7 @@ def build_llm(config) -> LLMHelper:
         temperature=llm.temperature,
         max_tokens=getattr(llm, "max_tokens", 0),
         reasoning_effort=getattr(llm, "reasoning_effort", ""),
+        base_url=(getattr(llm, "ollama_base_url", "") if provider == "ollama" else None),
     )
 
 
