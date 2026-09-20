@@ -38,7 +38,8 @@ python -m benchmark.dashboard_generator      # rebuild dashboard/index.html
 | LLM-assisted | `python run_benchmark.py --out results/llm_results.json --summary results/llm_results_summary.json` | ~15–30 min (provider rate limits) | the headline numbers: LLM classification, slot extraction, answer adjudication, LLM-as-judge |
 | Deterministic | `python run_benchmark.py --no-llm --out results/deterministic_results.json --summary results/deterministic_results_summary.json` | **~1 min** | reproducible baseline, verifying the harness, running with no quota |
 
-Both modes run all three pipelines end-to-end — the LLM is an accelerator, never
+Both modes run all three pipelines end-to-end (plus the ablation arm with
+`--ablation`) — the LLM is an accelerator, never
 a requirement. If the provider starts rate-limiting mid-run, a circuit breaker
 trips and the remaining questions finish deterministically instead of stalling
 (`llm.circuit` in `results/*_summary.json` shows how often this happened).
@@ -48,6 +49,37 @@ claims. `results/llm_results.json` is the LLM-assisted run (the headline);
 `results/deterministic_results.json` is the `--no-llm` baseline. Overwriting one
 with the other is how a deterministic "0 LLM calls" table ends up published as an
 LLM result — see below.
+
+### Publishing the ablation arm (what the structured layer contributes)
+
+The structure-aware retrieval step is shared by RAG and GraphRAG, so on every
+question it resolves both arms answer *identically* (measured: 10/10 in batch 1,
+50/50 on the hidden set). A three-arm table therefore credits the graph for work
+the corpus' typed fields did. Add `--ablation` (or `ABLATION_RAG=true`) to
+publish the fourth arm, `RAG (vector only)` — the same RAG pipeline with that one
+retrieval mechanism switched off:
+
+```powershell
+python run_benchmark.py --ablation --out results/llm_results.json `
+                        --summary results/llm_results_summary.json
+```
+
+| arm | retrieval | isolates |
+|---|---|---|
+| RAG | vector + structured fields | the graph's contribution |
+| **RAG (vector only)** | vector top-k only | **the structured layer's contribution** |
+| GraphRAG | graph neighbourhood + structured fields | — |
+| Agentic GraphRAG | tool loop + structured fields + verifier | the loop's contribution |
+
+The ablation arm appears as a fourth card/legend entry/bar group on the
+dashboard (`batch_*.html` pages are generated with it). Its failure signature is
+the round-1 baseline: it cannot answer counting, argmax or before/after
+questions at all, because the answer document was never in its top-k window.
+
+The agentic arm's final arbitration is likewise switchable:
+`AGENT_STRUCTURED_PREFERENCE=false` disables the structured-preference gate
+(verified structured candidate beats a disagreeing LLM answer), leaving the
+LLM-first behaviour for comparison.
 
 ### Is the LLM actually contributing?
 
@@ -157,6 +189,36 @@ powershell -File tools\run_bench.ps1 -Follow     # always run in the background
 | `LLM_CIRCUIT_COOLDOWN_S` | `60` | how long the circuit stays open before one probe call |
 
 </details>
+
+### Batched runs: publish while you go
+
+A long sweep is easier to trust when it is published incrementally. One batch =
+10 questions through every arm, then merged into the cumulative file and
+rendered as its own dashboard page. An interrupted batch is retried rather than
+restarting the sweep, and every batch's accuracy lands in a ledger line
+(`results/batch/ledger.jsonl`).
+
+```powershell
+# public batches 2..10 (questions 11-100), ablation arm included
+python tools/run_batches.py --set public --first 2 --last 10 --ablation
+
+# hidden set, diffing each batch's answers against the previous full run
+python tools/run_batches.py --set hidden --first 1 --last 5 `
+    --baseline results/hidden_results.json
+```
+
+Each batch produces `results/batch/b_<set>_<NN>.json` (+ summary),
+`dashboard/batch_<set>_<NN>.html`, and updates
+`results/batch/cumulative_<set>.json`. Re-running a completed batch is a no-op
+unless `--force` is passed; `tools/batch_score.py` can re-score and re-merge a
+single batch on its own:
+
+```powershell
+python tools/batch_score.py --batch results/batch/b_pub_03.json `
+    --cumulative results/batch/cumulative_public.json --set public
+python -m benchmark.dashboard_generator results/batch/b_pub_03.json `
+    --summary results/batch/b_pub_03_summary.json --name batch_pub_03.html
+```
 
 ### Long runs: don't block your terminal
 

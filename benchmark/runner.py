@@ -41,8 +41,8 @@ def log(message: str) -> None:
 
 def _short_name(name: str) -> str:
     """Compact pipeline label for the progress line (RAG/GraphRAG/Agentic)."""
-    return {"RAG": "RAG", "GraphRAG": "Graph", "Agentic GraphRAG": "Agent"}.get(
-        name, name.split()[0])
+    return {"RAG": "RAG", "GraphRAG": "Graph", "Agentic GraphRAG": "Agent",
+            "RAG (vector only)": "RAGv"}.get(name, name.split()[0])
 
 
 def load_questions(path: str) -> List[Dict[str, Any]]:
@@ -383,9 +383,17 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
 
     all_pipes = build_pipelines(index, llm, config)
     if pipelines:
-        wanted = {p.lower() for p in pipelines}
-        all_pipes = [p for p in all_pipes
-                     if any(w in p.name.lower() for w in wanted)]
+        # Exact match first, substring second, per token: `--pipelines rag`
+        # selects RAG alone rather than also its ablation arm
+        # ("RAG (vector only)"), while `--pipelines graph` still selects
+        # GraphRAG without needing its full name.
+        wanted = [p.strip().lower() for p in pipelines if p.strip()]
+        chosen = []
+        for token in wanted:
+            hits = ([p for p in all_pipes if p.name.lower() == token]
+                    or [p for p in all_pipes if token in p.name.lower()])
+            chosen.extend(p for p in hits if p not in chosen)
+        all_pipes = chosen
     log(f"pipelines: {[p.name for p in all_pipes]}")
 
     questions = load_questions(questions_path)[offset:]
@@ -484,6 +492,11 @@ def cli(argv=None) -> None:
                          "(useful for quota-bounded LLM samples)")
     ap.add_argument("--per-type", type=int, default=0,
                     help="with --limit 0: take at most N questions per qtype")
+    ap.add_argument("--ablation", action="store_true",
+                    help="also run the RAG ablation arm: the same pipeline with "
+                         "the structure-aware retrieval step disabled "
+                         "('RAG (vector only)'), to isolate that layer's "
+                         "contribution from the graph's")
     args = ap.parse_args(argv)
 
     if args.summarize_only:
@@ -504,10 +517,14 @@ def cli(argv=None) -> None:
             print(f"  WARNING: {warning}")
         return
 
-    if args.agent_mode or args.types or args.per_type:
+    if args.agent_mode or args.types or args.per_type or args.ablation:
         from config import config
         if args.agent_mode:
             config.agent.mode = args.agent_mode
+        if args.ablation:
+            # build_pipelines reads this from the config, so the flag works for
+            # the module-level main() callers too.
+            config.benchmark.ablation_rag = True
 
     qpath = args.questions
     if not qpath:

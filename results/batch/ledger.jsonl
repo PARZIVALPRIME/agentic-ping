@@ -1,0 +1,18 @@
+{"batch": "b_pub_01.json", "set": "public", "n": 10, "calls": 0, "tokens": 0, "accuracy": {"RAG": null, "GraphRAG": null, "Agentic GraphRAG": null}}
+{"batch": "b_pub_01.json", "set": "public", "n": 10, "calls": 53, "tokens": 135234, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 0.9}}
+{"batch": "b_pub_01_v2.json", "set": "public", "n": 10, "calls": 65, "tokens": 146979, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.1}}
+{"batch": "b_pub_02.json", "set": "public", "n": 10, "calls": 66, "tokens": 150728, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.2}}
+{"batch": "b_pub_03.json", "set": "public", "n": 10, "calls": 66, "tokens": 151273, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.3}}
+{"batch": "b_pub_04.json", "set": "public", "n": 10, "calls": 64, "tokens": 137235, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.2}}
+{"batch": "b_pub_05.json", "set": "public", "n": 10, "calls": 65, "tokens": 143173, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.1}}
+{"batch": "b_pub_06.json", "set": "public", "n": 10, "calls": 65, "tokens": 146541, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.1}}
+{"batch": "b_pub_07.json", "set": "public", "n": 10, "calls": 63, "tokens": 136999, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.3}}
+{"batch": "b_pub_08.json", "set": "public", "n": 10, "calls": 68, "tokens": 143176, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.5}}
+{"batch": "b_pub_09.json", "set": "public", "n": 10, "calls": 65, "tokens": 155843, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.1}}
+{"batch": "b_pub_10.json", "set": "public", "n": 10, "calls": 65, "tokens": 145902, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.3}}
+{"batch": "b_pub_10.json", "set": "public", "n": 10, "calls": 65, "tokens": 145902, "accuracy": {"RAG": 1.0, "GraphRAG": 1.0, "Agentic GraphRAG": 1.0, "RAG (vector only)": 0.3}}
+{"batch": "b_hid_01.json", "set": "hidden", "n": 10, "calls": 62, "tokens": 135919}
+{"batch": "b_hid_02.json", "set": "hidden", "n": 10, "calls": 60, "tokens": 129161}
+{"batch": "b_hid_03.json", "set": "hidden", "n": 10, "calls": 71, "tokens": 162074}
+{"batch": "b_hid_04.json", "set": "hidden", "n": 10, "calls": 64, "tokens": 150458}
+{"batch": "b_hid_05.json", "set": "hidden", "n": 10, "calls": 65, "tokens": 145459}

@@ -1,0 +1,201 @@
+{
+  "num_questions": 50,
+  "pipelines": {
+    "RAG": {
+      "num_questions": 50,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 7,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 10,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 8,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 15,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 5976.4072,
+      "avg_context_tokens": 253.3,
+      "avg_input_tokens": 296.24,
+      "avg_output_tokens": 1.72,
+      "avg_total_tokens": 297.96,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 1.0,
+      "avg_chunks_retrieved": 5.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 14898,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "resolved": 16,
+        "insufficient_retrieved_evidence": 34
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "GraphRAG": {
+      "num_questions": 50,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 7,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 10,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 8,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 15,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 3929.5798,
+      "avg_context_tokens": 901.06,
+      "avg_input_tokens": 928.32,
+      "avg_output_tokens": 0.0,
+      "avg_total_tokens": 928.32,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 2.0,
+      "avg_chunks_retrieved": 10.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 46416,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "resolved": 47,
+        "insufficient_retrieved_evidence": 3
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "Agentic GraphRAG": {
+      "num_questions": 50,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 7,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 10,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 8,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 15,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 6470.5976,
+      "avg_context_tokens": 314.36,
+      "avg_input_tokens": 29.64,
+      "avg_output_tokens": 4.58,
+      "avg_total_tokens": 34.22,
+      "avg_llm_calls": 0.06,
+      "avg_retrieval_steps": 2.86,
+      "avg_chunks_retrieved": 4.34,
+      "avg_candidates_considered": 23.06,
+      "total_tokens": 1711,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "no_new_information": 50
+      },
+      "strategy_adapted": 50,
+      "agents_used": [
+        "Aggregator",
+        "Comparator",
+        "EntityLinker",
+        "EvidenceEvaluator",
+        "GraphTraverser",
+        "LookupResolver",
+        "Synthesizer",
+        "TemporalReasoner",
+        "VectorSearcher"
+      ]
+    }
+  },
+  "when_agents_matter": [],
+  "evaluator": null,
+  "llm": null,
+  "backend": null,
+  "wall_clock_s": null,
+  "run_mode": "live",
+  "provenance": {
+    "rebuilt_from": "results/hidden_results.json",
+    "note": "summary rebuilt from an existing results file; evaluator/llm/backend telemetry is only known during a live run, so those blocks are null rather than guessed",
+    "llm_activity": {
+      "RAG": {
+        "records": 50,
+        "records_with_calls": 50,
+        "records_answering": 1,
+        "calls": 50,
+        "total_tokens": 14898,
+        "output_tokens": 86,
+        "unusable_adjudications": 50,
+        "llm_contributed": true
+      },
+      "GraphRAG": {
+        "records": 50,
+        "records_with_calls": 50,
+        "records_answering": 0,
+        "calls": 50,
+        "total_tokens": 46416,
+        "output_tokens": 0,
+        "unusable_adjudications": 50,
+        "llm_contributed": false
+      },
+      "Agentic GraphRAG": {
+        "records": 50,
+        "records_with_calls": 3,
+        "records_answering": 3,
+        "calls": 3,
+        "total_tokens": 1711,
+        "output_tokens": 229,
+        "unusable_adjudications": 47,
+        "llm_contributed": true
+      }
+    },
+    "warnings": [
+      "provider calls were recorded on only part of the run (Agentic GraphRAG 3/50) - the remaining records are deterministic",
+      "provider calls returned no completion text (GraphRAG 50 call(s)): those answers came from the deterministic path - check the API key, quota and circuit breaker"
+    ]
+  }
+}

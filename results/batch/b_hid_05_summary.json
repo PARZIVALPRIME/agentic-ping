@@ -1,0 +1,279 @@
+{
+  "num_questions": 10,
+  "pipelines": {
+    "RAG": {
+      "num_questions": 10,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 0,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 2,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 4,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 2,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 2,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 6226.289,
+      "avg_context_tokens": 688.4,
+      "avg_input_tokens": 1761.3,
+      "avg_output_tokens": 55.1,
+      "avg_total_tokens": 1816.4,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 2.0,
+      "avg_chunks_retrieved": 9.8,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 18164,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "structured_verified": 10
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "GraphRAG": {
+      "num_questions": 10,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 0,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 2,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 4,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 2,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 2,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 5936.608,
+      "avg_context_tokens": 1110.1,
+      "avg_input_tokens": 2371.3,
+      "avg_output_tokens": 55.6,
+      "avg_total_tokens": 2426.9,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 3.0,
+      "avg_chunks_retrieved": 12.9,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 24269,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "structured_verified": 10
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "Agentic GraphRAG": {
+      "num_questions": 10,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 0,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 2,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 4,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 2,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 2,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 61210.387,
+      "avg_context_tokens": 3.2,
+      "avg_input_tokens": 8799.3,
+      "avg_output_tokens": 587.6,
+      "avg_total_tokens": 9386.9,
+      "avg_llm_calls": 3.5,
+      "avg_retrieval_steps": 2.5,
+      "avg_chunks_retrieved": 13.5,
+      "avg_candidates_considered": 13.5,
+      "total_tokens": 93869,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "submitted_answer": 9,
+        "text_answer": 1
+      },
+      "strategy_adapted": 10,
+      "agents_used": [
+        "ReActAgent",
+        "Verifier"
+      ]
+    },
+    "RAG (vector only)": {
+      "num_questions": 10,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 0,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 2,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 4,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 2,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 2,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 4342.533,
+      "avg_context_tokens": 187.7,
+      "avg_input_tokens": 879.3,
+      "avg_output_tokens": 36.4,
+      "avg_total_tokens": 915.7,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 1.0,
+      "avg_chunks_retrieved": 4.6,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 9157,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "insufficient_retrieved_evidence": 10
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    }
+  },
+  "when_agents_matter": [],
+  "evaluator": {
+    "llm_judge_enabled": true,
+    "judge_calls": 0,
+    "judge_flips": 0,
+    "judge_tokens": 0
+  },
+  "llm": {
+    "available": true,
+    "provider": "ollama",
+    "chat_model": "qwen3.5:4b",
+    "eval_model": "qwen3.5:4b",
+    "num_calls": 65,
+    "failed_calls": 0,
+    "degraded": false,
+    "min_interval_s": 0.0,
+    "tpm_budget": 8000,
+    "enabled": false,
+    "rate_limit_events": 0,
+    "pace_sleeps": 0,
+    "pace_slept_s": 0.0,
+    "circuit": {
+      "threshold": 3,
+      "cooldown_s": 60.0,
+      "enabled": false,
+      "trips": 0,
+      "blocked_calls": 0,
+      "open": false
+    }
+  },
+  "run_mode": "live",
+  "wall_clock_s": 777.3,
+  "backend": {
+    "requested": "local",
+    "active": "local",
+    "graphname": "OlympicsKG",
+    "reason": "disabled in config",
+    "remote_stats": {}
+  },
+  "provenance": {
+    "rebuilt_from": null,
+    "note": "live run: llm/evaluator/backend telemetry recorded above",
+    "llm_activity": {
+      "RAG": {
+        "records": 10,
+        "records_with_calls": 10,
+        "records_answering": 10,
+        "calls": 10,
+        "total_tokens": 18164,
+        "output_tokens": 551,
+        "unusable_adjudications": 0,
+        "llm_contributed": true
+      },
+      "GraphRAG": {
+        "records": 10,
+        "records_with_calls": 10,
+        "records_answering": 10,
+        "calls": 10,
+        "total_tokens": 24269,
+        "output_tokens": 556,
+        "unusable_adjudications": 0,
+        "llm_contributed": true
+      },
+      "Agentic GraphRAG": {
+        "records": 10,
+        "records_with_calls": 10,
+        "records_answering": 10,
+        "calls": 35,
+        "total_tokens": 93869,
+        "output_tokens": 5876,
+        "unusable_adjudications": 0,
+        "llm_contributed": true
+      },
+      "RAG (vector only)": {
+        "records": 10,
+        "records_with_calls": 10,
+        "records_answering": 10,
+        "calls": 10,
+        "total_tokens": 9157,
+        "output_tokens": 364,
+        "unusable_adjudications": 10,
+        "llm_contributed": true
+      }
+    },
+    "warnings": []
+  }
+}

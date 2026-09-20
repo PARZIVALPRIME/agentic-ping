@@ -161,6 +161,15 @@ class AgentConfig:
     react_retries: int = field(
         default_factory=lambda: int(_env("AGENT_REACT_RETRIES", default="2")))
     react_model: str = field(default_factory=lambda: _env("AGENT_REACT_MODEL", default=""))
+    # Final-answer arbitration policy. True: when the agent's answer disagrees
+    # with a *structure-verified* candidate (complete candidate set for
+    # counting/argmax; resolution confidence above the retrieval thresholds for
+    # temporal/multi_hop/lookup), the verified candidate wins. This is the same
+    # definition of "verified" the retrieval arms use, so the three pipelines
+    # cannot drift apart on thresholds. False restores LLM-first behaviour.
+    structured_preference: bool = field(
+        default_factory=lambda: _env("AGENT_STRUCTURED_PREFERENCE", default="true").lower()
+        not in ("0", "false", "no"))
 
 
 @dataclass
@@ -185,6 +194,14 @@ class BenchmarkConfig:
     vector_backend: str = field(default_factory=lambda: _env("VECTOR_BACKEND", default="auto"))
     rebuild_kg: bool = field(default_factory=lambda: _env("REBUILD_KG", default="").lower()
                              in ("1", "true", "yes"))
+    # Publish the fourth arm: RAG on pure vector top-k, with the structure-aware
+    # retrieval step disabled. This isolates the contribution of that layer
+    # (the shared route is otherwise identical in RAG and GraphRAG) instead of
+    # attributing its gains to the graph. Off by default because it is an
+    # ablation, not a competing architecture.
+    ablation_rag: bool = field(
+        default_factory=lambda: _env("ABLATION_RAG", default="").lower()
+        in ("1", "true", "yes"))
 
 
 @dataclass
@@ -211,11 +228,13 @@ class Config:
             "vector_backend": self.benchmark.vector_backend,
             "rag_top_k": self.benchmark.rag_top_k,
             "num_hops": self.benchmark.num_hops,
+            "rag_ablation": self.benchmark.ablation_rag,
             "agent": {
                 "mode": self.agent.mode,
                 "max_steps": self.agent.max_steps,
                 "confidence_threshold": self.agent.confidence_threshold,
                 "stale_step_limit": self.agent.stale_step_limit,
+                "structured_preference": self.agent.structured_preference,
             },
         }
 

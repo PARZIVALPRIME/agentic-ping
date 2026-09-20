@@ -1,0 +1,96 @@
+
+$ C:\Users\riyaz\AppData\Local\Programs\Python\Python313\python.exe run_benchmark.py questions-20260919T043312Z-1-001/questions/eval_hidden.jsonl --out results/batch\b_hid_04.json --summary results/batch\b_hid_04_summary.json --limit 10 --offset 30 --ablation
+[20:27:33] building KG / index ...
+[20:27:33] graph backend: local [disabled in config]
+[20:27:55] llm available: True (ollama/qwen3.5:4b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[20:27:55] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'RAG (vector only)']
+[20:28:42]   1/10 eval-031 temporal    RAG=- Graph=- Agent=- RAGv=- tok=11440 took=46.6s elapsed=47s eta=7.0m
+[20:30:12]   2/10 eval-032 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=16451 took=90.3s elapsed=137s eta=9.1m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:31:31]   3/10 eval-033 aggregation RAG=- Graph=- Agent=- RAGv=- tok=13375 took=78.8s elapsed=216s eta=8.4m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:32:21]   4/10 eval-034 temporal    RAG=- Graph=- Agent=- RAGv=- tok=11496 took=50.3s elapsed=266s eta=6.6m
+[20:33:35]   5/10 eval-035 superlative RAG=- Graph=- Agent=- RAGv=- tok=18122 took=74.2s elapsed=340s eta=5.7m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:34:37]   6/10 eval-036 aggregation RAG=- Graph=- Agent=- RAGv=- tok=13577 took=62.4s elapsed=402s eta=4.5m
+[20:35:44]   7/10 eval-037 superlative RAG=- Graph=- Agent=- RAGv=- tok=16903 took=66.9s elapsed=469s eta=3.4m
+[20:37:11]   8/10 eval-038 aggregation RAG=- Graph=- Agent=- RAGv=- tok=17639 took=87.1s elapsed=556s eta=2.3m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:38:33]   9/10 eval-039 aggregation RAG=- Graph=- Agent=- RAGv=- tok=17176 took=81.6s elapsed=638s eta=1.2m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:39:25]  10/10 eval-040 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=14279 took=52.1s elapsed=690s eta=0.0m
+
+MODE: live: the provider returned text for 40 record(s) across 64 call(s) (6.40 calls/question).
+
+============================================================================
+RESULTS (10 questions) -> results/batch\b_hid_04.json
+  RAG                (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     2 question(s) (unscored - no gold answers)
+     aggregation  4 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=2254.9 lat=5544.111ms steps=2.0
+  GraphRAG           (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     2 question(s) (unscored - no gold answers)
+     aggregation  4 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=2657.5 lat=4756.439ms steps=3.0
+  Agentic GraphRAG   (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     2 question(s) (unscored - no gold answers)
+     aggregation  4 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=9100.0 lat=54996.17ms steps=2.4
+  RAG (vector only)  (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     2 question(s) (unscored - no gold answers)
+     aggregation  4 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=1033.4 lat=3702.194ms steps=1.0
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: local (disabled in config)
+llm: {'available': True, 'provider': 'ollama', 'chat_model': 'qwen3.5:4b', 'eval_model': 'qwen3.5:4b', 'num_calls': 64, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.0, 'tpm_budget': 8000, 'enabled': False, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': False, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+
+$ C:\Users\riyaz\AppData\Local\Programs\Python\Python313\python.exe tools/batch_score.py --batch results/batch\b_hid_04.json --cumulative results/batch\cumulative_hidden.json --set hidden --baseline results/hidden_results.json
+Traceback (most recent call last):
+  File "D:\gg\tools\batch_score.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "D:\gg\tools\batch_score.py", line 75, in main
+    moved = diff_answers(batch, base)
+TypeError: diff_answers() missing 1 required positional argument: 'pipeline'
+
+$ C:\Users\riyaz\AppData\Local\Programs\Python\Python313\python.exe tools/batch_score.py --batch results/batch\b_hid_04.json --cumulative results/batch\cumulative_hidden.json --set hidden --baseline results/hidden_results.json
+[eval-032:multi_hop]
+   old: 'Lee Jung-su and Zhou Yang'  (react_tool_calling)
+   new: 'Lee Jung-su'  (structured_preference)
+[eval-035:superlative]
+   old: "Women's eight"  (react_tool_calling)
+   new: "Rowing at the 2012 Summer Olympics – Women's eight"  (structured_preference)
+[eval-037:superlative]
+   old: "Men's 470"  (react_tool_calling)
+   new: "Sailing at the 1996 Summer Olympics – Men's 470"  (structured_preference)
+[eval-033:aggregation]
+   old: ''  (None)
+   new: '1'  (extractive)
+[eval-034:temporal]
+   old: ''  (None)
+   new: 'Komeil Ghasemi'  (extractive)
+[eval-040:multi_hop]
+   old: ''  (None)
+   new: 'Nouria Mérah-Benida'  (extractive)
+=== batch b_hid_04.json (10 questions, set=hidden) ===
+  RAG                vs baseline: same=10 changed=0
+  GraphRAG           vs baseline: same=10 changed=0
+  Agentic GraphRAG   vs baseline: same=7 changed=3
+  RAG (vector only)  vs baseline: same=7 changed=3
+  empty agentic answers: 0/10
+  llm calls: 64   tokens: 150,458
+
+$ C:\Users\riyaz\AppData\Local\Programs\Python\Python313\python.exe -m benchmark.dashboard_generator results/batch\b_hid_04.json --summary results/batch\b_hid_04_summary.json --name batch_hid_04.html
+dashboard -> dashboard\batch_hid_04.html (10 questions, 301 KiB)
+  RAG                provider calls in 10/10 records, model output in 10 - 22549 tokens
+  GraphRAG           provider calls in 10/10 records, model output in 10 - 26575 tokens
+  Agentic GraphRAG   provider calls in 10/10 records, model output in 10 - 91000 tokens
+  RAG (vector only)  provider calls in 10/10 records, model output in 10 - 10334 tokens

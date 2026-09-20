@@ -1,0 +1,119 @@
+Traceback (most recent call last):
+  File "D:\gg\run_benchmark.py", line 29, in <module>
+    cli()
+    ~~~^^
+  File "D:\gg\benchmark\runner.py", line 516, in cli
+    main(qpath, args.out, args.summary,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         pipelines=[p for p in args.pipelines.split(",") if p],
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+         per_type=args.per_type,
+         ^^^^^^^^^^^^^^^^^^^^^^^
+         no_tg=args.no_tg)
+         ^^^^^^^^^^^^^^^^^
+  File "D:\gg\benchmark\runner.py", line 420, in main
+    out = runner.run(questions, out_path, summary_path, initial_entries=initial)
+  File "D:\gg\benchmark\runner.py", line 186, in run
+    result = pipe.run(question, qid)
+  File "D:\gg\pipelines\agentic_pipeline.py", line 51, in run
+    state = self.engine.run(question, qid)
+  File "D:\gg\agents\orchestrator.py", line 134, in run
+    self.react.run(question, qid, spec, state)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\gg\agents\react_agent.py", line 109, in run
+    text, calls, finish = self.llm.chat(
+                          ~~~~~~~~~~~~~^
+        messages, tools=TOOL_SCHEMAS, counter=state.tokens,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=self.model, caller="agent.react")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\gg\utils\llm.py", line 111, in chat
+    turn = self._service.chat(messages, tools=tools, model=model,
+                              caller=caller)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py", line 402, in __get_result
+    raise self._exception
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+  File "D:\gg\llm_service.py", line 506, in chat
+    response = self._client.chat.completions.create(
+        model=use_model, messages=messages,
+        temperature=self.temperature, **kwargs)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 298, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1308, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<53 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1378, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1086, in request
+    response = self._send_request(
+        request,
+        stream=stream or self._should_stream_response_body(request=request),
+        **kwargs,
+    )
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_client.py", line 600, in _send_request
+    response = self._send_with_auth_retry(request, stream=stream, **kwargs)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_client.py", line 579, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_base_client.py", line 1008, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx2\_client.py", line 980, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx2\_client.py", line 1008, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx2\_client.py", line 1043, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx2\_client.py", line 1076, in _send_single_request
+    response = transport.handle_request(request)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpx2\_transports\default.py", line 245, in handle_request
+    resp = self._pool.handle_request(req)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore2\_sync\connection_pool.py", line 242, in handle_request
+    raise exc from None
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore2\_sync\connection_pool.py", line 224, in handle_request
+    response = connection.handle_request(pool_request.request)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore2\_sync\connection.py", line 96, in handle_request
+    return self._connection.handle_request(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore2\_sync\http11.py", line 125, in handle_request
+    raise exc
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore2\_sync\http11.py", line 97, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore2\_sync\http11.py", line 167, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore2\_sync\http11.py", line 200, in _receive_event
+    data = self._network_stream.read(self.READ_NUM_BYTES, timeout=timeout)
+  File "C:\Users\riyaz\AppData\Local\Programs\Python\Python313\Lib\site-packages\httpcore2\_backends\sync.py", line 127, in read
+    return self._sock.recv(max_bytes)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyboardInterrupt

@@ -1,0 +1,200 @@
+{
+  "num_questions": 50,
+  "pipelines": {
+    "RAG": {
+      "num_questions": 50,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 7,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 10,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 8,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 15,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 5009.6166,
+      "avg_context_tokens": 253.3,
+      "avg_input_tokens": 1042.58,
+      "avg_output_tokens": 40.38,
+      "avg_total_tokens": 1082.96,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 1.0,
+      "avg_chunks_retrieved": 5.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 54148,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "resolved": 13,
+        "insufficient_retrieved_evidence": 33,
+        "llm_revised_extraction": 4
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "GraphRAG": {
+      "num_questions": 50,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 7,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 10,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 8,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 15,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 7340.801,
+      "avg_context_tokens": 901.06,
+      "avg_input_tokens": 2193.86,
+      "avg_output_tokens": 56.84,
+      "avg_total_tokens": 2250.7,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 2.0,
+      "avg_chunks_retrieved": 10.0,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 112535,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "resolved": 41,
+        "llm_revised_extraction": 7,
+        "insufficient_retrieved_evidence": 2
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "Agentic GraphRAG": {
+      "num_questions": 50,
+      "num_evaluated": 0,
+      "correct": 0,
+      "accuracy": null,
+      "by_type": {
+        "lookup": {
+          "n": 7,
+          "correct": 0
+        },
+        "multi_hop": {
+          "n": 10,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 8,
+          "correct": 0
+        },
+        "aggregation": {
+          "n": 15,
+          "correct": 0
+        },
+        "superlative": {
+          "n": 10,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 59807.8832,
+      "avg_context_tokens": 64.48,
+      "avg_input_tokens": 8829.24,
+      "avg_output_tokens": 556.34,
+      "avg_total_tokens": 9385.58,
+      "avg_llm_calls": 3.96,
+      "avg_retrieval_steps": 3.1,
+      "avg_chunks_retrieved": 18.12,
+      "avg_candidates_considered": 25.94,
+      "total_tokens": 469279,
+      "avg_citation_precision": null,
+      "avg_citation_recall": null,
+      "match_types": {},
+      "stop_reasons": {
+        "submitted_answer": 44,
+        "max_steps": 3,
+        "text_answer": 3
+      },
+      "strategy_adapted": 50,
+      "agents_used": [
+        "EntityLinker",
+        "EvidenceEvaluator",
+        "GraphTraverser",
+        "LookupResolver",
+        "ReActAgent",
+        "Synthesizer",
+        "VectorSearcher"
+      ]
+    }
+  },
+  "when_agents_matter": [],
+  "evaluator": null,
+  "llm": null,
+  "backend": null,
+  "wall_clock_s": null,
+  "run_mode": "live",
+  "provenance": {
+    "rebuilt_from": "results/hidden_results.json",
+    "note": "summary rebuilt from an existing results file; evaluator/llm/backend telemetry is only known during a live run, so those blocks are null rather than guessed",
+    "llm_activity": {
+      "RAG": {
+        "records": 50,
+        "records_with_calls": 50,
+        "records_answering": 50,
+        "calls": 50,
+        "total_tokens": 54148,
+        "output_tokens": 2019,
+        "unusable_adjudications": 33,
+        "llm_contributed": true
+      },
+      "GraphRAG": {
+        "records": 50,
+        "records_with_calls": 50,
+        "records_answering": 50,
+        "calls": 50,
+        "total_tokens": 112535,
+        "output_tokens": 2842,
+        "unusable_adjudications": 12,
+        "llm_contributed": true
+      },
+      "Agentic GraphRAG": {
+        "records": 50,
+        "records_with_calls": 50,
+        "records_answering": 50,
+        "calls": 198,
+        "total_tokens": 469279,
+        "output_tokens": 27817,
+        "unusable_adjudications": 1,
+        "llm_contributed": true
+      }
+    },
+    "warnings": []
+  }
+}

@@ -1,0 +1,1749 @@
+[
+  {
+    "qid": "pub-001",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+    "gold": {
+      "answers": [
+        "5"
+      ],
+      "doc_ids": [
+        "Q47091419",
+        "Q47105341",
+        "Q47155365",
+        "Q47155371",
+        "Q47155408",
+        "Q47155425",
+        "Q47155467",
+        "Q47155505",
+        "Q47155541",
+        "Q47155555",
+        "Q47155815"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+        "qtype": "aggregation",
+        "answer": "3",
+        "citations": [
+          "Q47155425",
+          "Q47091419",
+          "Q47105341",
+          "Q47155365"
+        ],
+        "latency_ms": 16710.74,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 395,
+        "input_tokens": 1453,
+        "output_tokens": 49,
+        "total_tokens": 1502,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.4,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q47155425",
+              "Q47091419",
+              "Q47105341",
+              "Q47155408",
+              "Q47155365"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 34.34
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.35
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 16674.66
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 395,
+            "output_tokens": 0,
+            "total_tokens": 395,
+            "detail": "5 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 1029,
+            "output_tokens": 49,
+            "total_tokens": 1078,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q47155425",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47091419",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47105341",
+            "title": "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "competitors": "87"
+          },
+          {
+            "doc_id": "Q47155365",
+            "title": "Biathlon at the 2018 Winter Olympics – Women's pursuit",
+            "competitors": "58"
+          }
+        ],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q47155425",
+            "Q47091419",
+            "Q47105341",
+            "Q47155408",
+            "Q47155365"
+          ],
+          "retrieved_titles": [
+            "Biathlon at the 2018 Winter Olympics – Women's individual",
+            "Biathlon at the 2018 Winter Olympics – Women's sprint",
+            "Biathlon at the 2018 Winter Olympics – Men's sprint",
+            "Biathlon at the 2018 Winter Olympics – Men's individual",
+            "Biathlon at the 2018 Winter Olympics – Women's pursuit"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 4,
+          "adjudication": {
+            "agree": true,
+            "reason": "The context confirms three events (Women's individual, Women's sprint, Men's sprint) had 87 competitors, which is greater than 73.",
+            "candidate": "3",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "cannot_verify_candidate_set_completeness"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 1.0,
+          "citation_recall": 0.3636,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-002",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+    "gold": {
+      "answers": [
+        "Chen Ding"
+      ],
+      "doc_ids": [
+        "Q1050909",
+        "Q26233122"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "",
+        "citations": [
+          "Q853023",
+          "Q776944",
+          "Q936622",
+          "Q26233122"
+        ],
+        "latency_ms": 5669.77,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 4,
+        "docs_retrieved": 4,
+        "context_tokens": 185,
+        "input_tokens": 899,
+        "output_tokens": 46,
+        "total_tokens": 945,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q853023",
+              "Q776944",
+              "Q853023",
+              "Q936622",
+              "Q26233122"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 82.14
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.08
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 5586.86
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 31,
+            "output_tokens": 0,
+            "total_tokens": 31,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 185,
+            "output_tokens": 0,
+            "total_tokens": 185,
+            "detail": "4 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 683,
+            "output_tokens": 46,
+            "total_tokens": 729,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q853023",
+            "Q776944",
+            "Q853023",
+            "Q936622",
+            "Q26233122"
+          ],
+          "retrieved_titles": [
+            "Athletics at the 2008 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 1996 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2008 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2004 Summer Olympics – Men's 20 kilometres walk",
+            "Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 1,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": "",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_prior_edition_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.25,
+          "citation_recall": 0.5,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-003",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+    "gold": {
+      "answers": [
+        "8"
+      ],
+      "doc_ids": [
+        "Q4354074",
+        "Q4354615",
+        "Q4357642",
+        "Q5395306",
+        "Q5481589",
+        "Q722895",
+        "Q7500827",
+        "Q7500829",
+        "Q7500830",
+        "Q7500832",
+        "Q7500834",
+        "Q7500836",
+        "Q7500838",
+        "Q7500840",
+        "Q7500842",
+        "Q7500847",
+        "Q7500849"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
+        "qtype": "aggregation",
+        "answer": "",
+        "citations": [
+          "Q2065523",
+          "Q7500753",
+          "Q7500836",
+          "Q7500748",
+          "Q7500737"
+        ],
+        "latency_ms": 4438.87,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 216,
+        "input_tokens": 979,
+        "output_tokens": 35,
+        "total_tokens": 1014,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q2065523",
+              "Q7500753",
+              "Q7500836",
+              "Q7500748",
+              "Q7500737"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 79.75
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 4358.57
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 216,
+            "output_tokens": 0,
+            "total_tokens": 216,
+            "detail": "5 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 734,
+            "output_tokens": 35,
+            "total_tokens": 769,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q2065523",
+            "Q7500753",
+            "Q7500836",
+            "Q7500748",
+            "Q7500737"
+          ],
+          "retrieved_titles": [
+            "Cycling at the 2004 Summer Olympics – Women's individual road race",
+            "Shooting at the 1988 Summer Olympics – Women's 10 metre air rifle",
+            "Shooting at the 2004 Summer Olympics – Men's trap",
+            "Shooting at the 1988 Summer Olympics – Mixed skeet",
+            "Shooting at the 1988 Summer Olympics – Men's 10 metre air rifle"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 0,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": "",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_candidate_docs_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.2,
+          "citation_recall": 0.0588,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-004",
+    "qtype": "superlative",
+    "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+    "gold": {
+      "answers": [
+        "Athletics at the 2008 Summer Olympics – Men's marathon"
+      ],
+      "doc_ids": [
+        "Q1005784",
+        "Q1043342",
+        "Q1043347",
+        "Q1043354",
+        "Q1043361",
+        "Q1066390",
+        "Q1084677",
+        "Q247070",
+        "Q257545",
+        "Q288549",
+        "Q517035",
+        "Q544177",
+        "Q656634",
+        "Q657467",
+        "Q677027",
+        "Q693595",
+        "Q743905",
+        "Q744487",
+        "Q754844",
+        "Q766954",
+        "Q830711",
+        "Q847592",
+        "Q848278",
+        "Q848291",
+        "Q853003",
+        "Q853023",
+        "Q853040",
+        "Q853049",
+        "Q853072",
+        "Q899312",
+        "Q903439",
+        "Q904345",
+        "Q916976",
+        "Q917323",
+        "Q917328",
+        "Q917333",
+        "Q917348",
+        "Q922248",
+        "Q922361",
+        "Q932865",
+        "Q947678",
+        "Q947691",
+        "Q947750"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+        "qtype": "superlative",
+        "answer": "",
+        "citations": [
+          "Q922361",
+          "Q1004861",
+          "Q659097",
+          "Q1004892",
+          "Q657467"
+        ],
+        "latency_ms": 4149.38,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 242,
+        "input_tokens": 1017,
+        "output_tokens": 32,
+        "total_tokens": 1049,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q922361",
+              "Q1004861",
+              "Q659097",
+              "Q1004892",
+              "Q657467"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 87.43
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 4061.32
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 30,
+            "output_tokens": 0,
+            "total_tokens": 30,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 242,
+            "output_tokens": 0,
+            "total_tokens": 242,
+            "detail": "5 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 745,
+            "output_tokens": 32,
+            "total_tokens": 777,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q922361",
+            "Q1004861",
+            "Q659097",
+            "Q1004892",
+            "Q657467"
+          ],
+          "retrieved_titles": [
+            "Athletics at the 2008 Summer Olympics – Women's hammer throw",
+            "Weightlifting at the 2008 Summer Olympics – Men's +105 kg",
+            "Swimming at the 2008 Summer Olympics – Men's 50 metre freestyle",
+            "Swimming at the 2008 Summer Olympics – Men's 100 metre breaststroke",
+            "Athletics at the 2008 Summer Olympics – Women's discus throw"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 0,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": "",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_candidate_docs_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.4,
+          "citation_recall": 0.0465,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-005",
+    "qtype": "multi_hop",
+    "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+    "gold": {
+      "answers": [
+        "Naim Süleymanoğlu"
+      ],
+      "doc_ids": [
+        "Q25239316"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+        "qtype": "multi_hop",
+        "answer": "Naim Süleymanoğlu",
+        "citations": [
+          "Q25239316"
+        ],
+        "latency_ms": 7760.36,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 386,
+        "input_tokens": 1459,
+        "output_tokens": 61,
+        "total_tokens": 1520,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.85,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q25239316",
+              "Q25239321",
+              "Q25239317",
+              "Q25239314",
+              "Q25239533"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 41.02
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 1.75
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 7716.74
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 24,
+            "output_tokens": 0,
+            "total_tokens": 24,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 386,
+            "output_tokens": 0,
+            "total_tokens": 386,
+            "detail": "5 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 1049,
+            "output_tokens": 61,
+            "total_tokens": 1110,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q25239316",
+            "title": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+            "venue": "Olympic Weightlifting Gymnasium",
+            "date": "20 September 1988",
+            "gold": "Naim Süleymanoğlu"
+          }
+        ],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q25239316",
+            "Q25239321",
+            "Q25239317",
+            "Q25239314",
+            "Q25239533"
+          ],
+          "retrieved_titles": [
+            "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+            "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
+            "Weightlifting at the 1988 Summer Olympics – Men's +110 kg",
+            "Weightlifting at the 1988 Summer Olympics – Men's 52 kg",
+            "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 5,
+          "adjudication": {
+            "agree": true,
+            "reason": "The context confirms Naim Süleymanoğlu won gold in the Men's 60 kg event held at the Olympic Weightlifting Gymnasium on 20 September 1988.",
+            "candidate": "Naim Süleymanoğlu",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-006",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?",
+    "gold": {
+      "answers": [
+        "Rafaela Silva"
+      ],
+      "doc_ids": [
+        "Q26217865",
+        "Q65235550"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?",
+        "qtype": "temporal",
+        "answer": "",
+        "citations": [
+          "Q3811005",
+          "Q972253",
+          "Q65235550",
+          "Q1064016",
+          "Q26217865"
+        ],
+        "latency_ms": 3844.97,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 149,
+        "input_tokens": 856,
+        "output_tokens": 33,
+        "total_tokens": 889,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q3811005",
+              "Q972253",
+              "Q65235550",
+              "Q1064016",
+              "Q26217865"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 76.76
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 3767.69
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 27,
+            "output_tokens": 0,
+            "total_tokens": 27,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 149,
+            "output_tokens": 0,
+            "total_tokens": 149,
+            "detail": "5 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 680,
+            "output_tokens": 33,
+            "total_tokens": 713,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q3811005",
+            "Q972253",
+            "Q65235550",
+            "Q1064016",
+            "Q26217865"
+          ],
+          "retrieved_titles": [
+            "Judo at the 2004 Summer Olympics – Women's 57 kg",
+            "Taekwondo at the 2012 Summer Olympics – Women's 57 kg",
+            "Judo at the 2020 Summer Olympics – Women's 57 kg",
+            "Judo at the 2012 Summer Olympics – Women's 57 kg",
+            "Judo at the 2016 Summer Olympics – Women's 57 kg"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 0,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": "",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_prior_edition_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.4,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-007",
+    "qtype": "temporal",
+    "question": "Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?",
+    "gold": {
+      "answers": [
+        "Renaud Lavillenie"
+      ],
+      "doc_ids": [
+        "Q2000968",
+        "Q26208457"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "",
+        "citations": [
+          "Q26086643",
+          "Q26208457",
+          "Q2000968",
+          "Q903439"
+        ],
+        "latency_ms": 4788.35,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 4,
+        "docs_retrieved": 4,
+        "context_tokens": 191,
+        "input_tokens": 835,
+        "output_tokens": 42,
+        "total_tokens": 877,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q26086643",
+              "Q26208457",
+              "Q26208457",
+              "Q2000968",
+              "Q903439"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 85.15
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 4702.63
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 191,
+            "output_tokens": 0,
+            "total_tokens": 191,
+            "detail": "4 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 615,
+            "output_tokens": 42,
+            "total_tokens": 657,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q26086643",
+            "Q26208457",
+            "Q26208457",
+            "Q2000968",
+            "Q903439"
+          ],
+          "retrieved_titles": [
+            "Athletics at the 2016 Summer Olympics – Men's decathlon",
+            "Athletics at the 2016 Summer Olympics – Men's pole vault",
+            "Athletics at the 2016 Summer Olympics – Men's pole vault",
+            "Athletics at the 2012 Summer Olympics – Men's pole vault",
+            "Athletics at the 2008 Summer Olympics – Men's pole vault"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 0,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": "",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_prior_edition_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.5,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-008",
+    "qtype": "superlative",
+    "question": "According to the provided corpus, which sailing event at the 2000 Summer Olympics had the highest number of competitors?",
+    "gold": {
+      "answers": [
+        "Sailing at the 2000 Summer Olympics – Soling"
+      ],
+      "doc_ids": [
+        "Q7400327",
+        "Q7400328",
+        "Q7400329",
+        "Q7400330",
+        "Q7400332",
+        "Q7400333",
+        "Q7400334",
+        "Q7400335"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "According to the provided corpus, which sailing event at the 2000 Summer Olympics had the highest number of competitors?",
+        "qtype": "superlative",
+        "answer": "",
+        "citations": [
+          "Q527985",
+          "Q3628779",
+          "Q3879598",
+          "Q3879604",
+          "Q1076363"
+        ],
+        "latency_ms": 3687.97,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 179,
+        "input_tokens": 891,
+        "output_tokens": 28,
+        "total_tokens": 919,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q527985",
+              "Q3628779",
+              "Q3879598",
+              "Q3879604",
+              "Q1076363"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 89.92
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 3597.36
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 30,
+            "output_tokens": 0,
+            "total_tokens": 30,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 179,
+            "output_tokens": 0,
+            "total_tokens": 179,
+            "detail": "5 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 682,
+            "output_tokens": 28,
+            "total_tokens": 710,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q527985",
+            "Q3628779",
+            "Q3879598",
+            "Q3879604",
+            "Q1076363"
+          ],
+          "retrieved_titles": [
+            "Athletics at the 2000 Summer Olympics – Women's triple jump",
+            "Athletics at the 2000 Summer Olympics – Women's marathon",
+            "Swimming at the 2000 Summer Olympics – Women's 200 metre freestyle",
+            "Swimming at the 2000 Summer Olympics – Men's 50 metre freestyle",
+            "Swimming at the 2000 Summer Olympics – Men's 400 metre freestyle"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 0,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": "",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_candidate_docs_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.0,
+          "citation_recall": 0.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-009",
+    "qtype": "lookup",
+    "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+    "gold": {
+      "answers": [
+        "26"
+      ],
+      "doc_ids": [
+        "Q26254891"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+        "qtype": "lookup",
+        "answer": "",
+        "citations": [
+          "Q26254891",
+          "Q3039134",
+          "Q2558792"
+        ],
+        "latency_ms": 4533.05,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 3,
+        "docs_retrieved": 3,
+        "context_tokens": 104,
+        "input_tokens": 657,
+        "output_tokens": 36,
+        "total_tokens": 693,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q26254891",
+              "Q26254891",
+              "Q3039134",
+              "Q2558792",
+              "Q2558792"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 110.35
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 4422.27
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 20,
+            "output_tokens": 0,
+            "total_tokens": 20,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 104,
+            "output_tokens": 0,
+            "total_tokens": 104,
+            "detail": "3 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 533,
+            "output_tokens": 36,
+            "total_tokens": 569,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q26254891",
+            "Q26254891",
+            "Q3039134",
+            "Q2558792",
+            "Q2558792"
+          ],
+          "retrieved_titles": [
+            "Sailing at the 2016 Summer Olympics – Women's RS:X",
+            "Sailing at the 2016 Summer Olympics – Women's RS:X",
+            "Sailing at the 2012 Summer Olympics – Women's RS:X",
+            "Sailing at the 2008 Summer Olympics – Women's RS:X",
+            "Sailing at the 2008 Summer Olympics – Women's RS:X"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 0,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": "",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_infobox_chunks_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.3333,
+          "citation_recall": 1.0,
+          "judge_reason": ""
+        }
+      }
+    }
+  },
+  {
+    "qid": "pub-010",
+    "qtype": "aggregation",
+    "question": "According to the provided corpus, how many cycling events at the 2000 Summer Olympics had more than 30 competitors?",
+    "gold": {
+      "answers": [
+        "4"
+      ],
+      "doc_ids": [
+        "Q1856784",
+        "Q2133123",
+        "Q2426715",
+        "Q2526348",
+        "Q2774005",
+        "Q3001409",
+        "Q3001459",
+        "Q5198388",
+        "Q5198390",
+        "Q5198393"
+      ]
+    },
+    "pipelines": {
+      "RAG (vector only)": {
+        "pipeline": "RAG (vector only)",
+        "question": "According to the provided corpus, how many cycling events at the 2000 Summer Olympics had more than 30 competitors?",
+        "qtype": "aggregation",
+        "answer": "",
+        "citations": [
+          "Q2133123",
+          "Q3998590",
+          "Q10522587",
+          "Q2065523",
+          "Q916174"
+        ],
+        "latency_ms": 5302.44,
+        "retrieval_steps": 1,
+        "tools_called": [
+          "similarity_search"
+        ],
+        "agents_invoked": [],
+        "chunks_retrieved": 5,
+        "docs_retrieved": 5,
+        "context_tokens": 346,
+        "input_tokens": 1199,
+        "output_tokens": 41,
+        "total_tokens": 1240,
+        "llm_calls": 1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "insufficient_retrieved_evidence",
+        "confidence": 0.0,
+        "plan": [
+          "vector_search",
+          "answer"
+        ],
+        "loop_iterations": 1,
+        "candidates_considered": 0,
+        "steps": [
+          {
+            "step": 1,
+            "agent": "Retriever",
+            "operation": "vector_search",
+            "detail": "top-5 chunks by cosine similarity",
+            "doc_ids": [
+              "Q2133123",
+              "Q3998590",
+              "Q10522587",
+              "Q2065523",
+              "Q916174"
+            ]
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "vector_search",
+            "detail": "top_k=5",
+            "latency_ms": 82.07
+          },
+          {
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "llm_adjudicate",
+            "detail": "verify candidate against passages",
+            "latency_ms": 5219.55
+          }
+        ],
+        "tokens_per_operation": [
+          {
+            "operation": "prompt:question",
+            "input_tokens": 29,
+            "output_tokens": 0,
+            "total_tokens": 29,
+            "detail": ""
+          },
+          {
+            "operation": "context:chunks",
+            "input_tokens": 346,
+            "output_tokens": 0,
+            "total_tokens": 346,
+            "detail": "5 chunks (0 structured)"
+          },
+          {
+            "operation": "rag.adjudicate",
+            "input_tokens": 824,
+            "output_tokens": 41,
+            "total_tokens": 865,
+            "detail": "qwen3.5:4b"
+          }
+        ],
+        "evidence": [],
+        "metadata": {
+          "retriever": "vector",
+          "retrieval_mode": "vector_only (ablation)",
+          "top_k": 5,
+          "retrieved_doc_ids": [
+            "Q2133123",
+            "Q3998590",
+            "Q10522587",
+            "Q2065523",
+            "Q916174"
+          ],
+          "retrieved_titles": [
+            "Cycling at the 2000 Summer Olympics – Women's individual road race",
+            "Triathlon at the 2000 Summer Olympics – Women's",
+            "Cycling at the 1988 Summer Olympics – Men's track time trial",
+            "Cycling at the 2004 Summer Olympics – Women's individual road race",
+            "Cycling at the 2012 Summer Olympics – Men's road time trial"
+          ],
+          "structured_retrieval": {
+            "qtype": "",
+            "method": "structured",
+            "answer": "",
+            "confidence": 0.0,
+            "candidates": 0,
+            "complete_set": false,
+            "verified": false,
+            "hits": 0,
+            "hits_truncated": 0,
+            "citations": [],
+            "unresolved": [],
+            "steps": []
+          },
+          "structured_doc_ids": [],
+          "candidate_source": "extractive",
+          "candidate_verified": false,
+          "candidate_note": "structured retrieval produced no candidate; passage-only answer kept",
+          "docs_with_infobox": 0,
+          "adjudication": {
+            "reason": "verdict_unusable",
+            "raw_answer": "",
+            "candidate_source": "extractive",
+            "overridden": false
+          },
+          "llm_revised": false
+        },
+        "unresolved": [
+          "no_candidate_docs_retrieved"
+        ],
+        "evaluation": {
+          "is_correct": false,
+          "match_type": "none",
+          "accuracy_score": 0.0,
+          "similarity": 0.0,
+          "citation_precision": 0.2,
+          "citation_recall": 0.1,
+          "judge_reason": ""
+        }
+      }
+    }
+  }
+]

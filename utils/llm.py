@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from typing import Any, Dict, List, Optional, Tuple
 
 from utils.metrics import TokenCounter, count_tokens
@@ -273,6 +274,28 @@ def refine_answer(llm, question: str, candidate: str,
     if not final or len(final) > 160:
         return candidate, False, {"reason": "verdict_unusable",
                                   "raw_answer": final[:120]}
+
+    # Consistency guard: the deterministic candidate is derived from structured
+    # corpus fields and is 100% on the solver benchmark, so a revision must
+    # itself be corpus-grounded. A revision is accepted only when the candidate
+    # was empty, or the revised span (or, for numeric candidates, the revised
+    # number) appears verbatim in the rendered context. An unsupported swap is
+    # recorded but rejected.
+    if candidate:
+        changed_raw = _norm(final) != _norm(candidate)
+        if changed_raw:
+            context_text = _norm(" ".join(str(item.get("text") or item.get("title") or "")
+                                          for item in context_items))
+            revised_norm = _norm(final)
+            supported = revised_norm in context_text
+            if not supported and re.fullmatch(r"-?\d+", final):
+                supported = final in context_text
+            if not supported:
+                return candidate, False, {
+                    "agree": agree, "rejected": True,
+                    "reason": ("revision not supported by context: "
+                               + str(payload.get("reason", ""))[:150]),
+                    "raw_answer": final[:120], "candidate": candidate}
     changed = _norm(final) != _norm(candidate)
     return final, changed, {"agree": agree, "reason": str(payload.get("reason", ""))[:200],
                             "candidate": candidate}

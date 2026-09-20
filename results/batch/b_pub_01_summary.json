@@ -1,0 +1,339 @@
+{
+  "num_questions": 10,
+  "pipelines": {
+    "RAG": {
+      "num_questions": 10,
+      "num_evaluated": 10,
+      "correct": 10,
+      "accuracy": 1.0,
+      "by_type": {
+        "lookup": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "temporal": {
+          "n": 3,
+          "correct": 3,
+          "accuracy": 1.0
+        },
+        "aggregation": {
+          "n": 3,
+          "correct": 3,
+          "accuracy": 1.0
+        },
+        "superlative": {
+          "n": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        }
+      },
+      "avg_latency_ms": 8119.669,
+      "avg_context_tokens": 940.5,
+      "avg_input_tokens": 2002.1,
+      "avg_output_tokens": 52.9,
+      "avg_total_tokens": 2055.0,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 2.0,
+      "avg_chunks_retrieved": 11.3,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 20550,
+      "avg_citation_precision": 0.9714,
+      "avg_citation_recall": 1.0,
+      "match_types": {
+        "exact": 10
+      },
+      "stop_reasons": {
+        "structured_verified": 9,
+        "structured_resolved": 1
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "GraphRAG": {
+      "num_questions": 10,
+      "num_evaluated": 10,
+      "correct": 10,
+      "accuracy": 1.0,
+      "by_type": {
+        "lookup": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "temporal": {
+          "n": 3,
+          "correct": 3,
+          "accuracy": 1.0
+        },
+        "aggregation": {
+          "n": 3,
+          "correct": 3,
+          "accuracy": 1.0
+        },
+        "superlative": {
+          "n": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        }
+      },
+      "avg_latency_ms": 6133.072,
+      "avg_context_tokens": 1356.3,
+      "avg_input_tokens": 2642.8,
+      "avg_output_tokens": 54.9,
+      "avg_total_tokens": 2697.7,
+      "avg_llm_calls": 1.0,
+      "avg_retrieval_steps": 3.0,
+      "avg_chunks_retrieved": 14.8,
+      "avg_candidates_considered": 0.0,
+      "total_tokens": 26977,
+      "avg_citation_precision": 0.9714,
+      "avg_citation_recall": 1.0,
+      "match_types": {
+        "exact": 10
+      },
+      "stop_reasons": {
+        "structured_verified": 9,
+        "structured_resolved": 1
+      },
+      "strategy_adapted": 0,
+      "agents_used": []
+    },
+    "Agentic GraphRAG": {
+      "num_questions": 10,
+      "num_evaluated": 10,
+      "correct": 9,
+      "accuracy": 0.9,
+      "by_type": {
+        "lookup": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "multi_hop": {
+          "n": 1,
+          "correct": 1,
+          "accuracy": 1.0
+        },
+        "temporal": {
+          "n": 3,
+          "correct": 2,
+          "accuracy": 0.6667
+        },
+        "aggregation": {
+          "n": 3,
+          "correct": 3,
+          "accuracy": 1.0
+        },
+        "superlative": {
+          "n": 2,
+          "correct": 2,
+          "accuracy": 1.0
+        }
+      },
+      "avg_latency_ms": 62827.168,
+      "avg_context_tokens": 4.3,
+      "avg_input_tokens": 8174.3,
+      "avg_output_tokens": 596.4,
+      "avg_total_tokens": 8770.7,
+      "avg_llm_calls": 3.3,
+      "avg_retrieval_steps": 2.3,
+      "avg_chunks_retrieved": 18.4,
+      "avg_candidates_considered": 18.7,
+      "total_tokens": 87707,
+      "avg_citation_precision": 0.5106,
+      "avg_citation_recall": 0.85,
+      "match_types": {
+        "exact": 8,
+        "fuzzy": 1,
+        "none": 1
+      },
+      "stop_reasons": {
+        "text_answer": 4,
+        "submitted_answer": 6
+      },
+      "strategy_adapted": 10,
+      "agents_used": [
+        "ReActAgent",
+        "Verifier"
+      ]
+    }
+  },
+  "when_agents_matter": [
+    {
+      "qid": "pub-001",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 7930,
+      "graphrag_tokens": 2645,
+      "delta": 0
+    },
+    {
+      "qid": "pub-002",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 7553,
+      "graphrag_tokens": 2338,
+      "delta": 0
+    },
+    {
+      "qid": "pub-003",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 8146,
+      "graphrag_tokens": 3252,
+      "delta": 0
+    },
+    {
+      "qid": "pub-004",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 11259,
+      "graphrag_tokens": 4454,
+      "delta": 0
+    },
+    {
+      "qid": "pub-005",
+      "qtype": "multi_hop",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 8097,
+      "graphrag_tokens": 2216,
+      "delta": 0
+    },
+    {
+      "qid": "pub-006",
+      "qtype": "temporal",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 11460,
+      "graphrag_tokens": 1878,
+      "delta": 0
+    },
+    {
+      "qid": "pub-007",
+      "qtype": "temporal",
+      "agentic_correct": false,
+      "graphrag_correct": true,
+      "agentic_tokens": 7450,
+      "graphrag_tokens": 2483,
+      "delta": -1
+    },
+    {
+      "qid": "pub-008",
+      "qtype": "superlative",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 10650,
+      "graphrag_tokens": 2283,
+      "delta": 0
+    },
+    {
+      "qid": "pub-009",
+      "qtype": "lookup",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 7405,
+      "graphrag_tokens": 2317,
+      "delta": 0
+    },
+    {
+      "qid": "pub-010",
+      "qtype": "aggregation",
+      "agentic_correct": true,
+      "graphrag_correct": true,
+      "agentic_tokens": 7757,
+      "graphrag_tokens": 3111,
+      "delta": 0
+    }
+  ],
+  "evaluator": {
+    "llm_judge_enabled": true,
+    "judge_calls": 0,
+    "judge_flips": 0,
+    "judge_tokens": 0
+  },
+  "llm": {
+    "available": true,
+    "provider": "ollama",
+    "chat_model": "qwen3.5:4b",
+    "eval_model": "qwen3.5:4b",
+    "num_calls": 53,
+    "failed_calls": 0,
+    "degraded": false,
+    "min_interval_s": 0.0,
+    "tpm_budget": 8000,
+    "enabled": false,
+    "rate_limit_events": 0,
+    "pace_sleeps": 0,
+    "pace_slept_s": 0.0,
+    "circuit": {
+      "threshold": 3,
+      "cooldown_s": 60.0,
+      "enabled": false,
+      "trips": 0,
+      "blocked_calls": 0,
+      "open": false
+    }
+  },
+  "run_mode": "live",
+  "wall_clock_s": 771.0,
+  "backend": {
+    "requested": "local",
+    "active": "local",
+    "graphname": "OlympicsKG",
+    "reason": "disabled in config",
+    "remote_stats": {}
+  },
+  "provenance": {
+    "rebuilt_from": null,
+    "note": "live run: llm/evaluator/backend telemetry recorded above",
+    "llm_activity": {
+      "RAG": {
+        "records": 10,
+        "records_with_calls": 10,
+        "records_answering": 10,
+        "calls": 10,
+        "total_tokens": 20550,
+        "output_tokens": 529,
+        "unusable_adjudications": 1,
+        "llm_contributed": true
+      },
+      "GraphRAG": {
+        "records": 10,
+        "records_with_calls": 10,
+        "records_answering": 10,
+        "calls": 10,
+        "total_tokens": 26977,
+        "output_tokens": 549,
+        "unusable_adjudications": 1,
+        "llm_contributed": true
+      },
+      "Agentic GraphRAG": {
+        "records": 10,
+        "records_with_calls": 10,
+        "records_answering": 10,
+        "calls": 33,
+        "total_tokens": 87707,
+        "output_tokens": 5964,
+        "unusable_adjudications": 0,
+        "llm_contributed": true
+      }
+    },
+    "warnings": []
+  }
+}

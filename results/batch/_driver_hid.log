@@ -1,0 +1,322 @@
+
+==========================================================================
+batch 1 (hidden 0-9)
+==========================================================================
+[19:48:31] building KG / index ...
+[19:48:32] graph backend: local [disabled in config]
+[19:48:57] llm available: True (ollama/qwen3.5:4b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[19:48:57] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'RAG (vector only)']
+[19:50:02]   1/10 eval-001 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=11861 took=65.7s elapsed=66s eta=9.9m
+[19:50:45]   2/10 eval-002 lookup      RAG=- Graph=- Agent=- RAGv=- tok=11539 took=43.1s elapsed=109s eta=7.3m
+[19:52:39]   3/10 eval-003 aggregation RAG=- Graph=- Agent=- RAGv=- tok=16027 took=113.6s elapsed=222s eta=8.6m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[19:53:49]   4/10 eval-004 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=13697 took=70.4s elapsed=293s eta=7.3m
+[19:55:23]   5/10 eval-005 superlative RAG=- Graph=- Agent=- RAGv=- tok=16861 took=93.1s elapsed=386s eta=6.4m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[19:56:57]   6/10 eval-006 aggregation RAG=- Graph=- Agent=- RAGv=- tok=13478 took=94.2s elapsed=480s eta=5.3m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[19:57:54]   7/10 eval-007 temporal    RAG=- Graph=- Agent=- RAGv=- tok=11030 took=57.0s elapsed=537s eta=3.8m
+[19:59:40]   8/10 eval-008 aggregation RAG=- Graph=- Agent=- RAGv=- tok=13431 took=106.4s elapsed=644s eta=2.7m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:01:01]   9/10 eval-009 superlative RAG=- Graph=- Agent=- RAGv=- tok=16763 took=80.3s elapsed=724s eta=1.3m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:01:58]  10/10 eval-010 lookup      RAG=- Graph=- Agent=- RAGv=- tok=11232 took=57.0s elapsed=781s eta=0.0m
+
+MODE: live: the provider returned text for 40 record(s) across 62 call(s) (6.20 calls/question).
+
+============================================================================
+RESULTS (10 questions) -> results/batch\b_hid_01.json
+  RAG                (no gold answers)
+     lookup       2 question(s) (unscored - no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     1 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=1909.8 lat=6859.066ms steps=2.0
+  GraphRAG           (no gold answers)
+     lookup       2 question(s) (unscored - no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     1 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=2475.2 lat=5455.007ms steps=3.0
+  Agentic GraphRAG   (no gold answers)
+     lookup       2 question(s) (unscored - no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     1 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=8164.3 lat=61119.489ms steps=2.2
+  RAG (vector only)  (no gold answers)
+     lookup       2 question(s) (unscored - no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     1 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=1042.6 lat=4637.156ms steps=1.0
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: local (disabled in config)
+llm: {'available': True, 'provider': 'ollama', 'chat_model': 'qwen3.5:4b', 'eval_model': 'qwen3.5:4b', 'num_calls': 62, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.0, 'tpm_budget': 8000, 'enabled': False, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': False, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+
+Traceback (most recent call last):
+  File "D:\gg\tools\batch_score.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "D:\gg\tools\batch_score.py", line 75, in main
+    moved = diff_answers(batch, base)
+TypeError: diff_answers() missing 1 required positional argument: 'pipeline'
+
+
+==========================================================================
+batch 2 (hidden 10-19)
+==========================================================================
+[20:02:00] building KG / index ...
+[20:02:00] graph backend: local [disabled in config]
+[20:02:24] llm available: True (ollama/qwen3.5:4b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[20:02:24] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'RAG (vector only)']
+could not parse JSON from rag.adjudicate response
+could not parse JSON from graphrag.adjudicate response
+[20:06:22]   1/10 eval-011 aggregation RAG=- Graph=- Agent=- RAGv=- tok=19278 took=237.8s elapsed=238s eta=35.7m
+           note: slow pipeline(s) RAG, GraphRAG, Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:07:09]   2/10 eval-012 lookup      RAG=- Graph=- Agent=- RAGv=- tok=11018 took=47.0s elapsed=285s eta=19.0m
+[20:09:05]   3/10 eval-013 aggregation RAG=- Graph=- Agent=- RAGv=- tok=14722 took=115.8s elapsed=401s eta=15.6m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:09:45]   4/10 eval-014 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=8734 took=39.6s elapsed=440s eta=11.0m
+[20:10:36]   5/10 eval-015 lookup      RAG=- Graph=- Agent=- RAGv=- tok=11399 took=51.0s elapsed=491s eta=8.2m
+[20:11:19]   6/10 eval-016 lookup      RAG=- Graph=- Agent=- RAGv=- tok=10866 took=43.2s elapsed=534s eta=5.9m
+[20:12:25]   7/10 eval-017 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=13634 took=66.2s elapsed=600s eta=4.3m
+[20:13:54]   8/10 eval-018 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=13539 took=88.7s elapsed=689s eta=2.9m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:15:19]   9/10 eval-019 aggregation RAG=- Graph=- Agent=- RAGv=- tok=13428 took=85.7s elapsed=775s eta=1.4m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:16:09]  10/10 eval-020 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=12543 took=49.6s elapsed=824s eta=0.0m
+
+MODE: live: the provider returned text for 40 record(s) across 60 call(s) (6.00 calls/question).
+
+============================================================================
+RESULTS (10 questions) -> results/batch\b_hid_02.json
+  RAG                (no gold answers)
+     lookup       3 question(s) (unscored - no gold answers)
+     multi_hop    4 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     avg tok=1838.3 lat=11802.187ms steps=2.0
+  GraphRAG           (no gold answers)
+     lookup       3 question(s) (unscored - no gold answers)
+     multi_hop    4 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     avg tok=2509.1 lat=11798.271ms steps=3.0
+  Agentic GraphRAG   (no gold answers)
+     lookup       3 question(s) (unscored - no gold answers)
+     multi_hop    4 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     avg tok=7630.2 lat=54426.304ms steps=2.0
+  RAG (vector only)  (no gold answers)
+     lookup       3 question(s) (unscored - no gold answers)
+     multi_hop    4 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     avg tok=938.5 lat=4407.362ms steps=1.0
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: local (disabled in config)
+llm: {'available': True, 'provider': 'ollama', 'chat_model': 'qwen3.5:4b', 'eval_model': 'qwen3.5:4b', 'num_calls': 60, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.0, 'tpm_budget': 8000, 'enabled': False, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': False, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+
+Traceback (most recent call last):
+  File "D:\gg\tools\batch_score.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "D:\gg\tools\batch_score.py", line 75, in main
+    moved = diff_answers(batch, base)
+TypeError: diff_answers() missing 1 required positional argument: 'pipeline'
+
+
+==========================================================================
+batch 3 (hidden 20-29)
+==========================================================================
+[20:16:11] building KG / index ...
+[20:16:11] graph backend: local [disabled in config]
+[20:16:32] llm available: True (ollama/qwen3.5:4b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[20:16:32] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'RAG (vector only)']
+[20:17:21]   1/10 eval-021 temporal    RAG=- Graph=- Agent=- RAGv=- tok=12634 took=48.8s elapsed=49s eta=7.3m
+[20:18:20]   2/10 eval-022 lookup      RAG=- Graph=- Agent=- RAGv=- tok=17745 took=58.6s elapsed=107s eta=7.2m
+[20:19:46]   3/10 eval-023 aggregation RAG=- Graph=- Agent=- RAGv=- tok=15589 took=86.7s elapsed=194s eta=7.6m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:20:47]   4/10 eval-024 superlative RAG=- Graph=- Agent=- RAGv=- tok=16791 took=60.3s elapsed=254s eta=6.4m
+[20:22:05]   5/10 eval-025 superlative RAG=- Graph=- Agent=- RAGv=- tok=18273 took=78.4s elapsed=333s eta=5.5m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:22:58]   6/10 eval-026 lookup      RAG=- Graph=- Agent=- RAGv=- tok=16073 took=53.0s elapsed=386s eta=4.3m
+[20:24:03]   7/10 eval-027 superlative RAG=- Graph=- Agent=- RAGv=- tok=17644 took=65.3s elapsed=451s eta=3.2m
+[20:25:10]   8/10 eval-028 aggregation RAG=- Graph=- Agent=- RAGv=- tok=14456 took=66.4s elapsed=517s eta=2.2m
+[20:26:30]   9/10 eval-029 aggregation RAG=- Graph=- Agent=- RAGv=- tok=16525 took=80.4s elapsed=598s eta=1.1m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:27:31]  10/10 eval-030 superlative RAG=- Graph=- Agent=- RAGv=- tok=16344 took=61.3s elapsed=659s eta=0.0m
+
+MODE: live: the provider returned text for 40 record(s) across 71 call(s) (7.10 calls/question).
+
+============================================================================
+RESULTS (10 questions) -> results/batch\b_hid_03.json
+  RAG                (no gold answers)
+     lookup       2 question(s) (unscored - no gold answers)
+     temporal     1 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     superlative  4 question(s) (unscored - no gold answers)
+     avg tok=2245.2 lat=4844.845ms steps=2.0
+  GraphRAG           (no gold answers)
+     lookup       2 question(s) (unscored - no gold answers)
+     temporal     1 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     superlative  4 question(s) (unscored - no gold answers)
+     avg tok=2624.0 lat=4112.154ms steps=3.0
+  Agentic GraphRAG   (no gold answers)
+     lookup       2 question(s) (unscored - no gold answers)
+     temporal     1 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     superlative  4 question(s) (unscored - no gold answers)
+     avg tok=10331.9 lat=53572.232ms steps=3.3
+  RAG (vector only)  (no gold answers)
+     lookup       2 question(s) (unscored - no gold answers)
+     temporal     1 question(s) (unscored - no gold answers)
+     aggregation  3 question(s) (unscored - no gold answers)
+     superlative  4 question(s) (unscored - no gold answers)
+     avg tok=1006.3 lat=3371.771ms steps=1.0
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: local (disabled in config)
+llm: {'available': True, 'provider': 'ollama', 'chat_model': 'qwen3.5:4b', 'eval_model': 'qwen3.5:4b', 'num_calls': 71, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.0, 'tpm_budget': 8000, 'enabled': False, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': False, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+
+Traceback (most recent call last):
+  File "D:\gg\tools\batch_score.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "D:\gg\tools\batch_score.py", line 75, in main
+    moved = diff_answers(batch, base)
+TypeError: diff_answers() missing 1 required positional argument: 'pipeline'
+
+
+==========================================================================
+batch 4 (hidden 30-39)
+==========================================================================
+[20:27:33] building KG / index ...
+[20:27:33] graph backend: local [disabled in config]
+[20:27:55] llm available: True (ollama/qwen3.5:4b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[20:27:55] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'RAG (vector only)']
+[20:28:42]   1/10 eval-031 temporal    RAG=- Graph=- Agent=- RAGv=- tok=11440 took=46.6s elapsed=47s eta=7.0m
+[20:30:12]   2/10 eval-032 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=16451 took=90.3s elapsed=137s eta=9.1m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:31:31]   3/10 eval-033 aggregation RAG=- Graph=- Agent=- RAGv=- tok=13375 took=78.8s elapsed=216s eta=8.4m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:32:21]   4/10 eval-034 temporal    RAG=- Graph=- Agent=- RAGv=- tok=11496 took=50.3s elapsed=266s eta=6.6m
+[20:33:35]   5/10 eval-035 superlative RAG=- Graph=- Agent=- RAGv=- tok=18122 took=74.2s elapsed=340s eta=5.7m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:34:37]   6/10 eval-036 aggregation RAG=- Graph=- Agent=- RAGv=- tok=13577 took=62.4s elapsed=402s eta=4.5m
+[20:35:44]   7/10 eval-037 superlative RAG=- Graph=- Agent=- RAGv=- tok=16903 took=66.9s elapsed=469s eta=3.4m
+[20:37:11]   8/10 eval-038 aggregation RAG=- Graph=- Agent=- RAGv=- tok=17639 took=87.1s elapsed=556s eta=2.3m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:38:33]   9/10 eval-039 aggregation RAG=- Graph=- Agent=- RAGv=- tok=17176 took=81.6s elapsed=638s eta=1.2m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:39:25]  10/10 eval-040 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=14279 took=52.1s elapsed=690s eta=0.0m
+
+MODE: live: the provider returned text for 40 record(s) across 64 call(s) (6.40 calls/question).
+
+============================================================================
+RESULTS (10 questions) -> results/batch\b_hid_04.json
+  RAG                (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     2 question(s) (unscored - no gold answers)
+     aggregation  4 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=2254.9 lat=5544.111ms steps=2.0
+  GraphRAG           (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     2 question(s) (unscored - no gold answers)
+     aggregation  4 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=2657.5 lat=4756.439ms steps=3.0
+  Agentic GraphRAG   (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     2 question(s) (unscored - no gold answers)
+     aggregation  4 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=9100.0 lat=54996.17ms steps=2.4
+  RAG (vector only)  (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     2 question(s) (unscored - no gold answers)
+     aggregation  4 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=1033.4 lat=3702.194ms steps=1.0
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: local (disabled in config)
+llm: {'available': True, 'provider': 'ollama', 'chat_model': 'qwen3.5:4b', 'eval_model': 'qwen3.5:4b', 'num_calls': 64, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.0, 'tpm_budget': 8000, 'enabled': False, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': False, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+
+Traceback (most recent call last):
+  File "D:\gg\tools\batch_score.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "D:\gg\tools\batch_score.py", line 75, in main
+    moved = diff_answers(batch, base)
+TypeError: diff_answers() missing 1 required positional argument: 'pipeline'
+
+
+==========================================================================
+batch 5 (hidden 40-49)
+==========================================================================
+[20:39:27] building KG / index ...
+[20:39:27] graph backend: local [disabled in config]
+[20:39:48] llm available: True (ollama/qwen3.5:4b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[20:39:48] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'RAG (vector only)']
+[20:41:06]   1/10 eval-041 aggregation RAG=- Graph=- Agent=- RAGv=- tok=13404 took=77.2s elapsed=77s eta=11.6m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:41:51]   2/10 eval-042 temporal    RAG=- Graph=- Agent=- RAGv=- tok=11074 took=45.1s elapsed=122s eta=8.2m
+[20:43:10]   3/10 eval-043 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=20832 took=79.6s elapsed=202s eta=7.9m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:44:15]   4/10 eval-044 temporal    RAG=- Graph=- Agent=- RAGv=- tok=11672 took=64.3s elapsed=266s eta=6.7m
+[20:45:31]   5/10 eval-045 temporal    RAG=- Graph=- Agent=- RAGv=- tok=15075 took=76.2s elapsed=342s eta=5.7m
+[20:46:30]   6/10 eval-046 temporal    RAG=- Graph=- Agent=- RAGv=- tok=11233 took=59.1s elapsed=402s eta=4.5m
+[20:48:14]   7/10 eval-047 superlative RAG=- Graph=- Agent=- RAGv=- tok=16207 took=103.8s elapsed=505s eta=3.6m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:49:54]   8/10 eval-048 aggregation RAG=- Graph=- Agent=- RAGv=- tok=14770 took=100.4s elapsed=606s eta=2.5m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:51:39]   9/10 eval-049 superlative RAG=- Graph=- Agent=- RAGv=- tok=18422 took=104.5s elapsed=710s eta=1.3m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[20:52:46]  10/10 eval-050 multi_hop   RAG=- Graph=- Agent=- RAGv=- tok=12770 took=67.0s elapsed=777s eta=0.0m
+
+MODE: live: the provider returned text for 40 record(s) across 65 call(s) (6.50 calls/question).
+
+============================================================================
+RESULTS (10 questions) -> results/batch\b_hid_05.json
+  RAG                (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     4 question(s) (unscored - no gold answers)
+     aggregation  2 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=1816.4 lat=6226.289ms steps=2.0
+  GraphRAG           (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     4 question(s) (unscored - no gold answers)
+     aggregation  2 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=2426.9 lat=5936.608ms steps=3.0
+  Agentic GraphRAG   (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     4 question(s) (unscored - no gold answers)
+     aggregation  2 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=9386.9 lat=61210.387ms steps=2.5
+  RAG (vector only)  (no gold answers)
+     multi_hop    2 question(s) (unscored - no gold answers)
+     temporal     4 question(s) (unscored - no gold answers)
+     aggregation  2 question(s) (unscored - no gold answers)
+     superlative  2 question(s) (unscored - no gold answers)
+     avg tok=915.7 lat=4342.533ms steps=1.0
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: local (disabled in config)
+llm: {'available': True, 'provider': 'ollama', 'chat_model': 'qwen3.5:4b', 'eval_model': 'qwen3.5:4b', 'num_calls': 65, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.0, 'tpm_budget': 8000, 'enabled': False, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': False, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+
+Traceback (most recent call last):
+  File "D:\gg\tools\batch_score.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "D:\gg\tools\batch_score.py", line 75, in main
+    moved = diff_answers(batch, base)
+TypeError: diff_answers() missing 1 required positional argument: 'pipeline'
+
+
+==========================================================================
+FAILED steps: [(1, 'score'), (2, 'score'), (3, 'score'), (4, 'score'), (5, 'score')]

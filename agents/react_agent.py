@@ -44,6 +44,9 @@ Patterns:
 on its doc_id.
 - before/after: find the anchor event -> traverse_graph with PREV or NEXT -> read \
 the year.
+- venue+date such as "held at X on Y": resolve_event -> pick the event whose \
+printed date matches -> read its gold field. Do not guess between events that \
+share a venue.
 - who won what, where: search_events -> get_event_details or traverse_graph(WON_BY).
 - prose evidence: search_passages.
 
@@ -231,11 +234,13 @@ def _absorb(state: AgentState, tool: str, result: Any) -> int:
         state.add_chunks(result.get("events") or [])
     elif tool == "search_passages":
         state.add_chunks(result.get("passages") or [])
-    elif tool in ("get_event_details", "traverse_graph", "get_games_events"):
+    elif tool in ("get_event_details", "traverse_graph", "get_games_events",
+                  "resolve_event"):
         state.add_chunks(result.get("events") or [])
     if tool == "get_event_values":
         state.slots.setdefault("value_sets", []).append({
             "field": result.get("field"),
+            "num_matching_events": result.get("num_matching_events"),
             "num_with_value": result.get("num_with_value"),
             "values": result.get("values") or [],
         })
@@ -258,5 +263,20 @@ def _extract_answer(text: str) -> str:
     match = re.search(r"(?im)^\s*(?:final\s+)?answer\s*[:\-]\s*(.+)$", text)
     if match:
         return match.group(1).strip().strip('"').strip("*")[:200]
-    last = [line.strip() for line in text.splitlines() if line.strip()]
-    return last[-1][:200] if last else ""
+    # Guard: never extract a labeled podium/bullet fragment from prose. If the
+    # model answers with a ranked list, any single "silver:/bronze:" line is a
+    # partial fragment of the real answer, not the answer itself. Return ""
+    # so the orchestrator's solver fallback produces the full answer.
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    if lines:
+        import re as _re
+        fragment = _re.compile(
+            r"^[-*•]?\s*(silver|bronze|2nd|3rd|second|third)\b[^:]{0,20}:", _re.I
+        )
+        if fragment.match(lines[-1]):
+            return ""
+        # Bare numbered medal mention without colon ("2nd place Foo") also a
+        # ranked fragment.
+        if _re.match(r"^[-*•]?\s*(2nd|3rd|second|third)\b", lines[-1], _re.I):
+            return ""
+    return lines[-1][:200] if lines else ""

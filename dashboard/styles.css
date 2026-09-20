@@ -1,9 +1,9 @@
 :root {
   --bg: #0f1420; --panel: #171e2e; --panel2: #1d2740; --line: #2a3552;
   --text: #e8edf7; --muted: #8fa0bd;
-  --rag: #e05f5f; --graph: #e0a83c; --agent: #4fc38a;
+  --rag: #e05f5f; --graph: #e0a83c; --agent: #4fc38a; --ablate: #8b7fd6;
   --rag-soft: rgba(224,95,95,.18); --graph-soft: rgba(224,168,60,.18);
-  --agent-soft: rgba(79,195,138,.18);
+  --agent-soft: rgba(79,195,138,.18); --ablate-soft: rgba(139,127,214,.18);
 }
 * { box-sizing: border-box; }
 body {
@@ -34,6 +34,7 @@ main { padding: 8px 28px 32px; max-width: 1280px; margin: 0 auto; }
 .c-rag .big { color: var(--rag); } .c-rag .bar > i { background: var(--rag); }
 .c-graph .big { color: var(--graph); } .c-graph .bar > i { background: var(--graph); }
 .c-agent .big { color: var(--agent); } .c-agent .bar > i { background: var(--agent); }
+.c-ablate .big { color: var(--ablate); } .c-ablate .bar > i { background: var(--ablate); }
 .panel { background: var(--panel); border: 1px solid var(--line);
   border-radius: 12px; padding: 16px 18px; margin: 0 0 18px; }
 .hint { color: var(--muted); font-size: 12px; margin: 0 0 12px; }

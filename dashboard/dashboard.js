@@ -5,6 +5,8 @@ const PIPE_COLORS = {
   "RAG": "#e05f5f",
   "GraphRAG": "#e0a83c",
   "Agentic GraphRAG": "#4fc38a",
+  // Ablation arm: RAG with the structure-aware retrieval step removed.
+  "RAG (vector only)": "#8b7fd6",
 };
 const QTYPES = ["lookup", "multi_hop", "temporal", "aggregation", "superlative"];
 const short = n => (n === undefined || n === null) ? "–" :
@@ -50,6 +52,16 @@ function runModeLabel() {
   return "provider: not recorded";
 }
 
+/* A hidden-evaluation file carries no gold answers, so nothing can be scored
+   locally: every pipeline reports num_evaluated = 0 and the accuracy panels
+   would render as a misleading "0/0 correct". Detect that once and present it
+   as what it is - an answer sheet awaiting external grading. */
+function unscored() {
+  const p = (DATA.summary || {}).pipelines || {};
+  const vals = Object.values(p);
+  return vals.length > 0 && vals.every((x) => !x.num_evaluated);
+}
+
 function activityFor(name) {
   const top = (DATA.llm_activity || {})[name];
   if (top) return top;
@@ -59,14 +71,16 @@ function activityFor(name) {
 
 function renderMeta() {
   const s = DATA.summary || {};
+  const kind = unscored() ? "hidden questions (gold withheld)"
+    : "public questions";
   document.getElementById("meta").innerHTML =
-    `${s.num_questions || (DATA.entries || []).length} public questions · ` +
+    `${s.num_questions || (DATA.entries || []).length} ${kind} · ` +
     `evaluator: ${s.evaluator && s.evaluator.llm_judge_enabled ? "LLM judge on" : "deterministic"} · ` +
     `wall clock ${s.wall_clock_s ? s.wall_clock_s + "s" : "–"} · ` +
     `${runModeLabel()} · generated ${DATA.generated}`;
   document.getElementById("footMeta").textContent =
     `results: ${DATA.results_file} · corpus: 2,951 Wikipedia articles (1987–2023) · ` +
-    `vector backend: sparse TF-IDF · planner: openai/gpt-oss-120b via Groq`;
+    `vector backend: sparse TF-IDF · planner: ${s.llm?.chat_model || "openai/gpt-oss-120b"} via ${s.llm?.provider || "Groq"}`;
 }
 
 function renderCards() {
@@ -74,7 +88,8 @@ function renderCards() {
   const pipes = s.pipelines || {};
   const host = document.getElementById("cards");
   host.innerHTML = "";
-  const cls = { "RAG": "c-rag", "GraphRAG": "c-graph", "Agentic GraphRAG": "c-agent" };
+  const cls = { "RAG": "c-rag", "GraphRAG": "c-graph", "Agentic GraphRAG": "c-agent",
+                "RAG (vector only)": "c-ablate" };
 
   // Say it before the numbers, not after: a file whose provider calls returned
   // nothing still shows three plausible accuracies and three "0 LLM calls/q".
@@ -101,7 +116,9 @@ function renderCards() {
     const bar = el("div", { class: "bar" }, card);
     if (ps.accuracy) el("i", { style: `width:${(ps.accuracy * 100).toFixed(1)}%` }, bar);
     el("div", { class: "row", html:
-      `<span>${ps.correct ?? "–"}/${ps.num_evaluated ?? "–"} correct</span>` +
+      (unscored()
+        ? `<span>${DATA.entries.length} answers · unscored (gold withheld)</span>`
+        : `<span>${ps.correct ?? "–"}/${ps.num_evaluated ?? "–"} correct</span>`) +
       `<span>${short(ps.avg_total_tokens)} tok avg</span>` }, card);
     // Prefer the summary's average, but fall back to the per-record activity so
     // an older summary (no avg_llm_calls) still reports what really happened.
@@ -121,6 +138,27 @@ function renderCards() {
 function renderByType() {
   const s = DATA.summary || {};
   const pipes = Object.entries(s.pipelines || {});
+  const host = document.getElementById("byType");
+  if (unscored()) {
+    /* No gold answers in this file: accuracy is not computable here, so show
+       the deliverable instead of an empty chart. */
+    host.innerHTML = "";
+    el("p", {
+      style: "padding:24px 8px;color:#93a3c4;line-height:1.6",
+      text: "This is a hidden-evaluation answer sheet: gold answers are withheld, so no "
+        + "accuracy can be computed locally (the panels above are marked unscored, not 0%). "
+        + `${DATA.entries.length} questions were answered by all ${pipes.length} pipelines `
+        + "under live provider calls — grade the table below externally, or compare the "
+        + "pipelines' answers against each other on every row." }, host);
+    const legend = document.getElementById("legend");
+    legend.innerHTML = "";
+    pipes.forEach(([name]) => {
+      const item = el("span", {}, legend);
+      el("i", { style: `background:${PIPE_COLORS[name]}` }, item);
+      el("b", { text: ` ${name}` }, item);
+    });
+    return;
+  }
   const W = 860, H = 300, padL = 44, padB = 46, padT = 12;
   const groupW = (W - padL - 16) / QTYPES.length;
   const barW = Math.min(26, (groupW - 24) / Math.max(pipes.length, 1));
@@ -151,7 +189,6 @@ function renderByType() {
     svgEl("text", { x: padL + gi * groupW + groupW / 2, y: H - padB + 30,
       "text-anchor": "middle", "font-size": 10, text: `n=${n}` }, svg);
   });
-  const host = document.getElementById("byType");
   host.innerHTML = "";
   host.appendChild(svg);
   const legend = document.getElementById("legend");
@@ -166,6 +203,13 @@ function renderByType() {
 /* ─ cost vs accuracy scatter ────────────────────────────────────── */
 function renderCostScatter() {
   const s = DATA.summary || {};
+  const host0 = document.getElementById("costScatter");
+  if (unscored()) {
+    host0.innerHTML = "";
+    el("p", { class: "hint",
+      text: "Cost vs accuracy scatter is disabled for this unscored set (no gold answers)." }, host0);
+    return;
+  }
   const pts = Object.entries(s.pipelines || {})
     .map(([name, ps]) => ({ name, x: ps.avg_total_tokens || 0, y: ps.accuracy || 0,
       r: Math.max(7, Math.min(20, (ps.avg_latency_ms || 0) / 150)), ps }))
@@ -211,9 +255,12 @@ function renderDelta() {
   const wins = rows.filter(r => r.delta > 0).length;
   const losses = rows.filter(r => r.delta < 0).length;
   el("p", { class: "hint", html:
-    `Agentic fixed <b style="color:var(--agent)">${wins}</b> questions GraphRAG got wrong; ` +
-    `it broke <b style="color:var(--rag)">${losses}</b> that GraphRAG answered. ` +
-    `Net gain: <b>${wins - losses}</b> questions.` }, host);
+    (unscored()
+      ? `Gold answers are withheld, so win/loss vs GraphRAG is not computable here — `
+        + `external grading fills this in. `
+      : `Agentic fixed <b style="color:var(--agent)">${wins}</b> questions GraphRAG got wrong; `
+        + `it broke <b style="color:var(--rag)">${losses}</b> that GraphRAG answered. `
+        + `Net gain: <b>${wins - losses}</b> questions.`) }, host);
   const grid = el("div", {}, host);
   grid.style.cssText = "display:grid;grid-template-columns:repeat(auto-fill,minmax(18px,1fr));gap:4px;";
   rows.forEach(r => {

@@ -1,0 +1,73 @@
+
+$ C:\Users\riyaz\AppData\Local\Programs\Python\Python313\python.exe run_benchmark.py questions-20260919T043312Z-1-001/questions/eval_public.jsonl --out results/batch\b_pub_03.json --summary results/batch\b_pub_03_summary.json --limit 10 --offset 20 --ablation
+[17:38:10] building KG / index ...
+[17:38:10] graph backend: local [disabled in config]
+[17:38:39] llm available: True (ollama/qwen3.5:4b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[17:38:39] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'RAG (vector only)']
+[17:40:12]   1/10 pub-021 superlative RAG=OK Graph=OK Agent=OK RAGv=F tok=16953 took=93.0s elapsed=93s eta=14.0m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[17:41:34]   2/10 pub-022 multi_hop   RAG=OK Graph=OK Agent=OK RAGv=OK tok=13498 took=82.4s elapsed=175s eta=11.7m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[17:42:42]   3/10 pub-023 multi_hop   RAG=OK Graph=OK Agent=OK RAGv=OK tok=12617 took=68.1s elapsed=244s eta=9.5m
+[17:44:11]   4/10 pub-024 aggregation RAG=OK Graph=OK Agent=OK RAGv=F tok=12965 took=88.3s elapsed=332s eta=8.3m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[17:45:08]   5/10 pub-025 lookup      RAG=OK Graph=OK Agent=OK RAGv=F tok=11175 took=57.7s elapsed=389s eta=6.5m
+[17:46:13]   6/10 pub-026 temporal    RAG=OK Graph=OK Agent=OK RAGv=F tok=11568 took=64.6s elapsed=454s eta=5.0m
+[17:49:03]   7/10 pub-027 aggregation RAG=OK Graph=OK Agent=OK RAGv=F tok=21925 took=170.0s elapsed=624s eta=4.5m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[17:50:28]   8/10 pub-028 multi_hop   RAG=OK Graph=OK Agent=OK RAGv=OK tok=15661 took=84.9s elapsed=709s eta=3.0m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[17:51:11]   9/10 pub-029 lookup      RAG=OK Graph=OK Agent=OK RAGv=F tok=11009 took=43.1s elapsed=752s eta=1.4m
+[17:52:49]  10/10 pub-030 multi_hop   RAG=OK Graph=OK Agent=OK RAGv=F tok=23902 took=98.4s elapsed=850s eta=0.0m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+
+MODE: live: the provider returned text for 40 record(s) across 66 call(s) (6.60 calls/question).
+
+============================================================================
+RESULTS (10 questions) -> results/batch\b_pub_03.json
+  RAG                acc=100.0% (10/10)
+     lookup         2/2   = 100%
+     multi_hop      4/4   = 100%
+     temporal       1/1   = 100%
+     aggregation    2/2   = 100%
+     superlative    1/1   = 100%
+     avg tok=1768.4 lat=8075.201ms steps=2.0
+  GraphRAG           acc=100.0% (10/10)
+     lookup         2/2   = 100%
+     multi_hop      4/4   = 100%
+     temporal       1/1   = 100%
+     aggregation    2/2   = 100%
+     superlative    1/1   = 100%
+     avg tok=2380.2 lat=8122.776ms steps=3.0
+  Agentic GraphRAG   acc=100.0% (10/10)
+     lookup         2/2   = 100%
+     multi_hop      4/4   = 100%
+     temporal       1/1   = 100%
+     aggregation    2/2   = 100%
+     superlative    1/1   = 100%
+     avg tok=9848.4 lat=64030.653ms steps=2.6
+  RAG (vector only)  acc=30.0% (3/10)
+     lookup         0/2   = 0%
+     multi_hop      3/4   = 75%
+     temporal       0/1   = 0%
+     aggregation    0/2   = 0%
+     superlative    0/1   = 0%
+     avg tok=1130.3 lat=4793.819ms steps=1.0
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: local (disabled in config)
+llm: {'available': True, 'provider': 'ollama', 'chat_model': 'qwen3.5:4b', 'eval_model': 'qwen3.5:4b', 'num_calls': 66, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.0, 'tpm_budget': 8000, 'enabled': False, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': False, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+
+$ C:\Users\riyaz\AppData\Local\Programs\Python\Python313\python.exe tools/batch_score.py --batch results/batch\b_pub_03.json --cumulative results/batch\cumulative_public.json --set public
+=== batch b_pub_03.json (10 questions, set=public) ===
+  RAG                batch  100%  cumulative  100%
+  GraphRAG           batch  100%  cumulative  100%
+  Agentic GraphRAG   batch  100%  cumulative  100%
+  RAG (vector only)  batch   30%  cumulative   20%
+  llm calls: 66   tokens: 151,273
+
+$ C:\Users\riyaz\AppData\Local\Programs\Python\Python313\python.exe -m benchmark.dashboard_generator results/batch\b_pub_03.json --summary results/batch\b_pub_03_summary.json --name batch_pub_03.html
+dashboard -> dashboard\batch_pub_03.html (10 questions, 284 KiB)
+  RAG                provider calls in 10/10 records, model output in 10 - 17684 tokens
+  GraphRAG           provider calls in 10/10 records, model output in 10 - 23802 tokens
+  Agentic GraphRAG   provider calls in 10/10 records, model output in 10 - 98484 tokens
+  RAG (vector only)  provider calls in 10/10 records, model output in 10 - 11303 tokens

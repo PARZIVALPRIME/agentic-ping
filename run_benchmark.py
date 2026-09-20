@@ -9,7 +9,8 @@ Examples:
 All arguments are handled by ``benchmark.runner``'s argparse block:
     questions [positional] | --out | --summary | --pipelines | --limit |
     --offset | --resume | --no-llm | --no-llm-judge | --no-tg |
-    --agent-mode (alias --mode) | --types | --per-type | --summarize-only
+    --agent-mode (alias --mode) | --types | --per-type | --summarize-only |
+    --ablation
 
 Common invocations:
     # deterministic baseline (no provider calls at all)
@@ -17,6 +18,9 @@ Common invocations:
 
     # agentic-only, LLM tool-calling loop, quota-bounded sample
     python run_benchmark.py --pipelines agentic --mode react --per-type 2
+
+    # publish the RAG ablation arm alongside the three main pipelines
+    python run_benchmark.py --ablation
 
     # rebuild the summary/dashboard inputs from an existing results file
     python run_benchmark.py --summarize-only --out results/public_results.json

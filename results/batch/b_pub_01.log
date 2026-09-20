@@ -1,0 +1,48 @@
+[16:28:15] building KG / index ...
+[16:28:15] graph backend: local [disabled in config]
+[16:28:44] llm available: True (ollama/qwen3.5:4b) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[16:28:44] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG']
+[16:30:54]   1/10 pub-001 aggregation RAG=OK Graph=OK Agent=OK tok=13057 took=129.5s elapsed=129s eta=19.4m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[16:31:49]   2/10 pub-002 temporal    RAG=OK Graph=OK Agent=OK tok=11070 took=55.7s elapsed=185s eta=12.3m
+[16:33:41]   3/10 pub-003 aggregation RAG=OK Graph=OK Agent=OK tok=14525 took=111.2s elapsed=296s eta=11.5m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[16:34:36]   4/10 pub-004 superlative RAG=OK Graph=OK Agent=OK tok=19585 took=55.1s elapsed=351s eta=8.8m
+[16:36:00]   5/10 pub-005 multi_hop   RAG=OK Graph=OK Agent=OK tok=11833 took=84.2s elapsed=436s eta=7.3m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[16:37:10]   6/10 pub-006 temporal    RAG=OK Graph=OK Agent=OK tok=14437 took=70.1s elapsed=506s eta=5.6m
+[16:38:01]   7/10 pub-007 temporal    RAG=OK Graph=OK Agent=F tok=10962 took=50.6s elapsed=556s eta=4.0m
+[16:39:13]   8/10 pub-008 superlative RAG=OK Graph=OK Agent=OK tok=15149 took=71.9s elapsed=628s eta=2.6m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+[16:39:52]   9/10 pub-009 lookup      RAG=OK Graph=OK Agent=OK tok=10515 took=39.4s elapsed=668s eta=1.2m
+[16:41:35]  10/10 pub-010 aggregation RAG=OK Graph=OK Agent=OK tok=14101 took=103.3s elapsed=771s eta=0.0m
+           note: slow pipeline(s) Agentic GraphRAG - provider latency or retries; see llm.circuit in the summary
+
+MODE: live: the provider returned text for 30 record(s) across 53 call(s) (5.30 calls/question).
+
+============================================================================
+RESULTS (10 questions) -> results/batch/b_pub_01.json
+  RAG                acc=100.0% (10/10)
+     lookup         1/1   = 100%
+     multi_hop      1/1   = 100%
+     temporal       3/3   = 100%
+     aggregation    3/3   = 100%
+     superlative    2/2   = 100%
+     avg tok=2055.0 lat=8119.669ms steps=2.0
+  GraphRAG           acc=100.0% (10/10)
+     lookup         1/1   = 100%
+     multi_hop      1/1   = 100%
+     temporal       3/3   = 100%
+     aggregation    3/3   = 100%
+     superlative    2/2   = 100%
+     avg tok=2697.7 lat=6133.072ms steps=3.0
+  Agentic GraphRAG   acc=90.0% (9/10)
+     lookup         1/1   = 100%
+     multi_hop      1/1   = 100%
+     temporal       2/3   = 67%
+     aggregation    3/3   = 100%
+     superlative    2/2   = 100%
+     avg tok=8770.7 lat=62827.168ms steps=2.3
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: local (disabled in config)
+llm: {'available': True, 'provider': 'ollama', 'chat_model': 'qwen3.5:4b', 'eval_model': 'qwen3.5:4b', 'num_calls': 53, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.0, 'tpm_budget': 8000, 'enabled': False, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': False, 'trips': 0, 'blocked_calls': 0, 'open': False}}

@@ -93,6 +93,20 @@ TOOL_SCHEMAS: List[Dict[str, Any]] = [
                                description="default 'both'")},
             ["doc_id", "edge_type"]),
 
+    _schema("resolve_event",
+            "Resolve which event page a venue+date phrase refers to ('held at "
+            "X on Y' / 'at X on 3 to 4 August'). Returns candidate events with "
+            "their printed dates, venue and doc_ids; you choose the one that "
+            "matches the question and read its fields. Use this instead of "
+            "guessing when a venue hosted several events on the same day.",
+            {"venue": dict(_STR, description="venue phrase from the question"),
+             "date": dict(_STR, description="date phrase, e.g. '3 to 4 August'"),
+             "year": _INT,
+             "season": dict(_STR, description="'Summer' or 'Winter'"),
+             "sport": dict(_STR, description="optional sport filter"),
+             "event": dict(_STR, description="event descriptor from the question")},
+            []),
+
     _schema("submit_answer",
             "Submit the final answer and stop. Call once, when confident. "
             "'answer' is a short verbatim span: a number, a name, an event "
@@ -240,6 +254,43 @@ class GraphTools:
         doc_ids = [h["target"] for h in hops if h["target"] in self.kg.events]
         return {"from": doc_id, "edge_type": edge_type, "num_found": len(hops),
                 "neighbours": hops[:MAX_ROWS], "doc_ids": doc_ids[:MAX_ROWS]}
+
+    def resolve_event(self, venue: str = "", date: str = "", year: int = 0,
+                      season: str = "", sport: str = "",
+                      event: str = "") -> Dict[str, Any]:
+        """Resolve (venue, date) to candidate event pages - data, not an answer.
+
+        Wraps the same venue/date linker the deterministic planner uses, so the
+        model can ask the corpus which events a venue+date phrase refers to
+        instead of inferring it from page titles.
+        """
+        import re
+
+        from reasoning.query_parser import QuerySpec
+
+        from .lookup_resolver import LookupResolver
+
+        if not venue and not event:
+            return {"error": "provide at least a venue or an event descriptor"}
+        years = [int(y) for y in re.findall(r"\b(19\d{2}|20\d{2})\b", date or "")]
+        spec = QuerySpec(question="", qtype="multi_hop", venue=venue or "",
+                         date_text=date or "", sport=sport or "",
+                         event_desc=event or "", year=int(year) if year else
+                         (years[0] if years else 0),
+                         season=(season or "").title())
+        spec.years_mentioned = years
+        result = LookupResolver(self.kg).resolve_venue_date(spec, top_n=8)
+        rows = [r for r in (result.get("candidates") or []) if r.get("doc_id")]
+        return {
+            "venue_resolved": result.get("venue_resolved"),
+            "venue_score": result.get("venue_score"),
+            "date_used": date, "year_used": spec.year, "season_used": spec.season,
+            "num_candidates": result.get("num_candidates", 0),
+            "returned": len(rows), "events": rows,
+            "doc_ids": [r["doc_id"] for r in rows],
+            "note": ("candidate events, not an answer: pick the one that matches "
+                     "the question, then read its fields (gold, venue, date)"),
+        }
 
     def get_games_events(self, year: int, season: str = "", sport: str = "") -> Dict[str, Any]:
         events = self.kg.events_at_games(int(year), season or "")
