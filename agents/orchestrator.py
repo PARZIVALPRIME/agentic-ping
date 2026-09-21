@@ -61,6 +61,14 @@ DEFAULT_CFG = {
 KINDS = ("lookup", "multi_hop", "temporal", "aggregation", "superlative")
 
 
+class AgentUnavailableError(RuntimeError):
+    """Raised when the configured agent mode cannot actually run.
+
+    Deliberately fatal: it exists to stop a run that would otherwise execute
+    the wrong (deterministic) pipeline while reporting agentic intent.
+    """
+
+
 class OrchestratorAgent:
     """Plans, executes, adapts and synthesises - one question per run."""
 
@@ -85,6 +93,37 @@ class OrchestratorAgent:
         self.gap_detector = GapDetector()
         self.synth = Synthesizer(llm)
         self.react = ReActAgent(kg, index, llm, self.cfg)
+
+    # ── run-mode guard ─────────────────────────────────────────────────
+    def preflight_or_raise(self) -> None:
+        """Fail fast when the configured mode cannot actually run.
+
+        The silent trap this prevents: with ``AGENT_MODE=react|hybrid`` the run
+        *intends* to drive the LLM/ReAct loop, but if the model server is
+        unreachable at construction ``self.react.available`` is False and
+        ``run()`` quietly falls through to the deterministic path instead. The
+        answers still come out, so nothing looks wrong - yet the pipeline being
+        measured is not the agentic one. A whole hidden run was scored this way
+        (0 loop iterations, 3 LLM calls, 44%) and only caught by hand-grading.
+
+        Calling this once before a run turns that silent divergence into a loud
+        startup error. Deterministic (``plan``) mode never calls it, so
+        ``--no-llm`` runs are unaffected.
+        """
+        mode = str(self.cfg.get("agent_mode", "hybrid") or "hybrid").lower()
+        if mode not in ("react", "hybrid"):
+            return  # 'plan' is deterministic by design; nothing to assert.
+        if self.react is None or not getattr(self.react, "available", False):
+            llm_ok = bool(self.llm and getattr(self.llm, "available", False))
+            reason = ("the LLM/model server is not reachable"
+                      if not llm_ok else
+                      "the ReAct agent failed to initialise")
+            raise AgentUnavailableError(
+                f"AGENT_MODE='{mode}' requires a working ReAct agent, but "
+                f"{reason}. This is the configuration that silently produced a "
+                f"deterministic run before. Fix the model server (e.g. run "
+                f"`ollama serve` and check preflight.py), or set AGENT_MODE=plan "
+                f"to run the deterministic pipeline on purpose.")
 
     # ── main entry point ───────────────────────────────────────────────
     def run(self, question: str, qid: str = "") -> AgentState:

@@ -38,13 +38,24 @@ class AgenticPipeline:
 
     name = "Agentic GraphRAG"
 
-    def __init__(self, index, llm=None, cfg: Dict[str, Any] = None) -> None:
+    def __init__(self, index, llm=None, cfg: Dict[str, Any] = None,
+                 expect_agentic: bool = None) -> None:
         from agents.orchestrator import OrchestratorAgent
 
         self.index = index
         self.kg = index.kg if index is not None else None
         self.llm = llm
         self.engine = OrchestratorAgent(self.kg, index, llm=llm, cfg=cfg)
+
+        # Fail fast if the run intends to be agentic but cannot be. By default
+        # we infer that intent from "an LLM was supplied and is available": a
+        # deterministic (--no-llm) run passes llm=None and is never blocked,
+        # while an LLM run that silently can't reach ReAct is stopped at
+        # startup instead of quietly scoring the deterministic pipeline.
+        if expect_agentic is None:
+            expect_agentic = bool(llm and getattr(llm, "available", False))
+        if expect_agentic:
+            self.engine.preflight_or_raise()
 
     def run(self, question: str, qid: str = "") -> PipelineResult:
         started = time.perf_counter()

@@ -1,17 +1,23 @@
-﻿import sys, os, json
+﻿import sys, os
 sys.path.insert(0, os.getcwd())
-from reasoning.query_parser import parse_question, classify
-p="questions-20260919T043312Z-1-001/questions/eval_hidden.jsonl"
-rows=[json.loads(l) for l in open(p,encoding="utf-8") if l.strip()]
-parsed=0; olympics=0
-from collections import Counter
-qt=Counter()
-for r in rows:
-    q=r["question"]
-    if "Olympics" in q: olympics+=1
-    sp=parse_question(q, None)
-    if sp and (sp.year or sp.sport or sp.season): parsed+=1
-    qt[classify(q)]+=1
-print(f"hidden n={len(rows)}  mention 'Olympics': {olympics}/{len(rows)}")
-print(f"parser extracted structure: {parsed}/{len(rows)}")
-print("classify dist:", dict(qt))
+from agents.orchestrator import OrchestratorAgent, AgentUnavailableError
+
+# Case A: react/hybrid mode but no working LLM -> must raise
+class DeadLLM:  available = False
+class FakeReact:  available = False
+o = OrchestratorAgent(None, None, llm=DeadLLM(), cfg={"agent_mode":"hybrid"})
+o.react = FakeReact()
+try:
+    o.preflight_or_raise()
+    print("CASE A: FAIL - did not raise")
+except AgentUnavailableError as e:
+    print("CASE A: OK - raised:", str(e)[:70], "...")
+
+# Case B: deterministic plan mode -> must NOT raise even with no react
+o2 = OrchestratorAgent(None, None, llm=None, cfg={"agent_mode":"plan"})
+o2.react = FakeReact()
+try:
+    o2.preflight_or_raise()
+    print("CASE B: OK - plan mode did not raise")
+except AgentUnavailableError as e:
+    print("CASE B: FAIL - raised on deterministic:", e)
