@@ -14,6 +14,29 @@ from typing import Any, Dict, List
 from reasoning.query_parser import QuerySpec
 
 
+def canonical_event_title(node: Any) -> str:
+    """The full corpus-style event title, e.g.
+    'Sailing at the 2016 Summer Olympics – Men's 470'.
+
+    Gold answers for superlative questions are the *full* title. Some code
+    paths feed the comparator nodes whose ``title`` is only the event suffix
+    ("Men's 470"), which can never string-match the gold. When the title is
+    already full (contains the en-dash separator) it is used as-is; otherwise
+    it is reconstructed from the structured fields the node always carries.
+    """
+    title = (getattr(node, "title", "") or "").strip()
+    if "–" in title or " - " in title:
+        return title
+    sport = (getattr(node, "sport", "") or "").strip()
+    year = getattr(node, "year", 0) or 0
+    season = (getattr(node, "season", "") or "").strip()
+    event = (getattr(node, "event_name", "") or title).strip()
+    if sport and year and event:
+        games = f"{year} {season} Olympics".replace("  ", " ").strip()
+        return f"{sport} at the {games} – {event}"
+    return title
+
+
 class Comparator:
     """Argmax/argmin over a structured field with margin reporting."""
 
@@ -31,13 +54,15 @@ class Comparator:
         runner_up = ranked[1] if len(ranked) > 1 else None
         margin = (winner.competitors - runner_up.competitors) if runner_up else None
         return {
-            "winner": {"doc_id": winner.doc_id, "title": winner.title,
+            "winner": {"doc_id": winner.doc_id,
+                       "title": canonical_event_title(winner),
                        "competitors": winner.competitors},
             "direction": spec.direction,
-            "ranked": [{"doc_id": n.doc_id, "title": n.title,
+            "ranked": [{"doc_id": n.doc_id, "title": canonical_event_title(n),
                         "competitors": n.competitors, "rank": i + 1}
                        for i, n in enumerate(ranked[:10])],
-            "runner_up": ({"doc_id": runner_up.doc_id, "title": runner_up.title,
+            "runner_up": ({"doc_id": runner_up.doc_id,
+                           "title": canonical_event_title(runner_up),
                            "competitors": runner_up.competitors} if runner_up else None),
             "margin": margin,
             "candidates": len(candidates),

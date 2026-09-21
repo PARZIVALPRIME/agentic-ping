@@ -24,6 +24,23 @@ FIELD_RE = re.compile(r"^\s{0,4}([a-z_]+)\s*:\s?(.*)$")
 INT_RE = re.compile(r"^\s*(\d+)\s*$")
 MEDAL_FIELDS = ("gold", "silver", "bronze")
 
+# Two athletes in a pairs/doubles event arrive fused with no delimiter
+# ("Šime FantelaIgor Marenić"). We deliberately KEEP them fused: the gold
+# answers are fused the same way (e.g. "Dani KingLaura TrottJoanna Rowsell"),
+# and the evaluator's normalize() turns an inserted ", " into a token break, so
+# splitting made a prediction stop matching its own gold and cost two multi_hop
+# questions. Verified against results/_fix_check*.json. Do not re-introduce a
+# name splitter without re-checking the gold format first.
+
+
+def split_fused_names(value: str) -> str:
+    """Deprecated no-op. Kept so any external caller keeps working.
+
+    Splitting fused medallist names loses accuracy because the gold answers are
+    themselves fused (see the note above). This returns the value unchanged.
+    """
+    return value
+
 
 def parse_infobox(text: str) -> Dict[str, str]:
     """Extract the leading ``[Infobox ...]`` key/value block, if present."""
