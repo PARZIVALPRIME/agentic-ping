@@ -98,7 +98,7 @@ class GraphRagPipeline:
             with Timer(timings, "llm_adjudicate", "verify candidate against graph context"):
                 final, changed, payload = refine_answer(
                     self.llm, question, extracted.answer, expanded, counter,
-                    caller="graphrag.adjudicate")
+                    caller="graphrag.adjudicate", qtype=result.qtype)
             result.llm_calls = 1
             if final:
                 result.answer = _clean(final)

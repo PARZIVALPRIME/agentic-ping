@@ -1,0 +1,1329 @@
+{
+  "submission": {
+    "pipeline": "Agentic GraphRAG",
+    "mode": "deterministic",
+    "provider": null,
+    "chat_model": null,
+    "graph_backend": "local",
+    "questions_file": "questions-20260919T043312Z-1-001/questions/eval_hidden.jsonl",
+    "num_questions": 5,
+    "num_completed": 5,
+    "num_failed": 0,
+    "config": {
+      "llm_provider": "none",
+      "llm_available": false,
+      "chat_model": null,
+      "eval_model": null,
+      "max_tokens": 0,
+      "reasoning_effort": null,
+      "tigergraph_enabled": false,
+      "tigergraph_host": null,
+      "vector_backend": "auto",
+      "rag_top_k": 5,
+      "num_hops": 2,
+      "agent": {
+        "mode": "hybrid",
+        "max_steps": 15,
+        "confidence_threshold": 0.9,
+        "stale_step_limit": 2
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "eval-001",
+      "question": "Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?",
+      "qtype": "multi_hop",
+      "answer": "Li TingSun Tiantian",
+      "citations": [
+        "Q942805"
+      ],
+      "confidence": 0.9,
+      "tokens": {
+        "context_tokens": 752,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0
+      },
+      "agentic_trace": {
+        "pipeline": "Agentic GraphRAG",
+        "plan": [
+          "EntityLinker.link_entities",
+          "LookupResolver.resolve_venue_date",
+          "GraphTraverser.traverse_graph",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "retrieval_steps": 4,
+        "loop_iterations": 0,
+        "tools_called": [
+          "link_entities",
+          "resolve_venue_date",
+          "traverse_graph",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "LookupResolver",
+          "GraphTraverser",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "candidates_considered": 10,
+        "chunks_retrieved": 9,
+        "docs_retrieved": 3,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "venue->1 vertex/vertices (score 1.0)",
+            "observation": {
+              "sport": null,
+              "sport_score": 0.0,
+              "venue_score": 1.0,
+              "games": null,
+              "edition_chain": [],
+              "implied_event_pages": 3
+            },
+            "confidence_after": 0.0,
+            "new_documents": 3,
+            "latency_ms": 0.12,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "LookupResolver",
+            "operation": "resolve_venue_date",
+            "detail": "venue->['olympic tennis centre'] (score 1.0); date match 1.0 over 3 candidates -> \"Tennis at the 2004 Summer Olympics – Women's doubles\"",
+            "observation": {
+              "matched": "Tennis at the 2004 Summer Olympics – Women's doubles",
+              "score": 1.0,
+              "venue_affinity": 1.0,
+              "num_candidates": 3,
+              "disambiguation": {
+                "ambiguous": true,
+                "top": "Tennis at the 2004 Summer Olympics – Women's doubles",
+                "runner_up": "Tennis at the 2016 Summer Olympics – Women's singles",
+                "date_score_gap": 0.05,
+                "separating_signal": "venue/sport affinity"
+              },
+              "top_candidates": [
+                "Tennis at the 2004 Summer Olympics – Women's doubles",
+                "Tennis at the 2016 Summer Olympics – Women's singles",
+                "Tennis at the 2016 Summer Olympics – Men's singles"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.93,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=HELD_AT -> 3 event pages (0 new)",
+            "observation": {
+              "strategy": "HELD_AT",
+              "relations": [
+                "HELD_AT"
+              ],
+              "events": 3,
+              "new_documents": 0,
+              "sample_titles": [
+                "Tennis at the 2016 Summer Olympics – Women's singles",
+                "Tennis at the 2016 Summer Olympics – Men's singles",
+                "Tennis at the 2004 Summer Olympics – Women's doubles"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.05,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?' (widening=0) -> 12 passages (9 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q734997",
+                "Q942805",
+                "Q1183979",
+                "Q942805",
+                "Q734997",
+                "Q1183979",
+                "Q220866",
+                "Q26037158"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 9,
+            "latency_ms": 115.93,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.90, sufficient",
+            "observation": {
+              "confidence": 0.9,
+              "sufficient": true,
+              "signals": {
+                "score": 1.0,
+                "venue_affinity": 1.0,
+                "venue_score": 1.0,
+                "num_candidates": 3
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.06,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Li TingSun Tiantian' citing 1 document(s) :: gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer Olympics)",
+            "observation": {
+              "answer": "Li TingSun Tiantian",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer Olympics)",
+              "citations": [
+                "Q942805"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.08,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "venue->1 vertex/vertices (score 1.0)",
+            "latency_ms": 0.12
+          },
+          {
+            "operation": "resolve_venue_date",
+            "agent": "LookupResolver",
+            "detail": "venue->['olympic tennis centre'] (score 1.0); date match 1.0 over 3 candidates -> \"Tennis at the 2004 Summer Olympics – Women's doubles\"",
+            "latency_ms": 0.93
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=HELD_AT -> 3 event pages (0 new)",
+            "latency_ms": 0.05
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?' (widening=0) -> 12 passages",
+            "latency_ms": 115.93
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.90, sufficient",
+            "latency_ms": 0.06
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Li TingSun Tiantian' citing 1 document(s) :: gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer O",
+            "latency_ms": 0.08
+          }
+        ],
+        "tokens_per_operation": []
+      },
+      "evidence": [
+        {
+          "agent": "LookupResolver",
+          "operation": "resolve_venue_date",
+          "observation": {
+            "matched": "Tennis at the 2004 Summer Olympics – Women's doubles",
+            "score": 1.0,
+            "venue_affinity": 1.0,
+            "num_candidates": 3,
+            "disambiguation": {
+              "ambiguous": true,
+              "top": "Tennis at the 2004 Summer Olympics – Women's doubles",
+              "runner_up": "Tennis at the 2016 Summer Olympics – Women's singles",
+              "date_score_gap": 0.05,
+              "separating_signal": "venue/sport affinity"
+            },
+            "top_candidates": [
+              "Tennis at the 2004 Summer Olympics – Women's doubles",
+              "Tennis at the 2016 Summer Olympics – Women's singles",
+              "Tennis at the 2016 Summer Olympics – Men's singles"
+            ]
+          }
+        },
+        {
+          "agent": "Synthesizer",
+          "operation": "render_answer",
+          "observation": {
+            "answer": "Li TingSun Tiantian",
+            "source": "structured",
+            "rationale": "gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer Olympics)",
+            "citations": [
+              "Q942805"
+            ],
+            "adjudication": {}
+          }
+        }
+      ],
+      "unresolved": [],
+      "latency_ms": 118.19,
+      "error": null
+    },
+    {
+      "id": "eval-002",
+      "question": "How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?",
+      "qtype": "lookup",
+      "answer": "29",
+      "citations": [
+        "Q5443136"
+      ],
+      "confidence": 0.95,
+      "tokens": {
+        "context_tokens": 734,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0
+      },
+      "agentic_trace": {
+        "pipeline": "Agentic GraphRAG",
+        "plan": [
+          "EntityLinker.link_entities",
+          "LookupResolver.resolve_article",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "retrieval_steps": 3,
+        "loop_iterations": 0,
+        "tools_called": [
+          "link_entities",
+          "resolve_article",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "LookupResolver",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "candidates_considered": 10,
+        "chunks_retrieved": 10,
+        "docs_retrieved": 1,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "no graph vertices linked; will fall back to text retrieval",
+            "observation": {
+              "sport": null,
+              "sport_score": 0.0,
+              "venue_score": 0.0,
+              "games": null,
+              "edition_chain": [],
+              "implied_event_pages": 0
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "LookupResolver",
+            "operation": "resolve_article",
+            "detail": "resolved title \"Fencing at the 1988 Summer Olympics – Men's foil\" (score 1.0); field 'nations' = '29'",
+            "observation": {
+              "matched": "Fencing at the 1988 Summer Olympics – Men's foil",
+              "score": 1.0,
+              "value": "29",
+              "searched_titles": null
+            },
+            "confidence_after": 0.0,
+            "new_documents": 1,
+            "latency_ms": 0.07,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?\" (widening=0) -> 12 passages (10 new documents)",
+            "observation": {
+              "query": "How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q5443138",
+                "Q5443144",
+                "Q5443136",
+                "Q5443145",
+                "Q5443136",
+                "Q38605",
+                "Q25800",
+                "Q5443140"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 10,
+            "latency_ms": 196.95,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.95, sufficient",
+            "observation": {
+              "confidence": 0.95,
+              "sufficient": true,
+              "signals": {
+                "title_score": 1.0
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.95,
+            "new_documents": 0,
+            "latency_ms": 0.04,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='29' citing 1 document(s) :: Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+            "observation": {
+              "answer": "29",
+              "source": "structured",
+              "rationale": "Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+              "citations": [
+                "Q5443136"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.95,
+            "new_documents": 0,
+            "latency_ms": 0.06,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "no graph vertices linked; will fall back to text retrieval",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "resolve_article",
+            "agent": "LookupResolver",
+            "detail": "resolved title \"Fencing at the 1988 Summer Olympics – Men's foil\" (score 1.0); field 'nations' = '29'",
+            "latency_ms": 0.07
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?\" (widening=0) -> 12 passages (10 new doc",
+            "latency_ms": 196.95
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.95, sufficient",
+            "latency_ms": 0.04
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='29' citing 1 document(s) :: Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+            "latency_ms": 0.06
+          }
+        ],
+        "tokens_per_operation": []
+      },
+      "evidence": [
+        {
+          "agent": "LookupResolver",
+          "operation": "resolve_article",
+          "observation": {
+            "matched": "Fencing at the 1988 Summer Olympics – Men's foil",
+            "score": 1.0,
+            "value": "29",
+            "searched_titles": null
+          }
+        },
+        {
+          "agent": "Synthesizer",
+          "operation": "render_answer",
+          "observation": {
+            "answer": "29",
+            "source": "structured",
+            "rationale": "Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
+            "citations": [
+              "Q5443136"
+            ],
+            "adjudication": {}
+          }
+        }
+      ],
+      "unresolved": [],
+      "latency_ms": 197.81,
+      "error": null
+    },
+    {
+      "id": "eval-003",
+      "question": "According to the provided corpus, how many cycling events at the 2008 Summer Olympics had more than 30 competitors?",
+      "qtype": "aggregation",
+      "answer": "8",
+      "citations": [
+        "Q1063589",
+        "Q1064728",
+        "Q938833",
+        "Q635304",
+        "Q628945",
+        "Q1005322",
+        "Q1005614",
+        "Q727488"
+      ],
+      "confidence": 0.97,
+      "tokens": {
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0
+      },
+      "agentic_trace": {
+        "pipeline": "Agentic GraphRAG",
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Aggregator.count_threshold",
+          "Aggregator.verify_by_recount",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "retrieval_steps": 2,
+        "loop_iterations": 0,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "count_threshold",
+          "verify_by_recount",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Aggregator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "candidates_considered": 18,
+        "chunks_retrieved": 0,
+        "docs_retrieved": 18,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Cycling; games->GAMES::2008::Summer",
+            "observation": {
+              "sport": "Cycling",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2008::Summer",
+              "edition_chain": [],
+              "implied_event_pages": 18
+            },
+            "confidence_after": 0.0,
+            "new_documents": 18,
+            "latency_ms": 0.27,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 18 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 18,
+              "new_documents": 0,
+              "sample_titles": [
+                "Cycling at the 2008 Summer Olympics – Men's individual road race",
+                "Cycling at the 2008 Summer Olympics – Women's individual road race",
+                "Cycling at the 2008 Summer Olympics – Women's cross-country",
+                "Cycling at the 2008 Summer Olympics – Men's cross-country",
+                "Cycling at the 2008 Summer Olympics – Women's sprint"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.24,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Aggregator",
+            "operation": "count_threshold",
+            "detail": "filtered 18 enumerated events on competitors gt 30 -> 8 pass (field coverage 100%)",
+            "observation": {
+              "count": 8,
+              "candidates": 18,
+              "threshold": 30,
+              "comparator": "gt",
+              "field_completeness": 1.0,
+              "exhaustive": true,
+              "missing_field": 0,
+              "kept_doc_ids": [
+                "Q1063589",
+                "Q1064728",
+                "Q938833",
+                "Q635304",
+                "Q628945",
+                "Q1005322",
+                "Q1005614",
+                "Q727488"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.05,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Aggregator",
+            "operation": "verify_by_recount",
+            "detail": "independent recount -> 8 (documents with the field: 18); matches the primary count",
+            "observation": {
+              "recount": 8,
+              "documents_with_field": 18,
+              "recount_matches": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "candidate_set_size": 18,
+                "field_completeness": 1.0,
+                "exhaustive": true,
+                "independent_recount": 8,
+                "recount_matches": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 18 enumerated events had more than 30 competitors",
+            "observation": {
+              "answer": "8",
+              "source": "structured",
+              "rationale": "8 of 18 enumerated events had more than 30 competitors",
+              "citations": [
+                "Q1063589",
+                "Q1064728",
+                "Q938833",
+                "Q635304",
+                "Q628945",
+                "Q1005322",
+                "Q1005614",
+                "Q727488"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.13,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Cycling; games->GAMES::2008::Summer",
+            "latency_ms": 0.27
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 18 event pages (0 new)",
+            "latency_ms": 0.24
+          },
+          {
+            "operation": "count_threshold",
+            "agent": "Aggregator",
+            "detail": "filtered 18 enumerated events on competitors gt 30 -> 8 pass (field coverage 100%)",
+            "latency_ms": 0.05
+          },
+          {
+            "operation": "verify_by_recount",
+            "agent": "Aggregator",
+            "detail": "independent recount -> 8 (documents with the field: 18); matches the primary count",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 18 enumerated events had more than 30 competitors",
+            "latency_ms": 0.13
+          }
+        ],
+        "tokens_per_operation": []
+      },
+      "evidence": [
+        {
+          "agent": "Aggregator",
+          "operation": "count_threshold",
+          "observation": {
+            "count": 8,
+            "candidates": 18,
+            "threshold": 30,
+            "comparator": "gt",
+            "field_completeness": 1.0,
+            "exhaustive": true,
+            "missing_field": 0,
+            "kept_doc_ids": [
+              "Q1063589",
+              "Q1064728",
+              "Q938833",
+              "Q635304",
+              "Q628945",
+              "Q1005322",
+              "Q1005614",
+              "Q727488"
+            ]
+          }
+        },
+        {
+          "agent": "Synthesizer",
+          "operation": "render_answer",
+          "observation": {
+            "answer": "8",
+            "source": "structured",
+            "rationale": "8 of 18 enumerated events had more than 30 competitors",
+            "citations": [
+              "Q1063589",
+              "Q1064728",
+              "Q938833",
+              "Q635304",
+              "Q628945",
+              "Q1005322",
+              "Q1005614",
+              "Q727488"
+            ],
+            "adjudication": {}
+          }
+        }
+      ],
+      "unresolved": [],
+      "latency_ms": 1.16,
+      "error": null
+    },
+    {
+      "id": "eval-004",
+      "question": "Who won the gold medal in the event held at Sydney International Shooting Centre on 22 September 2000?",
+      "qtype": "multi_hop",
+      "answer": "Mariya Grozdeva",
+      "citations": [
+        "Q7500817"
+      ],
+      "confidence": 0.9,
+      "tokens": {
+        "context_tokens": 866,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0
+      },
+      "agentic_trace": {
+        "pipeline": "Agentic GraphRAG",
+        "plan": [
+          "EntityLinker.link_entities",
+          "LookupResolver.resolve_venue_date",
+          "GraphTraverser.traverse_graph",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "retrieval_steps": 4,
+        "loop_iterations": 0,
+        "tools_called": [
+          "link_entities",
+          "resolve_venue_date",
+          "traverse_graph",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "LookupResolver",
+          "GraphTraverser",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "candidates_considered": 21,
+        "chunks_retrieved": 11,
+        "docs_retrieved": 17,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "venue->1 vertex/vertices (score 1.0)",
+            "observation": {
+              "sport": null,
+              "sport_score": 0.0,
+              "venue_score": 1.0,
+              "games": null,
+              "edition_chain": [],
+              "implied_event_pages": 17
+            },
+            "confidence_after": 0.0,
+            "new_documents": 17,
+            "latency_ms": 0.1,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "LookupResolver",
+            "operation": "resolve_venue_date",
+            "detail": "venue->['sydney international shooting centre'] (score 1.0); date match 1.0 over 17 candidates -> \"Shooting at the 2000 Summer Olympics – Women's 25 metre pistol\"",
+            "observation": {
+              "matched": "Shooting at the 2000 Summer Olympics – Women's 25 metre pistol",
+              "score": 1.0,
+              "venue_affinity": 1.0,
+              "num_candidates": 17,
+              "disambiguation": {
+                "ambiguous": true,
+                "top": "Shooting at the 2000 Summer Olympics – Women's 25 metre pistol",
+                "runner_up": "Shooting at the 2000 Summer Olympics – Women's 50 metre rifle three positions",
+                "date_score_gap": 0.05,
+                "separating_signal": "venue/sport affinity"
+              },
+              "top_candidates": [
+                "Shooting at the 2000 Summer Olympics – Women's 25 metre pistol",
+                "Shooting at the 2000 Summer Olympics – Women's 50 metre rifle three positions",
+                "Shooting at the 2000 Summer Olympics – Men's skeet"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 3.49,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=HELD_AT -> 17 event pages (0 new)",
+            "observation": {
+              "strategy": "HELD_AT",
+              "relations": [
+                "HELD_AT"
+              ],
+              "events": 17,
+              "new_documents": 0,
+              "sample_titles": [
+                "Shooting at the 2000 Summer Olympics – Women's 50 metre rifle three positions",
+                "Shooting at the 2000 Summer Olympics – Men's skeet",
+                "Shooting at the 2000 Summer Olympics – Men's 50 metre rifle three positions",
+                "Shooting at the 2000 Summer Olympics – Women's double trap",
+                "Shooting at the 2000 Summer Olympics – Men's 50 metre pistol"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.06,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Sydney International Shooting Centre on 22 September 2000?' (widening=0) -> 12 passages (11 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the event held at Sydney International Shooting Centre on 22 September 2000?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q3879604",
+                "Q7500816",
+                "Q3879591",
+                "Q3879587",
+                "Q7500817",
+                "Q7500807",
+                "Q3879603",
+                "Q4443767"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 11,
+            "latency_ms": 69.98,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.90, sufficient",
+            "observation": {
+              "confidence": 0.9,
+              "sufficient": true,
+              "signals": {
+                "score": 1.0,
+                "venue_affinity": 1.0,
+                "venue_score": 1.0,
+                "num_candidates": 17
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Mariya Grozdeva' citing 1 document(s) :: gold medallist read from 'Shooting at the 2000 Summer Olympics – Women's 25 metre pistol' (2000 Summer Olympics)",
+            "observation": {
+              "answer": "Mariya Grozdeva",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Shooting at the 2000 Summer Olympics – Women's 25 metre pistol' (2000 Summer Olympics)",
+              "citations": [
+                "Q7500817"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.04,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "venue->1 vertex/vertices (score 1.0)",
+            "latency_ms": 0.1
+          },
+          {
+            "operation": "resolve_venue_date",
+            "agent": "LookupResolver",
+            "detail": "venue->['sydney international shooting centre'] (score 1.0); date match 1.0 over 17 candidates -> \"Shooting at the 2000 Summer Olympics – Women's 25 metre pisto",
+            "latency_ms": 3.49
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=HELD_AT -> 17 event pages (0 new)",
+            "latency_ms": 0.06
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Sydney International Shooting Centre on 22 September 2000?' (widening=0) ->",
+            "latency_ms": 69.98
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.90, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Mariya Grozdeva' citing 1 document(s) :: gold medallist read from 'Shooting at the 2000 Summer Olympics – Women's 25 metre pistol' (2000 Su",
+            "latency_ms": 0.04
+          }
+        ],
+        "tokens_per_operation": []
+      },
+      "evidence": [
+        {
+          "agent": "LookupResolver",
+          "operation": "resolve_venue_date",
+          "observation": {
+            "matched": "Shooting at the 2000 Summer Olympics – Women's 25 metre pistol",
+            "score": 1.0,
+            "venue_affinity": 1.0,
+            "num_candidates": 17,
+            "disambiguation": {
+              "ambiguous": true,
+              "top": "Shooting at the 2000 Summer Olympics – Women's 25 metre pistol",
+              "runner_up": "Shooting at the 2000 Summer Olympics – Women's 50 metre rifle three positions",
+              "date_score_gap": 0.05,
+              "separating_signal": "venue/sport affinity"
+            },
+            "top_candidates": [
+              "Shooting at the 2000 Summer Olympics – Women's 25 metre pistol",
+              "Shooting at the 2000 Summer Olympics – Women's 50 metre rifle three positions",
+              "Shooting at the 2000 Summer Olympics – Men's skeet"
+            ]
+          }
+        },
+        {
+          "agent": "Synthesizer",
+          "operation": "render_answer",
+          "observation": {
+            "answer": "Mariya Grozdeva",
+            "source": "structured",
+            "rationale": "gold medallist read from 'Shooting at the 2000 Summer Olympics – Women's 25 metre pistol' (2000 Summer Olympics)",
+            "citations": [
+              "Q7500817"
+            ],
+            "adjudication": {}
+          }
+        }
+      ],
+      "unresolved": [],
+      "latency_ms": 74.13,
+      "error": null
+    },
+    {
+      "id": "eval-005",
+      "question": "According to the provided corpus, which sailing event at the 2016 Summer Olympics had the highest number of competitors?",
+      "qtype": "superlative",
+      "answer": "Sailing at the 2016 Summer Olympics – Men's 470",
+      "citations": [
+        "Q26263261"
+      ],
+      "confidence": 0.85,
+      "tokens": {
+        "context_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0
+      },
+      "agentic_trace": {
+        "pipeline": "Agentic GraphRAG",
+        "plan": [
+          "EntityLinker.link_entities",
+          "GraphTraverser.traverse_graph",
+          "Comparator.arg_extreme",
+          "Comparator.verify_extreme",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "retrieval_steps": 2,
+        "loop_iterations": 0,
+        "tools_called": [
+          "link_entities",
+          "traverse_graph",
+          "arg_extreme",
+          "verify_extreme",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "EntityLinker",
+          "GraphTraverser",
+          "Comparator",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "strategy_changed": true,
+        "stop_reason": "no_new_information",
+        "candidates_considered": 10,
+        "chunks_retrieved": 0,
+        "docs_retrieved": 10,
+        "steps": [
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Sailing; games->GAMES::2016::Summer",
+            "observation": {
+              "sport": "Sailing",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2016::Summer",
+              "edition_chain": [],
+              "implied_event_pages": 10
+            },
+            "confidence_after": 0.0,
+            "new_documents": 10,
+            "latency_ms": 0.13,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "GraphTraverser",
+            "operation": "traverse_graph",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 10 event pages (0 new)",
+            "observation": {
+              "strategy": "IN_SPORT + PART_OF",
+              "relations": [
+                "IN_SPORT",
+                "PART_OF"
+              ],
+              "events": 10,
+              "new_documents": 0,
+              "sample_titles": [
+                "Sailing at the 2016 Summer Olympics – Laser",
+                "Sailing at the 2016 Summer Olympics – Women's RS:X",
+                "Sailing at the 2016 Summer Olympics – Men's RS:X",
+                "Sailing at the 2016 Summer Olympics – Laser Radial",
+                "Sailing at the 2016 Summer Olympics – 49er"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.11,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "Comparator",
+            "operation": "arg_extreme",
+            "detail": "argmax over 10 events -> \"Sailing at the 2016 Summer Olympics – Men's 470\" (52); margin over runner-up: 6",
+            "observation": {
+              "winner": "Sailing at the 2016 Summer Olympics – Men's 470",
+              "winner_doc_id": "Q26263261",
+              "winner_value": 52,
+              "runner_up": "Sailing at the 2016 Summer Olympics – Laser",
+              "margin": 6,
+              "candidates": 10,
+              "missing_field": 0,
+              "unique_winner": true
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.02,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "Comparator",
+            "operation": "verify_extreme",
+            "detail": "cross-check of the extreme value (no violations) across 10 documents",
+            "observation": {
+              "verified": true,
+              "extreme_value": 52,
+              "violations": [],
+              "documents_with_field": 10
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.85, sufficient",
+            "observation": {
+              "confidence": 0.85,
+              "sufficient": true,
+              "signals": {
+                "candidates": 10,
+                "margin": 6,
+                "unique_winner": true,
+                "extreme_verified": true
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.85,
+            "new_documents": 0,
+            "latency_ms": 0.01,
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer=\"Sailing at the 2016 Summer Olympics – Men's 470\" citing 1 document(s) :: 'Sailing at the 2016 Summer Olympics – Men's 470' had the highest competitor count (52) among 10 enumerated events",
+            "observation": {
+              "answer": "Sailing at the 2016 Summer Olympics – Men's 470",
+              "source": "structured",
+              "rationale": "'Sailing at the 2016 Summer Olympics – Men's 470' had the highest competitor count (52) among 10 enumerated events",
+              "citations": [
+                "Q26263261"
+              ],
+              "adjudication": {}
+            },
+            "confidence_after": 0.85,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Sailing; games->GAMES::2016::Summer",
+            "latency_ms": 0.13
+          },
+          {
+            "operation": "traverse_graph",
+            "agent": "GraphTraverser",
+            "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 10 event pages (0 new)",
+            "latency_ms": 0.11
+          },
+          {
+            "operation": "arg_extreme",
+            "agent": "Comparator",
+            "detail": "argmax over 10 events -> \"Sailing at the 2016 Summer Olympics – Men's 470\" (52); margin over runner-up: 6",
+            "latency_ms": 0.02
+          },
+          {
+            "operation": "verify_extreme",
+            "agent": "Comparator",
+            "detail": "cross-check of the extreme value (no violations) across 10 documents",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.85, sufficient",
+            "latency_ms": 0.01
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer=\"Sailing at the 2016 Summer Olympics – Men's 470\" citing 1 document(s) :: 'Sailing at the 2016 Summer Olympics – Men's 470' had the highest ",
+            "latency_ms": 0.03
+          }
+        ],
+        "tokens_per_operation": []
+      },
+      "evidence": [
+        {
+          "agent": "Comparator",
+          "operation": "arg_extreme",
+          "observation": {
+            "winner": "Sailing at the 2016 Summer Olympics – Men's 470",
+            "winner_doc_id": "Q26263261",
+            "winner_value": 52,
+            "runner_up": "Sailing at the 2016 Summer Olympics – Laser",
+            "margin": 6,
+            "candidates": 10,
+            "missing_field": 0,
+            "unique_winner": true
+          }
+        },
+        {
+          "agent": "Synthesizer",
+          "operation": "render_answer",
+          "observation": {
+            "answer": "Sailing at the 2016 Summer Olympics – Men's 470",
+            "source": "structured",
+            "rationale": "'Sailing at the 2016 Summer Olympics – Men's 470' had the highest competitor count (52) among 10 enumerated events",
+            "citations": [
+              "Q26263261"
+            ],
+            "adjudication": {}
+          }
+        }
+      ],
+      "unresolved": [],
+      "latency_ms": 0.53,
+      "error": null
+    }
+  ]
+}

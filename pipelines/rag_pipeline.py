@@ -86,7 +86,7 @@ class RagPipeline:
             with Timer(timings, "llm_adjudicate", "verify candidate against passages"):
                 final, changed, payload = refine_answer(
                     self.llm, question, extracted.answer, chunks, counter,
-                    caller="rag.adjudicate")
+                    caller="rag.adjudicate", qtype=result.qtype)
             result.llm_calls = 1
             if final:
                 result.answer = _clean(final)

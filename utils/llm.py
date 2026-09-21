@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from typing import Any, Dict, List, Optional, Tuple
 
 from utils.metrics import TokenCounter, count_tokens
@@ -242,17 +243,36 @@ Reply with JSON only:
 def refine_answer(llm, question: str, candidate: str,
                   context_items: List[Dict[str, Any]],
                   counter: Optional[TokenCounter] = None,
-                  caller: str = "llm.refine") -> Tuple[str, bool, Dict[str, Any]]:
+                  caller: str = "llm.refine",
+                  qtype: str = "",
+                  exhaustive: bool = False) -> Tuple[str, bool, Dict[str, Any]]:
     """Adjudicate a structured candidate answer against retrieved context.
 
     Returns ``(answer, changed, payload)``. When the LLM is unavailable the
     candidate is returned unchanged, so every pipeline keeps working offline.
+
+    ``qtype``/``exhaustive`` gate the one case where adjudication is actively
+    harmful: an answer computed *exhaustively* over the full candidate set
+    (a count, a max/min over 60+ events) cannot be checked against the handful
+    of passages that fit in the prompt. The model sees six documents, cannot
+    see the other fifty-four, and will still return a confident different
+    number. Asking it to adjudicate there is not verification - it is inviting
+    a hallucination to overwrite arithmetic that is correct by construction.
     """
     candidate = (candidate or "").strip()
     if llm is None or not getattr(llm, "available", False):
         return candidate, False, {"reason": "llm_unavailable"}
     if not context_items and not candidate:
         return "", False, {"reason": "no_evidence"}
+
+    # Never adjudicate an exhaustively-computed aggregate against a partial view.
+    if candidate and (exhaustive or qtype in ("aggregation", "superlative")):
+        return candidate, False, {
+            "reason": "adjudication_skipped_exhaustive",
+            "detail": (f"'{qtype or 'aggregate'}' answers are computed over the "
+                       "complete candidate set; the prompt can only show a "
+                       "subset, so the model cannot validly overrule them"),
+            "candidate": candidate}
 
     # Keep the adjudication prompt small: on metered tiers the prompt size, not
     # the request count, is the binding constraint. 6 x ~450 chars is enough to
@@ -273,9 +293,57 @@ def refine_answer(llm, question: str, candidate: str,
     if not final or len(final) > 160:
         return candidate, False, {"reason": "verdict_unusable",
                                   "raw_answer": final[:120]}
+
+    # A numeric candidate may only be replaced by another number. Small models
+    # answer counting questions with prose ("There are several events..."),
+    # which would otherwise destroy a correct integer.
+    if candidate and _is_numeric(candidate) and not _is_numeric(final):
+        return candidate, False, {"reason": "verdict_rejected_non_numeric",
+                                  "raw_answer": final[:120],
+                                  "candidate": candidate}
+
     changed = _norm(final) != _norm(candidate)
+
+    # Grounding check. An adjudicator's job is to pick the right answer *out of
+    # the context it was shown*; it is not licensed to invent a new one. So a
+    # replacement is only accepted when it actually occurs in that context.
+    # This is the single guard that matters most for a small local model: the
+    # characteristic 4B failure is a fluent, confident, short answer with no
+    # support in the passages, which is indistinguishable from a real
+    # correction by any other test. A genuine correction is by definition
+    # quoted from the evidence, so it passes untouched.
+    if changed and candidate and not _grounded(final, context):
+        return candidate, False, {"reason": "verdict_rejected_ungrounded",
+                                  "detail": ("the proposed answer does not appear "
+                                             "in the retrieved context"),
+                                  "raw_answer": final[:120],
+                                  "candidate": candidate}
+
     return final, changed, {"agree": agree, "reason": str(payload.get("reason", ""))[:200],
                             "candidate": candidate}
+
+
+def _grounded(answer: str, context: str) -> bool:
+    """True when the answer is supported by the context that was shown.
+
+    Two ways to qualify, because answers come in two shapes:
+      * a span ("Larisa Latynina") -> must appear verbatim after normalisation;
+      * a number ("18")            -> must appear as a standalone token, so that
+                                      "18" is not matched by "1980".
+    Very short answers (<=2 chars) skip the check: they are too collision-prone
+    for substring matching to mean anything either way.
+    """
+    ans, ctx = _norm(answer), _norm(context)
+    if not ctx or len(ans) <= 2:
+        return True
+    if _is_numeric(ans):
+        return bool(re.search(rf"(?<!\d){re.escape(ans.strip())}(?!\d)", ctx))
+    return ans in ctx
+
+
+def _is_numeric(text: str) -> bool:
+    """True when the string is a bare number (the shape of a count answer)."""
+    return bool(re.fullmatch(r"\s*-?\d+(?:[.,]\d+)?\s*", text or ""))
 
 
 def _norm(text: str) -> str:

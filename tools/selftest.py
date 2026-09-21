@@ -79,6 +79,11 @@ def main() -> int:
                         [PY, "tools/submit_hidden.py", "--no-llm", "--no-tg",
                          "--limit", "5",
                          "--out", "results/_selftest_hidden.json"])))
+    stages.append(("no data leakage",
+                   _run("leakage audit", [PY, "tools/audit_leakage.py"])))
+    stages.append(("llm robustness",
+                   _run("adversarial LLM audit (a bad model must not hurt)",
+                        [PY, "tools/audit_llm_robustness.py", "--limit", "20"])))
     stages.append(("baseline sweep",
                    _run("baseline ceiling: k=5,20 on 10 questions",
                         [PY, "tools/baseline_sweep.py", "--ks", "5,20",

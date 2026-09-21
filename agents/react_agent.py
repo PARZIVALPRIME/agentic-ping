@@ -144,7 +144,21 @@ class ReActAgent:
                     input_tokens=state.tokens.input_tokens - before_in,
                     output_tokens=state.tokens.output_tokens - before_out))
                 if text and not state.answer:
-                    state.answer = _extract_answer(text)
+                    # Prose instead of submit_answer already means the model
+                    # lost the protocol, so only accept the text when it is
+                    # actually answer-shaped. A small model that overruns its
+                    # budget emits a hedging paragraph ("Based on the provided
+                    # context it appears that..."), and taking that as the
+                    # answer both scores zero *and* suppresses the deterministic
+                    # fallback in hybrid mode - failing worse than not trying.
+                    extracted = _extract_answer(text)
+                    if _answer_shaped(extracted):
+                        state.answer = extracted
+                    else:
+                        state.trace[-1].observation["rejected_answer"] = _clip(extracted, 200)
+                        state.trace[-1].observation["rejected_reason"] = (
+                            "prose, not an answer span; deferring to the "
+                            "deterministic planner")
                 state.stop_reason = "text_answer"
                 break
 
@@ -260,3 +274,32 @@ def _extract_answer(text: str) -> str:
         return match.group(1).strip().strip('"').strip("*")[:200]
     last = [line.strip() for line in text.splitlines() if line.strip()]
     return last[-1][:200] if last else ""
+
+
+# Phrases a model uses when it is hedging rather than answering. Their presence
+# is a far more reliable "this is not an answer" signal than length alone.
+_HEDGES = (
+    "based on the provided", "the context does not", "i could not find",
+    "it appears that", "unable to determine", "there is no information",
+    "cannot be determined", "insufficient information", "i don't have",
+    "unfortunately", "however, the passages",
+)
+
+
+def _answer_shaped(text: str) -> bool:
+    """True when a prose reply looks like an actual short answer.
+
+    Benchmark golds are spans and numbers - a name, a year, a country, a count.
+    Anything long or hedging is the model narrating its uncertainty, which is
+    worth zero on the metric and, worse, blocks the deterministic fallback.
+    Rejecting it is strictly better than keeping it: the only thing lost is a
+    guaranteed-wrong answer.
+    """
+    stripped = (text or "").strip()
+    if not stripped:
+        return False
+    low = stripped.lower()
+    if any(h in low for h in _HEDGES):
+        return False
+    # A gold answer is a span; >14 words is a sentence about a span.
+    return len(stripped) <= 120 and len(stripped.split()) <= 14

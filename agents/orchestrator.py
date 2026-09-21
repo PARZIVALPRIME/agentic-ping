@@ -102,9 +102,27 @@ class OrchestratorAgent:
             state.slot_report = {"method": "react_tool_calling",
                                  "tool_calls": len(state.tool_calls)}
             if state.answer or mode == "react":
-                return state
+                # 'react' is the pure-ablation mode: whatever the loop produced
+                # is the result, by definition.
+                if mode == "react":
+                    return state
+                # 'hybrid' promises "the LLM drives, deterministic solvers
+                # rescue". Rescue has to be triggered by *evidence*, not by
+                # emptiness. An answer the model typed in prose never passed
+                # through a tool, so nothing in the system has checked it
+                # against the graph; a small model produces exactly that -
+                # fluent, short, and unsupported. Only an answer submitted via
+                # the submit_answer tool has been through the grounded path, so
+                # only that one is allowed to skip the deterministic solvers.
+                if state.stop_reason == "submitted_answer":
+                    return state
+                state.strategy_changes.append(
+                    f"discarded ungrounded ReAct answer ({state.stop_reason}); "
+                    "no tool call backed it")
+                state.answer = ""
             state.strategy_changes.append(
-                "fallback: deterministic planner/executor (ReAct produced no answer)")
+                "fallback: deterministic planner/executor (ReAct produced no "
+                "grounded answer)")
 
         self._run_deterministic(question, spec, state)
         return state
@@ -615,9 +633,12 @@ class OrchestratorAgent:
                 answer, citations = llm_answer, (llm_cites or citations)
                 source = "llm_fallback"
         elif self.llm is not None and getattr(self.llm, "available", False) and context_items:
+            _agg = state.slots.get("aggregation") or {}
             refined, changed, payload = refine_answer(
                 self.llm, state.question, answer, context_items, state.tokens,
-                caller=f"agent.adjudicate.{state.kind}")
+                caller=f"agent.adjudicate.{state.kind}",
+                qtype=state.kind,
+                exhaustive=bool(_agg.get("exhaustive")))
             adjudication = dict(payload)
             adjudication["changed"] = changed
             adjudication["candidate"] = answer

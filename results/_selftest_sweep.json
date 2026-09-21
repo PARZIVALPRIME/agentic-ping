@@ -1,0 +1,74 @@
+{
+  "ks": [
+    5,
+    20
+  ],
+  "num_questions": 10,
+  "mode": "deterministic",
+  "results": {
+    "RAG": {
+      "5": {
+        "accuracy": 0.2,
+        "correct": 2,
+        "total": 10,
+        "citation_recall": 0.516,
+        "avg_context_tokens": 259.6,
+        "avg_latency_ms": 67.9,
+        "by_type": {
+          "aggregation": 0.0,
+          "lookup": 1.0,
+          "multi_hop": 1.0,
+          "superlative": 0.0,
+          "temporal": 0.0
+        }
+      },
+      "20": {
+        "accuracy": 0.5,
+        "correct": 5,
+        "total": 10,
+        "citation_recall": 0.7162,
+        "avg_context_tokens": 1042.7,
+        "avg_latency_ms": 71.7,
+        "by_type": {
+          "aggregation": 0.0,
+          "lookup": 1.0,
+          "multi_hop": 1.0,
+          "superlative": 0.0,
+          "temporal": 1.0
+        }
+      }
+    },
+    "GraphRAG": {
+      "5": {
+        "accuracy": 0.3,
+        "correct": 3,
+        "total": 10,
+        "citation_recall": 0.4624,
+        "avg_context_tokens": 421.3,
+        "avg_latency_ms": 254.8,
+        "by_type": {
+          "aggregation": 0.0,
+          "lookup": 1.0,
+          "multi_hop": 1.0,
+          "superlative": 0.0,
+          "temporal": 0.3333
+        }
+      },
+      "20": {
+        "accuracy": 0.4,
+        "correct": 4,
+        "total": 10,
+        "citation_recall": 0.7206,
+        "avg_context_tokens": 1761.4,
+        "avg_latency_ms": 339.9,
+        "by_type": {
+          "aggregation": 0.0,
+          "lookup": 1.0,
+          "multi_hop": 1.0,
+          "superlative": 0.5,
+          "temporal": 0.3333
+        }
+      }
+    }
+  }
+}
