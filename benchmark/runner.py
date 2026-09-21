@@ -316,12 +316,37 @@ class BenchmarkRunner:
         print("!" * 72, flush=True)
 
     # ── persistence ────────────────────────────────────────────────────
-    def _write(self, out_path: str, entries: List[Dict[str, Any]]) -> None:
+    def _write(self, out_path: str, entries: List[Dict[str, Any]],
+               retries: int = 5) -> None:
+        """Persist results, tolerating transient Windows file locks.
+
+        ``os.replace`` is atomic but raises PermissionError when a sync client
+        (OneDrive/Dropbox) or an AV scanner momentarily holds the destination
+        open. That is transient and common on a synced folder, so we retry with
+        a short backoff and then fall back to a direct write. Losing a
+        100-question run to a locked file would be far worse than a
+        non-atomic write.
+        """
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
         tmp = out_path + ".tmp"
         with open(tmp, "w", encoding="utf-8") as fh:
             json.dump(entries, fh, indent=2, ensure_ascii=False)
-        os.replace(tmp, out_path)
+
+        for attempt in range(retries):
+            try:
+                os.replace(tmp, out_path)
+                return
+            except PermissionError:
+                time.sleep(0.25 * (attempt + 1))
+
+        try:
+            with open(out_path, "w", encoding="utf-8") as fh:
+                json.dump(entries, fh, indent=2, ensure_ascii=False)
+            if os.path.exists(tmp):
+                os.remove(tmp)
+        except OSError as exc:
+            print(f"WARNING: could not update {out_path} ({exc}); "
+                  f"progress preserved in {tmp}", flush=True)
 
 
 # ── CLI bootstrap ─────────────────────────────────────────────────────
@@ -331,7 +356,8 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
          limit: int = 0, offset: int = 0, llm_judge: bool = True,
          resume: bool = False, no_llm: bool = False,
          types: Optional[List[str]] = None, per_type: int = 0,
-         no_tg: bool = False) -> Dict[str, Any]:
+         no_tg: bool = False, ablations: bool = False,
+         no_router: bool = False) -> Dict[str, Any]:
     from config import config
     from pipelines import build_pipelines
     from retrieval import load_index
@@ -381,7 +407,9 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
     log(f"llm available: {llm.available} ({llm.provider}/{llm.chat_model}) "
         f"| index: {index.stats()}")
 
-    all_pipes = build_pipelines(index, llm, config)
+    all_pipes = build_pipelines(index, llm, config,
+                                with_router=not no_router,
+                                with_ablations=ablations)
     if pipelines:
         wanted = {p.lower() for p in pipelines}
         all_pipes = [p for p in all_pipes
@@ -484,6 +512,12 @@ def cli(argv=None) -> None:
                          "(useful for quota-bounded LLM samples)")
     ap.add_argument("--per-type", type=int, default=0,
                     help="with --limit 0: take at most N questions per qtype")
+    ap.add_argument("--ablations", action="store_true",
+                    help="also run the agentic ablation variants (no-planner, "
+                         "no-verifier, no-gap-detector) to attribute the "
+                         "agentic gain to a specific mechanism")
+    ap.add_argument("--no-router", action="store_true",
+                    help="skip the Router pipeline")
     args = ap.parse_args(argv)
 
     if args.summarize_only:
@@ -520,7 +554,9 @@ def cli(argv=None) -> None:
          no_llm=args.no_llm,
          types=[t for t in args.types.split(",") if t],
          per_type=args.per_type,
-         no_tg=args.no_tg)
+         no_tg=args.no_tg,
+         ablations=args.ablations,
+         no_router=args.no_router)
 
 
 if __name__ == "__main__":

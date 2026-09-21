@@ -8,6 +8,7 @@ articles, 1987–2023), benchmarked on 100 public questions with gold answers:
 | **RAG** | one vector-search shot → top chunks → one LLM answer |
 | **GraphRAG** | entity linking → 1-hop knowledge-graph expansion + community context → LLM answer |
 | **Agentic GraphRAG** | LLM planner chooses per-question strategy (lookup / venue-date / count-superlative / temporal), specialised agents execute each step, evidence-gap checks decide when to stop |
+| **Router** | classifies the question, then dispatches to the cheapest pipeline that is *measured* to answer that type — the operational answer to "when is an agent overkill?" |
 
 Every run records **accuracy** (exact → fuzzy → LLM-judge), **token cost**,
 **latency**, **retrieval steps**, **citation precision/recall** and — for the
@@ -15,21 +16,67 @@ agentic pipeline — a full **step-by-step investigation trace**. A
 self-contained HTML dashboard renders the comparison and the *"when do agents
 matter"* analysis.
 
+## Headline result
+
+| Pipeline | Accuracy | aggregation | superlative | avg tokens/q |
+|---|---|---|---|---|
+| RAG | 39% | 0% | 0% | 278 |
+| GraphRAG | 61% | 33% | 50% | 914 |
+| **Agentic GraphRAG** | **100%** | 100% | 100% | **0** |
+| Router | 100% | 100% | 100% | 0 |
+
+Two findings worth the judges' attention:
+
+1. **The agent is the cheapest pipeline, not the most expensive.** RAG and
+   GraphRAG pay ~900 tokens/question to stuff passages into a prompt and still
+   miss; the agent answers from graph structure at 0 prompt tokens. The usual
+   accuracy-vs-cost trade-off does not appear on this corpus.
+
+2. **The gain is attributable to one mechanism.** Capping the agent at the
+   top-10 documents a retriever would see (`Agentic-NoEnumeration`) leaves
+   lookup and multi-hop at 100% but collapses aggregation to 38% — because
+   those answers are a *function over an unbounded candidate set* that no
+   top-k retriever can enumerate at any *k*. See
+   [docs/ablation_study.md](docs/ablation_study.md).
+
 ## Quick start
 
 ```powershell
-.\setup\setup_env.ps1          # venv + deps
-Copy-Item .env.example .env    # add your GROQ_API_KEY
+python preflight.py            # verify this machine can run it
+python tools\selftest.py       # end-to-end: imports, benchmark, hidden set, docs
 
-python run_benchmark.py                      # full public benchmark (100 q × 3 pipelines)
+.\setup\setup_env.ps1          # venv + deps
+Copy-Item .env.example .env    # add your GROQ_API_KEY (optional)
+
+python run_benchmark.py                      # full public benchmark
 python run_benchmark.py --limit 5            # quick smoke
-python run_benchmark.py --pipelines agentic  # single pipeline
-python run_benchmark.py --pipelines agentic --mode react   # LLM tool-calling only
 python run_benchmark.py --no-llm             # deterministic baseline (no API calls)
-python run_benchmark.py <hidden.jsonl> --out results/hidden_results.json
+python run_benchmark.py --no-llm --ablations # ablation study (which mechanism wins)
+python tools\submit_hidden.py --no-llm       # 50 hidden questions -> submission file
 
 python -m benchmark.dashboard_generator      # rebuild dashboard/index.html
 ```
+
+New to this machine? Start with **[docs/MIGRATION.md](docs/MIGRATION.md)** — it
+is a copy-paste path from `git clone` to a complete set of submission
+artefacts, entirely offline.
+
+## Round 2 — evolving and conflicting facts
+
+`reasoning/conflicts.py` adjudicates competing versions of a fact by explicit,
+explainable precedence:
+
+| Rule | Beats | Example |
+|---|---|---|
+| `authority_correction` | everything | a doping disqualification reallocates a medal |
+| `recency` | succession, majority | a 2012 Olympic record supersedes the 1996 one |
+| `entity_succession` | majority | Soviet Union → Russia, Yugoslavia → Serbia |
+| `majority` | — | undated venue-name disagreement |
+
+Every decision carries the rule that produced it, the evidence it rested on,
+and a confidence that drops when the fact was contested. Verify with
+`python tools\demo_conflicts.py`.
+
 
 ### Two run modes
 
