@@ -15,26 +15,34 @@ from reasoning.query_parser import QuerySpec
 
 
 def canonical_event_title(node: Any) -> str:
-    """The full corpus-style event title, e.g.
+    """The full corpus title for an event, e.g.
     'Sailing at the 2016 Summer Olympics – Men's 470'.
 
     Gold answers for superlative questions are the *full* title. Some code
     paths feed the comparator nodes whose ``title`` is only the event suffix
-    ("Men's 470"), which can never string-match the gold. When the title is
-    already full (contains the en-dash separator) it is used as-is; otherwise
-    it is reconstructed from the structured fields the node always carries.
+    ("Men's 470"), which can never string-match the gold.
+
+    Nothing here is corpus-specific: it prefers the node's own ``title`` (which
+    the builder copies verbatim from the source document, whatever the domain)
+    and only falls back to joining ``title_prefix``/``games_label``/``event_name``
+    - all fields taken straight from the corpus - when the stored title is
+    somehow just the suffix. No domain word ("Olympics") is hardcoded, so this
+    behaves correctly on any corpus whose documents carry a title.
     """
     title = (getattr(node, "title", "") or "").strip()
-    if "–" in title or " - " in title:
+    # The stored corpus title is authoritative whenever it is the full form.
+    # "Full" = longer than the bare event suffix, detected by the presence of
+    # the corpus's own separator or simply by being longer than event_name.
+    event = (getattr(node, "event_name", "") or "").strip()
+    if title and ("–" in title or " - " in title or len(title) > len(event)):
         return title
-    sport = (getattr(node, "sport", "") or "").strip()
-    year = getattr(node, "year", 0) or 0
-    season = (getattr(node, "season", "") or "").strip()
-    event = (getattr(node, "event_name", "") or title).strip()
-    if sport and year and event:
-        games = f"{year} {season} Olympics".replace("  ", " ").strip()
-        return f"{sport} at the {games} – {event}"
-    return title
+
+    # Last resort: reconstruct from structured fields, using only values that
+    # came from the corpus itself (games_label is the raw infobox "games").
+    games = (getattr(node, "games_label", "") or "").strip()
+    prefix = (getattr(node, "sport", "") or "").strip()
+    parts = [p for p in (prefix, games, event or title) if p]
+    return " – ".join(parts) if parts else title
 
 
 class Comparator:
