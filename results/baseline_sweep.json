@@ -1,0 +1,198 @@
+{
+  "ks": [
+    5,
+    10,
+    20,
+    40,
+    80,
+    160
+  ],
+  "num_questions": 100,
+  "mode": "deterministic",
+  "results": {
+    "RAG": {
+      "5": {
+        "accuracy": 0.39,
+        "correct": 39,
+        "total": 100,
+        "citation_recall": 0.6742,
+        "avg_context_tokens": 251.3,
+        "avg_latency_ms": 73.2,
+        "by_type": {
+          "aggregation": 0.0,
+          "lookup": 0.8421,
+          "multi_hop": 0.6071,
+          "superlative": 0.0,
+          "temporal": 0.2727
+        }
+      },
+      "10": {
+        "accuracy": 0.52,
+        "correct": 52,
+        "total": 100,
+        "citation_recall": 0.7603,
+        "avg_context_tokens": 517.7,
+        "avg_latency_ms": 71.5,
+        "by_type": {
+          "aggregation": 0.0,
+          "lookup": 1.0,
+          "multi_hop": 0.6786,
+          "superlative": 0.0,
+          "temporal": 0.6364
+        }
+      },
+      "20": {
+        "accuracy": 0.61,
+        "correct": 61,
+        "total": 100,
+        "citation_recall": 0.8283,
+        "avg_context_tokens": 1073.8,
+        "avg_latency_ms": 70.1,
+        "by_type": {
+          "aggregation": 0.0,
+          "lookup": 1.0,
+          "multi_hop": 0.8571,
+          "superlative": 0.2,
+          "temporal": 0.7273
+        }
+      },
+      "40": {
+        "accuracy": 0.71,
+        "correct": 71,
+        "total": 100,
+        "citation_recall": 0.931,
+        "avg_context_tokens": 2250.9,
+        "avg_latency_ms": 75.5,
+        "by_type": {
+          "aggregation": 0.1905,
+          "lookup": 1.0,
+          "multi_hop": 0.9643,
+          "superlative": 0.2,
+          "temporal": 0.8636
+        }
+      },
+      "80": {
+        "accuracy": 0.8,
+        "correct": 80,
+        "total": 100,
+        "citation_recall": 0.9783,
+        "avg_context_tokens": 4678.5,
+        "avg_latency_ms": 77.1,
+        "by_type": {
+          "aggregation": 0.4762,
+          "lookup": 1.0,
+          "multi_hop": 1.0,
+          "superlative": 0.4,
+          "temporal": 0.8636
+        }
+      },
+      "160": {
+        "accuracy": 0.91,
+        "correct": 91,
+        "total": 100,
+        "citation_recall": 0.9959,
+        "avg_context_tokens": 9679.7,
+        "avg_latency_ms": 79.9,
+        "by_type": {
+          "aggregation": 0.7619,
+          "lookup": 1.0,
+          "multi_hop": 1.0,
+          "superlative": 0.9,
+          "temporal": 0.8636
+        }
+      }
+    },
+    "GraphRAG": {
+      "5": {
+        "accuracy": 0.45,
+        "correct": 45,
+        "total": 100,
+        "citation_recall": 0.5572,
+        "avg_context_tokens": 439.7,
+        "avg_latency_ms": 301.0,
+        "by_type": {
+          "aggregation": 0.0,
+          "lookup": 0.8947,
+          "multi_hop": 0.6429,
+          "superlative": 0.1,
+          "temporal": 0.4091
+        }
+      },
+      "10": {
+        "accuracy": 0.61,
+        "correct": 61,
+        "total": 100,
+        "citation_recall": 0.7033,
+        "avg_context_tokens": 886.5,
+        "avg_latency_ms": 272.1,
+        "by_type": {
+          "aggregation": 0.3333,
+          "lookup": 0.7368,
+          "multi_hop": 0.8571,
+          "superlative": 0.5,
+          "temporal": 0.5
+        }
+      },
+      "20": {
+        "accuracy": 0.64,
+        "correct": 64,
+        "total": 100,
+        "citation_recall": 0.7348,
+        "avg_context_tokens": 1768.1,
+        "avg_latency_ms": 256.9,
+        "by_type": {
+          "aggregation": 0.381,
+          "lookup": 0.6842,
+          "multi_hop": 0.8929,
+          "superlative": 0.6,
+          "temporal": 0.5455
+        }
+      },
+      "40": {
+        "accuracy": 0.61,
+        "correct": 61,
+        "total": 100,
+        "citation_recall": 0.7172,
+        "avg_context_tokens": 3511.1,
+        "avg_latency_ms": 317.9,
+        "by_type": {
+          "aggregation": 0.2381,
+          "lookup": 0.6316,
+          "multi_hop": 0.75,
+          "superlative": 0.6,
+          "temporal": 0.7727
+        }
+      },
+      "80": {
+        "accuracy": 0.66,
+        "correct": 66,
+        "total": 100,
+        "citation_recall": 0.7735,
+        "avg_context_tokens": 6957.8,
+        "avg_latency_ms": 290.1,
+        "by_type": {
+          "aggregation": 0.3333,
+          "lookup": 0.7895,
+          "multi_hop": 0.8571,
+          "superlative": 0.6,
+          "temporal": 0.6364
+        }
+      },
+      "160": {
+        "accuracy": 0.74,
+        "correct": 74,
+        "total": 100,
+        "citation_recall": 0.8621,
+        "avg_context_tokens": 13785.2,
+        "avg_latency_ms": 436.4,
+        "by_type": {
+          "aggregation": 0.4286,
+          "lookup": 0.9474,
+          "multi_hop": 0.9643,
+          "superlative": 0.8,
+          "temporal": 0.5455
+        }
+      }
+    }
+  }
+}

@@ -23,20 +23,21 @@ superlative       0%         50%       100%
 The first routing table we wrote sent ``lookup``->RAG and ``temporal``->
 GraphRAG on the assumption that "simple questions don't need an agent". The
 measurement refuted it: that router scored **82%**, giving away 18 points to
-buy tokens it did not need to save. On this corpus *no* cheaper pipeline
-reaches parity with the agent on *any* question type.
+buy tokens it did not need to save.
 
-That is the finding, and it is stronger than the one we expected: the agent is
-not merely more accurate, it is also the **cheapest** pipeline here, because
-the deterministic solvers answer from graph structure instead of stuffing
-retrieved passages into a prompt (Agentic avg 0 context-prompt tokens vs
-GraphRAG's ~914). Retrieval-based pipelines pay tokens *per question* for
-accuracy they never achieve.
+Why "did not need to save": the agent is also the *cheapest* pipeline here, at
+0 prompt-context tokens versus GraphRAG's ~914, because the deterministic
+solvers answer from graph structure instead of stuffing retrieved passages
+into a prompt. Routing to a retrieval pipeline trades accuracy away for a
+saving that does not exist.
 
-So the router routes everything to the agent, and the value of this pipeline is
-the *audit trail* proving that decision was measured rather than assumed. If a
-future corpus contains a type where a cheaper pipeline reaches parity, flip
-that one entry and the saving is immediate.
+Retrieval *can* approach agentic accuracy by widening k - RAG reaches 91% at
+k=160 (see docs/baseline_ceiling.md) - but only at 39x the context cost, which
+makes it a worse trade at every point on the curve. So the table below routes
+everything to the agent, and the value of this pipeline is the *audit trail*
+proving that decision was measured rather than assumed. If a future corpus
+contains a type where a cheaper pipeline reaches parity, flip that one entry
+and the saving is immediate.
 """
 
 from __future__ import annotations

@@ -55,10 +55,17 @@ The damage is precisely where the thesis predicts:
 
 Lookup and multi-hop are untouched, because their answers live in one or two
 documents that top-k retrieval reaches. Aggregation collapses, because the
-answer is a **function over an unbounded candidate set** and no top-k retriever
-can enumerate that set at any *k*.
+answer is a **function over a candidate set**: with only 10 documents visible
+the agent cannot count what it cannot see.
 
-This is the finding the hackathon asks for, isolated to a single mechanism.
+This isolates the mechanism to a single variable while holding every other
+agentic capability fixed.
+
+> **Scope of this claim.** An earlier draft said "no top-k retriever can win at
+> any *k*". The [baseline ceiling study](baseline_ceiling.md) refutes that: RAG
+> reaches 91% at k=160. The surviving claim is about *cost*, not capability —
+> retrieval buys that accuracy with 39× the context tokens (9,680/question vs
+> the agent's 0), and still tops out at 76% on aggregation.
 
 ### 3. Verification and gap detection are inert here (0 points) — a negative result
 

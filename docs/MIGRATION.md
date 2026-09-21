@@ -54,11 +54,17 @@ python run_benchmark.py --no-llm --no-tg `
 python run_benchmark.py --no-llm --no-tg --ablations `
   --out results\ablation_study.json --summary results\ablation_summary.json
 
+# Baseline ceiling: sweep k to test the "you sandbagged the baselines" critique (~5 min)
+python tools\baseline_sweep.py --ks 5,10,20,40,80,160
+
 # Hidden set: raw answers + tokens + agentic traces  (~5s)
 python tools\submit_hidden.py --no-llm --no-tg
 
 # Self-contained dashboard
 python -m benchmark.dashboard_generator
+
+# Confirm every number in docs/ still matches the data
+python tools\verify_doc_numbers.py
 ```
 
 Deliverables produced:
@@ -68,6 +74,7 @@ Deliverables produced:
 | `results/public_results.json` | per-question, per-pipeline results + traces |
 | `results/metrics_summary.json` | accuracy / token / latency aggregates |
 | `results/ablation_study.json` | ablation variants |
+| `results/baseline_sweep.json` | accuracy + cost vs retrieval *k* |
 | `results/hidden_submission.json` | 50 hidden answers, tokens, agentic trace |
 | `dashboard/index.html` | self-contained dashboard (open directly) |
 

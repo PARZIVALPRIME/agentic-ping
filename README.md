@@ -28,16 +28,34 @@ matter"* analysis.
 Two findings worth the judges' attention:
 
 1. **The agent is the cheapest pipeline, not the most expensive.** RAG and
-   GraphRAG pay ~900 tokens/question to stuff passages into a prompt and still
-   miss; the agent answers from graph structure at 0 prompt tokens. The usual
-   accuracy-vs-cost trade-off does not appear on this corpus.
+   GraphRAG pay ~900 tokens/question at their default *k* to stuff passages
+   into a prompt and still miss; the agent answers from graph structure at 0
+   prompt tokens. The usual accuracy-vs-cost trade-off does not appear here.
 
 2. **The gain is attributable to one mechanism.** Capping the agent at the
    top-10 documents a retriever would see (`Agentic-NoEnumeration`) leaves
-   lookup and multi-hop at 100% but collapses aggregation to 38% — because
-   those answers are a *function over an unbounded candidate set* that no
-   top-k retriever can enumerate at any *k*. See
-   [docs/ablation_study.md](docs/ablation_study.md).
+   lookup and multi-hop at 100% but collapses aggregation to 38% — those
+   answers are a *function over a candidate set*, and you cannot count what you
+   cannot see. See [docs/ablation_study.md](docs/ablation_study.md).
+
+### We tested the obvious objection against ourselves
+
+*"Your baselines are weak because k=5 is too small."* We swept k from 5 to 160
+([docs/baseline_ceiling.md](docs/baseline_ceiling.md)) and the critique partly
+lands: **RAG reaches 91% at k=160**, so our original claim that no retriever
+could win at any *k* was wrong, and we removed it.
+
+What survives is the cost result:
+
+| Pipeline | Accuracy | ctx tokens/q |
+|---|---:|---:|
+| RAG (best, k=160) | 91% | 9,680 |
+| GraphRAG (best, k=160) | 74% | 13,785 |
+| **Agentic GraphRAG** | **100%** | **0** |
+
+Retrieval can approach agentic accuracy — at **39× the context cost**, and it
+still tops out at 76% on aggregation. GraphRAG is also *non-monotonic* in k
+(64% at k=20, 61% at k=40): wider retrieval crowds out the correct document.
 
 ## Quick start
 

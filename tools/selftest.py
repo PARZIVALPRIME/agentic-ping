@@ -79,6 +79,11 @@ def main() -> int:
                         [PY, "tools/submit_hidden.py", "--no-llm", "--no-tg",
                          "--limit", "5",
                          "--out", "results/_selftest_hidden.json"])))
+    stages.append(("baseline sweep",
+                   _run("baseline ceiling: k=5,20 on 10 questions",
+                        [PY, "tools/baseline_sweep.py", "--ks", "5,20",
+                         "--limit", "10",
+                         "--out", "results/_selftest_sweep.json"])))
 
     # Only meaningful once the ablation study has been run; skipped otherwise
     # so a fresh clone does not report a spurious failure.
