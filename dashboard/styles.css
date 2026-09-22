@@ -34,6 +34,7 @@ main { padding: 8px 28px 32px; max-width: 1280px; margin: 0 auto; }
 .c-rag .big { color: var(--rag); } .c-rag .bar > i { background: var(--rag); }
 .c-graph .big { color: var(--graph); } .c-graph .bar > i { background: var(--graph); }
 .c-agent .big { color: var(--agent); } .c-agent .bar > i { background: var(--agent); }
+.c-router .big { color: #7d9ff0; } .c-router .bar > i { background: #7d9ff0; }
 .panel { background: var(--panel); border: 1px solid var(--line);
   border-radius: 12px; padding: 16px 18px; margin: 0 0 18px; }
 .hint { color: var(--muted); font-size: 12px; margin: 0 0 12px; }

@@ -5,6 +5,7 @@ const PIPE_COLORS = {
   "RAG": "#e05f5f",
   "GraphRAG": "#e0a83c",
   "Agentic GraphRAG": "#4fc38a",
+  "Router": "#7d9ff0",
 };
 const QTYPES = ["lookup", "multi_hop", "temporal", "aggregation", "superlative"];
 const short = n => (n === undefined || n === null) ? "–" :
@@ -74,7 +75,7 @@ function renderCards() {
   const pipes = s.pipelines || {};
   const host = document.getElementById("cards");
   host.innerHTML = "";
-  const cls = { "RAG": "c-rag", "GraphRAG": "c-graph", "Agentic GraphRAG": "c-agent" };
+  const cls = { "RAG": "c-rag", "GraphRAG": "c-graph", "Agentic GraphRAG": "c-agent", "Router": "c-router" };
 
   // Say it before the numbers, not after: a file whose provider calls returned
   // nothing still shows three plausible accuracies and three "0 LLM calls/q".

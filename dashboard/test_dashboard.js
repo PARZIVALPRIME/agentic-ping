@@ -7,7 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 
-const html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
+const html = fs.readFileSync(process.argv[2] || path.join(__dirname, "index.html"), "utf8");
 const start = html.indexOf("const DATA = ");
 const end = html.indexOf("</script>", start);
 if (start === -1 || end === -1) {
