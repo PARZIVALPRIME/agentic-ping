@@ -52,7 +52,7 @@ MODEL_DEFAULTS = {
     "groq": _env("DEFAULT_GROQ_MODEL", default="openai/gpt-oss-120b"),
     "ollama": _env("DEFAULT_OLLAMA_MODEL", default="qwen3.5:2b-q4_K_M"),
     "openai": _env("DEFAULT_OPENAI_MODEL", default="gpt-4o-mini"),
-    "gemini": _env("DEFAULT_GEMINI_MODEL", default="gemini-2.5-flash"),
+    "gemini": _env("DEFAULT_GEMINI_MODEL", default="gemini-3.8-flash"),
     "azure": _env("DEFAULT_AZURE_MODEL", default="gpt-4o-mini"),
 }
 
@@ -132,7 +132,9 @@ class LLMConfig:
     reasoning_effort: str = field(default_factory=lambda: _env("LLM_REASONING_EFFORT"))
 
     openai_api_key: Optional[str] = field(default_factory=lambda: os.getenv("OPENAI_API_KEY"))
-    google_api_key: Optional[str] = field(default_factory=lambda: os.getenv("GOOGLE_API_KEY"))
+    google_api_key: Optional[str] = field(default_factory=lambda: _env("GOOGLE_API_KEY", "GEMINI_API_KEY"))
+    gemini_base_url: str = field(default_factory=lambda: _env("GEMINI_BASE_URL",
+                                                               default="https://generativelanguage.googleapis.com/v1beta/openai/"))
     azure_api_key: Optional[str] = field(default_factory=lambda: os.getenv("AZURE_OPENAI_API_KEY"))
     azure_endpoint: Optional[str] = field(default_factory=lambda: os.getenv("AZURE_OPENAI_ENDPOINT"))
     azure_deployment: Optional[str] = field(default_factory=lambda: os.getenv("AZURE_OPENAI_DEPLOYMENT"))

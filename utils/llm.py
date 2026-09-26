@@ -57,7 +57,9 @@ class LLMHelper:
                                        model=self.chat_model or "", temperature=temperature,
                                        max_completion_tokens=max_tokens or None,
                                        reasoning_effort=reasoning_effort or None,
-                                       ollama_base_url=base_url or "")
+                                       base_url=base_url or "",
+                                       ollama_base_url=base_url or "",
+                                       gemini_base_url=base_url or "")
             # A local server that is not running would otherwise report
             # available=True (the client is lazy) and then fail every call of a
             # long sweep, which is how a run silently ends up deterministic.
@@ -152,7 +154,8 @@ class LLMHelper:
             counter.add(caller, turn.usage.input_tokens, turn.usage.output_tokens,
                         detail=(model or self._service.model))
         calls = [{"id": tc.id, "name": tc.name,
-                  "arguments": tc.parsed_args(), "raw": tc.arguments}
+                  "arguments": tc.parsed_args(), "raw": tc.arguments,
+                  "extra_content": getattr(tc, "extra_content", None)}
                  for tc in turn.tool_calls]
         return turn.text, calls, turn.finish_reason
 
@@ -217,7 +220,11 @@ def build_llm(config) -> LLMHelper:
         eval_temperature=getattr(llm, "eval_temperature", 0.0),
         max_tokens=getattr(llm, "max_tokens", 0),
         reasoning_effort=getattr(llm, "reasoning_effort", ""),
-        base_url=(getattr(llm, "ollama_base_url", "") if provider == "ollama" else None),
+        base_url=(
+            getattr(llm, "ollama_base_url", "") if provider == "ollama"
+            else (getattr(llm, "gemini_base_url", "") if provider == "gemini"
+                  else (getattr(llm, "groq_base_url", "") if provider == "groq" else None))
+        ),
     )
 
 

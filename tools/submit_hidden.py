@@ -198,6 +198,7 @@ def main(argv=None) -> int:
         records.append(rec)
 
         def _payload() -> Dict[str, Any]:
+            cur_tokens = sum(r.get("tokens", {}).get("total_tokens", 0) for r in records)
             return {
                 "submission": {
                     "pipeline": pipe.name,
@@ -209,6 +210,7 @@ def main(argv=None) -> int:
                     "num_questions": len(questions),
                     "num_completed": len(records),
                     "num_failed": failures,
+                    "total_tokens": cur_tokens,
                     "config": config.describe(),
                 },
                 "results": records,

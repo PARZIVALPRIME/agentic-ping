@@ -301,6 +301,7 @@ class ToolCall:
     id: str
     name: str
     arguments: str = "{}"      # raw JSON string as returned by the provider
+    extra_content: Optional[Dict[str, Any]] = None
 
     def parsed_args(self) -> Dict[str, Any]:
         try:
@@ -396,8 +397,12 @@ class LLMService:
             self._client = OpenAI(api_key=api_key)
 
         elif provider == "gemini":
-            from google import genai
-            self._client = genai.Client(api_key=api_key)
+            from openai import OpenAI
+            base_url = kwargs.get("gemini_base_url") or kwargs.get("base_url") or "https://generativelanguage.googleapis.com/v1beta/openai/"
+            self._client = OpenAI(
+                api_key=api_key,
+                base_url=base_url,
+            )
 
         elif provider == "azure":
             from openai import AzureOpenAI
@@ -433,11 +438,10 @@ class LLMService:
     def ping(self) -> Tuple[bool, str]:
         """Check the provider is actually answering before a run starts.
 
-        Only meaningful for a local server: a cloud key can be present and still
-        be unusable, but a *missing* Ollama daemon would otherwise fail every
-        call of a long sweep after reporting ``available: True``.
+        For local servers or cloud providers, pings the endpoint to verify
+        the client is connected and the API key is valid.
         """
-        if self.provider != "ollama":
+        if self.provider not in ("ollama", "gemini"):
             return True, ""
         try:
             self._client.models.list()
@@ -468,10 +472,7 @@ class LLMService:
         # request count, is what free provider tiers actually enforce.
         PACER.wait(_estimate_tokens(prompt) + _estimate_tokens(system_prompt))
 
-        if self.provider == "gemini":
-            out = self._complete_gemini(prompt, system_prompt, caller, t0)
-        else:
-            out = self._complete_openai_compat(prompt, system_prompt, caller, t0)
+        out = self._complete_openai_compat(prompt, system_prompt, caller, t0)
         PACER.record_output(out[1].output_tokens)
         CIRCUIT.record_success()
         return out
@@ -513,7 +514,8 @@ class LLMService:
         for tc in (getattr(msg, "tool_calls", None) or []):
             calls.append(ToolCall(id=getattr(tc, "id", "") or "",
                                   name=tc.function.name,
-                                  arguments=tc.function.arguments or "{}"))
+                                  arguments=tc.function.arguments or "{}",
+                                  extra_content=getattr(tc, "extra_content", None)))
         usage = TokenUsage(
             input_tokens=response.usage.prompt_tokens if response.usage else 0,
             output_tokens=response.usage.completion_tokens if response.usage else 0,
@@ -578,44 +580,6 @@ class LLMService:
         self.tracker.record(usage)
         return text, usage
 
-    def _complete_gemini(
-        self, prompt: str, system_prompt: str, caller: str, t0: float
-    ) -> Tuple[str, TokenUsage]:
-        """Google Gemini completion."""
-        from google.genai import types
-
-        contents = prompt
-        config = types.GenerateContentConfig(
-            temperature=self.temperature,
-            system_instruction=system_prompt if system_prompt else None,
-        )
-
-        response = self._client.models.generate_content(
-            model=self.model,
-            contents=contents,
-            config=config,
-        )
-
-        text = response.text or ""
-
-        # Extract token usage from response metadata
-        input_tokens = 0
-        output_tokens = 0
-        if hasattr(response, "usage_metadata") and response.usage_metadata:
-            input_tokens = getattr(response.usage_metadata, "prompt_token_count", 0) or 0
-            output_tokens = getattr(response.usage_metadata, "candidates_token_count", 0) or 0
-
-        usage = TokenUsage(
-            input_tokens=input_tokens,
-            output_tokens=output_tokens,
-            total_tokens=input_tokens + output_tokens,
-            model=self.model,
-            latency_ms=(time.time() - t0) * 1000,
-            caller=caller,
-        )
-        self.tracker.record(usage)
-        return text, usage
-
     def complete_json(
         self,
         prompt: str,
@@ -658,8 +622,11 @@ class EmbeddingService:
             self._client = OpenAI(api_key=api_key)
 
         elif provider == "gemini":
-            from google import genai
-            self._client = genai.Client(api_key=api_key)
+            from openai import OpenAI
+            self._client = OpenAI(
+                api_key=api_key,
+                base_url=base_url or "https://generativelanguage.googleapis.com/v1beta/openai/",
+            )
 
         elif provider == "groq":
             # Groq doesn't have embeddings — fall back to OpenAI-compatible
@@ -681,10 +648,7 @@ class EmbeddingService:
 
     def embed_batch(self, texts: List[str]) -> List[List[float]]:
         """Embed a batch of texts."""
-        if self.provider == "gemini":
-            return self._embed_gemini(texts)
-        else:
-            return self._embed_openai_compat(texts)
+        return self._embed_openai_compat(texts)
 
     def _embed_openai_compat(self, texts: List[str]) -> List[List[float]]:
         response = self._client.embeddings.create(

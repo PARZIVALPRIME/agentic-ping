@@ -329,6 +329,9 @@ def _check_writeup() -> int:
     # ── hidden-set claims ──────────────────────────────────────────────────
     n_done = hidden.get("num_completed")
     n_tok = hidden.get("total_tokens")
+    if n_tok is None:
+        raw_res = json.load(open(HIDDEN_SUBMISSION, encoding="utf-8")).get("results", [])
+        n_tok = sum(r.get("tokens", {}).get("total_tokens", 0) for r in raw_res)
     # The writeup is wrapped prose, so compare against collapsed whitespace.
     flat = " ".join(text.split())
     claim_done = f"answered {n_done}/{n_done}"

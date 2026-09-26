@@ -80,7 +80,7 @@ python preflight.py            # verify this machine can run it
 python tools\selftest.py       # end-to-end: imports, benchmark, hidden set, docs
 
 .\setup\setup_env.ps1          # venv + deps
-Copy-Item .env.example .env    # optional GROQ_API_KEY; the shipped .env runs local Ollama
+Copy-Item .env.example .env    # configure GEMINI_API_KEY (or Groq / local Ollama)
 
 python run_benchmark.py                      # full public benchmark
 python run_benchmark.py --limit 5            # quick smoke
@@ -312,7 +312,7 @@ python run_benchmark.py                         # --no-tg forces the local graph
 | Variable | Default | Meaning |
 |---|---|---|
 | `TG_ENABLED` | *(unset)* | serve the graph from TigerGraph |
-| `TG_HOST` / `TG_RESTPP_PORT` | `https://...tgcloud.io` / `443` | RESTPP endpoint (Community: `http://localhost`, port `9000`) |
+| `TG_HOST` / `TG_RESTPP_PORT` | `http://localhost` / `9000` | RESTPP endpoint |
 | `TG_GRAPHNAME` / `TG_USERNAME` / `TG_PASSWORD` / `TG_TOKEN` | `OlympicsKG` / `tigergraph` / — / — | graph and credentials |
 | `TG_MAX_ROWS` | `100000` | row budget per query — a **safety valve**, not a tuning knob: a budget below the largest candidate set (2210 rows here) is reported loudly, never silently applied |
 | `TG_TIMEOUT` / `TG_RETRIES` | `30` / `2` | per-request timeout and retries |

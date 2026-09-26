@@ -28,23 +28,23 @@
           "correct": 0
         }
       },
-      "avg_latency_ms": 4451.2252,
+      "avg_latency_ms": 2258.7566,
       "avg_context_tokens": 253.3,
-      "avg_input_tokens": 1030.94,
-      "avg_output_tokens": 38.04,
-      "avg_total_tokens": 1068.98,
+      "avg_input_tokens": 1030.66,
+      "avg_output_tokens": 40.52,
+      "avg_total_tokens": 1071.18,
       "avg_llm_calls": 1.0,
       "avg_retrieval_steps": 1.0,
       "avg_chunks_retrieved": 5.0,
       "avg_candidates_considered": 0.0,
-      "total_tokens": 53449,
+      "total_tokens": 53559,
       "avg_citation_precision": null,
       "avg_citation_recall": null,
       "match_types": {},
       "stop_reasons": {
-        "resolved": 14,
-        "insufficient_retrieved_evidence": 33,
-        "llm_revised_extraction": 3
+        "resolved": 16,
+        "llm_revised_extraction": 3,
+        "insufficient_retrieved_evidence": 31
       },
       "strategy_adapted": 0,
       "agents_used": []
@@ -76,23 +76,22 @@
           "correct": 0
         }
       },
-      "avg_latency_ms": 3312.0128,
+      "avg_latency_ms": 1379.9942,
       "avg_context_tokens": 901.06,
-      "avg_input_tokens": 1563.88,
-      "avg_output_tokens": 26.0,
-      "avg_total_tokens": 1589.88,
+      "avg_input_tokens": 1565.4,
+      "avg_output_tokens": 24.24,
+      "avg_total_tokens": 1589.64,
       "avg_llm_calls": 1.0,
       "avg_retrieval_steps": 2.0,
       "avg_chunks_retrieved": 10.0,
       "avg_candidates_considered": 0.0,
-      "total_tokens": 79494,
+      "total_tokens": 79482,
       "avg_citation_precision": null,
       "avg_citation_recall": null,
       "match_types": {},
       "stop_reasons": {
-        "resolved": 44,
-        "llm_revised_extraction": 5,
-        "insufficient_retrieved_evidence": 1
+        "resolved": 47,
+        "insufficient_retrieved_evidence": 3
       },
       "strategy_adapted": 0,
       "agents_used": []
@@ -104,19 +103,19 @@
       "accuracy": null,
       "by_type": {
         "lookup": {
-          "n": 15,
-          "correct": 0
-        },
-        "multi_hop": {
-          "n": 0,
-          "correct": 0
-        },
-        "temporal": {
           "n": 7,
           "correct": 0
         },
+        "multi_hop": {
+          "n": 10,
+          "correct": 0
+        },
+        "temporal": {
+          "n": 8,
+          "correct": 0
+        },
         "aggregation": {
-          "n": 18,
+          "n": 15,
           "correct": 0
         },
         "superlative": {
@@ -124,23 +123,23 @@
           "correct": 0
         }
       },
-      "avg_latency_ms": 77524.0128,
-      "avg_context_tokens": 140.16,
-      "avg_input_tokens": 12499.28,
-      "avg_output_tokens": 730.86,
-      "avg_total_tokens": 13230.14,
-      "avg_llm_calls": 4.86,
-      "avg_retrieval_steps": 4.16,
-      "avg_chunks_retrieved": 18.16,
-      "avg_candidates_considered": 25.26,
-      "total_tokens": 661507,
+      "avg_latency_ms": 13614.7326,
+      "avg_context_tokens": 126.14,
+      "avg_input_tokens": 21174.66,
+      "avg_output_tokens": 382.94,
+      "avg_total_tokens": 21557.6,
+      "avg_llm_calls": 6.56,
+      "avg_retrieval_steps": 5.94,
+      "avg_chunks_retrieved": 20.76,
+      "avg_candidates_considered": 27.12,
+      "total_tokens": 1077880,
       "avg_citation_precision": null,
       "avg_citation_recall": null,
       "match_types": {},
       "stop_reasons": {
-        "submitted_answer": 33,
-        "confidence_reached": 8,
-        "text_answer": 9
+        "submitted_answer": 41,
+        "confidence_reached": 5,
+        "max_steps": 4
       },
       "strategy_adapted": 50,
       "agents_used": [
@@ -152,7 +151,6 @@
         "LookupResolver",
         "ReActAgent",
         "Synthesizer",
-        "TemporalReasoner",
         "VectorSearcher"
       ]
     },
@@ -163,15 +161,15 @@
       "accuracy": null,
       "by_type": {
         "lookup": {
-          "n": 8,
+          "n": 7,
           "correct": 0
         },
         "multi_hop": {
-          "n": 9,
+          "n": 10,
           "correct": 0
         },
         "temporal": {
-          "n": 7,
+          "n": 8,
           "correct": 0
         },
         "aggregation": {
@@ -179,31 +177,31 @@
           "correct": 0
         },
         "superlative": {
-          "n": 11,
+          "n": 10,
           "correct": 0
         }
       },
-      "avg_latency_ms": 63503.9218,
-      "avg_context_tokens": 129.46,
-      "avg_input_tokens": 8353.1,
-      "avg_output_tokens": 618.38,
-      "avg_total_tokens": 8971.48,
-      "avg_llm_calls": 4.36,
-      "avg_retrieval_steps": 2.9,
-      "avg_chunks_retrieved": 12.9,
-      "avg_candidates_considered": 14.78,
-      "total_tokens": 448574,
+      "avg_latency_ms": 14767.156,
+      "avg_context_tokens": 162.78,
+      "avg_input_tokens": 20020.82,
+      "avg_output_tokens": 404.86,
+      "avg_total_tokens": 20425.68,
+      "avg_llm_calls": 7.28,
+      "avg_retrieval_steps": 6.06,
+      "avg_chunks_retrieved": 17.28,
+      "avg_candidates_considered": 21.48,
+      "total_tokens": 1021284,
       "avg_citation_precision": null,
       "avg_citation_recall": null,
       "match_types": {},
       "stop_reasons": {
-        "resolved": 11,
-        "confidence_reached": 7,
-        "text_answer": 6,
-        "submitted_answer": 21,
-        "insufficient_retrieved_evidence": 5
+        "submitted_answer": 32,
+        "resolved": 6,
+        "confidence_reached": 6,
+        "max_steps": 5,
+        "insufficient_retrieved_evidence": 1
       },
-      "strategy_adapted": 34,
+      "strategy_adapted": 43,
       "agents_used": [
         "Aggregator",
         "Comparator",
@@ -214,7 +212,6 @@
         "ReActAgent",
         "Router",
         "Synthesizer",
-        "TemporalReasoner",
         "VectorSearcher"
       ]
     }
@@ -228,29 +225,29 @@
   },
   "llm": {
     "available": true,
-    "provider": "ollama",
-    "chat_model": "qwen3.5:4b",
-    "eval_model": "qwen3.5:4b",
-    "num_calls": 623,
+    "provider": "gemini",
+    "chat_model": "gemini-3.8-flash",
+    "eval_model": "gemini-3.8-flash",
+    "num_calls": 859,
     "failed_calls": 0,
     "degraded": false,
-    "min_interval_s": 0.0,
+    "min_interval_s": 0.5,
     "tpm_budget": 0,
-    "enabled": false,
+    "enabled": true,
     "rate_limit_events": 0,
     "pace_sleeps": 0,
     "pace_slept_s": 0.0,
     "circuit": {
-      "threshold": 999999,
-      "cooldown_s": 0.0,
-      "enabled": false,
+      "threshold": 3,
+      "cooldown_s": 60.0,
+      "enabled": true,
       "trips": 0,
       "blocked_calls": 0,
       "open": false
     }
   },
   "run_mode": "live",
-  "wall_clock_s": 7442.7,
+  "wall_clock_s": 1603.8,
   "backend": {
     "requested": "local",
     "active": "local",
@@ -267,9 +264,9 @@
         "records_with_calls": 50,
         "records_answering": 49,
         "calls": 50,
-        "total_tokens": 53449,
-        "output_tokens": 1902,
-        "unusable_adjudications": 33,
+        "total_tokens": 53559,
+        "output_tokens": 2026,
+        "unusable_adjudications": 31,
         "llm_contributed": true
       },
       "GraphRAG": {
@@ -277,8 +274,8 @@
         "records_with_calls": 50,
         "records_answering": 25,
         "calls": 50,
-        "total_tokens": 79494,
-        "output_tokens": 1300,
+        "total_tokens": 79482,
+        "output_tokens": 1212,
         "unusable_adjudications": 4,
         "llm_contributed": true
       },
@@ -286,20 +283,20 @@
         "records": 50,
         "records_with_calls": 50,
         "records_answering": 50,
-        "calls": 243,
-        "total_tokens": 661507,
-        "output_tokens": 36543,
-        "unusable_adjudications": 2,
+        "calls": 328,
+        "total_tokens": 1077880,
+        "output_tokens": 19147,
+        "unusable_adjudications": 0,
         "llm_contributed": true
       },
       "Router": {
         "records": 50,
         "records_with_calls": 50,
         "records_answering": 50,
-        "calls": 218,
-        "total_tokens": 448574,
-        "output_tokens": 30919,
-        "unusable_adjudications": 7,
+        "calls": 364,
+        "total_tokens": 1021284,
+        "output_tokens": 20243,
+        "unusable_adjudications": 1,
         "llm_contributed": true
       }
     },

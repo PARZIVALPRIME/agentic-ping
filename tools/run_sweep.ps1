@@ -47,7 +47,9 @@ param(
   [switch]$NoLlm
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
+$env:PYTHONUTF8 = "1"
+$env:PYTHONIOENCODING = "utf-8"
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 Set-Location $root
 
@@ -66,24 +68,24 @@ foreach ($pair in @(@($PublicLog, $HiddenLog))) {
 # The public sweep first: it is the one the accuracy table is quoted from, and a
 # crash here must not silently take the submission run down with it.
 if (-not $SkipPublic) {
-  $pubArgs = @("-u", "run_benchmark.py", $PublicQuestions,
-               "--out", $PublicOut, "--summary", $PublicSummary)
-  if ($Limit -gt 0) { $pubArgs += @("--limit", "$Limit") }
-  if ($PublicResume) { $pubArgs += "--resume" }
-  if ($NoLlm) { $pubArgs += "--no-llm" }
-  Write-Host "public : $PublicQuestions -> $PublicOut (log $PublicLog)"
-  & python @pubArgs *> $PublicLog
+  $resumeFlag = if ($PublicResume -or (Test-Path $PublicOut)) { " --resume" } else { "" }
+  $limitFlag = if ($Limit -gt 0) { " --limit $Limit" } else { "" }
+  $noLlmFlag = if ($NoLlm) { " --no-llm" } else { "" }
+  $pubCmd = "python -u run_benchmark.py `"$PublicQuestions`" --out `"$PublicOut`" --summary `"$PublicSummary`"$limitFlag$resumeFlag$noLlmFlag"
+  Write-Host "public : $pubCmd (log $PublicLog)"
+  cmd.exe /c "$pubCmd >> `"$PublicLog`" 2>&1"
   Write-Host "public run exited with code $LASTEXITCODE"
 }
 
 if (-not $SkipHidden) {
-  $hidArgs = @("-u", "run_benchmark.py", $HiddenQuestions,
-               "--out", $HiddenOut, "--summary", $HiddenSummary)
-  if ($Limit -gt 0) { $hidArgs += @("--limit", "$Limit") }
-  if ($NoLlm) { $hidArgs += "--no-llm" }
-  Write-Host "hidden : $HiddenQuestions -> $HiddenOut (log $HiddenLog)"
-  & python @hidArgs *> $HiddenLog
+  $limitFlag = if ($Limit -gt 0) { " --limit $Limit" } else { "" }
+  $noLlmFlag = if ($NoLlm) { " --no-llm" } else { "" }
+  $hidCmd = "python -u run_benchmark.py `"$HiddenQuestions`" --out `"$HiddenOut`" --summary `"$HiddenSummary`"$limitFlag$noLlmFlag"
+  Write-Host "hidden : $hidCmd (log $HiddenLog)"
+  cmd.exe /c "$hidCmd > `"$HiddenLog`" 2>&1"
   Write-Host "hidden run exited with code $LASTEXITCODE"
 }
 
-Write-Host "sweep done."
+Write-Host "refreshing and validating dashboards..."
+& python tools/refresh_dashboard.py --all
+Write-Host "sweep and dashboards updated successfully."

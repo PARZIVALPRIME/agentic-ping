@@ -190,8 +190,10 @@ class OrchestratorAgent:
             state.strategy_changes.append(
                 "fallback: deterministic planner/executor (ReAct produced no "
                 "grounded answer)")
-
-        self._run_deterministic(question, spec, state)
+            budget = state.num_steps + int(self.cfg.get("max_steps", 15) or 15)
+            self._run_deterministic(question, spec, state, budget=budget)
+        else:
+            self._run_deterministic(question, spec, state)
 
         # The semantic parse is licensed to read the question as a different
         # *type* from the templates - that is its whole contribution, and it is

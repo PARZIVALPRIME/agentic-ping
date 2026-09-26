@@ -52,8 +52,8 @@ class TigerGraphUnavailable(TigerGraphError):
 def _join(host: str, port: str) -> str:
     """Attach the RESTPP port unless the host already carries one.
 
-    Local installs use ``http://localhost`` + 9000; Savanna gives a portless
-    ``https://<id>.tgcloud.io`` that already serves RESTPP on 443. One rule
+    Local installs use ``http://localhost`` + 9000; remote installs give a portless
+    URL that already serves RESTPP on 443. One rule
     covers both: only append a port when the host URL has none.
     """
     host = (host or "").strip().rstrip("/")

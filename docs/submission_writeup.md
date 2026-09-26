@@ -52,7 +52,7 @@ the buckets are identical across pipelines):
 | Router | 17/19 | 17/28 | 21/22 | 21/21 | 10/10 |
 
 Hidden set (50 questions, no gold answers): the Agentic GraphRAG arm answered
-50/50 with 0 errors and 661,507 tokens; `tools/validate_hidden.py` resolves
+50/50 with 0 errors and 1,042,857 tokens; `tools/validate_hidden.py` resolves
 50/50 slots (100%). GraphRAG left 1 blank, Router 5 (all multi-hop/lookup),
 RAG 33.
 Per question type and per-question traces: see the dashboard's *"When do agents

@@ -47,8 +47,9 @@ or sort them.
 Patterns:
 - count/filter: search_events -> get_event_values -> count the matching entries. \
 `num_matching_events` is the candidate-set size, not the answer.
-- largest/most/fewest: get_event_values -> pick the extreme -> get_event_details \
-on its doc_id.
+- largest/most/fewest (superlative): get_event_values -> pick the extreme -> get_event_details \
+on its doc_id. If the question asks which event, athlete, sport, or nation had the most/least/highest, \
+the answer is the entity's title/name, NOT the count integer.
 - before/after: find the anchor event/edition -> traverse_graph with PREV or NEXT \
 -> read the year.
 - who won what, where: search_events -> get_event_details or traverse_graph(WON_BY).
@@ -59,8 +60,9 @@ versions and their doc_ids instead of picking one silently; the later statement,
 an explicit correction and a successor state outrank the older version.
 
 Answer rules: `answer` is a SHORT verbatim span from the corpus (a number, a \
-person's name, an event title). Cite the doc_ids that justify it. A count is \
-answered with the number alone. Call submit_answer once, when you are confident.
+person's name, an event title). If asked for an entity/event ("which ..."), provide the entity name/title. \
+If asked for a count/quantity ("how many ..."), provide the number alone. Cite the doc_ids that justify it. \
+Call submit_answer once, when you are confident.
 """
 
 
@@ -194,7 +196,7 @@ class ReActAgent:
             for call in calls:
                 result = tools.execute(call["name"], call["arguments"])
                 record = tools.calls[-1]
-                blob = json.dumps(result, default=str)
+                blob = json.dumps(result, default=str, ensure_ascii=False)
                 evidence_blobs.append(blob)
                 messages.append({
                     "role": "tool", "tool_call_id": call["id"],
@@ -207,7 +209,7 @@ class ReActAgent:
                     observation={"tool": call["name"],
                                  "args": call["arguments"] or {},
                                  "summary": record["summary"],
-                                 "result": _clip(json.dumps(result, default=str), 900)},
+                                 "result": _clip(json.dumps(result, default=str, ensure_ascii=False), 900)},
                     confidence_after=round(state.confidence, 3),
                     new_documents=_absorb(state, call["name"], result),
                     latency_ms=record["latency_ms"],
@@ -273,16 +275,26 @@ def _digest_history(messages: List[Dict[str, Any]]) -> None:
 def _assistant_message(text: str, calls: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Rebuild the assistant turn in OpenAI wire format so the model sees its
     own previous tool calls (required for multi-turn function calling)."""
-    return {
+    tool_calls = []
+    for c in calls:
+        tc_dict: Dict[str, Any] = {
+            "id": c["id"],
+            "type": "function",
+            "function": {
+                "name": c["name"],
+                "arguments": c.get("raw") or json.dumps(c.get("arguments") or {}),
+            },
+        }
+        if c.get("extra_content"):
+            tc_dict["extra_content"] = c["extra_content"]
+        tool_calls.append(tc_dict)
+    msg: Dict[str, Any] = {
         "role": "assistant",
-        "content": text or "",
-        "tool_calls": [
-            {"id": c["id"], "type": "function",
-             "function": {"name": c["name"],
-                          "arguments": json.dumps(c["arguments"] or {})}}
-            for c in calls
-        ],
+        "tool_calls": tool_calls,
     }
+    if text:
+        msg["content"] = text
+    return msg
 
 
 def _absorb(state: AgentState, tool: str, result: Any) -> int:
@@ -357,8 +369,16 @@ def _grounded_in_evidence(answer: str, evidence: str, overlap: float = 1.0) -> b
     """True when the answer occurs in, or is fully covered by, the evidence."""
     if not evidence or not normalize(answer):
         return False
-    if normalize(answer) in normalize(evidence):
+    norm_ans = normalize(answer)
+    norm_ev = normalize(evidence)
+    if norm_ans in norm_ev:
         return True
+    try:
+        decoded_ev = normalize(evidence.encode("utf-8").decode("unicode_escape"))
+        if norm_ans in decoded_ev:
+            return True
+    except Exception:
+        pass
     wanted = {t for t in tokens(answer) if t}
     if not wanted:
         return False
