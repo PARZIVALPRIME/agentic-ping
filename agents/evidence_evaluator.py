@@ -18,6 +18,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
+from .gaps import Gap
+
 from reasoning.query_parser import QuerySpec
 
 
@@ -48,9 +50,9 @@ class EvidenceEvaluator:
             if evidence.get("exhaustive"):
                 base += 0.18
             else:
-                gaps.append("some candidate documents do not expose 'competitors'")
+                gaps.append(Gap.CANDIDATES_MISSING_FIELD)
             if total <= 1:
-                gaps.append("candidate set is suspiciously small")
+                gaps.append(Gap.CANDIDATE_SET_SMALL)
                 base -= 0.15
             if evidence.get("count", 0) == 0:
                 base -= 0.05
@@ -66,35 +68,40 @@ class EvidenceEvaluator:
                 base += 0.15
             else:
                 base -= 0.1
-                gaps.append("winner is not separated from the runner-up")
+                gaps.append(Gap.WINNER_NOT_SEPARATED)
             if evidence.get("missing_field"):
-                gaps.append("some candidate documents lack 'competitors'")
+                gaps.append(Gap.FEW_CANDIDATES_WITH_FIELD)
                 base -= 0.08
             if evidence.get("candidates", 0) <= 2:
-                gaps.append("very few candidates carry the comparison field")
+                gaps.append(Gap.FEW_CANDIDATES_WITH_FIELD)
                 base -= 0.1
 
         elif kind == "temporal":
             signals.update(link or {})
+            # An unstated season that no evidence settled is a real gap: the
+            # edition being asked about is not established, so any answer would
+            # rest on a guess. It is recoverable (enumerate both editions).
+            if (link or {}).get("season_unresolved") or (link or {}).get("season_ambiguous"):
+                gaps.append(Gap.SEASON_UNRESOLVED)
             chain = (verification or {}).get("consistent")
             signals["anchor_confirmed"] = chain
             base = 0.62
             if chain:
                 base += 0.2
             else:
-                gaps.append("anchor edition not confirmed by the PREV/NEXT chain")
+                gaps.append(Gap.ANCHOR_NOT_CONFIRMED)
             matched = (link or {}).get("matched")
             if matched is None:
-                gaps.append("no event matched the question's descriptor")
+                gaps.append(Gap.NO_EVENT_MATCHED)
                 base = 0.15
             else:
                 match_score = float((link or {}).get("score", 0.0))
                 signals["event_match_score"] = match_score
                 base += 0.15 * match_score
                 if match_score < 0.7:
-                    gaps.append("event descriptor match is weak")
+                    gaps.append(Gap.WEAK_EVENT_MATCH)
                 if not getattr(matched, "gold", ""):
-                    gaps.append("matched edition has no gold medal field")
+                    gaps.append(Gap.EVENT_MISSING_GOLD)
                     base -= 0.2
 
         elif kind == "multi_hop":
@@ -105,22 +112,22 @@ class EvidenceEvaluator:
             if (link or {}).get("venue_affinity"):
                 base += 0.05
             if (link or {}).get("matched") is None:
-                gaps.append("no event matched the venue/date pair")
+                gaps.append(Gap.NO_VENUE_DATE_MATCH)
                 base = 0.15
             elif not getattr((link or {}).get("matched"), "gold", ""):
-                gaps.append("matched event has no gold medal field")
+                gaps.append(Gap.EVENT_MISSING_GOLD)
                 base -= 0.2
             if not (link or {}).get("num_candidates"):
-                gaps.append("venue did not resolve to any candidate events")
+                gaps.append(Gap.VENUE_UNRESOLVED)
 
         else:  # lookup
             signals["title_score"] = (link or {}).get("score")
             base = 0.6 + 0.35 * float((link or {}).get("score", 0.0))
             if (link or {}).get("matched") is None:
-                gaps.append("target article was not resolved")
+                gaps.append(Gap.ARTICLE_UNRESOLVED)
                 base = 0.15
             elif (link or {}).get("value") in (None, ""):
-                gaps.append("resolved article has no 'nations' field")
+                gaps.append(Gap.ARTICLE_MISSING_NATIONS)
 
         confidence = max(0.0, min(0.97, base))
         return {"confidence": round(confidence, 3), "gaps": gaps, "signals": signals,

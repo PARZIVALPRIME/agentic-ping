@@ -11,7 +11,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from reasoning.query_parser import QuerySpec
-from reasoning.solvers import (_event_similarity, _nearest_previous_games,
+from reasoning.solvers import (_event_similarity, resolve_previous_edition,
                                resolve_sport)
 
 
@@ -22,19 +22,43 @@ class TemporalReasoner:
         self.kg = kg
 
     def resolve_anchor(self, spec: QuerySpec) -> Dict[str, Any]:
-        """Find the Games edition the question's phrase actually refers to."""
-        season = spec.season or "Summer"
+        """Find the Games edition the question's phrase actually refers to.
+
+        The season is never assumed. If the question states it, it is used; if
+        not, the edition is resolved from evidence (the season that holds this
+        sport, then the season whose events match the question's descriptor). If
+        neither decides, the resolution is reported as unresolved/ambiguous and
+        the caller marks the gap - answering from the Summer Games because
+        Summer is a common default is exactly the silent error this avoids.
+        """
+        season = spec.season
         target = spec.before_year
         if target is None:
             target = min((spec.years_mentioned or [9999]))
-        year = _nearest_previous_games(season, target, self.kg)
+
+        edition = resolve_previous_edition(spec, self.kg) if spec.before_year is not None \
+            else {"season": spec.season, "year": None, "method": "",
+                  "candidates": []}
+        resolved = edition.get("year")
+        if resolved is not None and edition.get("season"):
+            season = edition["season"]
+            # Evidence pinned the season: record it on the spec so every later
+            # agent sees the same decision instead of re-guessing.
+            if not spec.season:
+                spec.season = season
+                spec.season_unresolved = False
+
+        reasoning = (f"latest {season or 'unstated-season'} Games strictly before "
+                     f"{target} is {resolved} (resolved by {edition.get('method') or 'none'})")
         return {
             "anchor_year": target,
-            "resolved_year": year,
+            "resolved_year": resolved,
             "season": season,
-            "reasoning": (f"latest {season} Games strictly before {target} "
-                          f"is {year}"),
+            "season_resolution": edition.get("method") or "none",
+            "resolution": edition,
+            "reasoning": reasoning,
         }
+
 
     def resolve_event(self, spec: QuerySpec, year: int, season: str,
                       top_n: int = 3) -> Dict[str, Any]:

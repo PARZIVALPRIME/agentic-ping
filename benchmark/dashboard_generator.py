@@ -4,6 +4,10 @@ Inputs (produced by ``benchmark.runner``):
 - ``results/public_results.json``   per-question records (all pipelines)
 - ``results/metrics_summary.json``  aggregate tables
 
+The corpus (``config.benchmark.corpus_path``) is read for its document count, so
+the header/footer state the size of the corpus the run used instead of a number
+typed into this file.
+
 Output:
 - ``dashboard/index.html`` - a single self-contained page. Chart logic lives
   in ``dashboard/dashboard.js`` and styling in ``dashboard/styles.css``; the
@@ -38,7 +42,7 @@ HTML_HEAD = """<!DOCTYPE html>
 <header>
   <div>
     <h1>Agentic GraphRAG Benchmark</h1>
-    <p class="sub">RAG vs GraphRAG vs Agentic GraphRAG — Olympics corpus, 2,951 documents</p>
+    <p class="sub">RAG vs GraphRAG vs Agentic GraphRAG — __CORPUS_LINE__</p>
   </div>
   <div id="meta" class="meta"></div>
 </header>
@@ -132,6 +136,36 @@ def _load(path: str) -> Any:
         return json.load(fh)
 
 
+def _corpus_facts() -> Dict[str, Any]:
+    """Measure the corpus for the header/footer line the page has to state.
+
+    The header and the footer both used to hard-code "2,951 documents" - a fact
+    about one corpus snapshot, not about the run on the page, and one that has
+    already outlived its usefulness once (the footer additionally claimed a
+    hosted model and provider that no run in this repository used). Counting is
+    a single pass over a 23 MB jsonl (~0.2 s), which is far cheaper than
+    publishing a stale number. When the corpus cannot be read the page says the
+    size is unrecorded instead of guessing.
+    """
+    try:
+        from config import config
+        path = config.benchmark.corpus_path
+    except Exception:
+        path = ""
+    if not path:
+        return {}
+    if not os.path.isabs(path):
+        path = os.path.join(ROOT, path)
+    if not os.path.exists(path):
+        return {"path": path, "num_docs": 0}
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            docs = sum(1 for line in fh if line.strip())
+    except OSError:
+        return {}
+    return {"path": path, "num_docs": docs}
+
+
 def generate(results_path: str = "results/public_results.json",
              summary_path: str = "results/metrics_summary.json",
              out_dir: str = "dashboard",
@@ -146,6 +180,9 @@ def generate(results_path: str = "results/public_results.json",
     # ``provenance.llm_activity`` still wins in the dashboard.
     activity = llm_activity(entries)
     warnings = llm_activity_warnings(activity)
+    # Measured here rather than read from the results file: the corpus is an
+    # input to the run, and the page states its size in the header and footer.
+    corpus = _corpus_facts()
 
     if require_llm and not any(slot.get("llm_contributed") for slot in activity.values()):
         idle = ", ".join(sorted(activity)) or "no pipeline"
@@ -157,16 +194,22 @@ def generate(results_path: str = "results/public_results.json",
 
     payload = {"entries": entries, "summary": summary,
                "llm_activity": activity, "llm_warnings": warnings,
+               "corpus": corpus,
                "generated": __import__("time").strftime("%Y-%m-%d %H:%M:%S"),
                "results_file": results_path}
 
     os.makedirs(out_dir, exist_ok=True)
-    html = HTML_HEAD.replace("__DATA__", json.dumps(payload, ensure_ascii=False))
+    docs = int(corpus.get("num_docs") or 0)
+    corpus_line = (f"Olympics corpus, {docs:,} documents" if docs
+                   else "corpus document count not recorded in this page")
+    html = (HTML_HEAD.replace("__DATA__", json.dumps(payload, ensure_ascii=False))
+                     .replace("__CORPUS_LINE__", corpus_line))
     out_path = os.path.join(out_dir, name)
     with open(out_path, "w", encoding="utf-8") as fh:
         fh.write(html)
     print(f"dashboard -> {out_path} ({len(entries)} questions, "
-          f"{len(html) / 1024:.0f} KiB)")
+          f"{len(html) / 1024:.0f} KiB, corpus "
+          f"{f'{docs:,} documents' if docs else 'size unmeasured'})")
     for name, slot in activity.items():
         print(f"  {name:<18s} provider calls in {slot['records_with_calls']}"
               f"/{slot['records']} records, model output in "

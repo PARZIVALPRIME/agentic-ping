@@ -116,11 +116,13 @@ class AgenticPipeline:
                  "observation": s.observation}
                 for s in state.trace if s.operation in EVIDENCE_OPS]
         result.unresolved = list(state.missing_info)
+        result.uncertainty = round(max(0.0, min(1.0, 1.0 - float(state.confidence or 0.0))), 3)
         result.metadata = {
             "pipeline": self.name,
             "agent_mode": self.engine.cfg.get("agent_mode"),
             "classification": state.classification,
             "slot_report": state.slot_report,
+            "parse_report": state.parse_report,
             "spec": state.spec.to_dict(),
             "strategy_changes": state.strategy_changes,
             "resolved_gaps": state.resolved_gaps,
@@ -128,6 +130,8 @@ class AgenticPipeline:
             "synth_source": state.synth_source,
             "rationale": state.rationale,
             "adjudication": state.adjudication,
+            "conflicts": state.fact_conflicts,
+            "uncertainty": result.uncertainty,
             "tool_calls": list(state.tool_calls),
             "docs_touched": len(state.documents),
             "plan_skips": [{"agent": s.agent, "operation": s.operation,

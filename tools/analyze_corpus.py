@@ -7,6 +7,17 @@ import re
 import sys
 from collections import Counter
 
+# The corpus is Wikipedia text: titles and infobox values carry en/em dashes,
+# macrons ("Tōkyō") and other non-ASCII characters. On Windows the console
+# defaults to cp1252, and printing one of those examples raised
+# UnicodeEncodeError *after* the analysis had run - so the tool crashed on the
+# last line of output it was written to produce. Print UTF-8, and never let an
+# unprintable character lose the numbers behind it.
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:  # pragma: no cover - non-reconfigurable stream
+    pass
+
 CORPUS = sys.argv[1] if len(sys.argv) > 1 else \
     "corpus-20260919T043338Z-1-001/corpus/corpus.jsonl"
 

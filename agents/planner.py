@@ -23,15 +23,22 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, Tuple
 
 from agents.state import AgentState, PlannedStep
+from config import config as _app_config
 from reasoning.query_parser import QuerySpec
 
-SLOT_PROMPT = """Extract structured slots from an Olympics question.
+
+def _corpus_label() -> str:
+    """How prompts name the corpus: configuration, never hardcoded per domain."""
+    return getattr(getattr(_app_config, "domain", None), "corpus_label",
+                   "the corpus")
+
+SLOT_PROMPT = """Extract structured slots from a question about {corpus_label}.
 
 Fields (omit any you cannot determine):
   qtype        one of lookup | multi_hop | temporal | aggregation | superlative
   sport        the sport name exactly as it appears in the question
-  year         the 4-digit Olympics year mentioned
-  season       "Summer" or "Winter"
+  year         the 4-digit year the question mentions
+  season       the season/category the question names (e.g. "Summer", "Winter")
   threshold    the competitor count the question compares against (integer)
   comparator   one of gt | gte | lt | lte  (gt="more than", gte="at least",
                lt="fewer than", lte="at most")
@@ -39,7 +46,7 @@ Fields (omit any you cannot determine):
   venue        the venue name the question mentions
   date_text    the date phrase the question mentions (e.g. "28 July 2012")
   event_desc   the event description, with the sport name removed
-  target_title the Wikipedia article title for lookup questions
+  target_title the article title for lookup questions
   before_year  the year in an "immediately before <year>" question
 
 Question: {question}
@@ -49,7 +56,7 @@ Known sports in the corpus (choose the closest match if the question paraphrases
 
 Reply with JSON only."""
 
-PLAN_PROMPT = """An agent is answering an Olympics question and its evidence has gaps.
+PLAN_PROMPT = """An agent is answering a question about {corpus_label} and its evidence has gaps.
 
 Question: {question}
 Question type: {qtype}
@@ -171,7 +178,8 @@ class Planner:
             return report
         sports = ", ".join(getattr(self.kg, "sport_vocabulary", [])[:80]) or "(unknown)"
         payload = self.llm.complete_json(
-            SLOT_PROMPT.format(question=question, sports=sports),
+            SLOT_PROMPT.format(question=question, sports=sports,
+                               corpus_label=_corpus_label()),
             caller="planner.slots", model=self.llm.fast_model, counter=counter)
         if not payload:
             return report
@@ -207,7 +215,10 @@ class Planner:
                 return None
             if field == "threshold":
                 return number if 0 < number < 100000 else None
-            return number if 1896 <= number <= 2035 else None
+            # Plausible years come from configuration: a hallucinated year is
+            # rejected instead of being allowed into a slot.
+            domain = _app_config.domain
+            return number if domain.year_min <= number <= domain.year_max else None
         text = str(value).strip()
         if not text or len(text) > 120:
             return None
@@ -250,7 +261,8 @@ class Planner:
             PLAN_PROMPT.format(question=state.question, qtype=state.qtype,
                                summary=summary,
                                gaps="; ".join(state.missing_info) or "none",
-                               actions=listing),
+                               actions=listing,
+                               corpus_label=_corpus_label()),
             caller="planner.replan", model=self.llm.fast_model)
         try:
             chosen = int(payload.get("action", fallback))

@@ -24,6 +24,14 @@ FIELD_RE = re.compile(r"^\s{0,4}([a-z_]+)\s*:\s?(.*)$")
 INT_RE = re.compile(r"^\s*(\d+)\s*$")
 MEDAL_FIELDS = ("gold", "silver", "bronze")
 
+#: Bump whenever the persisted graph gains a field a run depends on. A cache
+#: written by an older builder is rebuilt rather than loaded. Without this an
+#: upgraded builder silently produced a graph whose new fields fell back to
+#: their dataclass defaults (a missing key and an empty value look identical to
+#: every consumer), which is exactly how a "fact has no version date" run is
+#: possible with no error anywhere.
+KG_SCHEMA_VERSION = 2
+
 # Two athletes in a pairs/doubles event arrive fused with no delimiter
 # ("Šime FantelaIgor Marenić"). We deliberately KEEP them fused: the gold
 # answers are fused the same way (e.g. "Dani KingLaura TrottJoanna Rowsell"),
@@ -102,6 +110,48 @@ def _event_key(sport: str, event_name: str) -> str:
     return f"{normalize(sport)}::{normalize(event_name)}"
 
 
+_MONTH_NUMBERS = {name.lower(): i for i, name in enumerate(
+    ("January", "February", "March", "April", "May", "June", "July", "August",
+     "September", "October", "November", "December"), start=1)}
+
+
+def _iso_version_date(date_text: str, year: int) -> str:
+    """Best-effort ISO date for when a fact was true ("as of").
+
+    The corpus has no document-revision timestamp, so the version signal is the
+    event's own date: "28 July 2012" -> "2012-07-28", falling back to the Games
+    year, and to "" when neither is known. An absent date stays absent - a
+    guessed version date would be worse than none.
+
+    The edition year is authoritative for *versioning*: two pages carry an
+    infobox date belonging to another edition entirely (Q1144277 dates a 2008
+    page 2012-08-15, Q7400312 dates a 1992 page 2001-09-11). Carrying those
+    through would let a page supersede an edition it has nothing to do with, so
+    a stated year that is neither the edition year nor the next one - the Tokyo
+    2020-edition-held-in-2021 case - is discarded in favour of the edition.
+    """
+    import re
+
+    text = (date_text or "").strip()
+    parsed = ""
+    m = re.search(r"(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})", text)
+    if m:
+        month = _MONTH_NUMBERS.get(m.group(2).lower())
+        parsed = (f"{int(m.group(3)):04d}-{month:02d}-{int(m.group(1)):02d}"
+                  if month else f"{int(m.group(3)):04d}")
+    else:
+        m2 = re.search(r"([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})", text)
+        month = _MONTH_NUMBERS.get(m2.group(1).lower()) if m2 else None
+        if month:
+            parsed = (f"{int(m2.group(3)):04d}-{month:02d}-"
+                      f"{int(m2.group(2)):02d}")
+    if parsed and year and int(parsed[:4]) not in (year, year + 1):
+        return f"{year:04d}"
+    if parsed:
+        return parsed
+    return f"{year:04d}" if year else ""
+
+
 def build_kg(corpus_path: str, progress: bool = True) -> KnowledgeGraph:
     """Parse the corpus and return a fully-linked :class:`KnowledgeGraph`."""
     kg = KnowledgeGraph()
@@ -148,6 +198,11 @@ def build_kg(corpus_path: str, progress: bool = True) -> KnowledgeGraph:
         date_blob = f"{node.date_raw} {node.dates_raw} {node.games_label}"
         node.months_found = sorted(months_in(date_blob))
         node.days_found = sorted(days_in(date_blob), key=lambda d: int(d))
+        # Round 2: every fact carries an "as of" date and the kind of source it
+        # came from, so two statements about the same thing can be ordered.
+        node.source_type = "infobox"
+        node.fact_version_date = _iso_version_date(node.date_raw or node.dates_raw,
+                                                   node.year)
         kg.add_event(node)
 
         event_keys.setdefault(_event_key(node.sport, node.event_name), []).append(doc_id)
@@ -221,12 +276,25 @@ def _build_medal_vertices(kg: KnowledgeGraph) -> None:
 
 def load_or_build(corpus_path: str, cache_path: str = "results/knowledge_graph.json",
                   rebuild: bool = False) -> KnowledgeGraph:
-    """Load the graph from cache when available, otherwise build and cache it."""
+    """Load the graph from cache when available, otherwise build and cache it.
+
+    A cache is only trusted when it was written by the current
+    :data:`KG_SCHEMA_VERSION`; an older (or unreadable) file is rebuilt instead,
+    so a builder upgrade can never leave a run reading a graph that lacks the
+    newer fields.
+    """
     import os
 
     if not rebuild and os.path.exists(cache_path):
-        with open(cache_path, "r", encoding="utf-8") as fh:
-            return KnowledgeGraph.from_dict(json.load(fh))
+        data: Any = None
+        try:
+            with open(cache_path, "r", encoding="utf-8") as fh:
+                data = json.load(fh)
+        except (OSError, ValueError):
+            data = None
+        if isinstance(data, dict) and data.get("schema_version") == KG_SCHEMA_VERSION:
+            return KnowledgeGraph.from_dict(data)
+        print(f"[kg] cache {cache_path} is not schema v{KG_SCHEMA_VERSION}; rebuilding")
     kg = build_kg(corpus_path)
     save_kg(kg, cache_path)
     return kg
@@ -237,6 +305,7 @@ def save_kg(kg: KnowledgeGraph, cache_path: str) -> None:
 
     payload = kg.to_dict()
     payload["non_event_doc_ids"] = kg.non_event_doc_ids
+    payload["schema_version"] = KG_SCHEMA_VERSION
     os.makedirs(os.path.dirname(cache_path) or ".", exist_ok=True)
     with open(cache_path, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False)

@@ -32,7 +32,7 @@
           "accuracy": 0.0
         }
       },
-      "avg_latency_ms": 60.828,
+      "avg_latency_ms": 45.462,
       "avg_context_tokens": 289.4,
       "avg_input_tokens": 318.0,
       "avg_output_tokens": 0.0,
@@ -86,7 +86,7 @@
           "accuracy": 0.0
         }
       },
-      "avg_latency_ms": 269.416,
+      "avg_latency_ms": 190.15,
       "avg_context_tokens": 889.6,
       "avg_input_tokens": 918.2,
       "avg_output_tokens": 0.0,
@@ -139,7 +139,7 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 61.888,
+      "avg_latency_ms": 45.184,
       "avg_context_tokens": 271.6,
       "avg_input_tokens": 0.0,
       "avg_output_tokens": 0.0,
@@ -202,7 +202,7 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 57.312,
+      "avg_latency_ms": 46.502,
       "avg_context_tokens": 271.6,
       "avg_input_tokens": 0.0,
       "avg_output_tokens": 0.0,
@@ -297,10 +297,24 @@
     "num_calls": 0,
     "failed_calls": 0,
     "degraded": false,
-    "error": "no provider/API key configured"
+    "error": "no provider/API key configured",
+    "min_interval_s": 0.0,
+    "tpm_budget": 0,
+    "enabled": true,
+    "rate_limit_events": 0,
+    "pace_sleeps": 0,
+    "pace_slept_s": 0.0,
+    "circuit": {
+      "threshold": 999999,
+      "cooldown_s": 0.0,
+      "enabled": true,
+      "trips": 0,
+      "blocked_calls": 0,
+      "open": false
+    }
   },
   "run_mode": "deterministic",
-  "wall_clock_s": 2.3,
+  "wall_clock_s": 1.7,
   "backend": {
     "requested": "local",
     "active": "local",

@@ -18,6 +18,10 @@ as a model plausibly can, and asserts that accuracy does not drop:
     prose              answers counting questions in prose ("There are ...")
     empty              returns empty / malformed JSON
     truncated          returns a 400-char ramble (a 4B model that overruns)
+    wrong_qtype        answers the *classification* request with a legal but
+                       wrong label ("lookup") every time, so no validator can
+                       reject it - only the evidence can (the reading produced
+                       no answer, and the run is retried under the templates')
 
 If accuracy under any adversary is below the deterministic baseline, a guard is
 missing and the run on the other machine would silently score lower than the
@@ -67,6 +71,14 @@ class _StubLLM:
         self.num_calls += 1
         if self.behaviour == "empty":
             return {}
+        if self.behaviour == "wrong_qtype" and (
+                "parser.semantic" in caller or "classifier" in caller):
+            # A *legal* label, just the wrong one - the failure no validation can
+            # catch, because "lookup" is a perfectly good question type. Only
+            # the outcome can: the reading produces nothing, so the run retries
+            # under the templates' reading.
+            return {"qtype": "lookup", "confidence": 0.9,
+                    "reason": "adversarial stub: confident, wrong label"}
         return {"answer": self._text(), "agree": False,
                 "reason": "adversarial stub: deliberately overrules the candidate"}
 
@@ -84,7 +96,7 @@ class _StubLLM:
 
     # -- the bad behaviour ---------------------------------------------------
     def _text(self) -> str:
-        if self.behaviour == "always_disagree":
+        if self.behaviour in ("always_disagree", "wrong_qtype"):
             return "Vladimir Smirnov"          # plausible, short, wrong
         if self.behaviour == "prose":
             return "There are several such events across the Games."
@@ -97,7 +109,7 @@ class _StubLLM:
         raise ValueError(self.behaviour)
 
 
-ADVERSARIES = ["always_disagree", "prose", "empty", "truncated"]
+ADVERSARIES = ["always_disagree", "prose", "empty", "truncated", "wrong_qtype"]
 
 
 def _guard_unit_tests() -> List[str]:

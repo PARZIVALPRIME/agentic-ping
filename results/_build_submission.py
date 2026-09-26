@@ -1,14 +1,16 @@
 """Rebuild the hidden submission file from the completed hidden benchmark run
 (results/hidden_llm.json) instead of re-running the pipeline. Same schema as
-tools/submit_hidden.py writes, built from the Router arm (best public accuracy;
-its answers are identical to Agentic GraphRAG on all 50 hidden questions).
+tools/submit_hidden.py writes, built from the Agentic GraphRAG arm -- the same
+default tools/submit_hidden.py uses, the best public accuracy (88% vs Router's
+86%), and the only arm that answered all 50 hidden questions (Router left 5
+blank).
 """
 import json
 import sys
 
 SRC = "results/hidden_llm.json"
 OUT = "results/hidden_submission.json"
-PIPELINE = "Router"
+PIPELINE = "Agentic GraphRAG"
 
 rows = json.load(open(SRC, encoding="utf-8"))
 records = []
@@ -66,8 +68,8 @@ payload = {
         "num_answered": answered,
         "total_tokens": total_tokens,
         "source_run": SRC,
-        "note": ("rebuilt from the completed benchmark run; identical answers "
-                 "to the Agentic GraphRAG arm on all 50 questions"),
+        "note": ("rebuilt from the completed benchmark run; the Agentic GraphRAG "
+                 "arm answered all 50 hidden questions"),
     },
     "results": records,
 }

@@ -93,6 +93,27 @@ TOOL_SCHEMAS: List[Dict[str, Any]] = [
                                description="default 'both'")},
             ["doc_id", "edge_type"]),
 
+    _schema("detect_conflicts",
+            "Adjudicate competing versions of the SAME fact (a medal winner, a "
+            "venue, a record, a count) from different sources. Precedence is "
+            "explicit: an explicit correction outranks a plain statement, then "
+            "recency, then entity succession (USSR -> Russia), then majority. "
+            "Returns the winning value, the rule that decided it, the versions "
+            "it superseded and the confidence left over. Use it when two sources "
+            "disagree rather than picking one silently.",
+            {"field": dict(_STR, description="name of the fact, e.g. 'gold'"),
+             "values": {"type": "array", "items": _STR,
+                        "description": "the competing values, one per source"},
+             "doc_ids": {"type": "array", "items": _STR,
+                         "description": "optional doc_id per value"},
+             "years": {"type": "array", "items": _INT,
+                       "description": "optional year per value (enables recency)"},
+             "sources": {"type": "array", "items": _STR,
+                         "description": "optional source_type per value: "
+                                        "official_report | result_page | infobox | "
+                                        "prose | unknown"}},
+            ["field", "values"]),
+
     _schema("submit_answer",
             "Submit the final answer and stop. Call once, when confident. "
             "'answer' is a short verbatim span: a number, a name, an event "
@@ -253,6 +274,42 @@ class GraphTools:
                 "count": len(events), "returned": len(rows),
                 "events": rows, "doc_ids": [r["doc_id"] for r in rows]}
 
+    # ── Round 2: conflict resolution ───────────────────────────────────
+    def detect_conflicts(self, field: str = "", values: Optional[List[Any]] = None,
+                         doc_ids: Optional[List[str]] = None,
+                         years: Optional[List[int]] = None,
+                         sources: Optional[List[str]] = None) -> Dict[str, Any]:
+        """Adjudicate competing versions of one fact (Round 2).
+
+        The tool exists so the *agent* notices that two sources disagree and then
+        delegates the precedence decision to the explainable resolver - authority
+        correction > recency > entity succession > majority - instead of picking
+        a value silently. The verdict names the rule, the evidence it rested on,
+        the versions it superseded and the uncertainty that is left.
+        """
+        from reasoning.conflicts import resolve
+
+        ids = list(doc_ids or [])
+        yrs = list(years or [])
+        srcs = list(sources or [])
+        candidates: List[Dict[str, Any]] = []
+        for i, value in enumerate(values or []):
+            if value in (None, ""):
+                continue
+            candidates.append({
+                "value": value,
+                "doc_id": ids[i] if i < len(ids) else "",
+                "year": yrs[i] if i < len(yrs) else None,
+                "source_type": srcs[i] if i < len(srcs) else "unknown",
+                "text": str(value),
+            })
+        resolution = resolve(field or "fact", candidates)
+        out = resolution.to_dict()
+        out["uncertainty"] = round(max(0.0, 1.0 - float(resolution.confidence or 0.0)), 3)
+        out["num_versions"] = len(candidates)
+        out["doc_ids"] = [c["doc_id"] for c in candidates if c["doc_id"]]
+        return out
+
     # ── terminal tool ──────────────────────────────────────────────────
     def submit_answer(self, answer: str = "", reasoning: str = "",
                       doc_ids: Optional[List[str]] = None,
@@ -317,6 +374,9 @@ def _summarise(name: str, result: Any) -> str:
         return f"{result.get('edge_type')} -> {result.get('num_found', 0)} neighbour(s)"
     if name == "get_games_events":
         return f"{result.get('count', 0)} event(s) at {result.get('year')}"
+    if name == "detect_conflicts":
+        return (f"{result.get('field')}: {str(result.get('resolved'))[:40]} "
+                f"({result.get('rule')}, uncertainty {result.get('uncertainty')})")
     if name == "submit_answer":
         return f"answer={str(result.get('answer', ''))[:60]}"
     return json.dumps(result)[:120]

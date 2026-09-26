@@ -23,6 +23,7 @@ accuracy never falls below the `--no-llm` floor:
 | `prose` | answers counting questions in prose ("There are several…") |
 | `empty` | returns empty / malformed JSON |
 | `truncated` | emits a 400-char hedging ramble, as a model that overruns its budget does |
+| `wrong_qtype` | answers the *classification* request with a legal but wrong label (`lookup`) every time |
 
 ## What it found (before the fixes)
 
@@ -40,11 +41,44 @@ Had this been run blind on the submission machine, the LLM run would have
 scored far below the deterministic run we had already validated, and the cause
 would have looked like a mystery.
 
-Three distinct defects were responsible.
+Five distinct defects were responsible.
 
-## The three fixes
+## The fixes
 
-**1. Adjudication was ungrounded** (`utils/llm.py::refine_answer`)
+**1. The parser credited a slot-less reply with the prompt's defaults**
+(`reasoning/query_parser.py::parse_question_semantic`)
+
+This is the defect the audit caught a *second* time, on the branch that added
+the semantic parser, and it is the most instructive one.
+
+The parse request shows the model a JSON skeleton, so a compliant model writes
+`qtype: "lookup"` for "I see no category". When reading the reply, the parser
+fell back to `SLOT_DEFAULTS` for every field the model omitted -
+`payload.get(field, SLOT_DEFAULTS[field])`. So a reply with **no slots at all**,
+like the adjudication-shaped `{"answer": "Vladimir Smirnov", "agree": false}`
+that a confused small model actually produces, was read as the model *choosing*
+`qtype = "lookup"`.
+
+That invention then survived the deterministic fill, because the fill test was
+"is the slot empty?" and the slot now held `"lookup"`. The consequence was not
+a wrong answer but **no answer**: an aggregation question was planned as a
+single-article lookup, the article could not be resolved, and the run returned
+the empty string. All three non-empty adversaries scored the Agentic pipeline at
+15% instead of 100%.
+
+Two invariants replaced it:
+
+- a field the model did not return is *missing*, and missing is filled by the
+  templates - so a slot-less reply is credited with nothing (it no longer even
+  appears in `corpus_validated`, which is what made the old behaviour
+  misattribute the qtype in the run trace);
+- the fill is tracked from what the model actually supplied (and the corpus
+  accepted) rather than from "the slot is empty", so the dataclass placeholders
+  (`qtype="unknown"`, `comparator="gt"`, `direction="max"`) and corpus-rejected
+  values can no longer block it. A fill that would not change the spec is not
+  recorded, so the report still says the model produced the slots when it did.
+
+**2. Adjudication was ungrounded** (`utils/llm.py::refine_answer`)
 
 The adjudicator's job is to pick the right answer *out of the context it was
 shown* — it is not licensed to invent a new one. A replacement is now accepted
@@ -57,7 +91,7 @@ characteristic 4B failure — a fluent, short, unsupported answer — is
 indistinguishable from a genuine correction by *any other test*. A real
 correction is by definition quoted from the evidence, so it passes untouched.
 
-**2. ReAct prose was accepted as an answer** (`agents/react_agent.py`)
+**3. ReAct prose was accepted as an answer** (`agents/react_agent.py`)
 
 Replying in prose instead of calling `submit_answer` already means the model
 lost the protocol. Taking the last line of a hedging paragraph as the answer
@@ -65,7 +99,7 @@ scored zero *and* suppressed the deterministic fallback — failing worse than
 not trying at all. `_answer_shaped()` now rejects hedging phrasing and anything
 longer than a span (gold answers are names, years, countries, counts).
 
-**3. `hybrid` mode rescued on emptiness, not on evidence**
+**4. `hybrid` mode rescued on emptiness, not on evidence**
 (`agents/orchestrator.py`)
 
 `hybrid` promises "the LLM drives; deterministic solvers rescue empty answers".
@@ -73,6 +107,36 @@ But an answer the model *typed* never passed through a tool, so nothing in the
 system had checked it against the graph. Only an answer submitted via the
 `submit_answer` tool has been through the grounded path, so only that one now
 skips the deterministic solvers.
+
+**5. A wrong-but-legal question type could still cost the question**
+(`agents/orchestrator.py`)
+
+Fix 1 stops a slot-less reply from inventing a question type. It does not stop a
+model that returns a *valid* one and is simply wrong - and that is the most
+common way a small model fails, because "lookup" is a perfectly good answer to
+"which category is this?". No validator can reject it; the classifier's
+structural override catches only the counting/extreme/edition questions.
+
+So the guard is evidence-based, like the others: after the deterministic path
+runs, if the run has **no answer at all** and the parse had read the question as
+a different type from the templates, the whole deterministic path is retried
+once under the templates' reading - with the question type pinned so the model's
+own vote cannot walk it back, with the abandoned attempt's answer, gaps and
+candidate set cleared so the second reading is judged on its own results, and
+with a fresh step budget, because the first reading has already spent it.
+
+Three properties make this safe to ship:
+
+- it fires on a **result**, not on suspicion, so a model reading that works is
+  still kept and still measured (which is what the ablation study exists to
+  measure);
+- it can only turn an empty answer into a non-empty one;
+- it is unreachable without an LLM, because with no model the parse returns the
+  template spec and `spec.qtype` always equals the templates' `rule_qtype` - so
+  the deterministic arms' published numbers cannot move.
+
+Measured on the `wrong_qtype` adversary (public set, 20 questions): **15% -> 100%**
+for the Agentic pipeline, with the retry alone accounting for 75% -> 100%.
 
 Plus two guards added earlier in the same pass:
 
@@ -91,6 +155,7 @@ Plus two guards added earlier in the same pass:
  adversary 'prose'             RAG 20% (+0%)   GraphRAG 65% (+0%)   Agentic 100% (+0%)
  adversary 'empty'             RAG 20% (+0%)   GraphRAG 65% (+0%)   Agentic 100% (+0%)
  adversary 'truncated'         RAG 20% (+0%)   GraphRAG 65% (+0%)   Agentic 100% (+0%)
+ adversary 'wrong_qtype'       RAG 20% (+0%)   GraphRAG 65% (+0%)   Agentic 100% (+0%)
 
  PASS - no adversary can score below the deterministic baseline.
 ```

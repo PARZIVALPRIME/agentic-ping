@@ -115,5 +115,47 @@ succession → majority. Every decision carries the rule that produced it and
 the evidence it rested on. Verify with:
 
 ```powershell
-python tools/demo_conflicts.py
+python tools/demo_conflicts.py     # the resolver, rule by rule
+python tools/test_round2.py        # the wiring: dates, audit, gap, tool
+python tools/_smoke_conflicts.py 1 # a real agentic run's metadata + trace
 ```
+
+### What reaches a run
+
+The resolver is not a standalone study: every stage of a run now carries the
+version signal and the verdict.
+
+| Stage | What it carries |
+| --- | --- |
+| `kg/builder.py` | every fact gets `source_type` and an "as of" `fact_version_date` ("28 July 2012" → `2012-07-28`, the Games year when the day is not stated). A stated year that is neither the edition's nor the next one is discarded: two pages in the corpus date themselves to an unrelated edition, and a version date like that would let a page supersede an edition it never took part in. |
+| `agents/orchestrator.py` | after the answer is finalised, the documents that *attest* it plus the model's own reading of the passages are handed to the resolver. The verdict is written to the trace, to the observation and to `state.fact_conflicts`; the confidence of the run is capped by the confidence of the adjudication, and `state.uncertainty` (1 − confidence) travels with the result. |
+| `agents/gaps.py`, `agents/gap_detector.py` | an adjudication that no rule settled — the versions disagree and neither dates nor authority separate them — is recorded as the `conflicting_evidence` gap, for which the gap detector has a targeted recovery (retrieve the authoritative/superseding passage). |
+| `agents/tools.py`, prompt | a `detect_conflicts` tool lets the *agent* hand the versions it saw to the same resolver, and the ReAct prompt tells it to use the tool rather than pick silently. |
+| `pipelines/base.py`, `pipelines/agentic_pipeline.py` | every pipeline result reports `uncertainty`, and the agentic metadata reports `conflicts` + `uncertainty`. |
+
+### What it deliberately does not do
+
+- **It never rewrites the answer.** A conflict is reported, priced into the
+  confidence and offered to the gap recovery; the grounded answer is only ever
+  revised by the adjudication step that already existed.
+- **It does not audit derived answers.** A count or an extreme is computed over
+  a candidate set in which every document holds a different value by
+  construction; comparing those values labelled *every* aggregation "majority,
+  undecided" and cut a correct answer's confidence from 0.97 to 0.60 (measured on
+  the public set). Derived answers and answers that cannot be attributed to a
+  field of the documents that cite them are therefore left unaudited.
+- **It does not compare values across editions automatically.** 415 of the 535
+  event groups change venue across editions, and the 6 pairs the infobox alias
+  field appeared to link were generic-name collisions ("Olympic Stadium" in two
+  different cities) — two editions are usually two facilities or two results, not
+  two names for one fact. Cross-edition versions the agent has actually observed
+  go through `detect_conflicts`, where the model names them.
+- **The KG cache is versioned** (`KG_SCHEMA_VERSION`): an older cache is rebuilt
+  instead of loaded, because a missing field and an empty field are
+  indistinguishable to every consumer — the first build after this change
+  silently produced a graph whose facts had no version date at all.
+
+The remaining gap is a *counting* consequence: two different states in one
+successor lineage (the Soviet Union and Russia, say) are counted as two
+entities. Deciding whether they are one is an answer-level judgement, not a
+reporting one, so it is left out rather than guessed.

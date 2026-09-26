@@ -21,16 +21,23 @@ deterministic path so the benchmark never loses a question.
 from __future__ import annotations
 
 import json
+import re
 import time
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
+from kg.textutil import normalize, tokens
 from utils.llm import LLMHelper
+from config import config as _app_config
+from utils.thresholds import thresholds
 
 from .state import AgentState, ExecutedStep
 from .tools import TOOL_SCHEMAS, GraphTools
 
-SYSTEM_PROMPT = """You are an agent answering questions about Olympic events from \
-a corpus of Wikipedia articles. The corpus is the ONLY source of truth; if the \
+#: The agent's operating instructions. The corpus is named from configuration so
+#: pointing the system at another document collection is a config change, not a
+#: code change - nothing in the loop depends on the subject matter.
+SYSTEM_PROMPT_TEMPLATE = """You are an agent answering questions about \
+{entity_label}s in {corpus_label}. The corpus is the ONLY source of truth; if the \
 tools show nothing, say so instead of guessing.
 
 Work iteratively: call tools, read the results, decide the next step. Do the \
@@ -42,15 +49,31 @@ Patterns:
 `num_matching_events` is the candidate-set size, not the answer.
 - largest/most/fewest: get_event_values -> pick the extreme -> get_event_details \
 on its doc_id.
-- before/after: find the anchor event -> traverse_graph with PREV or NEXT -> read \
-the year.
+- before/after: find the anchor event/edition -> traverse_graph with PREV or NEXT \
+-> read the year.
 - who won what, where: search_events -> get_event_details or traverse_graph(WON_BY).
 - prose evidence: search_passages.
+- disagreement: if two sources state different versions of the same fact (a \
+record, a venue name, a medallist, a nation), call detect_conflicts with the \
+versions and their doc_ids instead of picking one silently; the later statement, \
+an explicit correction and a successor state outrank the older version.
 
 Answer rules: `answer` is a SHORT verbatim span from the corpus (a number, a \
 person's name, an event title). Cite the doc_ids that justify it. A count is \
 answered with the number alone. Call submit_answer once, when you are confident.
 """
+
+
+def system_prompt() -> str:
+    """The agent system prompt, with the corpus named from configuration."""
+    domain = getattr(_app_config, "domain", None)
+    return SYSTEM_PROMPT_TEMPLATE.format(
+        corpus_label=getattr(domain, "corpus_label", "the corpus"),
+        entity_label=getattr(domain, "entity_label", "corpus record"))
+
+
+#: Backwards-compatible constant: probes and dashboards import this name.
+SYSTEM_PROMPT = system_prompt()
 
 MAX_TOOL_RESULT_CHARS = 1600
 # Older tool payloads are digested before each turn: the model keeps the two
@@ -90,11 +113,15 @@ class ReActAgent:
             return state
 
         messages: List[Dict[str, Any]] = [
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": system_prompt()},
             {"role": "user", "content": f"Question: {question}"},
         ]
         state.strategy_changes.append("strategy: LLM tool-calling loop (ReAct)")
         retries_left = self.max_retries
+        # Everything the tools have returned, kept verbatim: this is the evidence
+        # an answer is validated against (see validate_answer).
+        evidence_blobs: List[str] = []
+        rejections_left = 2
 
         for step in range(1, self.max_steps + 1):
             state.iterations = step
@@ -102,6 +129,7 @@ class ReActAgent:
             before_in = state.tokens.input_tokens
             before_out = state.tokens.output_tokens
             _digest_history(messages)
+            evidence_text = "\n".join(evidence_blobs)
 
             text, calls, finish = self.llm.chat(
                 messages, tools=TOOL_SCHEMAS, counter=state.tokens,
@@ -144,21 +172,19 @@ class ReActAgent:
                     input_tokens=state.tokens.input_tokens - before_in,
                     output_tokens=state.tokens.output_tokens - before_out))
                 if text and not state.answer:
-                    # Prose instead of submit_answer already means the model
-                    # lost the protocol, so only accept the text when it is
-                    # actually answer-shaped. A small model that overruns its
-                    # budget emits a hedging paragraph ("Based on the provided
-                    # context it appears that..."), and taking that as the
-                    # answer both scores zero *and* suppresses the deterministic
-                    # fallback in hybrid mode - failing worse than not trying.
+                    # A prose reply means the model did not use submit_answer, so
+                    # the answer is only kept if it passes the same schema and
+                    # evidence checks the tool path runs - not because it looks
+                    # like the right shape for the benchmark.
                     extracted = _extract_answer(text)
-                    if _answer_shaped(extracted):
+                    ok, why = validate_answer(extracted, spec, evidence_text)
+                    if ok:
                         state.answer = extracted
+                        state.trace[-1].observation["answer_accepted_because"] = why
                     else:
                         state.trace[-1].observation["rejected_answer"] = _clip(extracted, 200)
                         state.trace[-1].observation["rejected_reason"] = (
-                            "prose, not an answer span; deferring to the "
-                            "deterministic planner")
+                            f"{why}; deferring to the deterministic planner")
                 state.stop_reason = "text_answer"
                 break
 
@@ -168,10 +194,11 @@ class ReActAgent:
             for call in calls:
                 result = tools.execute(call["name"], call["arguments"])
                 record = tools.calls[-1]
+                blob = json.dumps(result, default=str)
+                evidence_blobs.append(blob)
                 messages.append({
                     "role": "tool", "tool_call_id": call["id"],
-                    "content": _clip(json.dumps(result, default=str),
-                                     MAX_TOOL_RESULT_CHARS)})
+                    "content": _clip(blob, MAX_TOOL_RESULT_CHARS)})
                 state.trace.append(ExecutedStep(
                     index=len(state.trace) + 1, agent=self.name,
                     operation=f"tool:{call['name']}",
@@ -187,9 +214,32 @@ class ReActAgent:
                     input_tokens=state.tokens.input_tokens - before_in,
                     output_tokens=state.tokens.output_tokens - before_out))
                 if call["name"] == "submit_answer":
-                    state.answer = str(result.get("answer", "")).strip()
-                    state.rationale = str(result.get("reasoning", ""))[:600]
-                    submitted = True
+                    candidate = str(result.get("answer", "")).strip()
+                    ok, why = validate_answer(candidate, spec, evidence_text)
+                    if ok:
+                        state.answer = candidate
+                        state.rationale = str(result.get("reasoning", ""))[:600]
+                        state.trace[-1].observation["answer_accepted_because"] = why
+                        submitted = True
+                    elif rejections_left > 0:
+                        # Tell the model why it was refused and let it try again.
+                        # The loop's own evidence is the judge, so this is a
+                        # correction round rather than a failed investigation.
+                        rejections_left -= 1
+                        state.trace[-1].observation["rejected_answer"] = _clip(candidate, 200)
+                        state.trace[-1].observation["rejected_reason"] = why
+                        messages.append({
+                            "role": "user",
+                            "content": ("Your submitted answer was not accepted: "
+                                        f"{why}. Re-read the tool results and call "
+                                        "submit_answer again with an answer the "
+                                        "evidence supports."),
+                        })
+                    else:
+                        state.trace[-1].observation["rejected_answer"] = _clip(candidate, 200)
+                        state.trace[-1].observation["rejected_reason"] = why
+                        state.strategy_changes.append(
+                            f"react: dropped an unvalidated submission ({why})")
 
             if submitted:
                 state.stop_reason = "submitted_answer"
@@ -276,30 +326,71 @@ def _extract_answer(text: str) -> str:
     return last[-1][:200] if last else ""
 
 
-# Phrases a model uses when it is hedging rather than answering. Their presence
-# is a far more reliable "this is not an answer" signal than length alone.
-_HEDGES = (
-    "based on the provided", "the context does not", "i could not find",
-    "it appears that", "unable to determine", "there is no information",
-    "cannot be determined", "insufficient information", "i don't have",
-    "unfortunately", "however, the passages",
-)
+# ── answer validation ──────────────────────────────────────────────────────
+#
+# An answer is accepted on two grounds and no others:
+#
+#   * SCHEMA   - the shape the question demands. "How many ..." has a numeric
+#                answer because the corpus field behind it is numeric; "which
+#                event ..." has an entity as its answer. This is a property of
+#                the question's semantics, not of any benchmark's formatting.
+#   * EVIDENCE - a span answer must occur in the tool output that produced it.
+#                An answer the model cannot point at in its own evidence is a
+#                guess, however fluent.
+#
+# This replaces an earlier heuristic that asserted what benchmark golds look
+# like ("Benchmark golds are spans and numbers", ">14 words is a sentence about
+# a span") plus a hedge-phrase blocklist. Those were statements about the
+# evaluation set, and they fail exactly where they are most confident: a
+# fluent, confident, wrong answer has the same shape as a right one.
+
+_EXPECTED_SHAPE = {"aggregation": "number", "superlative": "entity"}
+_NUMBER_RE = re.compile(r"^\s*-?\d[\d,]*(?:\.\d+)?\s*$")
 
 
-def _answer_shaped(text: str) -> bool:
-    """True when a prose reply looks like an actual short answer.
+def _is_number(text: str) -> bool:
+    """True when the string is a bare number (the shape of a count)."""
+    return bool(_NUMBER_RE.match(text or ""))
 
-    Benchmark golds are spans and numbers - a name, a year, a country, a count.
-    Anything long or hedging is the model narrating its uncertainty, which is
-    worth zero on the metric and, worse, blocks the deterministic fallback.
-    Rejecting it is strictly better than keeping it: the only thing lost is a
-    guaranteed-wrong answer.
+
+def _grounded_in_evidence(answer: str, evidence: str, overlap: float = 1.0) -> bool:
+    """True when the answer occurs in, or is fully covered by, the evidence."""
+    if not evidence or not normalize(answer):
+        return False
+    if normalize(answer) in normalize(evidence):
+        return True
+    wanted = {t for t in tokens(answer) if t}
+    if not wanted:
+        return False
+    have = set(tokens(evidence))
+    return len(wanted & have) / len(wanted) >= overlap
+
+
+def validate_answer(answer: str, spec: Any, evidence: str) -> Tuple[bool, str]:
+    """Accept or reject an answer on schema and evidence grounds.
+
+    Returns ``(ok, why)``. The reason is written into the run trace, so a
+    rejected answer is visible rather than silently swapped.
     """
-    stripped = (text or "").strip()
-    if not stripped:
-        return False
-    low = stripped.lower()
-    if any(h in low for h in _HEDGES):
-        return False
-    # A gold answer is a span; >14 words is a sentence about a span.
-    return len(stripped) <= 120 and len(stripped.split()) <= 14
+    text = (answer or "").strip()
+    if not text:
+        return False, "empty answer"
+    th = thresholds()
+    if len(text) > th.answer_max_chars:
+        return False, (f"longer than {th.answer_max_chars} characters: no corpus "
+                       "field produces a paragraph")
+    numeric = _is_number(text)
+    shape = _EXPECTED_SHAPE.get(str(getattr(spec, "qtype", "") or ""), "")
+    if shape == "number" and not numeric:
+        return False, "this question asks for a count, so the answer must be a number"
+    if shape == "entity" and numeric:
+        return False, "this question asks which event/person, so the answer must name it"
+    if numeric:
+        # A count is *derived* by the model from the value lists it was shown, so
+        # it cannot be re-found verbatim in the evidence; a span must be.
+        return True, "schema: numeric answer"
+    if len(text) <= th.grounding_min_chars:
+        return True, "too short to check against evidence"
+    if _grounded_in_evidence(text, evidence, th.grounding_token_overlap):
+        return True, "evidence: present in tool output"
+    return False, "the answer does not appear in any tool output it was shown"

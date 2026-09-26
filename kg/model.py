@@ -49,6 +49,15 @@ class EventNode:
     win_label: str = ""
     prev: str = ""
     next: str = ""
+    #: What kind of document states the fact. Feeds the conflict resolver's
+    #: authority tie-break (SOURCE_RANK in reasoning.conflicts), so a fact read
+    #: from an infobox outranks the same fact read out of running prose.
+    source_type: str = "infobox"
+    #: The date the fact was true at ("as of"). The corpus carries no document
+    #: revision timestamp - the honest version signal available is the event's
+    #: own date/edition, which is exactly what makes one statement supersede
+    #: another (a 2012 record supersedes the 1992 record it replaced).
+    fact_version_date: str = ""
     approx_tokens: int = 0
     prev_doc_id: Optional[str] = None
     next_doc_id: Optional[str] = None

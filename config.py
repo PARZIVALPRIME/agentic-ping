@@ -46,6 +46,43 @@ def _float_env(name: str, default: float) -> float:
         return default
 
 
+#: Default model per provider. Env-overridable so no vendor or model version is
+#: baked into the code: swapping the model is a configuration change.
+MODEL_DEFAULTS = {
+    "groq": _env("DEFAULT_GROQ_MODEL", default="openai/gpt-oss-120b"),
+    "ollama": _env("DEFAULT_OLLAMA_MODEL", default="qwen3.5:2b-q4_K_M"),
+    "openai": _env("DEFAULT_OPENAI_MODEL", default="gpt-4o-mini"),
+    "gemini": _env("DEFAULT_GEMINI_MODEL", default="gemini-2.5-flash"),
+    "azure": _env("DEFAULT_AZURE_MODEL", default="gpt-4o-mini"),
+}
+
+
+@dataclass
+class DomainConfig:
+    """What the corpus is about - named in prompts, never hardcoded.
+
+    Nothing in the pipeline architecture depends on the subject matter: the
+    question ("when is the graph worth its cost?") is the same for patents,
+    medicine or sport. Prompts therefore describe the corpus from configuration,
+    and the numeric guards (which years are plausible) come from here too, so a
+    new corpus is onboarded by editing environment variables instead of code.
+    """
+
+    #: How prompts refer to the corpus, e.g. "a corpus of sports-event articles".
+    corpus_label: str = field(default_factory=lambda: _env(
+        "CORPUS_LABEL", default="a corpus of sports-event articles"))
+    #: Singular noun for the things the graph is about ("Olympic event").
+    entity_label: str = field(default_factory=lambda: _env(
+        "CORPUS_ENTITY_LABEL", default="Olympic event"))
+    #: The name of the graph in the external store (TigerGraph etc.).
+    graph_name: str = field(default_factory=lambda: _env(
+        "GRAPH_NAME", "TG_GRAPHNAME", default="OlympicsKG"))
+    #: Plausible range for a year mentioned in a question, used to reject a
+    #: hallucinated year instead of letting it into a slot.
+    year_min: int = field(default_factory=lambda: _int_env("CORPUS_YEAR_MIN", 1896))
+    year_max: int = field(default_factory=lambda: _int_env("CORPUS_YEAR_MAX", 2035))
+
+
 @dataclass
 class TigerGraphConfig:
     """TigerGraph connection configuration (Savanna or Community Edition)."""
@@ -53,7 +90,7 @@ class TigerGraphConfig:
     host: str = field(default_factory=lambda: _env("TG_HOST", "TGRAPH_HOST",
                                                    default="http://localhost"))
     graphname: str = field(default_factory=lambda: _env("TG_GRAPHNAME", "TGRAPH_GRAPH_NAME",
-                                                        default="OlympicsKG"))
+                                                        "GRAPH_NAME", default="OlympicsKG"))
     username: str = field(default_factory=lambda: _env("TG_USERNAME", "TGRAPH_USERNAME",
                                                        default="tigergraph"))
     password: str = field(default_factory=lambda: _env("TG_PASSWORD", "TGRAPH_PASSWORD",
@@ -80,8 +117,17 @@ class LLMConfig:
     fast_model: str = field(default_factory=lambda: _env("FAST_MODEL", default=""))
     eval_model: str = field(default_factory=lambda: _env("EVAL_MODEL", default=""))
     embedding_model: str = field(default_factory=lambda: _env("EMBEDDING_MODEL", default=""))
+    #: Sampling temperature for the *agentic* models. Deliberately > 0 by
+    #: default: a temperature of 0 makes every investigation take the same path,
+    #: so the system cannot adapt its strategy - and adaptation is exactly what
+    #: it is graded on. The judge/eval model stays greedy (see eval_temperature)
+    #: so that scoring is reproducible.
     temperature: float = field(default_factory=lambda: float(_env("LLM_TEMPERATURE",
-                                                                 default="0.0")))
+                                                                 default="0.3")))
+    #: Temperature for evaluation/adjudication calls: 0 keeps *scoring* stable
+    #: even while the agent explores.
+    eval_temperature: float = field(default_factory=lambda: float(
+        _env("LLM_EVAL_TEMPERATURE", default="0.0")))
     max_tokens: int = field(default_factory=lambda: int(_env("LLM_MAX_TOKENS", default="0")))
     reasoning_effort: str = field(default_factory=lambda: _env("LLM_REASONING_EFFORT"))
 
@@ -101,13 +147,7 @@ class LLMConfig:
     ollama_api_key: Optional[str] = field(default_factory=lambda: os.getenv("OLLAMA_API_KEY"))
 
     def __post_init__(self) -> None:
-        defaults = {
-            "groq": "openai/gpt-oss-120b",
-            "ollama": "qwen3.5:2b-q4_K_M",
-            "openai": "gpt-4o-mini",
-            "gemini": "gemini-2.5-flash",
-            "azure": "gpt-4o-mini",
-        }
+        defaults = MODEL_DEFAULTS
         fallback = defaults.get(self.provider, "")
         self.chat_model = self.chat_model or fallback
         self.completion_model = self.completion_model or self.chat_model
@@ -161,6 +201,12 @@ class AgentConfig:
     react_retries: int = field(
         default_factory=lambda: int(_env("AGENT_REACT_RETRIES", default="2")))
     react_model: str = field(default_factory=lambda: _env("AGENT_REACT_MODEL", default=""))
+    #: How a question becomes a QuerySpec: "semantic" (the LLM extracts the
+    #: slots, the template parser validates and fills - the default) or "rules"
+    #: (templates only, for deterministic and ablation runs). Read through
+    #: ``reasoning.query_parser.parse_mode()`` rather than here, because that
+    #: module also owns the ABLATE_CLASSIFIER switch.
+    parse_mode: str = field(default_factory=lambda: _env("PARSE_MODE", default="semantic"))
 
 
 @dataclass
@@ -195,6 +241,7 @@ class Config:
     llm: LLMConfig = field(default_factory=LLMConfig)
     agent: AgentConfig = field(default_factory=AgentConfig)
     benchmark: BenchmarkConfig = field(default_factory=BenchmarkConfig)
+    domain: DomainConfig = field(default_factory=DomainConfig)
 
     def describe(self) -> dict:
         """Summary of the active configuration (safe to log / embed in results)."""
@@ -205,7 +252,12 @@ class Config:
             "chat_model": self.llm.chat_model or None,
             "eval_model": self.llm.eval_model or None,
             "max_tokens": self.llm.max_tokens,
+            "temperature": self.llm.temperature,
+            "eval_temperature": self.llm.eval_temperature,
             "reasoning_effort": self.llm.reasoning_effort or None,
+            "corpus_label": self.domain.corpus_label,
+            "graph_name": self.domain.graph_name,
+            "plausible_years": [self.domain.year_min, self.domain.year_max],
             "tigergraph_enabled": self.tg.enabled,
             "tigergraph_host": self.tg.host if self.tg.enabled else None,
             "vector_backend": self.benchmark.vector_backend,

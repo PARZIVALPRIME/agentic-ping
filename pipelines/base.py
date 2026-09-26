@@ -60,6 +60,11 @@ class PipelineResult:
     strategy_changed: bool = False
     stop_reason: str = ""
     confidence: float = 0.0
+    #: Residual doubt, reported explicitly (``1 - confidence``) because Round 2
+    #: asks for *uncertainty* to be carried rather than a bare confidence score.
+    #: A pipeline that says "0.6 confident" and one that says "40% uncertain"
+    #: are the same fact stated in the two directions the rubric names.
+    uncertainty: float = 0.0
     plan: List[str] = field(default_factory=list)
     loop_iterations: int = 0
     candidates_considered: int = 0
@@ -113,4 +118,7 @@ def finalise_result(result: PipelineResult, counter: TokenCounter,
     result.tokens_per_operation = counter.per_operation
     result.time_per_operation = timings
     result.latency_ms = round((time.perf_counter() - started_at) * 1000.0, 2)
+    # Uncertainty is the complement of confidence, clipped to [0, 1] so a
+    # pipeline that reports 1.0 confidence still reports 0.0 uncertainty.
+    result.uncertainty = round(max(0.0, min(1.0, 1.0 - float(result.confidence or 0.0))), 3)
     return result

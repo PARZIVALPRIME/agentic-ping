@@ -130,7 +130,10 @@ class Evaluator:
         self.judge_calls += 1
         out = self.llm.complete_json(
             judge_prompt(question, golds, pred), JUDGE_SYSTEM_PROMPT,
-            caller="eval.judge", counter=self.tokens, model=self.llm.eval_model)
+            caller="eval.judge", counter=self.tokens, model=self.llm.eval_model,
+            # Judging stays greedy even when the agent model explores, so the
+            # score is reproducible across runs of a stochastic agent.
+            temperature=getattr(self.llm, "eval_temperature", None))
         if not out:
             return {}
         same = out.get("same")

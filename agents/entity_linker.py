@@ -11,7 +11,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from reasoning.solvers import resolve_sport, resolve_venue
+from reasoning.solvers import (resolve_previous_edition, resolve_sport,
+                               resolve_venue, season_candidates)
 from reasoning.query_parser import QuerySpec
 
 
@@ -39,19 +40,54 @@ class EntityLinker:
             out["venue_keys"] = keys
             out["venue_score"] = round(score, 3)
 
-        if spec.year and spec.season:
-            out["games_vertex"] = self.kg.games_id(spec.year, spec.season)
+        if spec.year:
+            seasons = [spec.season] if spec.season else season_candidates(spec, self.kg)
+            vertices = {s: self.kg.games_id(spec.year, s) for s in seasons
+                        if self.kg.games_id(spec.year, s)}
+            if len(vertices) == 1:
+                season, vertex = next(iter(vertices.items()))
+                out["games_vertex"] = vertex
+                out["resolved_season"] = season
+                self._pin_season(spec, season, out, why="single games vertex for year")
+            elif vertices:
+                # Both seasons exist for this year; the season stays open until
+                # the sport/event evidence picks one (never defaulted).
+                out["games_vertices"] = vertices
+                out["season_ambiguous"] = True
         if spec.before_year is not None:
-            from reasoning.solvers import _nearest_previous_games
-
-            season = spec.season or "Summer"
-            prev = _nearest_previous_games(season, spec.before_year, self.kg)
-            out["edition_chain"] = [f"{spec.before_year} {season}", f"{prev} {season}"]
-            if prev is not None:
-                out["games_vertex"] = self.kg.games_id(prev, season)
-                out["resolved_prev_year"] = prev
+            edition = resolve_previous_edition(spec, self.kg)
+            out["edition_resolution"] = edition
+            resolved_season = edition.get("season")
+            resolved_year = edition.get("year")
+            if resolved_year is not None and resolved_season:
+                out["edition_chain"] = [f"{spec.before_year} {resolved_season}",
+                                        f"{resolved_year} {resolved_season}"]
+                out["games_vertex"] = self.kg.games_id(resolved_year, resolved_season)
+                out["resolved_prev_year"] = resolved_year
+                self._pin_season(spec, resolved_season, out,
+                                 why=f"edition resolved by {edition.get('method')}")
+            else:
+                out["season_unresolved"] = True
+                out["edition_chain"] = []
 
         return out
+
+    @staticmethod
+    def _pin_season(spec: QuerySpec, season: str, out: Dict[str, Any],
+                    why: str = "") -> None:
+        """Record a season established from evidence rather than from wording.
+
+        The decision is written onto the spec so every later agent works from the
+        same Games edition, and onto the linker's output so the trace shows that
+        the season was derived (and how) rather than assumed.
+        """
+        if not season:
+            return
+        if not spec.season:
+            spec.season = season
+            spec.season_unresolved = False
+            out["season_resolved_by"] = why or "evidence"
+
 
     def linked_event_pages(self, spec: QuerySpec, limit: int = 40) -> List[Any]:
         """EventPage vertices implied by the question's slots.
@@ -71,14 +107,22 @@ class EntityLinker:
                     found[node.doc_id] = node
 
         if spec.before_year is not None:
-            from reasoning.solvers import _nearest_previous_games
-
-            season = spec.season or "Summer"
-            prev = _nearest_previous_games(season, spec.before_year, self.kg)
             sport = spec.sport or resolve_sport(spec.event_desc, self.kg)
-            if prev is not None and sport:
-                for node in self.kg.events_for(sport, prev, season):
-                    found[node.doc_id] = node
+            if sport:
+                edition = resolve_previous_edition(spec, self.kg)
+                if edition.get("year") is not None and edition.get("season"):
+                    pairs = [(edition["season"], edition["year"])]
+                else:
+                    # Undetermined season: gather every candidate edition rather
+                    # than committing to one. The event-descriptor match then
+                    # decides, and the evidence audit records the ambiguity.
+                    pairs = [(c["season"], c["year"])
+                             for c in edition.get("candidates", [])
+                             if c.get("year") is not None]
+                for season, year in pairs:
+                    for node in self.kg.events_for(sport, year, season):
+                        found[node.doc_id] = node
+
 
         if spec.venue:
             keys, _score = resolve_venue(spec.venue, self.kg)

@@ -9,10 +9,11 @@ keeps the benchmark reproducible on any machine.
 
 from __future__ import annotations
 
+from contextlib import contextmanager
 import json
 import logging
 import re
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 from utils.metrics import TokenCounter, count_tokens
 
@@ -25,6 +26,7 @@ class LLMHelper:
     def __init__(self, provider: Optional[str] = None, api_key: Optional[str] = None,
                  chat_model: Optional[str] = None, fast_model: Optional[str] = None,
                  eval_model: Optional[str] = None, temperature: float = 0.0,
+                 eval_temperature: float = 0.0,
                  max_tokens: int = 0, reasoning_effort: str = "",
                  base_url: Optional[str] = None) -> None:
         self.provider = provider
@@ -32,6 +34,10 @@ class LLMHelper:
         self.fast_model = fast_model or chat_model
         self.eval_model = eval_model or chat_model
         self.temperature = temperature
+        #: Sampling temperature for verification/judging calls. The agent model
+        #: may explore (temperature > 0) while scoring and adjudication stay
+        #: greedy, so a run is reproducible even though investigation is not.
+        self.eval_temperature = eval_temperature
         self.max_tokens = max_tokens
         self.reasoning_effort = reasoning_effort
         self._service = None
@@ -65,10 +71,31 @@ class LLMHelper:
             self.error = f"{exc.__class__.__name__}: {exc}"
             logger.warning("LLM unavailable (%s); running deterministically", self.error)
 
+    @contextmanager
+    def _at_temperature(self, temperature: Optional[float]) -> Iterator[None]:
+        """Run the enclosed call at a different sampling temperature.
+
+        Verification (adjudication, judging) must stay greedy even while the
+        agent explores, so one call can pin its own temperature without changing
+        the agent's sampling.
+        """
+        service = self._service
+        if temperature is None or service is None:
+            yield
+            return
+        previous = getattr(service, "temperature", None)
+        try:
+            service.temperature = temperature
+            yield
+        finally:
+            if previous is not None:
+                service.temperature = previous
+
         # ── completion helpers ──────────────────────────────────────────────
     def complete(self, prompt: str, system_prompt: str = "", caller: str = "llm",
                  counter: Optional[TokenCounter] = None,
-                 model: Optional[str] = None) -> Tuple[str, int, int]:
+                 model: Optional[str] = None,
+                 temperature: Optional[float] = None) -> Tuple[str, int, int]:
         """Return (text, input_tokens, output_tokens).
 
         On rate-limit exhaustion the call returns empty rather than raising, so
@@ -80,7 +107,8 @@ class LLMHelper:
         if model and model != self._service.model:
             self._service.model = model
         try:
-            text, usage = self._service.complete(prompt, system_prompt, caller)
+            with self._at_temperature(temperature):
+                text, usage = self._service.complete(prompt, system_prompt, caller)
             self.num_calls += 1
         except Exception as exc:
             self.failed_calls += 1
@@ -97,7 +125,8 @@ class LLMHelper:
     def chat(self, messages: List[Dict[str, Any]],
              tools: Optional[List[Dict[str, Any]]] = None,
              counter: Optional[TokenCounter] = None,
-             model: Optional[str] = None, caller: str = "chat"):
+             model: Optional[str] = None, caller: str = "chat",
+             temperature: Optional[float] = None):
         """One tool-calling turn; returns ``(text, tool_calls, finish_reason)``.
 
         ``tool_calls`` is a list of dicts ``{"id", "name", "arguments"}`` with
@@ -108,8 +137,9 @@ class LLMHelper:
         if not self.available:
             return "", [], ""
         try:
-            turn = self._service.chat(messages, tools=tools, model=model,
-                                      caller=caller)
+            with self._at_temperature(temperature):
+                turn = self._service.chat(messages, tools=tools, model=model,
+                                          caller=caller)
             self.num_calls += 1
         except Exception as exc:
             self.failed_calls += 1
@@ -128,10 +158,12 @@ class LLMHelper:
 
     def complete_json(self, prompt: str, system_prompt: str = "", caller: str = "llm",
                       counter: Optional[TokenCounter] = None,
-                      model: Optional[str] = None) -> Dict[str, Any]:
+                      model: Optional[str] = None,
+                      temperature: Optional[float] = None) -> Dict[str, Any]:
         if not self.available:
             return {}
-        text, _i, _o = self.complete(prompt, system_prompt, caller, counter, model)
+        text, _i, _o = self.complete(prompt, system_prompt, caller, counter, model,
+                                     temperature=temperature)
         if not text:
             return {}
         cleaned = text.strip()
@@ -182,6 +214,7 @@ def build_llm(config) -> LLMHelper:
         fast_model=getattr(llm, "fast_model", None),
         eval_model=llm.eval_model,
         temperature=llm.temperature,
+        eval_temperature=getattr(llm, "eval_temperature", 0.0),
         max_tokens=getattr(llm, "max_tokens", 0),
         reasoning_effort=getattr(llm, "reasoning_effort", ""),
         base_url=(getattr(llm, "ollama_base_url", "") if provider == "ollama" else None),
@@ -202,7 +235,7 @@ def render_context(items: List[Dict[str, Any]], max_chars_per_item: int = 1200,
 
 
 ANSWER_SYSTEM_PROMPT = (
-    "You are a meticulous QA assistant for an Olympics corpus. Answer the "
+    "You are a meticulous QA assistant for {corpus_label}. Answer the "
     "question using ONLY the provided context. Follow these rules strictly:\n"
     "1. Answer the question directly and concisely (a number, a name, or a title).\n"
     "2. For counting or comparison questions, treat the corpus as the only truth "
@@ -211,6 +244,21 @@ ANSWER_SYSTEM_PROMPT = (
     "note the uncertainty briefly.\n"
     "4. Never use outside knowledge; never invent documents."
 )
+
+
+def _corpus_label() -> str:
+    """How prompts should name the corpus (configuration, not code)."""
+    try:
+        from config import config as _config
+
+        return _config.domain.corpus_label
+    except Exception:  # configuration is optional for library use
+        return "the corpus"
+
+
+def answer_system_prompt() -> str:
+    """The answering system prompt, with the corpus named from configuration."""
+    return ANSWER_SYSTEM_PROMPT.format(corpus_label=_corpus_label())
 
 
 def answer_prompt(question: str, context: str) -> str:
@@ -224,7 +272,7 @@ def answer_prompt(question: str, context: str) -> str:
 # the candidate only when the passages contradict it, which keeps the LLM from
 # inventing counts or names while still letting it fix linking mistakes.
 
-ADJUDICATE_SYSTEM_PROMPT = """You verify answers for an Olympics question-answering system.
+ADJUDICATE_SYSTEM_PROMPT = """You verify answers for a QA system over {corpus_label}.
 
 You receive: the question, a CANDIDATE answer produced by deterministic structured reasoning over a knowledge graph, and the retrieved CONTEXT passages.
 
@@ -237,7 +285,12 @@ Rules:
 6. If neither the candidate nor the context supports any answer, return an empty string.
 
 Reply with JSON only:
-{"answer": "<final answer>", "agree": true|false, "reason": "<one short sentence>"}"""
+{{"answer": "<final answer>", "agree": true|false, "reason": "<one short sentence>"}}"""
+
+
+def adjudicate_system_prompt() -> str:
+    """The adjudication prompt, with the corpus named from configuration."""
+    return ADJUDICATE_SYSTEM_PROMPT.format(corpus_label=_corpus_label())
 
 
 def refine_answer(llm, question: str, candidate: str,
@@ -283,8 +336,11 @@ def refine_answer(llm, question: str, candidate: str,
                  'reasoning found no answer)'}\n\n"
               f"CONTEXT:\n{context}\n\n"
               "Return the JSON verdict now.")
-    payload = llm.complete_json(prompt, ADJUDICATE_SYSTEM_PROMPT,
-                                caller=caller, counter=counter)
+    payload = llm.complete_json(prompt, adjudicate_system_prompt(),
+                                caller=caller, counter=counter,
+                                # Verification stays greedy even when the agent
+                                # model explores: scoring must not wobble.
+                                temperature=getattr(llm, "eval_temperature", None))
     final = str(payload.get("answer", "") or "").strip()
     agree = bool(payload.get("agree", False))
 

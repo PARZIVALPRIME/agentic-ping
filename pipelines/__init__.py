@@ -6,7 +6,7 @@ from .base import PipelineResult, StepRecord, Timer, finalise_result
 from .extractive import ExtractiveAnswerer, ExtractResult
 from .graphrag_pipeline import GraphRagPipeline
 from .rag_pipeline import RagPipeline
-from .router_pipeline import ROUTING_TABLE, RouterPipeline
+from .router_pipeline import CAPABILITY_ROUTES, UNKNOWN_ROUTE, RouterPipeline
 
 __all__ = [
     "PipelineResult",
@@ -19,7 +19,8 @@ __all__ = [
     "GraphRagPipeline",
     "AgenticPipeline",
     "RouterPipeline",
-    "ROUTING_TABLE",
+    "CAPABILITY_ROUTES",
+    "UNKNOWN_ROUTE",
     "ABLATIONS",
     "build_ablations",
     "build_pipelines",

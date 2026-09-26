@@ -133,9 +133,11 @@ interrupted runs keep completed work.
 
 ## Running the benchmark
 
-A full sweep is 300 pipeline runs (100 questions × 3 pipelines) and takes
-20–30 minutes wall-clock — dominated by LLM rate limits, not compute. Two
-properties make this safe and observable:
+A full sweep is 300 pipeline runs (100 questions × 3 pipelines). How long that
+takes is a property of the provider, not of the harness: on a metered hosted
+model it is 20–30 minutes dominated by rate limits, and on the active local
+profile (a 4B model on one GPU) it is a few **hours**, because every step is a
+sequential local call. Two properties make either safe and observable:
 
 | Property | Mechanism |
 |---|---|
@@ -144,6 +146,7 @@ properties make this safe and observable:
 | **Crash-safe** | `runner.py` rewrites `results/*.json` atomically (temp file + `os.replace`) after each question; a per-pipeline exception is captured into the record instead of killing the run |
 | **Resumable** | `--resume` / `-Resume` loads existing entries and skips those `qid`s, so an interrupted sweep continues rather than restarting |
 | **Live progress lines** | one line per question: `[  7/100] pub-007 temporal RAG=F GraphRAG=F Agentic=OK tok=1211 elapsed=78s` |
+| **Both sets in one go** | `tools/run_sweep.ps1` runs the public-100 sweep and then the hidden-50 sweep back to back, so the two never hold the same GPU at once |
 
 ```mermaid
 flowchart LR
@@ -183,16 +186,24 @@ Two failure shapes look alike in a results file and must not be conflated:
 `llm_activity` separates them per pipeline (`records_with_calls` vs
 `records_answering`), the summary carries `run_mode` (`live` /
 `provider-failed` / `deterministic`), and the dashboard names the reason instead
-of printing a bare "0 calls/q". Publishing is gated two ways: `--require-llm` on
+of printing a bare "0 calls/q". Publishing is gated three ways: `--require-llm` on
 `benchmark.dashboard_generator` refuses to build the headline page from a file in
-which no pipeline recorded provider output, and `tools/validate_dashboard.py`
+which no pipeline recorded provider output, `tools/validate_dashboard.py`
 asserts that the published page's counters are consistent and that any pipeline
-with failed calls is named in the page's own warnings.
+with failed calls is named in the page's own warnings, and
+`tools/refresh_dashboard.py` is the one command that does both — it also refuses
+to publish when the summary and the results file describe different runs, since
+the headline table comes from the summary while the per-question table, the
+traces and the provider panel come from the entries.
 
 Because a run's mode is a property of the *run*, not of the architecture, the two
 modes are published as two pages from two files: `dashboard/index.html`
-(LLM-assisted, `results/llm_results.json`) beside `dashboard/baseline.html`
-(deterministic, `results/deterministic_results.json`).
+(LLM-assisted, `results/public_results.json`) beside `dashboard/baseline.html`
+(deterministic, `results/deterministic_results.json`). The pages carry no
+timestamps of their own beyond `generated`: the footer names the file a page was
+built from, the corpus size measured at build time, the retriever the records
+recorded, the graph store that answered and the model that did — so a page cannot
+advertise a provider, a model or a corpus it was not built from.
 
 `--summarize-only` rebuilds a summary from an existing results file. Provider,
 evaluator and backend telemetry is only known *during* a run, so a rebuilt

@@ -68,6 +68,12 @@ def main() -> int:
     stages.append(("preflight", _run("preflight", [PY, "preflight.py"])))
     stages.append(("conflicts (Round 2)",
                    _run("conflict resolution", [PY, "tools/demo_conflicts.py"])))
+    stages.append(("round 2 wiring",
+                   _run("version dates, audit, gap + tool",
+                        [PY, "tools/test_round2.py"])))
+    stages.append(("semantic parser",
+                   _run("LLM slot parse: validation, fill, fallback",
+                        [PY, "tools/test_semantic_parser.py"])))
     stages.append(("benchmark smoke",
                    _run("benchmark: 5 questions, deterministic",
                         [PY, "run_benchmark.py", "--no-llm", "--no-tg",
@@ -81,6 +87,9 @@ def main() -> int:
                          "--out", "results/_selftest_hidden.json"])))
     stages.append(("no data leakage",
                    _run("leakage audit", [PY, "tools/audit_leakage.py"])))
+    stages.append(("dashboard page",
+                   _run("page payload, provider counters, chart helpers",
+                        [PY, "tools/validate_dashboard.py"])))
     stages.append(("llm robustness",
                    _run("adversarial LLM audit (a bad model must not hurt)",
                         [PY, "tools/audit_llm_robustness.py", "--limit", "20"])))

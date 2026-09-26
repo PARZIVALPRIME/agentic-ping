@@ -14,6 +14,8 @@ from typing import Any, Dict, List, Optional
 
 from reasoning.query_parser import QuerySpec
 
+from .gaps import Gap, is_unrecoverable
+
 
 @dataclass
 class GapAction:
@@ -31,15 +33,9 @@ class GapAction:
                 "reason": self.reason, "recoverable": self.recoverable}
 
 
-# Gaps that no retrieval action can fix (the corpus itself lacks the field).
-_UNRECOVERABLE = (
-    "some candidate documents do not expose 'competitors'",
-    "some candidate documents lack 'competitors'",
-    "matched edition has no gold medal field",
-    "matched event has no gold medal field",
-    "resolved article has no 'nations' field",
-    "winner is not separated from the runner-up",
-)
+# Gaps that no retrieval action can fix (the corpus itself lacks the field) live
+# in :mod:`agents.gaps` as ``UNRECOVERABLE`` - a single definition shared with the
+# evaluator that produces them, so the two can never disagree.
 
 
 class GapDetector:
@@ -61,34 +57,54 @@ class GapDetector:
     # ── gap -> action mapping ──────────────────────────────────────────
     def _action_for(self, spec: QuerySpec, kind: str, gap: str,
                     state: Any) -> Optional[GapAction]:
-        if any(gap.endswith(suffix) for suffix in _UNRECOVERABLE) or gap in _UNRECOVERABLE:
+        if is_unrecoverable(gap):
             return GapAction(gap=gap, agent="GapDetector", operation="accept_limitation",
                              reason="no retrieval action can supply this field",
                              recoverable=False)
 
-        if gap in ("candidate set is suspiciously small",
-                   "very few candidates carry the comparison field"):
+        if gap in (Gap.CANDIDATE_SET_SMALL, Gap.FEW_CANDIDATES_WITH_FIELD):
             return self._widen_traversal(spec, gap)
 
-        if gap in ("no event matched the question's descriptor",
-                   "no event matched the venue/date pair",
-                   "venue did not resolve to any candidate events",
-                   "target article was not resolved",
-                   "no candidate set from structural traversal"):
+        if gap == Gap.SEASON_UNRESOLVED:
+            # The Games edition is not settled. Enumerate every candidate
+            # edition rather than committing to one, and let the event match and
+            # the evidence audit decide - the alternative is answering a Winter
+            # question from the Summer Games.
+            return GapAction(gap=gap, agent="GraphTraverser",
+                             operation="traverse_graph",
+                             reason="season not established from the question or "
+                                    "the evidence: enumerate every candidate edition",
+                             params={"widen_season": True}, recoverable=True)
+
+        if gap in (Gap.NO_EVENT_MATCHED, Gap.NO_VENUE_DATE_MATCH,
+                   Gap.VENUE_UNRESOLVED, Gap.ARTICLE_UNRESOLVED,
+                   Gap.NO_CANDIDATE_SET):
             return GapAction(gap=gap, agent="VectorSearcher", operation="vector_search",
                              reason="structural linking failed; fall back to text "
                                     "retrieval over the chunk index",
                              params={"widening": self._widening_for(kind)},
                              recoverable=True)
 
-        if gap == "anchor edition not confirmed by the PREV/NEXT chain":
+        if gap == Gap.CONFLICTING_EVIDENCE:
+            # Two readings of the same fact disagree. The recovery is not *more*
+            # of the same evidence - it is a different source class: the prose
+            # passages, where a correction or a newer statement would live. If
+            # that finishes the budget, the gap stays recorded as unresolved,
+            # which is the honest outcome for a fact the corpus never settles.
+            return GapAction(gap=gap, agent="VectorSearcher", operation="vector_search",
+                             reason="structured and textual readings of the same fact "
+                                    "disagree: retrieve passages for the authoritative "
+                                    "or superseding statement",
+                             params={"widening": 2, "conflict": True}, recoverable=True)
+
+        if gap == Gap.ANCHOR_NOT_CONFIRMED:
             return GapAction(gap=gap, agent="TemporalReasoner",
                              operation="edition_chain_fallback",
                              reason="verify the anchor against the corpus-wide "
                                     "edition ordering instead of the infobox next-field",
                              recoverable=True)
 
-        if gap in ("event descriptor match is weak",):
+        if gap == Gap.WEAK_EVENT_MATCH:
             return GapAction(gap=gap, agent="VectorSearcher", operation="vector_search",
                              reason="re-rank the top editions by passage evidence",
                              params={"widening": 2}, recoverable=True)

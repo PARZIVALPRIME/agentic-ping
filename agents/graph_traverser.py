@@ -12,7 +12,8 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from reasoning.query_parser import QuerySpec
-from reasoning.solvers import _nearest_previous_games, resolve_sport
+from reasoning.solvers import (resolve_previous_edition, resolve_sport,
+                               resolve_venue)
 
 
 class GraphTraverser:
@@ -64,18 +65,35 @@ class GraphTraverser:
                     result["relations"] = ["IN_SPORT", "PART_OF"]
                     return result
 
-        # 2. temporal: resolve the previous Games, then the event inside it
+        # 2. temporal: resolve the previous Games from evidence, then the event
+        #    inside it. The season is never assumed: an unstated season yields
+        #    every candidate edition, and the event-descriptor match decides.
         if spec.before_year is not None:
-            season = spec.season or "Summer"
-            prev = _nearest_previous_games(season, spec.before_year, self.kg)
             sport = spec.sport or resolve_sport(spec.event_desc, self.kg)
-            if prev is not None and sport:
-                events = self.kg.events_for(sport, prev, season)
-                result["strategy"] = "PREV_GAMES + IN_SPORT"
-                result["events"] = events[:limit]
-                result["relations"] = ["PREV_GAMES", "IN_SPORT"]
-                result["resolved_year"] = prev
-                return result
+            edition = resolve_previous_edition(spec, self.kg)
+            if sport:
+                if edition.get("year") is not None and edition.get("season"):
+                    pairs = [(edition["season"], edition["year"])]
+                    method = edition.get("method")
+                else:
+                    pairs = [(c["season"], c["year"])
+                             for c in edition.get("candidates", [])
+                             if c.get("year") is not None]
+                    method = edition.get("method") or "unresolved"
+                events = []
+                for season, year in pairs:
+                    events.extend(self.kg.events_for(sport, year, season))
+                if events:
+                    result["strategy"] = "PREV_GAMES + IN_SPORT"
+                    result["events"] = events[:limit]
+                    result["relations"] = ["PREV_GAMES", "IN_SPORT"]
+                    result["resolved_year"] = edition.get("year")
+                    result["season_resolution"] = method
+                    result["editions_considered"] = pairs
+                    if not edition.get("season"):
+                        result["season_ambiguous"] = True
+                    return result
+
 
         # 3. venue-anchored traversal (link venue -> events -> candidate set)
         if spec.venue:

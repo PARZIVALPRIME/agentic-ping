@@ -74,6 +74,13 @@ class AgentState:
                      else "lookup")
         self.classification: Dict[str, Any] = {}
         self.slot_report: Dict[str, Any] = {}
+        #: Audit trail of how the question became a QuerySpec: which slots came
+        #: from the semantic (LLM) parse, which from the deterministic template
+        #: parser, which were rejected, and where the two disagreed. Written by
+        #: ``OrchestratorAgent.run`` from
+        #: ``reasoning.query_parser.parse_question_with_llm`` and serialised in
+        #: ``to_dict`` so the claim is checkable in the result files.
+        self.parse_report: Dict[str, Any] = {}
         self.synth_source: str = ""
         self.adjudication: Dict[str, Any] = {}
         self.rationale: str = ""
@@ -99,6 +106,12 @@ class AgentState:
         self.stop_reason: str = ""
         self.iterations = 0
         self.tool_calls: List[Dict[str, Any]] = []  # records from the ReAct loop
+        #: Round 2: the outcome of adjudicating competing versions of a fact
+        #: (rule applied, versions superseded, residual confidence) plus the
+        #: uncertainty carried on the result. Both are surfaced in the trace and
+        #: the pipeline metadata rather than staying inside the resolver.
+        self.fact_conflicts: Dict[str, Any] = {}
+        self.uncertainty: float = 0.0
         self._t0 = time.perf_counter()
 
     # ── plan management ────────────────────────────────────────────────
@@ -194,6 +207,20 @@ class AgentState:
     def num_steps(self) -> int:
         return len(self.trace)
 
+    def adopt_spec(self, spec: QuerySpec, kind: Optional[str] = None) -> None:
+        """Install a parsed spec and keep ``qtype``/``kind`` in sync with it.
+
+        Used once, at the top of a run, after the semantic parse: the parse may
+        have reclassified the question (the model reads the requirement, not the
+        wording), and every downstream agent routes on ``kind``. ``kind`` is
+        passed in by the caller so the mapping has a single definition.
+        """
+        self.spec = spec
+        self.qtype = spec.qtype
+        self.kind = kind or (spec.qtype if spec.qtype in
+                             ("lookup", "multi_hop", "temporal", "aggregation",
+                              "superlative") else "lookup")
+
     @property
     def stale_streak(self) -> int:
         """How many trailing steps discovered no new documents."""
@@ -212,6 +239,7 @@ class AgentState:
             "kind": self.kind,
             "classification": self.classification,
             "slot_report": self.slot_report,
+            "parse_report": self.parse_report,
             "spec": self.spec.to_dict(),
             "plan": [s.to_dict() for s in self.plan],
             "trace": [s.to_dict() for s in self.trace],

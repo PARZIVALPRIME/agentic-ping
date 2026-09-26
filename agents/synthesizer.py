@@ -124,11 +124,11 @@ class Synthesizer:
                      counter: Optional[TokenCounter] = None) -> Tuple[str, List[str]]:
         if not self.llm or not getattr(self.llm, "available", False) or not chunks:
             return "", []
-        from utils.llm import ANSWER_SYSTEM_PROMPT, answer_prompt, render_context
+        from utils.llm import answer_prompt, answer_system_prompt, render_context
 
         context = render_context(chunks)
         text, _i, _o = self.llm.complete(answer_prompt(question, context),
-                                         ANSWER_SYSTEM_PROMPT,
+                                         answer_system_prompt(),
                                          caller="agent.synthesize", counter=counter)
         line = (text or "").strip().split("\n")[0].strip()
         for prefix in ("Answer:", "answer:", "ANSWER:"):

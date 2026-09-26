@@ -10,15 +10,23 @@
     "num_completed": 5,
     "num_failed": 0,
     "config": {
-      "llm_provider": "none",
-      "llm_available": false,
-      "chat_model": null,
-      "eval_model": null,
-      "max_tokens": 0,
-      "reasoning_effort": null,
+      "llm_provider": "ollama",
+      "llm_available": true,
+      "chat_model": "qwen3.5:4b",
+      "eval_model": "qwen3.5:4b",
+      "max_tokens": 1200,
+      "temperature": 0.3,
+      "eval_temperature": 0.0,
+      "reasoning_effort": "none",
+      "corpus_label": "a corpus of sports-event articles",
+      "graph_name": "OlympicsKG",
+      "plausible_years": [
+        1896,
+        2035
+      ],
       "tigergraph_enabled": false,
       "tigergraph_host": null,
-      "vector_backend": "auto",
+      "vector_backend": "sparse-tfidf",
       "rag_top_k": 5,
       "num_hops": 2,
       "agent": {
@@ -95,7 +103,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 3,
-            "latency_ms": 0.12,
+            "latency_ms": 0.06,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -124,7 +132,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.93,
+            "latency_ms": 0.45,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -148,7 +156,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -174,7 +182,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 9,
-            "latency_ms": 115.93,
+            "latency_ms": 62.84,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -196,7 +204,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.06,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -212,11 +220,13 @@
               "citations": [
                 "Q942805"
               ],
-              "adjudication": {}
+              "adjudication": {},
+              "uncertainty": 0.1,
+              "conflicts": {}
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.08,
+            "latency_ms": 2.44,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -226,37 +236,37 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.12
+            "latency_ms": 0.06
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['olympic tennis centre'] (score 1.0); date match 1.0 over 3 candidates -> \"Tennis at the 2004 Summer Olympics – Women's doubles\"",
-            "latency_ms": 0.93
+            "latency_ms": 0.45
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=HELD_AT -> 3 event pages (0 new)",
-            "latency_ms": 0.05
+            "latency_ms": 0.03
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?' (widening=0) -> 12 passages",
-            "latency_ms": 115.93
+            "latency_ms": 62.84
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.06
+            "latency_ms": 0.03
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Li TingSun Tiantian' citing 1 document(s) :: gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer O",
-            "latency_ms": 0.08
+            "latency_ms": 2.44
           }
         ],
         "tokens_per_operation": []
@@ -294,12 +304,14 @@
             "citations": [
               "Q942805"
             ],
-            "adjudication": {}
+            "adjudication": {},
+            "uncertainty": 0.1,
+            "conflicts": {}
           }
         }
       ],
       "unresolved": [],
-      "latency_ms": 118.19,
+      "latency_ms": 66.41,
       "error": null
     },
     {
@@ -381,7 +393,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 1,
-            "latency_ms": 0.07,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -407,7 +419,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 10,
-            "latency_ms": 196.95,
+            "latency_ms": 121.35,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -426,7 +438,7 @@
             },
             "confidence_after": 0.95,
             "new_documents": 0,
-            "latency_ms": 0.04,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -442,7 +454,9 @@
               "citations": [
                 "Q5443136"
               ],
-              "adjudication": {}
+              "adjudication": {},
+              "uncertainty": 0.05,
+              "conflicts": {}
             },
             "confidence_after": 0.95,
             "new_documents": 0,
@@ -462,19 +476,19 @@
             "operation": "resolve_article",
             "agent": "LookupResolver",
             "detail": "resolved title \"Fencing at the 1988 Summer Olympics – Men's foil\" (score 1.0); field 'nations' = '29'",
-            "latency_ms": 0.07
+            "latency_ms": 0.04
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?\" (widening=0) -> 12 passages (10 new doc",
-            "latency_ms": 196.95
+            "latency_ms": 121.35
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.95, sufficient",
-            "latency_ms": 0.04
+            "latency_ms": 0.03
           },
           {
             "operation": "render_answer",
@@ -506,12 +520,14 @@
             "citations": [
               "Q5443136"
             ],
-            "adjudication": {}
+            "adjudication": {},
+            "uncertainty": 0.05,
+            "conflicts": {}
           }
         }
       ],
       "unresolved": [],
-      "latency_ms": 197.81,
+      "latency_ms": 121.86,
       "error": null
     },
     {
@@ -585,7 +601,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 18,
-            "latency_ms": 0.27,
+            "latency_ms": 0.15,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -612,7 +628,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.24,
+            "latency_ms": 0.12,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -642,7 +658,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -658,7 +674,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -681,7 +697,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -704,11 +720,13 @@
                 "Q1005614",
                 "Q727488"
               ],
-              "adjudication": {}
+              "adjudication": {},
+              "uncertainty": 0.03,
+              "conflicts": {}
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.13,
+            "latency_ms": 0.07,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -718,37 +736,37 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Cycling; games->GAMES::2008::Summer",
-            "latency_ms": 0.27
+            "latency_ms": 0.15
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 18 event pages (0 new)",
-            "latency_ms": 0.24
+            "latency_ms": 0.12
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 18 enumerated events on competitors gt 30 -> 8 pass (field coverage 100%)",
-            "latency_ms": 0.05
+            "latency_ms": 0.03
           },
           {
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 8 (documents with the field: 18); matches the primary count",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 18 enumerated events had more than 30 competitors",
-            "latency_ms": 0.13
+            "latency_ms": 0.07
           }
         ],
         "tokens_per_operation": []
@@ -794,12 +812,14 @@
               "Q1005614",
               "Q727488"
             ],
-            "adjudication": {}
+            "adjudication": {},
+            "uncertainty": 0.03,
+            "conflicts": {}
           }
         }
       ],
       "unresolved": [],
-      "latency_ms": 1.16,
+      "latency_ms": 0.66,
       "error": null
     },
     {
@@ -867,7 +887,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.1,
+            "latency_ms": 0.06,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -896,7 +916,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 3.49,
+            "latency_ms": 1.91,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -922,7 +942,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.06,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -948,7 +968,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 69.98,
+            "latency_ms": 46.45,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -970,7 +990,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -986,7 +1006,9 @@
               "citations": [
                 "Q7500817"
               ],
-              "adjudication": {}
+              "adjudication": {},
+              "uncertainty": 0.1,
+              "conflicts": {}
             },
             "confidence_after": 0.9,
             "new_documents": 0,
@@ -1000,31 +1022,31 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.1
+            "latency_ms": 0.06
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['sydney international shooting centre'] (score 1.0); date match 1.0 over 17 candidates -> \"Shooting at the 2000 Summer Olympics – Women's 25 metre pisto",
-            "latency_ms": 3.49
+            "latency_ms": 1.91
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=HELD_AT -> 17 event pages (0 new)",
-            "latency_ms": 0.06
+            "latency_ms": 0.04
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Sydney International Shooting Centre on 22 September 2000?' (widening=0) ->",
-            "latency_ms": 69.98
+            "latency_ms": 46.45
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
@@ -1068,12 +1090,14 @@
             "citations": [
               "Q7500817"
             ],
-            "adjudication": {}
+            "adjudication": {},
+            "uncertainty": 0.1,
+            "conflicts": {}
           }
         }
       ],
       "unresolved": [],
-      "latency_ms": 74.13,
+      "latency_ms": 48.85,
       "error": null
     },
     {
@@ -1140,7 +1164,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 10,
-            "latency_ms": 0.13,
+            "latency_ms": 0.16,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -1188,7 +1212,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -1243,11 +1267,13 @@
               "citations": [
                 "Q26263261"
               ],
-              "adjudication": {}
+              "adjudication": {},
+              "uncertainty": 0.15,
+              "conflicts": {}
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -1257,7 +1283,7 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Sailing; games->GAMES::2016::Summer",
-            "latency_ms": 0.13
+            "latency_ms": 0.16
           },
           {
             "operation": "traverse_graph",
@@ -1269,7 +1295,7 @@
             "operation": "arg_extreme",
             "agent": "Comparator",
             "detail": "argmax over 10 events -> \"Sailing at the 2016 Summer Olympics – Men's 470\" (52); margin over runner-up: 6",
-            "latency_ms": 0.02
+            "latency_ms": 0.03
           },
           {
             "operation": "verify_extreme",
@@ -1287,7 +1313,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer=\"Sailing at the 2016 Summer Olympics – Men's 470\" citing 1 document(s) :: 'Sailing at the 2016 Summer Olympics – Men's 470' had the highest ",
-            "latency_ms": 0.03
+            "latency_ms": 0.04
           }
         ],
         "tokens_per_operation": []
@@ -1317,12 +1343,14 @@
             "citations": [
               "Q26263261"
             ],
-            "adjudication": {}
+            "adjudication": {},
+            "uncertainty": 0.15,
+            "conflicts": {}
           }
         }
       ],
       "unresolved": [],
-      "latency_ms": 0.53,
+      "latency_ms": 0.69,
       "error": null
     }
   ]

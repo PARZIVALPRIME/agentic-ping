@@ -58,6 +58,47 @@ function activityFor(name) {
   return prov[name] || null;
 }
 
+/* ── footer facts ─────────────────────────────────────────────────── */
+/* The model that actually answered, from the run's own telemetry. This line
+   used to read "planner: openai/gpt-oss-120b via Groq" on every page, including
+   the local qwen3.5:4b/Ollama runs, so the published dashboard named a provider
+   and a model that took part in none of the results below it. A summary rebuilt
+   from a results file carries no llm block at all; "not recorded" is the honest
+   answer there. */
+function plannerLabel() {
+  const llm = (DATA.summary || {}).llm || {};
+  const model = (llm.chat_model || "").trim();
+  const provider = (llm.provider || "").trim();
+  if (model) return `planner: ${model}${provider ? " via " + provider : ""}`;
+  return (DATA.summary || {}).run_mode === "deterministic"
+    ? "planner: none (deterministic run)"
+    : "planner: not recorded in this file";
+}
+
+/* Corpus size is a property of the corpus, not of a run, so the generator
+   measures it each time it writes a page. A page built without it says so
+   instead of repeating a number from the past. */
+function corpusLabel() {
+  const docs = (DATA.corpus || {}).num_docs;
+  return docs ? `corpus: ${docs.toLocaleString()} Wikipedia articles`
+              : "corpus: size not recorded in this page";
+}
+
+/* The retriever each record recorded for itself. Replaces a hard-coded
+   "vector backend: sparse TF-IDF", which is a property of one configuration and
+   is not something a results file states. */
+function retrieverLabel() {
+  for (const e of (DATA.entries || [])) {
+    for (const r of Object.values(e.pipelines || {})) {
+      const m = (r && r.metadata) || {};
+      if (m.retriever) {
+        return `retriever: ${m.retriever}` + (m.top_k ? ` (top_k ${m.top_k})` : "");
+      }
+    }
+  }
+  return "retriever: not recorded in this file";
+}
+
 function renderMeta() {
   const s = DATA.summary || {};
   document.getElementById("meta").innerHTML =
@@ -66,8 +107,8 @@ function renderMeta() {
     `wall clock ${s.wall_clock_s ? s.wall_clock_s + "s" : "–"} · ` +
     `${runModeLabel()} · generated ${DATA.generated}`;
   document.getElementById("footMeta").textContent =
-    `results: ${DATA.results_file} · corpus: 2,951 Wikipedia articles (1987–2023) · ` +
-    `vector backend: sparse TF-IDF · planner: openai/gpt-oss-120b via Groq`;
+    `results: ${DATA.results_file} · ${corpusLabel()} · ${retrieverLabel()} · ` +
+    `${backendLabel()} · ${plannerLabel()}`;
 }
 
 function renderCards() {

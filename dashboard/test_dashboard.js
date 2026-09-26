@@ -94,6 +94,19 @@ check("results table has rows", !!tbody && tbody.children.length === DATA.entrie
   `${tbody ? tbody.children.length : 0} rows`);
 check("meta filled", registry.meta.innerHTML.includes("questions"));
 check("footer filled", registry.footMeta.textContent.length > 20);
+/* The footer must name the model the run itself recorded. It used to print
+   "planner: openai/gpt-oss-120b via Groq" on every page - including the local
+   qwen3.5:4b/Ollama runs - so the published page advertised a provider that
+   took part in none of the results on it. A summary with no llm block (a
+   rebuilt one, or a deterministic run) has to say so rather than fall back to
+   a plausible default. */
+{
+  const foot = registry.footMeta.textContent || "";
+  const recorded = ((summary.llm || {}).chat_model || "");
+  const honest = recorded ? foot.includes(recorded)
+    : /planner: (not recorded|none \()/.test(foot);
+  check("footer names the recorded model, or says it is unrecorded", honest, foot);
+}
 check("backend panel rendered", registry.backend.children.length > 0,
   `${registry.backend.children.length} nodes`);
 check("provider contribution panel rendered", registry.llmActivity.children.length > 0,

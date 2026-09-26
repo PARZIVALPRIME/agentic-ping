@@ -1,6 +1,6 @@
 # Agentic GraphRAG Benchmark — RAG vs GraphRAG vs Agentic
 
-Three retrieval pipelines over the same Olympics corpus (2,951 Wikipedia
+Four retrieval pipelines over the same Olympics corpus (2,951 Wikipedia
 articles, 1987–2023), benchmarked on 100 public questions with gold answers:
 
 | Pipeline | What it does |
@@ -18,25 +18,40 @@ matter"* analysis.
 
 ## Headline result
 
+Final public run: 100 questions, **live** local provider (Ollama `qwen3.5:4b`),
+every pipeline recording provider calls — `results/metrics_summary.json`.
+
 | Pipeline | Accuracy | aggregation | superlative | avg tokens/q |
 |---|---|---|---|---|
-| RAG | 39% | 0% | 0% | 278 |
-| GraphRAG | 61% | 33% | 50% | 914 |
-| **Agentic GraphRAG** | **100%** | 100% | 100% | **0** |
-| Router | 100% | 100% | 100% | 0 |
+| RAG | 43% | 5% | 0% | 1,084 |
+| GraphRAG | 61% | 33% | 50% | 1,850 |
+| **Agentic GraphRAG** | **88%** | 95% | 100% | 14,004 |
+| Router | 86% | 100% | 100% | 7,950 |
 
-Two findings worth the judges' attention:
+Three findings worth the judges' attention:
 
-1. **The agent is the cheapest pipeline, not the most expensive.** RAG and
-   GraphRAG pay ~900 tokens/question at their default *k* to stuff passages
-   into a prompt and still miss; the agent answers from graph structure at 0
-   prompt tokens. The usual accuracy-vs-cost trade-off does not appear here.
+1. **Agents earn their keep on set-operations, and that is measurable.** On a
+   single-hop lookup plain RAG already scores 89%, while GraphRAG's
+   neighbourhood expansion *costs* accuracy there (74% — wider context crowds
+   out the right passage). The pipelines only separate decisively once an
+   answer becomes a *function over a candidate set*: GraphRAG gets 33% of
+   aggregations and 50% of superlatives; the agent gets 95% and 100%.
 
-2. **The gain is attributable to one mechanism.** Capping the agent at the
+2. **The gain is not free, and we publish the cost.** Agentic GraphRAG spends
+   ~7.6× GraphRAG's total tokens (14,004 vs 1,850) and ~17× its latency. It
+   reads *less* context per retrieval (189 vs 886 avg context tokens) because
+   it re-queries instead of stuffing a prompt — but it re-queries often, and
+   every step re-sends the system prompt and tool schemas. The Router is the
+   value pick: it matches the agent on aggregation, superlatives and temporal
+   at 57% of the tokens.
+
+3. **The gain is attributable to one mechanism.** Capping the agent at the
    top-10 documents a retriever would see (`Agentic-NoEnumeration`) leaves
-   lookup and multi-hop at 100% but collapses aggregation to 38% — those
-   answers are a *function over a candidate set*, and you cannot count what you
-   cannot see. See [docs/ablation_study.md](docs/ablation_study.md).
+   lookup and multi-hop intact but collapses aggregation — those answers are a
+   *function over a candidate set*, and you cannot count what you cannot see.
+   (The ablation is a separate deterministic run on the same 100 questions, so
+   its arm figures differ from the live table above.) See
+   [docs/ablation_study.md](docs/ablation_study.md).
 
 ### We tested the obvious objection against ourselves
 
@@ -51,10 +66,11 @@ What survives is the cost result:
 |---|---:|---:|
 | RAG (best, k=160) | 91% | 9,680 |
 | GraphRAG (best, k=160) | 74% | 13,785 |
-| **Agentic GraphRAG** | **100%** | **0** |
+| **Agentic GraphRAG** | **88%** | **189** |
 
-Retrieval can approach agentic accuracy — at **39× the context cost**, and it
-still tops out at 76% on aggregation. GraphRAG is also *non-monotonic* in k
+Retrieval overtakes the agent on raw accuracy at k=160 — and pays **~51× the
+context cost per question** to do it (9,680 vs 189 tokens), while still topping
+out at 76% on aggregation. GraphRAG is also *non-monotonic* in k
 (64% at k=20, 61% at k=40): wider retrieval crowds out the correct document.
 
 ## Quick start
@@ -64,15 +80,19 @@ python preflight.py            # verify this machine can run it
 python tools\selftest.py       # end-to-end: imports, benchmark, hidden set, docs
 
 .\setup\setup_env.ps1          # venv + deps
-Copy-Item .env.example .env    # add your GROQ_API_KEY (optional)
+Copy-Item .env.example .env    # optional GROQ_API_KEY; the shipped .env runs local Ollama
 
 python run_benchmark.py                      # full public benchmark
 python run_benchmark.py --limit 5            # quick smoke
 python run_benchmark.py --no-llm             # deterministic baseline (no API calls)
 python run_benchmark.py --no-llm --ablations # ablation study (which mechanism wins)
-python tools\submit_hidden.py --no-llm       # 50 hidden questions -> submission file
 
-python -m benchmark.dashboard_generator      # rebuild dashboard/index.html
+# The published numbers: public 100 then hidden 50, detached, one log per stage
+powershell -File tools\run_sweep.ps1         # -> results/public_results.json + results/hidden_llm.json
+python tools\validate_hidden.py              # hidden-set slot coverage
+python tools\submit_hidden.py                # 50 hidden questions -> results/hidden_submission.json
+python tools\refresh_dashboard.py --all      # rebuild AND validate both dashboard pages
+python tools\verify_doc_numbers.py           # gate: every number in docs/ still matches results/
 ```
 
 New to this machine? Start with **[docs/MIGRATION.md](docs/MIGRATION.md)** — it
@@ -103,7 +123,7 @@ and a confidence that drops when the fact was contested. Verify with
 | LLM-assisted | `python run_benchmark.py --out results/llm_results.json --summary results/llm_results_summary.json` | ~15–30 min (provider rate limits) | the headline numbers: LLM classification, slot extraction, answer adjudication, LLM-as-judge |
 | Deterministic | `python run_benchmark.py --no-llm --out results/deterministic_results.json --summary results/deterministic_results_summary.json` | **~1 min** | reproducible baseline, verifying the harness, running with no quota |
 
-Both modes run all three pipelines end-to-end — the LLM is an accelerator, never
+Both modes run all four pipelines end-to-end — the LLM is an accelerator, never
 a requirement. If the provider starts rate-limiting mid-run, a circuit breaker
 trips and the remaining questions finish deterministically instead of stalling
 (`llm.circuit` in `results/*_summary.json` shows how often this happened).
@@ -127,6 +147,9 @@ seconds on a call that recorded nothing.
 python tools/audit_results.py                     # audit results/public_results.json
 python tools/audit_results.py results/regression_final.json
 ```
+
+Here is that failure mode as the audit reports it — an example of a run the
+gate rejects, not the current headline numbers:
 
 ```
 pipeline              n     acc  w/calls   tokens    out   p50 ms  unacct status
@@ -225,8 +248,9 @@ powershell -File tools\run_bench.ps1 -Follow     # always run in the background
 
 ### Long runs: don't block your terminal
 
-The full 100 × 3 sweep takes 20–30 minutes (LLM rate limits), which makes a
-foreground run look *stuck*. Launch it in the background instead:
+The full 100 × 4 sweep is measured in **hours, not minutes** on a local 4B model
+(~4 h for the public 100 at ~2.4 min/question, ~2 h for the hidden 50), which
+makes a foreground run look *stuck*. Launch it in the background instead:
 
 ```powershell
 powershell -File tools\run_bench.ps1                 # starts detached, returns immediately
@@ -324,7 +348,7 @@ are built once from `corpus.jsonl` and cached under `.cache/` (`kg/`,
 
 | Path | Contents |
 |---|---|
-| `pipelines/` | the 3 pipelines + shared `PipelineResult` schema |
+| `pipelines/` | the 4 pipelines (RAG, GraphRAG, Agentic, Router) + shared `PipelineResult` schema |
 | `agents/` | planner, orchestrator and the specialised agentic agents |
 | `reasoning/` | query parser + deterministic solvers (counts, superlatives, temporal) |
 | `kg/`, `retrieval/` | knowledge-graph builder and TF-IDF vector index |

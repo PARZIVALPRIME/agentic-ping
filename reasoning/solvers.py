@@ -21,6 +21,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from kg.model import EventNode, KnowledgeGraph
 from kg.textutil import best_match, normalize, similarity, tokens
+from utils.thresholds import thresholds
 
 from .query_parser import QuerySpec, parse_question
 
@@ -48,6 +49,8 @@ class SolveResult:
 
 def resolve_sport(name: str, kg: KnowledgeGraph) -> str:
     """Map a question's sport phrase onto the corpus sport vocabulary."""
+    from utils.thresholds import thresholds
+
     if not name:
         return ""
     norm = normalize(name)
@@ -59,7 +62,7 @@ def resolve_sport(name: str, kg: KnowledgeGraph) -> str:
         if ns and ns in norm:
             return sport
     match, score = best_match(name, kg.sport_vocabulary)
-    return match if score >= 0.72 else ""
+    return match if score >= thresholds().sport_match_min else ""
 
 
 def resolve_venue(name: str, kg: KnowledgeGraph) -> Tuple[List[str], float]:
@@ -84,13 +87,120 @@ def resolve_venue(name: str, kg: KnowledgeGraph) -> Tuple[List[str], float]:
             # containment helps with "X Beijing" style concatenations
             overlap = len(qtok & vtok) / min(len(qtok), len(vtok))
             score = max(score, overlap * 0.93)
-        if score >= 0.72:
+        if score >= thresholds().venue_match_min:
             hits.append((venue_key, score))
     if not hits:
         return [], 0.0
     hits.sort(key=lambda x: x[1], reverse=True)
     top = hits[0][1]
-    return [k for k, s in hits if s >= max(0.8, top - 0.06)], top
+    band = thresholds().venue_match_band
+    return [k for k, s in hits
+            if s >= max(thresholds().venue_strong_min, top - band)], top
+
+
+def season_candidates(spec: QuerySpec, kg: KnowledgeGraph) -> List[str]:
+    """The seasons a question may refer to, most-likely first.
+
+    A question that says "Summer" or "Winter" pins the season. A question that
+    does not state one is *undetermined*, not Summer: the candidates are then
+    every season the corpus actually contains, and the caller resolves it from
+    evidence (which season has the event the question describes). Returning an
+    ordered list rather than a default is what makes the ambiguity visible - a
+    silent fallback to Summer would answer a Winter question from the wrong
+    Games with no trace of the substitution.
+    """
+    if spec.season:
+        return [spec.season]
+    seasons = _games_seasons(kg)
+    present = [s for s in ("Summer", "Winter") if seasons.get(s)]
+    if present:
+        return present
+    return ["Summer", "Winter"]
+
+
+def seasons_for_sport(sport: str, kg: KnowledgeGraph) -> List[str]:
+    """Seasons in which the corpus actually holds editions of ``sport``.
+
+    Sports are effectively season-specific in the data (sailing has no Winter
+    editions, biathlon no Summer ones), so this is the cheapest *evidence* for a
+    season the question did not state - and unlike a default it can come back
+    empty, which is the honest answer when the corpus does not decide.
+    """
+    if not sport:
+        return []
+    seen: List[str] = []
+    for node in kg.events_for_sport(sport):
+        if node.season and node.season not in seen:
+            seen.append(node.season)
+    return [s for s in ("Summer", "Winter") if s in seen]
+
+
+def resolve_previous_edition(spec: QuerySpec, kg: KnowledgeGraph) -> Dict[str, Any]:
+    """Resolve "the Games immediately before *target*" without assuming a season.
+
+    Order of evidence, strongest first:
+      1. the question states the season -> use it;
+      2. only one season in the corpus holds this sport -> that season;
+      3. otherwise compare the question's event descriptor against the events of
+         each candidate edition and take a clear winner;
+      4. otherwise report ``unresolved``/``ambiguous`` so the caller can mark the
+         gap and recover, instead of silently answering from the Summer Games.
+    """
+    target = spec.before_year
+    sport = spec.sport or resolve_sport(spec.event_desc, kg)
+    candidates: List[Dict[str, Any]] = []
+    for season in season_candidates(spec, kg):
+        prev = _nearest_previous_games(season, target, kg) if target else None
+        score = 0.0
+        if prev is not None and sport and spec.event_desc:
+            events = kg.events_for(sport, prev, season)
+            score = max((_event_similarity(spec.event_desc, e) for e in events),
+                        default=0.0)
+        candidates.append({"season": season, "year": prev,
+                           "event_score": round(score, 3)})
+
+    out: Dict[str, Any] = {"season": "", "year": None, "method": "",
+                           "target_year": target, "sport": sport,
+                           "candidates": candidates}
+
+    if spec.season:
+        hit = next((c for c in candidates if c["season"] == spec.season), None)
+        if hit and hit["year"] is not None:
+            out.update(season=hit["season"], year=hit["year"], method="stated_season")
+        else:
+            out["method"] = "unresolved"
+        return out
+
+    # 2. sport evidence: a sport lives in exactly one season in this corpus
+    sport_seasons = seasons_for_sport(sport, kg)
+    if len(sport_seasons) == 1:
+        hit = next((c for c in candidates if c["season"] == sport_seasons[0]), None)
+        if hit and hit["year"] is not None:
+            out.update(season=hit["season"], year=hit["year"], method="sport_season")
+            return out
+
+    # 3. event-descriptor evidence
+    scored = [c for c in candidates if c["year"] is not None and c["event_score"] > 0]
+    scored.sort(key=lambda c: c["event_score"], reverse=True)
+    if len(scored) == 1:
+        out.update(season=scored[0]["season"], year=scored[0]["year"],
+                   method="event_match")
+        return out
+    if len(scored) > 1 and scored[0]["event_score"] > scored[1]["event_score"]:
+        out.update(season=scored[0]["season"], year=scored[0]["year"],
+                   method="event_match_margin")
+        return out
+    if len(scored) > 1:
+        out["method"] = "ambiguous"
+        out["ambiguous_between"] = [c["season"] for c in scored]
+        return out
+    out["method"] = "unresolved"
+    return out
+
+
+
+
+
 
 
 def _date_score(spec: QuerySpec, ev: EventNode) -> float:
@@ -302,13 +412,31 @@ class StructuredSolver:
         if spec.before_year is None:
             res.unresolved.append("before_year")
             return res
-        season = spec.season or "Summer"
-        year = _nearest_previous_games(season, spec.before_year, self.kg)
+        # Which season the previous edition belongs to is *evidence*, not a
+        # default: "the Games immediately before 1994" contains no season, and
+        # assuming Summer answers from the Summer Games when the question meant
+        # Lillehammer. The shared resolver decides it from the question's sport
+        # and event descriptor - the same decision the entity linker and the
+        # graph traverser make - and reports which evidence produced it. When the
+        # question does state a season this is exactly the old behaviour
+        # ("stated_season" -> that season's nearest earlier edition).
+        edition = resolve_previous_edition(spec, self.kg)
+        season = str(edition.get("season") or "")
+        year = edition.get("year")
         res.steps.append({
             "operation": "temporal_resolution",
-            "description": f"latest {season} Games strictly before {spec.before_year}",
+            "description": (f"latest {season or '(unresolved)'} Games strictly "
+                            f"before {spec.before_year} "
+                            f"[{edition.get('method') or 'unresolved'}]"),
             "resolved_year": year,
+            "season_method": edition.get("method"),
+            "season_candidates": edition.get("candidates", []),
         })
+        if not season:
+            # Never guessed: an unstated season the evidence could not settle is
+            # reported as a gap so the caller can widen or replan.
+            res.unresolved.append("season_unresolved")
+            return res
         if year is None:
             res.unresolved.append("no_prior_games")
             return res
