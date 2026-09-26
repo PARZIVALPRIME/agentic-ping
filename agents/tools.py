@@ -258,6 +258,7 @@ class GraphTools:
             hops.append({"direction": direction_seen, "target": other,
                          "attrs": attrs or {},
                          "title": getattr(self.kg.events.get(other), "title", "")})
+        hops.sort(key=lambda h: (h["direction"], str(h["target"])))
         doc_ids = [h["target"] for h in hops if h["target"] in self.kg.events]
         return {"from": doc_id, "edge_type": edge_type, "num_found": len(hops),
                 "neighbours": hops[:MAX_ROWS], "doc_ids": doc_ids[:MAX_ROWS]}

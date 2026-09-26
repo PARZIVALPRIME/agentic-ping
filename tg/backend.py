@@ -319,7 +319,13 @@ class TigerGraphBackend(KnowledgeGraph):
         by_id: Dict[str, Dict[str, Any]] = {}
         for row in rows:
             by_id.setdefault(str(row.get("v_id") or ""), row)
-        if isinstance(id_order, list):
+        has_seq = any((r.get("attributes") or {}).get("seq") is not None for r in rows)
+        if has_seq:
+            def _seq_key(v: str) -> Tuple[int, int]:
+                s = (by_id[v].get("attributes") or {}).get("seq")
+                return (0, int(s)) if s is not None else (1, 0)
+            page_ids = sorted(by_id.keys(), key=_seq_key)
+        elif isinstance(id_order, list):
             page_ids = [str(v) for v in id_order if str(v) in by_id]
             for v in by_id:
                 if v not in page_ids:

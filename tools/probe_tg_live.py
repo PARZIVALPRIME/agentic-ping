@@ -55,8 +55,12 @@ def check(label: str, ok: bool, detail: str = "") -> bool:
 def tg_cfg(host: str, max_rows: int) -> dict:
     """A config object shaped like ``config.tg``, to point a probe anywhere."""
     return {"tg": SimpleNamespace(
-        host=host, graphname=config.tg.graphname, username="tigergraph",
-        password="tigergraph", restpp_port="", gs_port="", token="",
+        host=host, graphname=config.tg.graphname,
+        username=getattr(config.tg, "username", "tigergraph"),
+        password=getattr(config.tg, "password", "tigergraph"),
+        restpp_port=getattr(config.tg, "restpp_port", ""),
+        gs_port=getattr(config.tg, "gs_port", ""),
+        token=getattr(config.tg, "token", ""),
         timeout=15.0, retries=0, verbose=False, max_rows=max_rows, enabled=True)}
 
 
