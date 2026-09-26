@@ -175,14 +175,39 @@ class FakeTigerGraph:
         accepted_v = accepted_e = 0
         for vtype, rows in (payload.get("vertices") or {}).items():
             for v_id, attrs in rows.items():
-                self.add_vertex(vtype, v_id, attrs or {})
+                clean_attrs = {}
+                for k, v in (attrs or {}).items():
+                    if isinstance(v, dict) and "value" in v:
+                        clean_attrs[k] = v["value"]
+                    else:
+                        clean_attrs[k] = v
+                self.add_vertex(vtype, v_id, clean_attrs)
                 accepted_v += 1
         for src_type, blocks in (payload.get("edges") or {}).items():
-            for etype, sources in blocks.items():
-                for src, targets in sources.items():
-                    for dst, attrs in targets.items():
-                        self.add_edge(src_type, etype, src, dst, attrs or {})
-                        accepted_e += 1
+            for k1, v1 in blocks.items():
+                if not isinstance(v1, dict):
+                    continue
+                if k1 in EDGE_TYPES:
+                    etype = k1
+                    for src, targets in v1.items():
+                        for dst, attrs in targets.items():
+                            clean_attrs = {k: (v["value"] if isinstance(v, dict) and "value" in v else v)
+                                           for k, v in (attrs or {}).items()}
+                            self.add_edge(src_type, etype, src, dst, clean_attrs)
+                            accepted_e += 1
+                else:
+                    src = k1
+                    for etype, dst_types in v1.items():
+                        if not isinstance(dst_types, dict):
+                            continue
+                        for dst_type, targets in dst_types.items():
+                            if not isinstance(targets, dict):
+                                continue
+                            for dst, attrs in targets.items():
+                                clean_attrs = {k: (v["value"] if isinstance(v, dict) and "value" in v else v)
+                                               for k, v in (attrs or {}).items()}
+                                self.add_edge(src_type, etype, src, dst, clean_attrs)
+                                accepted_e += 1
         return {"error": False, "results": {"accepted_vertices": accepted_v,
                                             "accepted_edges": accepted_e}}
 

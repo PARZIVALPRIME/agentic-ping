@@ -26,9 +26,6 @@
 // and in results/*.json citations. No id mapping layer exists on purpose.
 // ===========================================================================
 
-DROP GRAPH OlympicsKG
-CREATE GRAPH OlympicsKG (*)
-
 USE GLOBAL
 CREATE VERTEX Event (
   PRIMARY_ID doc_id STRING,
@@ -81,6 +78,8 @@ CREATE DIRECTED EDGE WON_BY (
   FROM Event, TO Athlete,
   medal STRING
 )
+
+CREATE GRAPH OlympicsKG (*)
 
 // Loader for RESTPP upserts (what tools/tg_ingest.py --push uses); no files
 // need to be visible to the server, which is what makes Savanna work.

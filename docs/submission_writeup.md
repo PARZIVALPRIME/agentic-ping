@@ -32,29 +32,28 @@ interactive dashboard.
 ## Results
 
 Measured live on the 100-question public set (`results/metrics_summary.json`),
-local provider: Ollama `qwen3.5:4b`, no external API, no rate-limit sleeps.
+provider: Gemini 3.8 Flash on TGCloud 4.2.5 Enterprise cluster (`OlympicsKG`).
 
 | Pipeline | Accuracy | Avg total tokens | Avg context tokens | Avg latency |
 |---|---|---|---|---|
-| RAG | 43.0% (43/100) | 1,084 | 251 | 4.6 s |
-| GraphRAG | 61.0% (61/100) | 1,850 | 886 | 4.6 s |
-| Agentic GraphRAG | **88.0%** (88/100) | 14,004 | 189 | 78.4 s |
-| Router | 86.0% (86/100) | 7,950 | 170 | 53.7 s |
+| RAG | 42.0% (42/100) | 1,085 | 251 | 2.3 s |
+| GraphRAG | 62.0% (62/100) | 1,849 | 886 | 1.9 s |
+| Agentic GraphRAG | **100.0%** (100/100) | 17,472 | 95 | 12.9 s |
+| Router | 98.0% (98/100) | 16,748 | 162 | 13.7 s |
 
 Accuracy by question type (scored against the question set's own `qtype`, so
 the buckets are identical across pipelines):
 
 | Pipeline | lookup | multi_hop | temporal | aggregation | superlative |
 |---|---|---|---|---|---|
-| RAG | 17/19 | 17/28 | 8/22 | 1/21 | 0/10 |
-| GraphRAG | 14/19 | 24/28 | 11/22 | 7/21 | 5/10 |
-| Agentic GraphRAG | 19/19 | 19/28 | 20/22 | 20/21 | 10/10 |
-| Router | 17/19 | 17/28 | 21/22 | 21/21 | 10/10 |
+| RAG | 17/19 | 17/28 | 8/22 | 0/21 | 0/10 |
+| GraphRAG | 14/19 | 24/28 | 12/22 | 7/21 | 5/10 |
+| Agentic GraphRAG | 19/19 | 28/28 | 22/22 | 21/21 | 10/10 |
+| Router | 17/19 | 28/28 | 22/22 | 21/21 | 10/10 |
 
 Hidden set (50 questions, no gold answers): the Agentic GraphRAG arm answered
-50/50 with 0 errors and 1,042,857 tokens; `tools/validate_hidden.py` resolves
-50/50 slots (100%). GraphRAG left 1 blank, Router 5 (all multi-hop/lookup),
-RAG 33.
+50/50 with 0 errors and 1,077,581 tokens; `tools/validate_hidden.py` resolves
+50/50 slots (100%).
 Per question type and per-question traces: see the dashboard's *"When do agents
 matter?"* panel.
 

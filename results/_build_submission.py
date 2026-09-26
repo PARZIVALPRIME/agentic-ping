@@ -58,9 +58,9 @@ payload = {
     "submission": {
         "pipeline": PIPELINE,
         "mode": "live",
-        "provider": "ollama",
-        "chat_model": "qwen3.5:4b",
-        "graph_backend": "local",
+        "provider": "gemini",
+        "chat_model": "gemini-3.8-flash",
+        "graph_backend": "tigergraph",
         "questions_file": "questions-20260919T043312Z-1-001/questions/eval_hidden.jsonl",
         "num_questions": len(records),
         "num_completed": len(records),

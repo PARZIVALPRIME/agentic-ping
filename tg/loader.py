@@ -86,11 +86,11 @@ def event_payload(node: Any, text: str = "", seq: int = 0) -> Dict[str, Any]:
     ``seq`` carries the corpus position so server-side result order matches the
     local scan; it is supplied by the loader, not read from the node.
     """
-    payload = {name: _coerce(name, getattr(node, name, None))
+    payload = {name: {"value": _coerce(name, getattr(node, name, None))}
                for name in EVENT_ATTRS}
-    payload[SEQ_ATTR] = int(seq)
+    payload[SEQ_ATTR] = {"value": int(seq)}
     if text:
-        payload["text"] = text
+        payload["text"] = {"value": text}
     return payload
 
 
@@ -195,12 +195,18 @@ def push_graph(kg: KnowledgeGraph, client: TigerGraphClient, corpus_path: str = 
                                    "local_total": len(kg.events)}
 
     others = {
-        "Athlete": {aid: {"name": a.name, "medals": list(a.medals)}
+        "Athlete": {aid: {"name": {"value": a.name}}
                     for aid, a in kg.athletes.items()},
-        "Sport": {kg.sport_id(s): {"name": s} for s in sorted(kg.sports) if s},
-        "Venue": {kg.venue_id(v): {"name": v} for v in sorted(kg.venues) if v},
-        "Games": {kg.games_id(games_payload(g)["year"], games_payload(g)["season"]):
-                  games_payload(g) for g in sorted(kg.games)},
+        "Sport": {kg.sport_id(s): {"name": {"value": s}} for s in sorted(kg.sports) if s},
+        "Venue": {kg.venue_id(v): {"name": {"value": v}} for v in sorted(kg.venues) if v},
+        "Games": {
+            kg.games_id(games_payload(g)["year"], games_payload(g)["season"]): {
+                "label": {"value": str(g)},
+                "year": {"value": games_payload(g)["year"]},
+                "season": {"value": games_payload(g)["season"]},
+            }
+            for g in sorted(kg.games)
+        },
     }
     for vtype, vertices in others.items():
         sent = 0
@@ -213,6 +219,8 @@ def push_graph(kg: KnowledgeGraph, client: TigerGraphClient, corpus_path: str = 
         report["vertices"][vtype] = {"sent": sent, "target": len(keys)}
 
     # ── edges ──────────────────────────────────────────────────────────
+    # TG 4.2.5 RESTPP v2 format:
+    # {"edges": {src_type: {src_id: {etype: {dst_type: {dst_id: wrapped_attrs}}}}}}
     buckets: Dict[Tuple[str, str], Dict[str, Any]] = {}
     skipped = 0
     for edge in kg.edges:
@@ -224,16 +232,26 @@ def push_graph(kg: KnowledgeGraph, client: TigerGraphClient, corpus_path: str = 
             skipped += 1          # capped load / dangling target: never send it
             continue
         src_type = id_type(edge.src)
+        dst_type = id_type(edge.dst)
+        wrapped_attrs = {k: {"value": v} for k, v in (edge.attrs or {}).items()}
+
         bucket = buckets.setdefault((src_type, etype), {})
-        bucket.setdefault(edge.src, {})[edge.dst] = dict(edge.attrs or {})
-    for (src_type, etype), edges in buckets.items():
+        src_entry = bucket.setdefault(edge.src, {})
+        dst_type_entry = src_entry.setdefault(dst_type, {})
+        dst_type_entry[edge.dst] = wrapped_attrs
+
+    for (src_type, etype), src_dict in buckets.items():
         sent_edges = 0
-        keys = list(edges)
+        keys = list(src_dict)
         for start in range(0, len(keys), batch_size):
-            chunk = {k: edges[k] for k in keys[start:start + batch_size]}
-            if _send(client, {"edges": {src_type: {etype: chunk}}}, report,
-                     f"{etype} batch"):
-                sent_edges += sum(len(targets) for targets in chunk.values())
+            chunk_keys = keys[start:start + batch_size]
+            payload_edges: Dict[str, Any] = {src_type: {}}
+            batch_count = 0
+            for sid in chunk_keys:
+                payload_edges[src_type][sid] = {etype: src_dict[sid]}
+                batch_count += sum(len(dests) for dests in src_dict[sid].values())
+            if _send(client, {"edges": payload_edges}, report, f"{etype} batch"):
+                sent_edges += batch_count
         report["edges"][etype] = {"sent": sent_edges, "sources": len(keys)}
     report["edges_skipped"] = skipped
     report["local_edges_total"] = len(kg.edges)
@@ -253,9 +271,18 @@ def remote_counts(client: TigerGraphClient) -> Dict[str, Any]:
     by ``schema.gsql`` and always works.
     """
     try:
-        data = client.run_query("tg_stats")
-        if isinstance(data, dict) and data:
-            return {k.lstrip("@"): v for k, v in data.items()}
+        acc = client.run_accumulators("tg_stats")
+        if isinstance(acc, dict) and acc:
+            mapping = {
+                "events": "Event",
+                "athletes": "Athlete",
+                "games": "Games",
+                "sports": "Sport",
+                "venues": "Venue",
+                "event": "Event",
+                "athlete": "Athlete",
+            }
+            return {mapping.get(k.lower(), k): v for k, v in acc.items()}
     except TigerGraphError:
         pass
     try:

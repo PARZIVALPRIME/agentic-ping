@@ -123,7 +123,11 @@ def open_graph(corpus_path: str, cfg: Any = None,
             cfg = None
     tg_cfg = _tg_config(cfg)
 
-    enabled = _flag(os.getenv("TG_ENABLED")) or bool(getattr(tg_cfg, "enabled", False))
+    cfg_enabled = getattr(tg_cfg, "enabled", None)
+    if cfg_enabled is not None:
+        enabled = bool(cfg_enabled)
+    else:
+        enabled = _flag(os.getenv("TG_ENABLED"))
     graph_name = str(getattr(tg_cfg, "graphname", "") or "")
     client, reason = (None, "")
     if enabled and not force_local:

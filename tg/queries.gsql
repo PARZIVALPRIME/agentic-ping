@@ -31,14 +31,13 @@ CREATE QUERY tg_filter_events(
   // Attribute filters execute in the database; the agent layer only ranks and
   // trims the returned rows (see TigerGraphBackend.filter_events).
   //
-  // Two accumulators are printed on purpose:
+  // Two results are printed on purpose:
   //   @@ids   ordered doc_ids - ORDER BY v.seq reproduces the corpus order of the
   //           local scan, and a plain string list survives JSON round-trips, so
   //           the backend can compare remote and local answers object-for-object.
-  //   @@rows  the vertices themselves, so the answer carries server attributes
-  //           instead of being re-hydrated from the local mirror.
+  //   Events  the vertex set with server attributes, so the answer carries server
+  //           attributes instead of being re-hydrated from the local mirror.
   ListAccum<STRING> @@ids;
-  SetAccum<VERTEX<Event>> @@rows;
   Events = {Event.*};
   Events = SELECT v FROM Events:v
     WHERE (sport    == "" OR lower(v.sport)  == lower(sport))
@@ -46,49 +45,51 @@ CREATE QUERY tg_filter_events(
       AND (season   == "" OR lower(v.season) == lower(season))
       AND (year_from == 0 OR v.year >= year_from)
       AND (year_to   == 0 OR v.year <= year_to)
-    ACCUM @@ids += v.doc_id, @@rows += v
+    ACCUM @@ids += v.doc_id
     ORDER BY v.seq ASC
     LIMIT max_rows;
-  PRINT @@ids, @@rows;
+  PRINT @@ids, Events;
 }
 
 CREATE QUERY tg_neighbours(
   STRING vertex_id, STRING edge_type="", INT max_rows=200
-) FOR GRAPH OlympicsKG SYNTAX V2 {
+) FOR GRAPH OlympicsKG SYNTAX V1 {
   // Undirected hops around one vertex, one block per edge type. Works from any
   // vertex type, so SPORT::/VENUE::/ATHLETE::/GAMES:: lookups also return the
   // events attached to them - that is what the multi-hop and temporal tools use.
   SetAccum<EDGE> @@edges;
 
-  SEvent  = {Event.*};   SEvent  = SELECT s FROM SEvent:s  WHERE s.doc_id     == vertex_id;
-  SAth    = {Athlete.*}; SAth    = SELECT s FROM SAth:s    WHERE s.athlete_id == vertex_id;
-  SSport  = {Sport.*};   SSport  = SELECT s FROM SSport:s  WHERE s.sid        == vertex_id;
-  SVenue  = {Venue.*};   SVenue  = SELECT s FROM SVenue:s  WHERE s.vid        == vertex_id;
-  SGames  = {Games.*};   SGames  = SELECT s FROM SGames:s  WHERE s.gid        == vertex_id;
+  v_events = {Event.*};
+  SEvent   = SELECT s FROM v_events:s WHERE s.doc_id == vertex_id;
 
   IF edge_type == "" OR edge_type == "PREV" THEN
-    E1 = SELECT t FROM SEvent:s -(PREV:e)- Event:t    LIMIT max_rows ACCUM @@edges += e;
-    E2 = SELECT t FROM SEvent:s -(NEXT:e)- Event:t    LIMIT max_rows ACCUM @@edges += e;
+    E1     = SELECT t FROM SEvent:s   -(PREV:e)-> Event:t ACCUM @@edges += e LIMIT max_rows;
+    E1_rev = SELECT s FROM v_events:s -(PREV:e)-> Event:t WHERE t.doc_id == vertex_id ACCUM @@edges += e LIMIT max_rows;
+  END;
+
+  IF edge_type == "" OR edge_type == "NEXT" THEN
+    E2     = SELECT t FROM SEvent:s   -(NEXT:e)-> Event:t ACCUM @@edges += e LIMIT max_rows;
+    E2_rev = SELECT s FROM v_events:s -(NEXT:e)-> Event:t WHERE t.doc_id == vertex_id ACCUM @@edges += e LIMIT max_rows;
   END;
 
   IF edge_type == "" OR edge_type == "PART_OF" THEN
-    E3 = SELECT t FROM SEvent:s -(PART_OF:e)- Games:t  LIMIT max_rows ACCUM @@edges += e;
-    E4 = SELECT t FROM SGames:s -(PART_OF:e)- Event:t  LIMIT max_rows ACCUM @@edges += e;
+    E3 = SELECT t FROM SEvent:s   -(PART_OF:e)-> Games:t ACCUM @@edges += e LIMIT max_rows;
+    E4 = SELECT s FROM v_events:s -(PART_OF:e)-> Games:t WHERE t.gid == vertex_id ACCUM @@edges += e LIMIT max_rows;
   END;
 
   IF edge_type == "" OR edge_type == "IN_SPORT" THEN
-    E5 = SELECT t FROM SEvent:s -(IN_SPORT:e)- Sport:t LIMIT max_rows ACCUM @@edges += e;
-    E6 = SELECT t FROM SSport:s -(IN_SPORT:e)- Event:t LIMIT max_rows ACCUM @@edges += e;
+    E5 = SELECT t FROM SEvent:s   -(IN_SPORT:e)-> Sport:t ACCUM @@edges += e LIMIT max_rows;
+    E6 = SELECT s FROM v_events:s -(IN_SPORT:e)-> Sport:t WHERE t.sid == vertex_id ACCUM @@edges += e LIMIT max_rows;
   END;
 
   IF edge_type == "" OR edge_type == "HELD_AT" THEN
-    E7 = SELECT t FROM SEvent:s -(HELD_AT:e)- Venue:t  LIMIT max_rows ACCUM @@edges += e;
-    E8 = SELECT t FROM SVenue:s -(HELD_AT:e)- Event:t  LIMIT max_rows ACCUM @@edges += e;
+    E7 = SELECT t FROM SEvent:s   -(HELD_AT:e)-> Venue:t ACCUM @@edges += e LIMIT max_rows;
+    E8 = SELECT s FROM v_events:s -(HELD_AT:e)-> Venue:t WHERE t.vid == vertex_id ACCUM @@edges += e LIMIT max_rows;
   END;
 
   IF edge_type == "" OR edge_type == "WON_BY" THEN
-    E9  = SELECT t FROM SEvent:s -(WON_BY:e)- Athlete:t LIMIT max_rows ACCUM @@edges += e;
-    E10 = SELECT t FROM SAth:s   -(WON_BY:e)- Event:t   LIMIT max_rows ACCUM @@edges += e;
+    E9  = SELECT t FROM SEvent:s   -(WON_BY:e)-> Athlete:t ACCUM @@edges += e LIMIT max_rows;
+    E10 = SELECT s FROM v_events:s -(WON_BY:e)-> Athlete:t WHERE t.athlete_id == vertex_id ACCUM @@edges += e LIMIT max_rows;
   END;
 
   PRINT @@edges;
@@ -106,10 +107,10 @@ CREATE QUERY tg_event(STRING doc_id) FOR GRAPH OlympicsKG SYNTAX V2 {
 
 CREATE QUERY tg_stats() FOR GRAPH OlympicsKG SYNTAX V2 {
   SumAccum<INT> @@events, @@athletes, @@games, @@sports, @@venues;
-  Events   = {Event.*};   @@events   = Events.size();
-  Athletes = {Athlete.*}; @@athletes = Athletes.size();
-  Games    = {Games.*};   @@games    = Games.size();
-  Sports   = {Sport.*};   @@sports   = Sports.size();
-  Venues   = {Venue.*};   @@venues   = Venues.size();
+  v_events   = {Event.*};   @@events   = v_events.size();
+  v_athletes = {Athlete.*}; @@athletes = v_athletes.size();
+  v_games    = {Games.*};   @@games    = v_games.size();
+  v_sports   = {Sport.*};   @@sports   = v_sports.size();
+  v_venues   = {Venue.*};   @@venues   = v_venues.size();
   PRINT @@events, @@athletes, @@games, @@sports, @@venues;
 }

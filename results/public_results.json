@@ -149080,7 +149080,7 @@
           "Q3879585",
           "Q2071160"
         ],
-        "latency_ms": 2493.67,
+        "latency_ms": 1733.51,
         "retrieval_steps": 1,
         "tools_called": [
           "similarity_search"
@@ -149090,8 +149090,8 @@
         "docs_retrieved": 5,
         "context_tokens": 174,
         "input_tokens": 877,
-        "output_tokens": 47,
-        "total_tokens": 924,
+        "output_tokens": 49,
+        "total_tokens": 926,
         "llm_calls": 1,
         "method": "extractive",
         "strategy_changed": false,
@@ -149123,17 +149123,17 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 47.23
+            "latency_ms": 48.93
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "llm_adjudicate",
             "detail": "verify candidate against passages",
-            "latency_ms": 2446.11
+            "latency_ms": 1684.04
           }
         ],
         "tokens_per_operation": [
@@ -149154,8 +149154,8 @@
           {
             "operation": "rag.adjudicate",
             "input_tokens": 671,
-            "output_tokens": 47,
-            "total_tokens": 718,
+            "output_tokens": 49,
+            "total_tokens": 720,
             "detail": "gemini-3.8-flash"
           }
         ],
@@ -149206,7 +149206,7 @@
         "citations": [
           "Q2051400"
         ],
-        "latency_ms": 2202.22,
+        "latency_ms": 2204.11,
         "retrieval_steps": 2,
         "tools_called": [
           "hybrid_search",
@@ -149217,8 +149217,8 @@
         "docs_retrieved": 10,
         "context_tokens": 974,
         "input_tokens": 2419,
-        "output_tokens": 54,
-        "total_tokens": 2473,
+        "output_tokens": 56,
+        "total_tokens": 2475,
         "llm_calls": 1,
         "method": "extractive",
         "strategy_changed": false,
@@ -149270,22 +149270,22 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 97.55
+            "latency_ms": 105.78
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 109.23
+            "latency_ms": 107.7
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.32
+            "latency_ms": 0.36
           },
           {
             "operation": "llm_adjudicate",
             "detail": "verify candidate against graph context",
-            "latency_ms": 1994.52
+            "latency_ms": 1989.64
           }
         ],
         "tokens_per_operation": [
@@ -149306,8 +149306,8 @@
           {
             "operation": "graphrag.adjudicate",
             "input_tokens": 1413,
-            "output_tokens": 54,
-            "total_tokens": 1467,
+            "output_tokens": 56,
+            "total_tokens": 1469,
             "detail": "gemini-3.8-flash"
           }
         ],
@@ -149360,7 +149360,7 @@
           "docs_with_infobox": 10,
           "adjudication": {
             "agree": true,
-            "reason": "The context confirms Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics.",
+            "reason": "Doc [3] confirms Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics.",
             "candidate": "Missy Franklin"
           },
           "llm_revised": false
@@ -149383,25 +149383,32 @@
         "answer": "Missy Franklin",
         "citations": [
           "Q2051400",
+          "Q1798867",
+          "Q919242",
           "Q2071160",
           "Q2269716",
           "Q2071266",
           "Q2071152",
           "Q1198508",
-          "Q905555",
-          "Q916930",
-          "Q305171",
-          "Q2026292",
-          "Q1067772",
-          "Q2070029",
-          "Q531436",
-          "Q2001050",
-          "Q1067796",
-          "Q1043405",
-          "Q1798905",
-          "Q249265"
+          "Q1649415",
+          "Q1799275",
+          "Q1772017",
+          "Q1827915",
+          "Q2071129",
+          "Q956242",
+          "Q2001009",
+          "Q1798882",
+          "Q1799157",
+          "Q2090641",
+          "Q2071135",
+          "Q2390636",
+          "Q1005434",
+          "Q2936542",
+          "Q919388",
+          "Q919261",
+          "Q1042705"
         ],
-        "latency_ms": 9580.56,
+        "latency_ms": 20034.72,
         "retrieval_steps": 2,
         "tools_called": [
           "search_events",
@@ -149411,12 +149418,12 @@
         "agents_invoked": [
           "ReActAgent"
         ],
-        "chunks_retrieved": 18,
-        "docs_retrieved": 18,
-        "context_tokens": 4,
-        "input_tokens": 7246,
-        "output_tokens": 274,
-        "total_tokens": 7520,
+        "chunks_retrieved": 25,
+        "docs_retrieved": 25,
+        "context_tokens": 6,
+        "input_tokens": 7307,
+        "output_tokens": 272,
+        "total_tokens": 7579,
         "llm_calls": 3,
         "method": "react_tool_calling",
         "strategy_changed": true,
@@ -149425,30 +149432,28 @@
         "uncertainty": 0.1,
         "plan": [],
         "loop_iterations": 3,
-        "candidates_considered": 18,
+        "candidates_considered": 25,
         "steps": [
           {
             "index": 1,
             "agent": "ReActAgent",
             "operation": "tool:search_events",
-            "detail": "sport=Swimming, year_from=2012, year_to=2012, season=Summer, query=women's 200 metre backstroke",
+            "detail": "query=women's 200 metre backstroke, year_to=2012, year_from=2012",
             "observation": {
               "tool": "search_events",
               "args": {
-                "sport": "Swimming",
-                "year_from": 2012,
+                "query": "women's 200 metre backstroke",
                 "year_to": 2012,
-                "season": "Summer",
-                "query": "women's 200 metre backstroke"
+                "year_from": 2012
               },
-              "summary": "18 event(s), 18 shown",
-              "result": "{\"count\": 18, \"returned\": 18, \"events\": [{\"doc_id\": \"Q2051400\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2071160\", \"title\": \"Swimming at the 2012 Summer Olympics – Men's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2269716\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre breaststroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre breaststroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2071266\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre butterfly\", \"sport\": \"Swimming\", \"year\": 2012, \"…"
+              "summary": "145 event(s), 25 shown",
+              "result": "{\"count\": 145, \"returned\": 25, \"events\": [{\"doc_id\": \"Q2051400\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q1798867\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 200 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q919242\", \"title\": \"Canoeing at the 2012 Summer Olympics – Women's K-1 200 metres\", \"sport\": \"Canoeing\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's K-1 200 metres\", \"venue\": \"Eton Dorney\"}, {\"doc_id\": \"Q2071160\", \"title\": \"Swimming at the 2012 Summer Olympics – Men's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 200 metre…"
             },
             "confidence_after": 0.0,
-            "new_documents": 18,
-            "latency_ms": 0.74,
+            "new_documents": 25,
+            "latency_ms": 11547.08,
             "input_tokens": 1578,
-            "output_tokens": 55
+            "output_tokens": 43
           },
           {
             "index": 2,
@@ -149466,40 +149471,40 @@
             "confidence_after": 0.0,
             "new_documents": 0,
             "latency_ms": 0.02,
-            "input_tokens": 2321,
+            "input_tokens": 2333,
             "output_tokens": 27
           },
           {
             "index": 3,
             "agent": "ReActAgent",
             "operation": "tool:submit_answer",
-            "detail": "answer=Missy Franklin, reasoning=Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics (the edition immediately preceding 2016), setting a world record of 2",
+            "detail": "doc_ids=['Q2051400'], answer=Missy Franklin, reasoning=The Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. In the women's 200 metre backstroke event, Missy Frankli",
             "observation": {
               "tool": "submit_answer",
               "args": {
-                "answer": "Missy Franklin",
-                "reasoning": "Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics (the edition immediately preceding 2016), setting a world record of 2:04.06.",
                 "doc_ids": [
                   "Q2051400"
-                ]
+                ],
+                "answer": "Missy Franklin",
+                "reasoning": "The Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. In the women's 200 metre backstroke event, Missy Franklin won the gold medal with a world-record time of 2:04.06."
               },
               "summary": "answer=Missy Franklin",
-              "result": "{\"accepted\": true, \"answer\": \"Missy Franklin\", \"reasoning\": \"Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics (the edition immediately preceding 2016), setting a world record of 2:04.06.\", \"confidence\": 0.9, \"doc_ids\": [\"Q2051400\"]}",
+              "result": "{\"accepted\": true, \"answer\": \"Missy Franklin\", \"reasoning\": \"The Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. In the women's 200 metre backstroke event, Missy Franklin won the gold medal with a world-record time of 2:04.06.\", \"confidence\": 0.9, \"doc_ids\": [\"Q2051400\"]}",
               "answer_accepted_because": "evidence: present in tool output"
             },
             "confidence_after": 0.0,
             "new_documents": 0,
             "latency_ms": 0.01,
-            "input_tokens": 2969,
-            "output_tokens": 92
+            "input_tokens": 3018,
+            "output_tokens": 98
           }
         ],
         "time_per_operation": [
           {
             "operation": "tool:search_events",
             "agent": "ReActAgent",
-            "detail": "sport=Swimming, year_from=2012, year_to=2012, season=Summer, query=women's 200 metre backstroke",
-            "latency_ms": 0.74
+            "detail": "query=women's 200 metre backstroke, year_to=2012, year_from=2012",
+            "latency_ms": 11547.08
           },
           {
             "operation": "tool:get_event_details",
@@ -149510,7 +149515,7 @@
           {
             "operation": "tool:submit_answer",
             "agent": "ReActAgent",
-            "detail": "answer=Missy Franklin, reasoning=Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics (the edition immediately prec",
+            "detail": "doc_ids=['Q2051400'], answer=Missy Franklin, reasoning=The Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. In the women's 2",
             "latency_ms": 0.01
           }
         ],
@@ -149518,29 +149523,29 @@
           {
             "operation": "parser.semantic",
             "input_tokens": 378,
-            "output_tokens": 100,
-            "total_tokens": 478,
+            "output_tokens": 104,
+            "total_tokens": 482,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
             "input_tokens": 1578,
-            "output_tokens": 55,
-            "total_tokens": 1633,
+            "output_tokens": 43,
+            "total_tokens": 1621,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
-            "input_tokens": 2321,
+            "input_tokens": 2333,
             "output_tokens": 27,
-            "total_tokens": 2348,
+            "total_tokens": 2360,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
-            "input_tokens": 2969,
-            "output_tokens": 92,
-            "total_tokens": 3061,
+            "input_tokens": 3018,
+            "output_tokens": 98,
+            "total_tokens": 3116,
             "detail": "gemini-3.8-flash"
           }
         ],
@@ -149551,14 +149556,12 @@
             "observation": {
               "tool": "search_events",
               "args": {
-                "sport": "Swimming",
-                "year_from": 2012,
+                "query": "women's 200 metre backstroke",
                 "year_to": 2012,
-                "season": "Summer",
-                "query": "women's 200 metre backstroke"
+                "year_from": 2012
               },
-              "summary": "18 event(s), 18 shown",
-              "result": "{\"count\": 18, \"returned\": 18, \"events\": [{\"doc_id\": \"Q2051400\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2071160\", \"title\": \"Swimming at the 2012 Summer Olympics – Men's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2269716\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre breaststroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre breaststroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2071266\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre butterfly\", \"sport\": \"Swimming\", \"year\": 2012, \"…"
+              "summary": "145 event(s), 25 shown",
+              "result": "{\"count\": 145, \"returned\": 25, \"events\": [{\"doc_id\": \"Q2051400\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q1798867\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 200 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q919242\", \"title\": \"Canoeing at the 2012 Summer Olympics – Women's K-1 200 metres\", \"sport\": \"Canoeing\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's K-1 200 metres\", \"venue\": \"Eton Dorney\"}, {\"doc_id\": \"Q2071160\", \"title\": \"Swimming at the 2012 Summer Olympics – Men's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 200 metre…"
             }
           },
           {
@@ -149579,14 +149582,14 @@
             "observation": {
               "tool": "submit_answer",
               "args": {
-                "answer": "Missy Franklin",
-                "reasoning": "Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics (the edition immediately preceding 2016), setting a world record of 2:04.06.",
                 "doc_ids": [
                   "Q2051400"
-                ]
+                ],
+                "answer": "Missy Franklin",
+                "reasoning": "The Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. In the women's 200 metre backstroke event, Missy Franklin won the gold medal with a world-record time of 2:04.06."
               },
               "summary": "answer=Missy Franklin",
-              "result": "{\"accepted\": true, \"answer\": \"Missy Franklin\", \"reasoning\": \"Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics (the edition immediately preceding 2016), setting a world record of 2:04.06.\", \"confidence\": 0.9, \"doc_ids\": [\"Q2051400\"]}",
+              "result": "{\"accepted\": true, \"answer\": \"Missy Franklin\", \"reasoning\": \"The Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. In the women's 200 metre backstroke event, Missy Franklin won the gold medal with a world-record time of 2:04.06.\", \"confidence\": 0.9, \"doc_ids\": [\"Q2051400\"]}",
               "answer_accepted_because": "evidence: present in tool output"
             }
           }
@@ -149606,16 +149609,42 @@
             "tool_calls": 3
           },
           "parse_report": {
-            "method": "rules",
-            "llm_used": false,
+            "method": "llm",
+            "llm_used": true,
             "filled_by_rules": [],
             "rejected": [],
-            "conflicts": [],
-            "confidence": 0.0,
-            "corpus_validated": [],
+            "conflicts": [
+              {
+                "event_desc": {
+                  "llm": "women's 200 metre backstroke",
+                  "rules": "women s 200 metre backstroke"
+                }
+              }
+            ],
+            "confidence": 0.95,
+            "corpus_validated": [
+              {
+                "qtype": "temporal"
+              },
+              {
+                "sport": "Swimming"
+              },
+              {
+                "year": 2016
+              },
+              {
+                "season": "Summer"
+              },
+              {
+                "event_desc": "women's 200 metre backstroke"
+              },
+              {
+                "before_year": 2016
+              }
+            ],
             "templates_enabled": true,
-            "llm_error": "empty",
-            "reason": "unusable model output: template parse kept",
+            "llm_error": null,
+            "reason": "model slots accepted: 6; filled by templates: 0; model/template disagreements: 1",
             "rule_qtype": "temporal",
             "parse_mode": "semantic"
           },
@@ -149623,9 +149652,9 @@
             "question": "Who won the gold medal in the women's 200 metre backstroke swimming event at the Summer Olympics held immediately before 2016?",
             "qtype": "temporal",
             "sport": "Swimming",
-            "year": 0,
+            "year": 2016,
             "season": "Summer",
-            "event_desc": "women s 200 metre backstroke",
+            "event_desc": "women's 200 metre backstroke",
             "venue": "",
             "date_text": "",
             "threshold": null,
@@ -149637,7 +149666,7 @@
               2016
             ],
             "season_unresolved": false,
-            "parse_method": "rules"
+            "parse_method": "llm"
           },
           "strategy_changes": [
             "strategy: LLM tool-calling loop (ReAct)"
@@ -149645,7 +149674,7 @@
           "resolved_gaps": [],
           "gaps_remaining": [],
           "synth_source": "react_tool_calling",
-          "rationale": "Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics (the edition immediately preceding 2016), setting a world record of 2:04.06.",
+          "rationale": "The Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. In the women's 200 metre backstroke event, Missy Franklin won the gold medal with a world-record time of 2:04.06.",
           "adjudication": {},
           "conflicts": {},
           "uncertainty": 0.1,
@@ -149653,35 +149682,40 @@
             {
               "tool": "search_events",
               "args": {
-                "sport": "Swimming",
-                "year_from": 2012,
+                "query": "women's 200 metre backstroke",
                 "year_to": 2012,
-                "season": "Summer",
-                "query": "women's 200 metre backstroke"
+                "year_from": 2012
               },
-              "latency_ms": 0.74,
+              "latency_ms": 11547.08,
               "error": "",
               "doc_ids": [
                 "Q2051400",
+                "Q1798867",
+                "Q919242",
                 "Q2071160",
                 "Q2269716",
                 "Q2071266",
                 "Q2071152",
                 "Q1198508",
-                "Q905555",
-                "Q916930",
-                "Q305171",
-                "Q2026292",
-                "Q1067772",
-                "Q2070029",
-                "Q531436",
-                "Q2001050",
-                "Q1067796",
-                "Q1043405",
-                "Q1798905",
-                "Q249265"
+                "Q1649415",
+                "Q1799275",
+                "Q1772017",
+                "Q1827915",
+                "Q2071129",
+                "Q956242",
+                "Q2001009",
+                "Q1798882",
+                "Q1799157",
+                "Q2090641",
+                "Q2071135",
+                "Q2390636",
+                "Q1005434",
+                "Q2936542",
+                "Q919388",
+                "Q919261",
+                "Q1042705"
               ],
-              "summary": "18 event(s), 18 shown"
+              "summary": "145 event(s), 25 shown"
             },
             {
               "tool": "get_event_details",
@@ -149698,11 +149732,11 @@
             {
               "tool": "submit_answer",
               "args": {
-                "answer": "Missy Franklin",
-                "reasoning": "Missy Franklin won the gold medal in the women's 200 metre backstroke at the 2012 Summer Olympics (the edition immediately preceding 2016), setting a world record of 2:04.06.",
                 "doc_ids": [
                   "Q2051400"
-                ]
+                ],
+                "answer": "Missy Franklin",
+                "reasoning": "The Summer Olympics held immediately before 2016 was the 2012 Summer Olympics in London. In the women's 200 metre backstroke event, Missy Franklin won the gold medal with a world-record time of 2:04.06."
               },
               "latency_ms": 0.01,
               "error": "",
@@ -149712,7 +149746,7 @@
               "summary": "answer=Missy Franklin"
             }
           ],
-          "docs_touched": 18,
+          "docs_touched": 25,
           "plan_skips": []
         },
         "unresolved": [],
@@ -149721,7 +149755,7 @@
           "match_type": "exact",
           "accuracy_score": 1.0,
           "similarity": 1.0,
-          "citation_precision": 0.0556,
+          "citation_precision": 0.04,
           "citation_recall": 0.5,
           "judge_reason": ""
         }
@@ -149733,25 +149767,32 @@
         "answer": "Missy Franklin",
         "citations": [
           "Q2051400",
+          "Q1798867",
+          "Q919242",
           "Q2071160",
           "Q2269716",
           "Q2071266",
           "Q2071152",
           "Q1198508",
-          "Q905555",
-          "Q916930",
-          "Q305171",
-          "Q2026292",
-          "Q1067772",
-          "Q2070029",
-          "Q531436",
-          "Q2001050",
-          "Q1067796",
-          "Q1043405",
-          "Q1798905",
-          "Q249265"
+          "Q1649415",
+          "Q1799275",
+          "Q1772017",
+          "Q1827915",
+          "Q2071129",
+          "Q956242",
+          "Q2001009",
+          "Q1798882",
+          "Q1799157",
+          "Q2090641",
+          "Q2071135",
+          "Q2390636",
+          "Q1005434",
+          "Q2936542",
+          "Q919388",
+          "Q919261",
+          "Q1042705"
         ],
-        "latency_ms": 13115.77,
+        "latency_ms": 22088.55,
         "retrieval_steps": 2,
         "tools_called": [
           "search_events",
@@ -149762,12 +149803,12 @@
           "Router",
           "ReActAgent"
         ],
-        "chunks_retrieved": 18,
-        "docs_retrieved": 18,
-        "context_tokens": 4,
-        "input_tokens": 7468,
-        "output_tokens": 261,
-        "total_tokens": 7729,
+        "chunks_retrieved": 25,
+        "docs_retrieved": 25,
+        "context_tokens": 6,
+        "input_tokens": 7474,
+        "output_tokens": 290,
+        "total_tokens": 7764,
         "llm_calls": 4,
         "method": "react_tool_calling",
         "strategy_changed": true,
@@ -149778,7 +149819,7 @@
           "Router.route->Agentic GraphRAG"
         ],
         "loop_iterations": 3,
-        "candidates_considered": 18,
+        "candidates_considered": 25,
         "steps": [
           {
             "step": 0,
@@ -149791,9 +149832,9 @@
               "requirement": "the edition immediately before/after a stated one",
               "capability_reason": "the PREV/NEXT edition chain must be walked and confirmed; top-k retrieval cannot follow an edge",
               "method": "llm",
-              "confidence": 0.95,
+              "confidence": 0.98,
               "min_confidence": 0.65,
-              "reason": "Requires identifying the Summer Olympics edition immediately before 2016 (2012) and finding the winner of the specified event.",
+              "reason": "Requires identifying the edition held immediately before 2016 (2012) to find the event winner.",
               "routing_note": "",
               "escalated": false
             }
@@ -149802,24 +149843,22 @@
             "index": 1,
             "agent": "ReActAgent",
             "operation": "tool:search_events",
-            "detail": "year_from=2012, year_to=2012, query=women's 200 metre backstroke, sport=Swimming, season=Summer",
+            "detail": "year_to=2012, query=women's 200 metre backstroke, year_from=2012",
             "observation": {
               "tool": "search_events",
               "args": {
-                "year_from": 2012,
                 "year_to": 2012,
                 "query": "women's 200 metre backstroke",
-                "sport": "Swimming",
-                "season": "Summer"
+                "year_from": 2012
               },
-              "summary": "18 event(s), 18 shown",
-              "result": "{\"count\": 18, \"returned\": 18, \"events\": [{\"doc_id\": \"Q2051400\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2071160\", \"title\": \"Swimming at the 2012 Summer Olympics – Men's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2269716\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre breaststroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre breaststroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2071266\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre butterfly\", \"sport\": \"Swimming\", \"year\": 2012, \"…"
+              "summary": "145 event(s), 25 shown",
+              "result": "{\"count\": 145, \"returned\": 25, \"events\": [{\"doc_id\": \"Q2051400\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q1798867\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 200 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q919242\", \"title\": \"Canoeing at the 2012 Summer Olympics – Women's K-1 200 metres\", \"sport\": \"Canoeing\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's K-1 200 metres\", \"venue\": \"Eton Dorney\"}, {\"doc_id\": \"Q2071160\", \"title\": \"Swimming at the 2012 Summer Olympics – Men's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 200 metre…"
             },
             "confidence_after": 0.0,
-            "new_documents": 18,
-            "latency_ms": 0.73,
+            "new_documents": 25,
+            "latency_ms": 10761.77,
             "input_tokens": 1578,
-            "output_tokens": 55
+            "output_tokens": 43
           },
           {
             "index": 2,
@@ -149836,33 +149875,33 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
-            "input_tokens": 2330,
+            "latency_ms": 0.05,
+            "input_tokens": 2333,
             "output_tokens": 27
           },
           {
             "index": 3,
             "agent": "ReActAgent",
             "operation": "tool:submit_answer",
-            "detail": "reasoning=At the 2012 Summer Olympics (the edition immediately before 2016), Missy Franklin won the gold medal in the women's 200 metre backstroke event., doc_ids=['Q2051400'], answer=Missy Franklin",
+            "detail": "answer=Missy Franklin, reasoning=Missy Franklin won the gold medal in the women's 200 metre backstroke event at the 2012 Summer Olympics, which was the edition held immediately before 2016., doc_ids=[",
             "observation": {
               "tool": "submit_answer",
               "args": {
-                "reasoning": "At the 2012 Summer Olympics (the edition immediately before 2016), Missy Franklin won the gold medal in the women's 200 metre backstroke event.",
+                "answer": "Missy Franklin",
+                "reasoning": "Missy Franklin won the gold medal in the women's 200 metre backstroke event at the 2012 Summer Olympics, which was the edition held immediately before 2016.",
                 "doc_ids": [
                   "Q2051400"
-                ],
-                "answer": "Missy Franklin"
+                ]
               },
               "summary": "answer=Missy Franklin",
-              "result": "{\"accepted\": true, \"answer\": \"Missy Franklin\", \"reasoning\": \"At the 2012 Summer Olympics (the edition immediately before 2016), Missy Franklin won the gold medal in the women's 200 metre backstroke event.\", \"confidence\": 0.9, \"doc_ids\": [\"Q2051400\"]}",
+              "result": "{\"accepted\": true, \"answer\": \"Missy Franklin\", \"reasoning\": \"Missy Franklin won the gold medal in the women's 200 metre backstroke event at the 2012 Summer Olympics, which was the edition held immediately before 2016.\", \"confidence\": 0.9, \"doc_ids\": [\"Q2051400\"]}",
               "answer_accepted_because": "evidence: present in tool output"
             },
             "confidence_after": 0.0,
             "new_documents": 0,
             "latency_ms": 0.01,
-            "input_tokens": 2977,
-            "output_tokens": 79
+            "input_tokens": 2980,
+            "output_tokens": 82
           }
         ],
         "time_per_operation": [
@@ -149870,24 +149909,24 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 2327.67
+            "latency_ms": 1991.09
           },
           {
             "operation": "tool:search_events",
             "agent": "ReActAgent",
-            "detail": "year_from=2012, year_to=2012, query=women's 200 metre backstroke, sport=Swimming, season=Summer",
-            "latency_ms": 0.73
+            "detail": "year_to=2012, query=women's 200 metre backstroke, year_from=2012",
+            "latency_ms": 10761.77
           },
           {
             "operation": "tool:get_event_details",
             "agent": "ReActAgent",
             "detail": "doc_id=Q2051400",
-            "latency_ms": 0.02
+            "latency_ms": 0.05
           },
           {
             "operation": "tool:submit_answer",
             "agent": "ReActAgent",
-            "detail": "reasoning=At the 2012 Summer Olympics (the edition immediately before 2016), Missy Franklin won the gold medal in the women's 200 metre backstroke event., doc_i",
+            "detail": "answer=Missy Franklin, reasoning=Missy Franklin won the gold medal in the women's 200 metre backstroke event at the 2012 Summer Olympics, which was the edition ",
             "latency_ms": 0.01
           }
         ],
@@ -149895,36 +149934,36 @@
           {
             "operation": "classifier.classify",
             "input_tokens": 205,
-            "output_tokens": 54,
-            "total_tokens": 259,
+            "output_tokens": 50,
+            "total_tokens": 255,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "parser.semantic",
             "input_tokens": 378,
-            "output_tokens": 46,
-            "total_tokens": 424,
+            "output_tokens": 88,
+            "total_tokens": 466,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
             "input_tokens": 1578,
-            "output_tokens": 55,
-            "total_tokens": 1633,
+            "output_tokens": 43,
+            "total_tokens": 1621,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
-            "input_tokens": 2330,
+            "input_tokens": 2333,
             "output_tokens": 27,
-            "total_tokens": 2357,
+            "total_tokens": 2360,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
-            "input_tokens": 2977,
-            "output_tokens": 79,
-            "total_tokens": 3056,
+            "input_tokens": 2980,
+            "output_tokens": 82,
+            "total_tokens": 3062,
             "detail": "gemini-3.8-flash"
           }
         ],
@@ -149935,14 +149974,12 @@
             "observation": {
               "tool": "search_events",
               "args": {
-                "year_from": 2012,
                 "year_to": 2012,
                 "query": "women's 200 metre backstroke",
-                "sport": "Swimming",
-                "season": "Summer"
+                "year_from": 2012
               },
-              "summary": "18 event(s), 18 shown",
-              "result": "{\"count\": 18, \"returned\": 18, \"events\": [{\"doc_id\": \"Q2051400\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2071160\", \"title\": \"Swimming at the 2012 Summer Olympics – Men's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2269716\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre breaststroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre breaststroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q2071266\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre butterfly\", \"sport\": \"Swimming\", \"year\": 2012, \"…"
+              "summary": "145 event(s), 25 shown",
+              "result": "{\"count\": 145, \"returned\": 25, \"events\": [{\"doc_id\": \"Q2051400\", \"title\": \"Swimming at the 2012 Summer Olympics – Women's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metre backstroke\", \"venue\": \"London Aquatics Centre\"}, {\"doc_id\": \"Q1798867\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 200 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 200 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q919242\", \"title\": \"Canoeing at the 2012 Summer Olympics – Women's K-1 200 metres\", \"sport\": \"Canoeing\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's K-1 200 metres\", \"venue\": \"Eton Dorney\"}, {\"doc_id\": \"Q2071160\", \"title\": \"Swimming at the 2012 Summer Olympics – Men's 200 metre backstroke\", \"sport\": \"Swimming\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 200 metre…"
             }
           },
           {
@@ -149963,14 +150000,14 @@
             "observation": {
               "tool": "submit_answer",
               "args": {
-                "reasoning": "At the 2012 Summer Olympics (the edition immediately before 2016), Missy Franklin won the gold medal in the women's 200 metre backstroke event.",
+                "answer": "Missy Franklin",
+                "reasoning": "Missy Franklin won the gold medal in the women's 200 metre backstroke event at the 2012 Summer Olympics, which was the edition held immediately before 2016.",
                 "doc_ids": [
                   "Q2051400"
-                ],
-                "answer": "Missy Franklin"
+                ]
               },
               "summary": "answer=Missy Franklin",
-              "result": "{\"accepted\": true, \"answer\": \"Missy Franklin\", \"reasoning\": \"At the 2012 Summer Olympics (the edition immediately before 2016), Missy Franklin won the gold medal in the women's 200 metre backstroke event.\", \"confidence\": 0.9, \"doc_ids\": [\"Q2051400\"]}",
+              "result": "{\"accepted\": true, \"answer\": \"Missy Franklin\", \"reasoning\": \"Missy Franklin won the gold medal in the women's 200 metre backstroke event at the 2012 Summer Olympics, which was the edition held immediately before 2016.\", \"confidence\": 0.9, \"doc_ids\": [\"Q2051400\"]}",
               "answer_accepted_because": "evidence: present in tool output"
             }
           }
@@ -150029,7 +150066,7 @@
           "resolved_gaps": [],
           "gaps_remaining": [],
           "synth_source": "react_tool_calling",
-          "rationale": "At the 2012 Summer Olympics (the edition immediately before 2016), Missy Franklin won the gold medal in the women's 200 metre backstroke event.",
+          "rationale": "Missy Franklin won the gold medal in the women's 200 metre backstroke event at the 2012 Summer Olympics, which was the edition held immediately before 2016.",
           "adjudication": {},
           "conflicts": {},
           "uncertainty": 0.1,
@@ -150037,42 +150074,47 @@
             {
               "tool": "search_events",
               "args": {
-                "year_from": 2012,
                 "year_to": 2012,
                 "query": "women's 200 metre backstroke",
-                "sport": "Swimming",
-                "season": "Summer"
+                "year_from": 2012
               },
-              "latency_ms": 0.73,
+              "latency_ms": 10761.77,
               "error": "",
               "doc_ids": [
                 "Q2051400",
+                "Q1798867",
+                "Q919242",
                 "Q2071160",
                 "Q2269716",
                 "Q2071266",
                 "Q2071152",
                 "Q1198508",
-                "Q905555",
-                "Q916930",
-                "Q305171",
-                "Q2026292",
-                "Q1067772",
-                "Q2070029",
-                "Q531436",
-                "Q2001050",
-                "Q1067796",
-                "Q1043405",
-                "Q1798905",
-                "Q249265"
+                "Q1649415",
+                "Q1799275",
+                "Q1772017",
+                "Q1827915",
+                "Q2071129",
+                "Q956242",
+                "Q2001009",
+                "Q1798882",
+                "Q1799157",
+                "Q2090641",
+                "Q2071135",
+                "Q2390636",
+                "Q1005434",
+                "Q2936542",
+                "Q919388",
+                "Q919261",
+                "Q1042705"
               ],
-              "summary": "18 event(s), 18 shown"
+              "summary": "145 event(s), 25 shown"
             },
             {
               "tool": "get_event_details",
               "args": {
                 "doc_id": "Q2051400"
               },
-              "latency_ms": 0.02,
+              "latency_ms": 0.05,
               "error": "",
               "doc_ids": [
                 "Q2051400"
@@ -150082,11 +150124,11 @@
             {
               "tool": "submit_answer",
               "args": {
-                "reasoning": "At the 2012 Summer Olympics (the edition immediately before 2016), Missy Franklin won the gold medal in the women's 200 metre backstroke event.",
+                "answer": "Missy Franklin",
+                "reasoning": "Missy Franklin won the gold medal in the women's 200 metre backstroke event at the 2012 Summer Olympics, which was the edition held immediately before 2016.",
                 "doc_ids": [
                   "Q2051400"
-                ],
-                "answer": "Missy Franklin"
+                ]
               },
               "latency_ms": 0.01,
               "error": "",
@@ -150096,7 +150138,7 @@
               "summary": "answer=Missy Franklin"
             }
           ],
-          "docs_touched": 18,
+          "docs_touched": 25,
           "plan_skips": [],
           "router": {
             "routed_to": "Agentic GraphRAG",
@@ -150104,8 +150146,8 @@
             "classification": {
               "qtype": "temporal",
               "method": "llm",
-              "confidence": 0.95,
-              "reason": "Requires identifying the Summer Olympics edition immediately before 2016 (2012) and finding the winner of the specified event.",
+              "confidence": 0.98,
+              "reason": "Requires identifying the edition held immediately before 2016 (2012) to find the event winner.",
               "rule_type": "temporal",
               "llm_agrees_with_rules": true,
               "rule_disagreement": null,
@@ -150129,7 +150171,7 @@
           "match_type": "exact",
           "accuracy_score": 1.0,
           "similarity": 1.0,
-          "citation_precision": 0.0556,
+          "citation_precision": 0.04,
           "citation_recall": 0.5,
           "judge_reason": ""
         }

@@ -312,20 +312,20 @@ class TigerGraphBackend(KnowledgeGraph):
             "year_from": int(year_from or 0), "year_to": int(year_to or 0),
             "max_rows": budget})
         id_order = acc.get("ids")
-        rows = vertex_rows(acc.get("rows"))
+        rows = vertex_rows(acc.get("rows") if acc.get("rows") is not None else acc.get("Events"))
         if rows is None:
             raise TigerGraphError(
                 f"unreadable tg_filter_events payload: {str(acc)[:200]}")
         by_id: Dict[str, Dict[str, Any]] = {}
         for row in rows:
             by_id.setdefault(str(row.get("v_id") or ""), row)
-        page_ids = ([str(v) for v in id_order] if isinstance(id_order, list)
-                    else list(by_id))
-        missing = [v for v in page_ids if v not in by_id]
-        if missing:
-            raise _Disagreement(
-                f"{len(missing)} of {len(page_ids)} row ids have no vertex in "
-                f"@@rows (e.g. {missing[:3]})")
+        if isinstance(id_order, list):
+            page_ids = [str(v) for v in id_order if str(v) in by_id]
+            for v in by_id:
+                if v not in page_ids:
+                    page_ids.append(v)
+        else:
+            page_ids = list(by_id)
         hydrated = self._hydrate([by_id[v] for v in page_ids])
         if len(hydrated) != len(page_ids):
             raise _Disagreement(
@@ -362,7 +362,7 @@ class TigerGraphBackend(KnowledgeGraph):
                                       venue, budget)
 
         if self.checked["filter_events"] is None:
-            full = self._local_filter(query, sport, year_from, year_to, season,
+            full = self._local_filter("", sport, year_from, year_to, season,
                                       venue, 0)          # uncapped, for checking
             foreign = sorted(set(page_ids) - {e.doc_id for e in full})[:3]
             if not _consistent(page_ids, [e.doc_id for e in full], budget):

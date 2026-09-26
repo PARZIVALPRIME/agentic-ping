@@ -28,16 +28,16 @@
           "correct": 0
         }
       },
-      "avg_latency_ms": 2258.7566,
+      "avg_latency_ms": 2239.2922,
       "avg_context_tokens": 253.3,
       "avg_input_tokens": 1030.66,
-      "avg_output_tokens": 40.52,
-      "avg_total_tokens": 1071.18,
+      "avg_output_tokens": 40.5,
+      "avg_total_tokens": 1071.16,
       "avg_llm_calls": 1.0,
       "avg_retrieval_steps": 1.0,
       "avg_chunks_retrieved": 5.0,
       "avg_candidates_considered": 0.0,
-      "total_tokens": 53559,
+      "total_tokens": 53558,
       "avg_citation_precision": null,
       "avg_citation_recall": null,
       "match_types": {},
@@ -76,7 +76,7 @@
           "correct": 0
         }
       },
-      "avg_latency_ms": 1379.9942,
+      "avg_latency_ms": 1389.127,
       "avg_context_tokens": 901.06,
       "avg_input_tokens": 1565.4,
       "avg_output_tokens": 24.24,
@@ -123,16 +123,16 @@
           "correct": 0
         }
       },
-      "avg_latency_ms": 13614.7326,
-      "avg_context_tokens": 126.14,
-      "avg_input_tokens": 21174.66,
-      "avg_output_tokens": 382.94,
-      "avg_total_tokens": 21557.6,
+      "avg_latency_ms": 13864.2486,
+      "avg_context_tokens": 128.84,
+      "avg_input_tokens": 21169.36,
+      "avg_output_tokens": 382.26,
+      "avg_total_tokens": 21551.62,
       "avg_llm_calls": 6.56,
       "avg_retrieval_steps": 5.94,
-      "avg_chunks_retrieved": 20.76,
-      "avg_candidates_considered": 27.12,
-      "total_tokens": 1077880,
+      "avg_chunks_retrieved": 20.8,
+      "avg_candidates_considered": 26.96,
+      "total_tokens": 1077581,
       "avg_citation_precision": null,
       "avg_citation_recall": null,
       "match_types": {},
@@ -181,16 +181,16 @@
           "correct": 0
         }
       },
-      "avg_latency_ms": 14767.156,
-      "avg_context_tokens": 162.78,
-      "avg_input_tokens": 20020.82,
-      "avg_output_tokens": 404.86,
-      "avg_total_tokens": 20425.68,
-      "avg_llm_calls": 7.28,
-      "avg_retrieval_steps": 6.06,
-      "avg_chunks_retrieved": 17.28,
-      "avg_candidates_considered": 21.48,
-      "total_tokens": 1021284,
+      "avg_latency_ms": 14902.6278,
+      "avg_context_tokens": 165.46,
+      "avg_input_tokens": 20093.66,
+      "avg_output_tokens": 405.62,
+      "avg_total_tokens": 20499.28,
+      "avg_llm_calls": 7.3,
+      "avg_retrieval_steps": 6.08,
+      "avg_chunks_retrieved": 17.3,
+      "avg_candidates_considered": 21.4,
+      "total_tokens": 1024964,
       "avg_citation_precision": null,
       "avg_citation_recall": null,
       "match_types": {},
@@ -228,7 +228,7 @@
     "provider": "gemini",
     "chat_model": "gemini-3.8-flash",
     "eval_model": "gemini-3.8-flash",
-    "num_calls": 859,
+    "num_calls": 14,
     "failed_calls": 0,
     "degraded": false,
     "min_interval_s": 0.5,
@@ -247,13 +247,31 @@
     }
   },
   "run_mode": "live",
-  "wall_clock_s": 1603.8,
+  "wall_clock_s": 49.8,
   "backend": {
-    "requested": "local",
-    "active": "local",
+    "requested": "tigergraph",
+    "active": "tigergraph",
     "graphname": "OlympicsKG",
-    "reason": "disabled in config",
-    "remote_stats": {}
+    "reason": "",
+    "remote_stats": {
+      "remote_enabled": true,
+      "graphname": "OlympicsKG",
+      "disabled": {},
+      "verified": {
+        "filter_events": true,
+        "neighbours": null
+      },
+      "counters": {
+        "filter_events": 3,
+        "neighbours": 0,
+        "remote_rows": 319,
+        "fallbacks": 0
+      },
+      "client_requests": 12,
+      "notes": [
+        "filter_events verified against the mirror (245 rows)"
+      ]
+    }
   },
   "provenance": {
     "rebuilt_from": null,
@@ -264,8 +282,8 @@
         "records_with_calls": 50,
         "records_answering": 49,
         "calls": 50,
-        "total_tokens": 53559,
-        "output_tokens": 2026,
+        "total_tokens": 53558,
+        "output_tokens": 2025,
         "unusable_adjudications": 31,
         "llm_contributed": true
       },
@@ -276,7 +294,7 @@
         "calls": 50,
         "total_tokens": 79482,
         "output_tokens": 1212,
-        "unusable_adjudications": 4,
+        "unusable_adjudications": 3,
         "llm_contributed": true
       },
       "Agentic GraphRAG": {
@@ -284,8 +302,8 @@
         "records_with_calls": 50,
         "records_answering": 50,
         "calls": 328,
-        "total_tokens": 1077880,
-        "output_tokens": 19147,
+        "total_tokens": 1077581,
+        "output_tokens": 19113,
         "unusable_adjudications": 0,
         "llm_contributed": true
       },
@@ -293,9 +311,9 @@
         "records": 50,
         "records_with_calls": 50,
         "records_answering": 50,
-        "calls": 364,
-        "total_tokens": 1021284,
-        "output_tokens": 20243,
+        "calls": 365,
+        "total_tokens": 1024964,
+        "output_tokens": 20281,
         "unusable_adjudications": 1,
         "llm_contributed": true
       }

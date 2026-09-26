@@ -1,11 +1,18 @@
 {
   "submission": {
     "pipeline": "Agentic GraphRAG",
+    "mode": "live",
     "provider": "gemini",
-    "model": "gemini-3.8-flash",
+    "chat_model": "gemini-3.8-flash",
+    "graph_backend": "tigergraph",
+    "questions_file": "questions-20260919T043312Z-1-001/questions/eval_hidden.jsonl",
     "num_questions": 50,
-    "total_tokens": 1077880,
-    "avg_tokens_per_question": 21557.6
+    "num_completed": 50,
+    "num_failed": 0,
+    "num_answered": 50,
+    "total_tokens": 1077581,
+    "source_run": "results/hidden_llm.json",
+    "note": "rebuilt from the completed benchmark run; the Agentic GraphRAG arm answered all 50 hidden questions"
   },
   "results": [
     {
@@ -20377,48 +20384,40 @@
       "qtype": "multi_hop",
       "answer": "David Rudisha",
       "citations": [
-        "Q1049551",
-        "Q2071129",
-        "Q2071135",
-        "Q2090641",
-        "Q2001009",
-        "Q1799275",
-        "Q1771990",
-        "Q1055931",
-        "Q2000949",
-        "Q2000999",
-        "Q2000979",
-        "Q645932",
-        "Q2070547",
-        "Q2071171",
-        "Q591384",
-        "Q2000968",
-        "Q2069991",
-        "Q2000939",
-        "Q1772012",
-        "Q1798873",
-        "Q1649415",
-        "Q1827915",
+        "Q903679",
+        "Q1337042",
+        "Q374871",
+        "Q1067383",
         "Q1753402",
-        "Q1986718",
-        "Q1798882",
-        "Q1636766",
-        "Q843436",
-        "Q1799251",
-        "Q733756",
-        "Q1772017",
-        "Q1798867",
-        "Q1799157",
-        "Q1771958",
         "Q734020",
-        "Q593761"
+        "Q2000999",
+        "Q591384",
+        "Q1050909",
+        "Q1649415",
+        "Q1771990",
+        "Q1636766",
+        "Q1772012",
+        "Q2070009",
+        "Q2071171",
+        "Q1049551",
+        "Q765839",
+        "Q841530",
+        "Q2000949",
+        "Q1986718",
+        "Q1055931",
+        "Q1798983",
+        "Q2000968",
+        "Q593761",
+        "Q2000979",
+        "Q2070547",
+        "Q1799251"
       ],
       "confidence": 0.9,
       "tokens": {
-        "context_tokens": 6,
-        "input_tokens": 10907,
-        "output_tokens": 301,
-        "total_tokens": 11208,
+        "context_tokens": 141,
+        "input_tokens": 10642,
+        "output_tokens": 267,
+        "total_tokens": 10909,
         "llm_calls": 4
       },
       "agentic_trace": {
@@ -20428,7 +20427,7 @@
         "loop_iterations": 4,
         "tools_called": [
           "search_events",
-          "get_event_values",
+          "search_passages",
           "get_event_details",
           "submit_answer"
         ],
@@ -20437,53 +20436,49 @@
         ],
         "strategy_changed": true,
         "stop_reason": "submitted_answer",
-        "candidates_considered": 35,
-        "chunks_retrieved": 25,
-        "docs_retrieved": 35,
+        "candidates_considered": 27,
+        "chunks_retrieved": 27,
+        "docs_retrieved": 27,
         "steps": [
           {
             "index": 1,
             "agent": "ReActAgent",
             "operation": "tool:search_events",
-            "detail": "year_from=2012, venue=Olympic Stadium, season=Summer, year_to=2012",
+            "detail": "query=2012 Summer Olympics, year_from=2012, year_to=2012",
             "observation": {
               "tool": "search_events",
               "args": {
+                "query": "2012 Summer Olympics",
                 "year_from": 2012,
-                "venue": "Olympic Stadium",
-                "season": "Summer",
                 "year_to": 2012
               },
-              "summary": "37 event(s), 25 shown",
-              "result": "{\"count\": 37, \"returned\": 25, \"events\": [{\"doc_id\": \"Q1049551\", \"title\": \"Athletics at the 2012 Summer Olympics – Men's 800 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 800 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q2071129\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 1500 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 1500 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q2071135\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 800 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 800 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q2090641\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 5000 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 5000 metres\", \"venue\": \"Olympic Stadium\"}…"
+              "summary": "245 event(s), 25 shown",
+              "result": "{\"count\": 245, \"returned\": 25, \"events\": [{\"doc_id\": \"Q903679\", \"title\": \"Archery at the 2012 Summer Olympics – Men's individual\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's individual\", \"venue\": \"Lord's Cricket Ground\"}, {\"doc_id\": \"Q1337042\", \"title\": \"Archery at the 2012 Summer Olympics – Men's team\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's team\", \"venue\": \"Lord's Cricket Ground\"}, {\"doc_id\": \"Q374871\", \"title\": \"Archery at the 2012 Summer Olympics – Women's individual\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's individual\", \"venue\": \"Lord's Cricket Ground\"}, {\"doc_id\": \"Q1067383\", \"title\": \"Archery at the 2012 Summer Olympics – Women's team\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's team\", \"venue\": \"Lord's Cricket Ground\"}, {\"doc_id\": \"Q1753402\", …"
             },
             "confidence_after": 0.0,
             "new_documents": 25,
-            "latency_ms": 0.14,
+            "latency_ms": 11881.36,
             "input_tokens": 1574,
-            "output_tokens": 41
+            "output_tokens": 39
           },
           {
             "index": 2,
             "agent": "ReActAgent",
-            "operation": "tool:get_event_values",
-            "detail": "year_from=2012, year_to=2012, venue=Olympic Stadium, field=date_raw",
+            "operation": "tool:search_passages",
+            "detail": "query=6–9 August 2012 Olympic Stadium",
             "observation": {
-              "tool": "get_event_values",
+              "tool": "search_passages",
               "args": {
-                "year_from": 2012,
-                "year_to": 2012,
-                "venue": "Olympic Stadium",
-                "field": "date_raw"
+                "query": "6–9 August 2012 Olympic Stadium"
               },
-              "summary": "field=date_raw values=31/37",
-              "result": "{\"field\": \"date_raw\", \"num_matching_events\": 37, \"num_with_value\": 31, \"num_missing\": 6, \"values\": [\"6–9 August\", \"6–10 August 2012\", \"8–11 August\", \"Aug 7 (prelim), Aug 10 (final)\", \"4–6 August\", \"3 August\", \"3–5 August\", \"3–4 August\", \"5–7 August\", \"7–8 August\", \"7–8 August\", \"9–11 August\", \"8–11 August\", \"8–10 August\", \"8–10 August\", \"7–9 August\", \"4–6 August 2012\", \"6–7 August\", \"4 August\", \"8–11 August\", \"3–5 August\", \"4–6 August\", \"3–4 August\", \"6 August\", \"3–5 August\", \"3–4 August\", \"6–8 August\", \"5–8 August\", \"3–4 August\", \"4–5 August 2012\", \"3 August\"], \"pairs\": [{\"doc_id\": \"Q1049551\", \"value\": \"6–9 August\"}, {\"doc_id\": \"Q2071129\", \"value\": \"6–10 August 2012\"}, {\"doc_id\": \"Q2071135\", \"value\": \"8–11 August\"}, {\"doc_id\": \"Q2090641\", \"value\": \"Aug 7 (prelim), Aug 10 (final)\"}, {\"doc_id\": \"Q2001009\", \"value\": \"4–6 August\"}, {\"doc_id\": \"Q1799275\", \"value\": \"3 August\"}, {\"doc_id\": \"Q…"
+              "summary": "5 passage(s)",
+              "result": "{\"returned\": 5, \"passages\": [{\"doc_id\": \"Q1049551\", \"title\": \"Athletics at the 2012 Summer Olympics – Men's 800 metres\", \"score\": 0.014, \"text\": \"Infobox of Athletics at the 2012 Summer Olympics – Men's 800 metres -> event: Men's 800 metres | games: 2012 Summer | venue: Olympic Stadium | date: 6–9 August | competitors: 55 | nations: 43 | longnames: yes | gold: David Rudisha | silver: Nijel Amos | bronze: Timothy Kitum | win_value: 1:40.91 athletics | prev: 2008 | next: 2016\"}, {\"doc_id\": \"Q2070547\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's high jump\", \"score\": 0.008, \"text\": \"The Women's high jump competition at the 2012 Summer Olympics in London, United Kingdom. The event was held at the Olympic Stadium on 9–11 August.\"}, {\"doc_id\": \"Q1049551\", \"title\": \"Athletics at the 2012 Summer Olympics – Men's 800 metres\", \"score\": 0.008, \"text\": \"Date | Time | Round\\nMonday, 6 A…"
             },
             "confidence_after": 0.0,
-            "new_documents": 10,
-            "latency_ms": 0.13,
-            "input_tokens": 2362,
-            "output_tokens": 45
+            "new_documents": 2,
+            "latency_ms": 36.57,
+            "input_tokens": 2335,
+            "output_tokens": 27
           },
           {
             "index": 3,
@@ -20501,46 +20496,46 @@
             "confidence_after": 0.0,
             "new_documents": 0,
             "latency_ms": 0.02,
-            "input_tokens": 3229,
+            "input_tokens": 3050,
             "output_tokens": 27
           },
           {
             "index": 4,
             "agent": "ReActAgent",
             "operation": "tool:submit_answer",
-            "detail": "answer=David Rudisha, doc_ids=['Q1049551'], reasoning=At the 2012 Summer Olympics, the Men's 800 metres was held at the Olympic Stadium on 6–9 August, and the gold medal was won by David Rudisha.",
+            "detail": "doc_ids=['Q1049551'], answer=David Rudisha, reasoning=David Rudisha won the gold medal in the men's 800 metres, which was held at the Olympic Stadium on 6–9 August at the 2012 Summer Olympics.",
             "observation": {
               "tool": "submit_answer",
               "args": {
-                "answer": "David Rudisha",
                 "doc_ids": [
                   "Q1049551"
                 ],
-                "reasoning": "At the 2012 Summer Olympics, the Men's 800 metres was held at the Olympic Stadium on 6–9 August, and the gold medal was won by David Rudisha."
+                "answer": "David Rudisha",
+                "reasoning": "David Rudisha won the gold medal in the men's 800 metres, which was held at the Olympic Stadium on 6–9 August at the 2012 Summer Olympics."
               },
               "summary": "answer=David Rudisha",
-              "result": "{\"accepted\": true, \"answer\": \"David Rudisha\", \"reasoning\": \"At the 2012 Summer Olympics, the Men's 800 metres was held at the Olympic Stadium on 6–9 August, and the gold medal was won by David Rudisha.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1049551\"]}",
+              "result": "{\"accepted\": true, \"answer\": \"David Rudisha\", \"reasoning\": \"David Rudisha won the gold medal in the men's 800 metres, which was held at the Olympic Stadium on 6–9 August at the 2012 Summer Olympics.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1049551\"]}",
               "answer_accepted_because": "evidence: present in tool output"
             },
             "confidence_after": 0.0,
             "new_documents": 0,
             "latency_ms": 0.01,
-            "input_tokens": 3368,
-            "output_tokens": 82
+            "input_tokens": 3309,
+            "output_tokens": 80
           }
         ],
         "time_per_operation": [
           {
             "operation": "tool:search_events",
             "agent": "ReActAgent",
-            "detail": "year_from=2012, venue=Olympic Stadium, season=Summer, year_to=2012",
-            "latency_ms": 0.14
+            "detail": "query=2012 Summer Olympics, year_from=2012, year_to=2012",
+            "latency_ms": 11881.36
           },
           {
-            "operation": "tool:get_event_values",
+            "operation": "tool:search_passages",
             "agent": "ReActAgent",
-            "detail": "year_from=2012, year_to=2012, venue=Olympic Stadium, field=date_raw",
-            "latency_ms": 0.13
+            "detail": "query=6–9 August 2012 Olympic Stadium",
+            "latency_ms": 36.57
           },
           {
             "operation": "tool:get_event_details",
@@ -20551,7 +20546,7 @@
           {
             "operation": "tool:submit_answer",
             "agent": "ReActAgent",
-            "detail": "answer=David Rudisha, doc_ids=['Q1049551'], reasoning=At the 2012 Summer Olympics, the Men's 800 metres was held at the Olympic Stadium on 6–9 August, and the g",
+            "detail": "doc_ids=['Q1049551'], answer=David Rudisha, reasoning=David Rudisha won the gold medal in the men's 800 metres, which was held at the Olympic Stadium on 6–9 Aug",
             "latency_ms": 0.01
           }
         ],
@@ -20559,36 +20554,36 @@
           {
             "operation": "parser.semantic",
             "input_tokens": 374,
-            "output_tokens": 106,
-            "total_tokens": 480,
+            "output_tokens": 94,
+            "total_tokens": 468,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
             "input_tokens": 1574,
-            "output_tokens": 41,
-            "total_tokens": 1615,
+            "output_tokens": 39,
+            "total_tokens": 1613,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
-            "input_tokens": 2362,
-            "output_tokens": 45,
-            "total_tokens": 2407,
-            "detail": "gemini-3.8-flash"
-          },
-          {
-            "operation": "agent.react",
-            "input_tokens": 3229,
+            "input_tokens": 2335,
             "output_tokens": 27,
-            "total_tokens": 3256,
+            "total_tokens": 2362,
             "detail": "gemini-3.8-flash"
           },
           {
             "operation": "agent.react",
-            "input_tokens": 3368,
-            "output_tokens": 82,
-            "total_tokens": 3450,
+            "input_tokens": 3050,
+            "output_tokens": 27,
+            "total_tokens": 3077,
+            "detail": "gemini-3.8-flash"
+          },
+          {
+            "operation": "agent.react",
+            "input_tokens": 3309,
+            "output_tokens": 80,
+            "total_tokens": 3389,
             "detail": "gemini-3.8-flash"
           }
         ]
@@ -20600,28 +20595,24 @@
           "observation": {
             "tool": "search_events",
             "args": {
+              "query": "2012 Summer Olympics",
               "year_from": 2012,
-              "venue": "Olympic Stadium",
-              "season": "Summer",
               "year_to": 2012
             },
-            "summary": "37 event(s), 25 shown",
-            "result": "{\"count\": 37, \"returned\": 25, \"events\": [{\"doc_id\": \"Q1049551\", \"title\": \"Athletics at the 2012 Summer Olympics – Men's 800 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's 800 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q2071129\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 1500 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 1500 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q2071135\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 800 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 800 metres\", \"venue\": \"Olympic Stadium\"}, {\"doc_id\": \"Q2090641\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's 5000 metres\", \"sport\": \"Athletics\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's 5000 metres\", \"venue\": \"Olympic Stadium\"}…"
+            "summary": "245 event(s), 25 shown",
+            "result": "{\"count\": 245, \"returned\": 25, \"events\": [{\"doc_id\": \"Q903679\", \"title\": \"Archery at the 2012 Summer Olympics – Men's individual\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's individual\", \"venue\": \"Lord's Cricket Ground\"}, {\"doc_id\": \"Q1337042\", \"title\": \"Archery at the 2012 Summer Olympics – Men's team\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Men's team\", \"venue\": \"Lord's Cricket Ground\"}, {\"doc_id\": \"Q374871\", \"title\": \"Archery at the 2012 Summer Olympics – Women's individual\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's individual\", \"venue\": \"Lord's Cricket Ground\"}, {\"doc_id\": \"Q1067383\", \"title\": \"Archery at the 2012 Summer Olympics – Women's team\", \"sport\": \"Archery\", \"year\": 2012, \"season\": \"Summer\", \"event_name\": \"Women's team\", \"venue\": \"Lord's Cricket Ground\"}, {\"doc_id\": \"Q1753402\", …"
           }
         },
         {
           "agent": "ReActAgent",
-          "operation": "tool:get_event_values",
+          "operation": "tool:search_passages",
           "observation": {
-            "tool": "get_event_values",
+            "tool": "search_passages",
             "args": {
-              "year_from": 2012,
-              "year_to": 2012,
-              "venue": "Olympic Stadium",
-              "field": "date_raw"
+              "query": "6–9 August 2012 Olympic Stadium"
             },
-            "summary": "field=date_raw values=31/37",
-            "result": "{\"field\": \"date_raw\", \"num_matching_events\": 37, \"num_with_value\": 31, \"num_missing\": 6, \"values\": [\"6–9 August\", \"6–10 August 2012\", \"8–11 August\", \"Aug 7 (prelim), Aug 10 (final)\", \"4–6 August\", \"3 August\", \"3–5 August\", \"3–4 August\", \"5–7 August\", \"7–8 August\", \"7–8 August\", \"9–11 August\", \"8–11 August\", \"8–10 August\", \"8–10 August\", \"7–9 August\", \"4–6 August 2012\", \"6–7 August\", \"4 August\", \"8–11 August\", \"3–5 August\", \"4–6 August\", \"3–4 August\", \"6 August\", \"3–5 August\", \"3–4 August\", \"6–8 August\", \"5–8 August\", \"3–4 August\", \"4–5 August 2012\", \"3 August\"], \"pairs\": [{\"doc_id\": \"Q1049551\", \"value\": \"6–9 August\"}, {\"doc_id\": \"Q2071129\", \"value\": \"6–10 August 2012\"}, {\"doc_id\": \"Q2071135\", \"value\": \"8–11 August\"}, {\"doc_id\": \"Q2090641\", \"value\": \"Aug 7 (prelim), Aug 10 (final)\"}, {\"doc_id\": \"Q2001009\", \"value\": \"4–6 August\"}, {\"doc_id\": \"Q1799275\", \"value\": \"3 August\"}, {\"doc_id\": \"Q…"
+            "summary": "5 passage(s)",
+            "result": "{\"returned\": 5, \"passages\": [{\"doc_id\": \"Q1049551\", \"title\": \"Athletics at the 2012 Summer Olympics – Men's 800 metres\", \"score\": 0.014, \"text\": \"Infobox of Athletics at the 2012 Summer Olympics – Men's 800 metres -> event: Men's 800 metres | games: 2012 Summer | venue: Olympic Stadium | date: 6–9 August | competitors: 55 | nations: 43 | longnames: yes | gold: David Rudisha | silver: Nijel Amos | bronze: Timothy Kitum | win_value: 1:40.91 athletics | prev: 2008 | next: 2016\"}, {\"doc_id\": \"Q2070547\", \"title\": \"Athletics at the 2012 Summer Olympics – Women's high jump\", \"score\": 0.008, \"text\": \"The Women's high jump competition at the 2012 Summer Olympics in London, United Kingdom. The event was held at the Olympic Stadium on 9–11 August.\"}, {\"doc_id\": \"Q1049551\", \"title\": \"Athletics at the 2012 Summer Olympics – Men's 800 metres\", \"score\": 0.008, \"text\": \"Date | Time | Round\\nMonday, 6 A…"
           }
         },
         {
@@ -20642,20 +20633,20 @@
           "observation": {
             "tool": "submit_answer",
             "args": {
-              "answer": "David Rudisha",
               "doc_ids": [
                 "Q1049551"
               ],
-              "reasoning": "At the 2012 Summer Olympics, the Men's 800 metres was held at the Olympic Stadium on 6–9 August, and the gold medal was won by David Rudisha."
+              "answer": "David Rudisha",
+              "reasoning": "David Rudisha won the gold medal in the men's 800 metres, which was held at the Olympic Stadium on 6–9 August at the 2012 Summer Olympics."
             },
             "summary": "answer=David Rudisha",
-            "result": "{\"accepted\": true, \"answer\": \"David Rudisha\", \"reasoning\": \"At the 2012 Summer Olympics, the Men's 800 metres was held at the Olympic Stadium on 6–9 August, and the gold medal was won by David Rudisha.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1049551\"]}",
+            "result": "{\"accepted\": true, \"answer\": \"David Rudisha\", \"reasoning\": \"David Rudisha won the gold medal in the men's 800 metres, which was held at the Olympic Stadium on 6–9 August at the 2012 Summer Olympics.\", \"confidence\": 0.9, \"doc_ids\": [\"Q1049551\"]}",
             "answer_accepted_because": "evidence: present in tool output"
           }
         }
       ],
       "unresolved": [],
-      "latency_ms": 10006.84,
+      "latency_ms": 22482.64,
       "error": null
     }
   ]

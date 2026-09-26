@@ -18,15 +18,15 @@ matter"* analysis.
 
 ## Headline result
 
-Final public run: 100 questions, **live** local provider (Ollama `qwen3.5:4b`),
+Final public run: 100 questions, **live** provider (Gemini 3.8 Flash + TigerGraph Cloud),
 every pipeline recording provider calls — `results/metrics_summary.json`.
 
 | Pipeline | Accuracy | aggregation | superlative | avg tokens/q |
 |---|---|---|---|---|
-| RAG | 43% | 5% | 0% | 1,084 |
-| GraphRAG | 61% | 33% | 50% | 1,850 |
-| **Agentic GraphRAG** | **88%** | 95% | 100% | 14,004 |
-| Router | 86% | 100% | 100% | 7,950 |
+| RAG | 42% | 0% | 0% | 1,085 |
+| GraphRAG | 62% | 33% | 50% | 1,849 |
+| **Agentic GraphRAG** | **100%** | 100% | 100% | 17,472 |
+| Router | 98% | 100% | 100% | 16,748 |
 
 Three findings worth the judges' attention:
 
@@ -66,7 +66,7 @@ What survives is the cost result:
 |---|---:|---:|
 | RAG (best, k=160) | 91% | 9,680 |
 | GraphRAG (best, k=160) | 74% | 13,785 |
-| **Agentic GraphRAG** | **88%** | **189** |
+| **Agentic GraphRAG** | **100%** | **95** |
 
 Retrieval overtakes the agent on raw accuracy at k=160 — and pays **~51× the
 context cost per question** to do it (9,680 vs 189 tokens), while still topping

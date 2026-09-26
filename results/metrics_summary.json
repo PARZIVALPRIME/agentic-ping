@@ -33,16 +33,16 @@
           "accuracy": 0.0
         }
       },
-      "avg_latency_ms": 2343.0104,
+      "avg_latency_ms": 2335.4088,
       "avg_context_tokens": 251.34,
       "avg_input_tokens": 1042.25,
-      "avg_output_tokens": 42.95,
-      "avg_total_tokens": 1085.2,
+      "avg_output_tokens": 42.97,
+      "avg_total_tokens": 1085.22,
       "avg_llm_calls": 1.0,
       "avg_retrieval_steps": 1.0,
       "avg_chunks_retrieved": 5.0,
       "avg_candidates_considered": 0.0,
-      "total_tokens": 108520,
+      "total_tokens": 108522,
       "avg_citation_precision": 0.5892,
       "avg_citation_recall": 0.6433,
       "match_types": {
@@ -89,16 +89,16 @@
           "accuracy": 0.5
         }
       },
-      "avg_latency_ms": 1925.6131,
+      "avg_latency_ms": 1925.632,
       "avg_context_tokens": 886.46,
       "avg_input_tokens": 1812.2,
-      "avg_output_tokens": 36.42,
-      "avg_total_tokens": 1848.62,
+      "avg_output_tokens": 36.44,
+      "avg_total_tokens": 1848.64,
       "avg_llm_calls": 1.0,
       "avg_retrieval_steps": 2.0,
       "avg_chunks_retrieved": 9.9,
       "avg_candidates_considered": 0.0,
-      "total_tokens": 184862,
+      "total_tokens": 184864,
       "avg_citation_precision": 0.7215,
       "avg_citation_recall": 0.5762,
       "match_types": {
@@ -145,17 +145,17 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 12793.278,
-      "avg_context_tokens": 94.65,
-      "avg_input_tokens": 17116.6,
-      "avg_output_tokens": 354.47,
-      "avg_total_tokens": 17471.07,
+      "avg_latency_ms": 12897.8196,
+      "avg_context_tokens": 94.67,
+      "avg_input_tokens": 17117.21,
+      "avg_output_tokens": 354.45,
+      "avg_total_tokens": 17471.66,
       "avg_llm_calls": 5.61,
       "avg_retrieval_steps": 5.01,
-      "avg_chunks_retrieved": 20.5,
-      "avg_candidates_considered": 24.76,
-      "total_tokens": 1747107,
-      "avg_citation_precision": 0.39,
+      "avg_chunks_retrieved": 20.57,
+      "avg_candidates_considered": 24.83,
+      "total_tokens": 1747166,
+      "avg_citation_precision": 0.3898,
       "avg_citation_recall": 0.8319,
       "match_types": {
         "exact": 97,
@@ -212,17 +212,17 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 13614.508,
-      "avg_context_tokens": 162.14,
-      "avg_input_tokens": 16392.55,
-      "avg_output_tokens": 354.99,
-      "avg_total_tokens": 16747.54,
+      "avg_latency_ms": 13704.2358,
+      "avg_context_tokens": 162.16,
+      "avg_input_tokens": 16392.61,
+      "avg_output_tokens": 355.28,
+      "avg_total_tokens": 16747.89,
       "avg_llm_calls": 6.28,
       "avg_retrieval_steps": 4.9,
-      "avg_chunks_retrieved": 16.42,
-      "avg_candidates_considered": 19.79,
-      "total_tokens": 1674754,
-      "avg_citation_precision": 0.5726,
+      "avg_chunks_retrieved": 16.49,
+      "avg_candidates_considered": 19.86,
+      "total_tokens": 1674789,
+      "avg_citation_precision": 0.5725,
       "avg_citation_recall": 0.8529,
       "match_types": {
         "exact": 92,
@@ -1150,23 +1150,23 @@
       "qtype": "temporal",
       "agentic_correct": true,
       "graphrag_correct": true,
-      "agentic_tokens": 7520,
-      "graphrag_tokens": 2473,
+      "agentic_tokens": 7579,
+      "graphrag_tokens": 2475,
       "delta": 0
     }
   ],
   "evaluator": {
     "llm_judge_enabled": true,
-    "judge_calls": 7,
+    "judge_calls": 0,
     "judge_flips": 0,
-    "judge_tokens": 1389
+    "judge_tokens": 0
   },
   "llm": {
     "available": true,
     "provider": "gemini",
     "chat_model": "gemini-3.8-flash",
     "eval_model": "gemini-3.8-flash",
-    "num_calls": 1239,
+    "num_calls": 11,
     "failed_calls": 0,
     "degraded": false,
     "min_interval_s": 0.5,
@@ -1185,13 +1185,31 @@
     }
   },
   "run_mode": "live",
-  "wall_clock_s": 2379.4,
+  "wall_clock_s": 46.3,
   "backend": {
-    "requested": "local",
-    "active": "local",
+    "requested": "tigergraph",
+    "active": "tigergraph",
     "graphname": "OlympicsKG",
-    "reason": "disabled in config",
-    "remote_stats": {}
+    "reason": "",
+    "remote_stats": {
+      "remote_enabled": true,
+      "graphname": "OlympicsKG",
+      "disabled": {},
+      "verified": {
+        "filter_events": true,
+        "neighbours": null
+      },
+      "counters": {
+        "filter_events": 2,
+        "neighbours": 0,
+        "remote_rows": 490,
+        "fallbacks": 0
+      },
+      "client_requests": 11,
+      "notes": [
+        "filter_events verified against the mirror (245 rows)"
+      ]
+    }
   },
   "provenance": {
     "rebuilt_from": null,
@@ -1202,8 +1220,8 @@
         "records_with_calls": 100,
         "records_answering": 97,
         "calls": 100,
-        "total_tokens": 108520,
-        "output_tokens": 4295,
+        "total_tokens": 108522,
+        "output_tokens": 4297,
         "unusable_adjudications": 52,
         "llm_contributed": true
       },
@@ -1212,8 +1230,8 @@
         "records_with_calls": 100,
         "records_answering": 71,
         "calls": 100,
-        "total_tokens": 184862,
-        "output_tokens": 3642,
+        "total_tokens": 184864,
+        "output_tokens": 3644,
         "unusable_adjudications": 12,
         "llm_contributed": true
       },
@@ -1222,8 +1240,8 @@
         "records_with_calls": 100,
         "records_answering": 100,
         "calls": 561,
-        "total_tokens": 1747107,
-        "output_tokens": 35447,
+        "total_tokens": 1747166,
+        "output_tokens": 35445,
         "unusable_adjudications": 0,
         "llm_contributed": true
       },
@@ -1232,8 +1250,8 @@
         "records_with_calls": 100,
         "records_answering": 100,
         "calls": 628,
-        "total_tokens": 1674754,
-        "output_tokens": 35499,
+        "total_tokens": 1674789,
+        "output_tokens": 35528,
         "unusable_adjudications": 2,
         "llm_contributed": true
       }

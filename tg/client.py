@@ -52,9 +52,9 @@ class TigerGraphUnavailable(TigerGraphError):
 def _join(host: str, port: str) -> str:
     """Attach the RESTPP port unless the host already carries one.
 
-    Local installs use ``http://localhost`` + 9000; remote installs give a portless
-    URL that already serves RESTPP on 443. One rule
-    covers both: only append a port when the host URL has none.
+    Local installs use ``http://localhost`` + 9000; remote installs (like TGCloud)
+    give a portless URL that already serves RESTPP reverse-proxied on 443. One rule
+    covers both: do not append local ports to cloud URLs or URLs that already specify a port.
     """
     host = (host or "").strip().rstrip("/")
     if not host:
@@ -62,7 +62,8 @@ def _join(host: str, port: str) -> str:
     if not host.startswith(("http://", "https://")):
         host = "http://" + host
     parts = urllib.parse.urlsplit(host)
-    if parts.port or not port:
+    if (parts.port or not port or parts.netloc.endswith(".tgcloud.io")
+            or (parts.scheme == "https" and str(port) in ("9000", "14240"))):
         return host
     return f"{parts.scheme}://{parts.netloc}:{port}{parts.path.rstrip('/')}"
 
@@ -82,8 +83,14 @@ class TigerGraphClient:
         self.timeout = float(timeout or 30.0)
         self.retries = max(0, int(retries))
         self.verbose = verbose
-        self._restpp = _join(host, restpp_port)
-        self._gs = _join(host, gs_port)
+        parts = urllib.parse.urlsplit(host)
+        is_cloud = parts.netloc.endswith(".tgcloud.io") or (parts.scheme == "https" and not parts.port)
+        if is_cloud:
+            self._restpp = f"{host.rstrip('/')}/restpp"
+            self._gs = host.rstrip('/')
+        else:
+            self._restpp = _join(host, restpp_port)
+            self._gs = _join(host, gs_port)
         self._token = token or ""
         self._token_expiry = 0.0
         self.requests = 0
@@ -97,8 +104,18 @@ class TigerGraphClient:
     # ── low level HTTP ─────────────────────────────────────────────────
     def _auth_headers(self, use_token: bool = True) -> Dict[str, str]:
         headers = {"Accept": "application/json"}
-        if use_token and self._token:
-            headers["Authorization"] = f"Bearer {self._token}"
+        if use_token:
+            if not self._token:
+                try:
+                    self.ensure_token()
+                except Exception:
+                    pass
+            if self._token:
+                headers["Authorization"] = f"Bearer {self._token}"
+        elif self.username and self.password:
+            import base64
+            raw = f"{self.username}:{self.password}".encode("utf-8")
+            headers["Authorization"] = "Basic " + base64.b64encode(raw).decode("ascii")
         return headers
 
     def _basic_headers(self) -> Dict[str, str]:
@@ -137,14 +154,14 @@ class TigerGraphClient:
 
     def request(self, method: str, url: str, params: Optional[Dict[str, Any]] = None,
                 payload: Optional[Any] = None, form: Optional[Dict[str, Any]] = None,
-                use_token: bool = True) -> Any:
+                use_token: bool = True, auth: bool = True) -> Any:
         """One HTTP call with a small retry budget for transient failures."""
         if params:
             clean = {k: v for k, v in params.items() if v is not None and v != ""}
             if clean:
-                url = f"{url}?{urllib.parse.urlencode(clean)}"
+                url = f"{url}?{urllib.parse.urlencode(clean, quote_via=urllib.parse.quote)}"
         body: Optional[bytes] = None
-        headers = self._auth_headers(use_token)
+        headers = self._auth_headers(use_token) if auth else {"Accept": "application/json"}
         if form is not None:
             body = urllib.parse.urlencode(form).encode("utf-8")
             headers["Content-Type"] = "application/x-www-form-urlencoded"
@@ -172,29 +189,55 @@ class TigerGraphClient:
         if self._token and not force and (not self._token_expiry
                                           or time.time() < self._token_expiry - 30):
             return self._token
-        try:
-            data = self.request("POST", f"{self._restpp}/requesttoken",
-                                form={"secret": self.password}, use_token=False)
-        except TigerGraphError:
-            # Community Edition also accepts basic auth on this endpoint.
-            data = self.request("GET", f"{self._restpp}/requesttoken",
-                                use_token=False)
+        data = None
+        # 1. TigerGraph 4.x / TGCloud: POST /gsql/v1/tokens with {"secret": ...}
+        if self.password:
+            try:
+                data = self.request("POST", f"{self._gs}/gsql/v1/tokens",
+                                    payload={"secret": self.password}, use_token=False, auth=False)
+            except TigerGraphError:
+                try:
+                    data = self.request("POST", f"{self._restpp}/gsql/v1/tokens",
+                                        payload={"secret": self.password}, use_token=False, auth=False)
+                except TigerGraphError:
+                    data = None
+        # 2. TigerGraph 3.x: POST or GET /requesttoken
+        if not (isinstance(data, dict) and data.get("token")):
+            try:
+                data = self.request("POST", f"{self._restpp}/requesttoken",
+                                    form={"secret": self.password}, use_token=False)
+            except TigerGraphError:
+                try:
+                    data = self.request("GET", f"{self._restpp}/requesttoken",
+                                        use_token=False)
+                except TigerGraphError:
+                    pass
         if isinstance(data, dict) and data.get("token"):
             self._token = str(data["token"])
-            self._token_expiry = float(data.get("expiration") or 0)
+            exp = data.get("expiration")
+            try:
+                self._token_expiry = float(exp) if exp else time.time() + 86400 * 6
+            except (ValueError, TypeError):
+                self._token_expiry = time.time() + 86400 * 6
             self.log(f"token acquired (expires in "
                      f"{max(0, int(self._token_expiry - time.time()))}s)")
             return self._token
         raise TigerGraphUnavailable(
-            f"no token in /requesttoken response: {str(data)[:200]}")
+            f"no token in token response: {str(data)[:200]}")
 
     def ping(self) -> str:
         """Liveness probe: returns the server's echo string."""
+        auth_exc = None
         try:
             self.ensure_token()
         except TigerGraphError as exc:
-            raise TigerGraphUnavailable(f"token request failed: {exc}") from exc
-        data = self.request("GET", f"{self._restpp}/echo")
+            auth_exc = exc
+        try:
+            data = self.request("GET", f"{self._restpp}/echo")
+        except TigerGraphError as exc:
+            if auth_exc is not None:
+                raise TigerGraphUnavailable(f"server unreachable or auth failed: {auth_exc}") from auth_exc
+            raise
         if isinstance(data, dict):
             if data.get("error"):
                 raise TigerGraphError(f"echo failed: {data}")
@@ -235,12 +278,16 @@ class TigerGraphClient:
         data = self.request(
             "GET", f"{self._restpp}/graph/{self.graphname}/vertices/{vertex_type}",
             params={"limit": limit or None, "skip": skip or None})
+        if isinstance(data, dict) and data.get("error"):
+            raise TigerGraphError(f"get_vertices {vertex_type} failed: {data.get('message') or data}")
         return _rows(data)
 
     def get_vertex(self, vertex_type: str, v_id: str) -> Dict[str, Any]:
         data = self.request(
             "GET", f"{self._restpp}/graph/{self.graphname}/vertices/{vertex_type}/"
                    f"{urllib.parse.quote(str(v_id), safe='')}")
+        if isinstance(data, dict) and data.get("error"):
+            raise TigerGraphError(f"get_vertex {vertex_type} failed: {data.get('message') or data}")
         rows = _rows(data)
         return rows[0] if rows else {}
 
@@ -250,6 +297,8 @@ class TigerGraphClient:
             "GET", f"{self._restpp}/graph/{self.graphname}/edges/{src_type}/"
                    f"{urllib.parse.quote(str(src_id), safe='')}/{edge_type}",
             params={"limit": limit or None})
+        if isinstance(data, dict) and data.get("error"):
+            raise TigerGraphError(f"get_edges failed: {data.get('message') or data}")
         return _rows(data)
 
     def vertex_type_exists(self, vertex_type: str) -> bool:
@@ -265,13 +314,26 @@ class TigerGraphClient:
     # ── queries ────────────────────────────────────────────────────────
     def installed_queries(self) -> List[str]:
         """Names of the queries installed on the graph (empty when unsure)."""
+        # 1. TigerGraph 3.x / legacy query list endpoint
         try:
             data = self.request("GET", f"{self._restpp}/query/{self.graphname}")
+            results = data.get("results") if isinstance(data, dict) else data
+            if isinstance(results, list) and results and isinstance(results[0], dict):
+                return [n for n in results[0] if not n.startswith("_")]
         except TigerGraphError:
-            return []
-        results = data.get("results") if isinstance(data, dict) else data
-        if isinstance(results, list) and results and isinstance(results[0], dict):
-            return [n for n in results[0] if not n.startswith("_")]
+            pass
+
+        # 2. TigerGraph 4.x /endpoints endpoint
+        try:
+            endpoints = self.request("GET", f"{self._restpp}/endpoints")
+            if isinstance(endpoints, dict):
+                prefix = f"GET /query/{self.graphname}/"
+                queries = [k[len(prefix):] for k in endpoints if k.startswith(prefix) and not k[len(prefix):].startswith("_")]
+                if queries:
+                    return sorted(set(queries))
+        except TigerGraphError:
+            pass
+
         return []
 
     def run_query(self, name: str, params: Optional[Dict[str, Any]] = None,
@@ -336,11 +398,32 @@ class TigerGraphClient:
     def gsql(self, script: str, tag: Optional[str] = None) -> Any:
         """Submit raw GSQL to the GSQL server (schema/query installation).
 
-        Savanna installs the schema through its console; on Community Edition
-        this endpoint does the same job as ``gsql schema.gsql``. Failures are
-        reported rather than hidden, because the loader wants to print the exact
-        manual command when this route is not available.
+        Supports both TigerGraph 4.x / TGCloud (POST /gsql/v1/statements) and
+        legacy Community Edition (POST /gsqlserver/gsql/file).
         """
+        # Try TGCloud / TG 4.x statement API first if token or cloud host
+        token = ""
+        try:
+            token = self.ensure_token()
+        except Exception:
+            pass
+
+        if token:
+            url = f"{self._gs}/gsql/v1/statements"
+            headers = {"Authorization": f"Bearer {token}", "Content-Type": "text/plain"}
+            req = urllib.request.Request(url, data=script.encode("utf-8"), method="POST", headers=headers)
+            try:
+                with urllib.request.urlopen(req, timeout=max(60.0, self.timeout * 2)) as response:
+                    return response.read().decode("utf-8", "replace")
+            except urllib.error.HTTPError as exc:
+                detail = exc.read().decode("utf-8", "replace")
+                if exc.code != 404:
+                    raise TigerGraphError(
+                        f"GSQL statement failed (HTTP {exc.code}): {detail[:400]}", exc.code) from exc
+            except (urllib.error.URLError, OSError):
+                pass
+
+        # Legacy /gsqlserver fallback
         url = f"{self._gs}/gsqlserver/gsql/file"
         if tag:
             url = f"{url}?tag={urllib.parse.quote(tag)}"
