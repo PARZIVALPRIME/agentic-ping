@@ -13,7 +13,7 @@
         "total": 10,
         "citation_recall": 0.516,
         "avg_context_tokens": 259.6,
-        "avg_latency_ms": 40.7,
+        "avg_latency_ms": 41.3,
         "by_type": {
           "aggregation": 0.0,
           "lookup": 1.0,
@@ -28,7 +28,7 @@
         "total": 10,
         "citation_recall": 0.7162,
         "avg_context_tokens": 1042.7,
-        "avg_latency_ms": 52.3,
+        "avg_latency_ms": 40.0,
         "by_type": {
           "aggregation": 0.0,
           "lookup": 1.0,
@@ -45,7 +45,7 @@
         "total": 10,
         "citation_recall": 0.4624,
         "avg_context_tokens": 421.3,
-        "avg_latency_ms": 202.6,
+        "avg_latency_ms": 167.8,
         "by_type": {
           "aggregation": 0.0,
           "lookup": 1.0,
@@ -60,7 +60,7 @@
         "total": 10,
         "citation_recall": 0.7206,
         "avg_context_tokens": 1761.4,
-        "avg_latency_ms": 216.6,
+        "avg_latency_ms": 180.5,
         "by_type": {
           "aggregation": 0.0,
           "lookup": 1.0,

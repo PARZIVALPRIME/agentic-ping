@@ -33,7 +33,7 @@
           "Q47105341",
           "Q47155365"
         ],
-        "latency_ms": 30.69,
+        "latency_ms": 32.51,
         "retrieval_steps": 1,
         "tools_called": [
           "similarity_search"
@@ -76,7 +76,7 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 29.91
+            "latency_ms": 31.73
           },
           {
             "operation": "extractive_answer",
@@ -172,7 +172,7 @@
           "Q47155541",
           "Q47155408"
         ],
-        "latency_ms": 135.21,
+        "latency_ms": 205.64,
         "retrieval_steps": 2,
         "tools_called": [
           "hybrid_search",
@@ -236,17 +236,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 63.73
+            "latency_ms": 81.46
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 70.59
+            "latency_ms": 122.78
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.3
+            "latency_ms": 0.47
           }
         ],
         "tokens_per_operation": [
@@ -384,7 +384,7 @@
           "Q47155425",
           "Q47155408"
         ],
-        "latency_ms": 2.71,
+        "latency_ms": 3.68,
         "retrieval_steps": 2,
         "tools_called": [
           "link_entities",
@@ -439,7 +439,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 0.13,
+            "latency_ms": 0.21,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -466,7 +466,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.11,
+            "latency_ms": 0.19,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -493,7 +493,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -558,7 +558,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 2.11,
+            "latency_ms": 2.73,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -568,19 +568,19 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Biathlon; games->GAMES::2018::Winter",
-            "latency_ms": 0.13
+            "latency_ms": 0.21
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
-            "latency_ms": 0.11
+            "latency_ms": 0.19
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 11 enumerated events on competitors gt 73 -> 5 pass (field coverage 100%)",
-            "latency_ms": 0.02
+            "latency_ms": 0.04
           },
           {
             "operation": "verify_by_recount",
@@ -598,7 +598,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
-            "latency_ms": 2.11
+            "latency_ms": 2.73
           }
         ],
         "tokens_per_operation": [],
@@ -733,7 +733,7 @@
           "Q47155425",
           "Q47155408"
         ],
-        "latency_ms": 0.68,
+        "latency_ms": 1.25,
         "retrieval_steps": 2,
         "tools_called": [
           "link_entities",
@@ -808,7 +808,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 0.13,
+            "latency_ms": 0.23,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -835,7 +835,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.11,
+            "latency_ms": 0.21,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -862,7 +862,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -878,7 +878,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -901,7 +901,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -927,7 +927,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.09,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -937,43 +937,43 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Biathlon; games->GAMES::2018::Winter",
-            "latency_ms": 0.13
+            "latency_ms": 0.23
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
-            "latency_ms": 0.11
+            "latency_ms": 0.21
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 11 enumerated events on competitors gt 73 -> 5 pass (field coverage 100%)",
-            "latency_ms": 0.02
+            "latency_ms": 0.03
           },
           {
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
-            "latency_ms": 0.05
+            "latency_ms": 0.09
           }
         ],
         "tokens_per_operation": [],
@@ -1142,7 +1142,7 @@
         "qtype": "temporal",
         "answer": "",
         "citations": [],
-        "latency_ms": 48.88,
+        "latency_ms": 63.92,
         "retrieval_steps": 1,
         "tools_called": [
           "similarity_search"
@@ -1185,12 +1185,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 48.36
+            "latency_ms": 63.41
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.04
+            "latency_ms": 0.05
           }
         ],
         "tokens_per_operation": [
@@ -1251,7 +1251,7 @@
         "citations": [
           "Q1050909"
         ],
-        "latency_ms": 258.19,
+        "latency_ms": 272.45,
         "retrieval_steps": 2,
         "tools_called": [
           "hybrid_search",
@@ -1315,17 +1315,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 131.3
+            "latency_ms": 139.11
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 125.99
+            "latency_ms": 131.88
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.29
+            "latency_ms": 0.49
           }
         ],
         "tokens_per_operation": [
@@ -1411,7 +1411,7 @@
           "Q1050909",
           "Q26233122"
         ],
-        "latency_ms": 240.26,
+        "latency_ms": 204.47,
         "retrieval_steps": 4,
         "tools_called": [
           "link_entities",
@@ -1471,7 +1471,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 60,
-            "latency_ms": 20.76,
+            "latency_ms": 22.18,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -1503,7 +1503,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 10.86,
+            "latency_ms": 10.35,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -1534,7 +1534,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 10.42,
+            "latency_ms": 9.89,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -1562,7 +1562,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.1,
+            "latency_ms": 0.16,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -1588,7 +1588,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 8,
-            "latency_ms": 197.39,
+            "latency_ms": 160.95,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -1659,7 +1659,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.04,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -1712,7 +1712,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.15,
+            "latency_ms": 0.12,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -1722,43 +1722,43 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "latency_ms": 20.76
+            "latency_ms": 22.18
           },
           {
             "operation": "resolve_anchor",
             "agent": "TemporalReasoner",
             "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "latency_ms": 10.86
+            "latency_ms": 10.35
           },
           {
             "operation": "resolve_event",
             "agent": "TemporalReasoner",
             "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "latency_ms": 10.42
+            "latency_ms": 9.89
           },
           {
             "operation": "verify_chain",
             "agent": "TemporalReasoner",
             "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "latency_ms": 0.1
+            "latency_ms": 0.16
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
-            "latency_ms": 197.39
+            "latency_ms": 160.95
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.04
+            "latency_ms": 0.03
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
-            "latency_ms": 0.15
+            "latency_ms": 0.12
           }
         ],
         "tokens_per_operation": [],
@@ -1951,7 +1951,7 @@
           "Q1050909",
           "Q26233122"
         ],
-        "latency_ms": 151.1,
+        "latency_ms": 268.34,
         "retrieval_steps": 4,
         "tools_called": [
           "link_entities",
@@ -2031,7 +2031,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 60,
-            "latency_ms": 17.58,
+            "latency_ms": 41.93,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -2063,7 +2063,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 9.13,
+            "latency_ms": 21.04,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -2094,7 +2094,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 9.11,
+            "latency_ms": 13.43,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -2122,7 +2122,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.14,
+            "latency_ms": 0.18,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -2148,7 +2148,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 8,
-            "latency_ms": 114.38,
+            "latency_ms": 190.82,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -2288,31 +2288,31 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "latency_ms": 17.58
+            "latency_ms": 41.93
           },
           {
             "operation": "resolve_anchor",
             "agent": "TemporalReasoner",
             "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "latency_ms": 9.13
+            "latency_ms": 21.04
           },
           {
             "operation": "resolve_event",
             "agent": "TemporalReasoner",
             "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "latency_ms": 9.11
+            "latency_ms": 13.43
           },
           {
             "operation": "verify_chain",
             "agent": "TemporalReasoner",
             "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "latency_ms": 0.14
+            "latency_ms": 0.18
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
-            "latency_ms": 114.38
+            "latency_ms": 190.82
           },
           {
             "operation": "evaluate_evidence",
@@ -2569,7 +2569,7 @@
         "qtype": "aggregation",
         "answer": "",
         "citations": [],
-        "latency_ms": 42.37,
+        "latency_ms": 61.26,
         "retrieval_steps": 1,
         "tools_called": [
           "similarity_search"
@@ -2612,12 +2612,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 42.06
+            "latency_ms": 60.94
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           }
         ],
         "tokens_per_operation": [
@@ -2687,7 +2687,7 @@
           "Q7500832",
           "Q7500834"
         ],
-        "latency_ms": 192.64,
+        "latency_ms": 375.4,
         "retrieval_steps": 2,
         "tools_called": [
           "hybrid_search",
@@ -2751,17 +2751,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 96.21
+            "latency_ms": 121.91
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 95.51
+            "latency_ms": 251.92
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.3
+            "latency_ms": 0.5
           }
         ],
         "tokens_per_operation": [
@@ -2902,7 +2902,7 @@
           "Q4354615",
           "Q5481589"
         ],
-        "latency_ms": 0.62,
+        "latency_ms": 1.09,
         "retrieval_steps": 2,
         "tools_called": [
           "link_entities",
@@ -2957,7 +2957,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.14,
+            "latency_ms": 0.23,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -2984,7 +2984,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.12,
+            "latency_ms": 0.2,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -3014,7 +3014,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -3030,7 +3030,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -3053,7 +3053,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -3082,7 +3082,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.07,
+            "latency_ms": 0.12,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -3092,37 +3092,37 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Shooting; games->GAMES::2004::Summer",
-            "latency_ms": 0.14
+            "latency_ms": 0.23
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
-            "latency_ms": 0.12
+            "latency_ms": 0.2
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
-            "latency_ms": 0.02
+            "latency_ms": 0.04
           },
           {
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 8 (documents with the field: 17); matches the primary count",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
-            "latency_ms": 0.07
+            "latency_ms": 0.12
           }
         ],
         "tokens_per_operation": [],
@@ -3266,7 +3266,7 @@
           "Q4354615",
           "Q5481589"
         ],
-        "latency_ms": 0.62,
+        "latency_ms": 0.94,
         "retrieval_steps": 2,
         "tools_called": [
           "link_entities",
@@ -3341,7 +3341,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.12,
+            "latency_ms": 0.17,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -3368,7 +3368,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.11,
+            "latency_ms": 0.14,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -3398,7 +3398,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -3466,7 +3466,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.09,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -3476,25 +3476,25 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Shooting; games->GAMES::2004::Summer",
-            "latency_ms": 0.12
+            "latency_ms": 0.17
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
-            "latency_ms": 0.11
+            "latency_ms": 0.14
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
-            "latency_ms": 0.02
+            "latency_ms": 0.03
           },
           {
             "operation": "verify_by_recount",
@@ -3512,7 +3512,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
-            "latency_ms": 0.05
+            "latency_ms": 0.09
           }
         ],
         "tokens_per_operation": [],
@@ -3728,7 +3728,7 @@
         "qtype": "superlative",
         "answer": "",
         "citations": [],
-        "latency_ms": 46.04,
+        "latency_ms": 73.85,
         "retrieval_steps": 1,
         "tools_called": [
           "similarity_search"
@@ -3771,12 +3771,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 45.7
+            "latency_ms": 73.35
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           }
         ],
         "tokens_per_operation": [
@@ -3837,7 +3837,7 @@
         "citations": [
           "Q922361"
         ],
-        "latency_ms": 207.81,
+        "latency_ms": 246.03,
         "retrieval_steps": 2,
         "tools_called": [
           "hybrid_search",
@@ -3901,17 +3901,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 106.27
+            "latency_ms": 145.99
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 100.73
+            "latency_ms": 99.33
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.28
+            "latency_ms": 0.24
           }
         ],
         "tokens_per_operation": [
@@ -4000,7 +4000,7 @@
         "citations": [
           "Q693595"
         ],
-        "latency_ms": 0.62,
+        "latency_ms": 0.53,
         "retrieval_steps": 2,
         "tools_called": [
           "link_entities",
@@ -4055,7 +4055,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 43,
-            "latency_ms": 0.15,
+            "latency_ms": 0.12,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -4082,7 +4082,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.12,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -4103,7 +4103,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.04,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -4174,19 +4174,19 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2008::Summer",
-            "latency_ms": 0.15
+            "latency_ms": 0.12
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 43 event pages (0 new)",
-            "latency_ms": 0.12
+            "latency_ms": 0.1
           },
           {
             "operation": "arg_extreme",
             "agent": "Comparator",
             "detail": "argmax over 43 events -> \"Athletics at the 2008 Summer Olympics – Men's marathon\" (95); margin over runner-up: 10",
-            "latency_ms": 0.04
+            "latency_ms": 0.03
           },
           {
             "operation": "verify_extreme",
@@ -4325,7 +4325,7 @@
         "citations": [
           "Q693595"
         ],
-        "latency_ms": 0.64,
+        "latency_ms": 0.54,
         "retrieval_steps": 2,
         "tools_called": [
           "link_entities",
@@ -4400,7 +4400,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 43,
-            "latency_ms": 0.13,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -4427,7 +4427,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.12,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -4448,7 +4448,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -4465,7 +4465,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -4525,25 +4525,25 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2008::Summer",
-            "latency_ms": 0.13
+            "latency_ms": 0.11
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 43 event pages (0 new)",
-            "latency_ms": 0.12
+            "latency_ms": 0.1
           },
           {
             "operation": "arg_extreme",
             "agent": "Comparator",
             "detail": "argmax over 43 events -> \"Athletics at the 2008 Summer Olympics – Men's marathon\" (95); margin over runner-up: 10",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "verify_extreme",
             "agent": "Comparator",
             "detail": "cross-check of the extreme value (no violations) across 43 documents",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "evaluate_evidence",
@@ -4715,7 +4715,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 20.74,
+        "latency_ms": 20.93,
         "retrieval_steps": 1,
         "tools_called": [
           "similarity_search"
@@ -4758,12 +4758,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 19.75
+            "latency_ms": 20.09
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.7
+            "latency_ms": 0.57
           }
         ],
         "tokens_per_operation": [
@@ -4830,7 +4830,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 95.23,
+        "latency_ms": 85.82,
         "retrieval_steps": 2,
         "tools_called": [
           "hybrid_search",
@@ -4894,17 +4894,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 45.92
+            "latency_ms": 39.66
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 47.23
+            "latency_ms": 44.27
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 1.6
+            "latency_ms": 1.46
           }
         ],
         "tokens_per_operation": [
@@ -4992,7 +4992,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 48.54,
+        "latency_ms": 55.34,
         "retrieval_steps": 4,
         "tools_called": [
           "link_entities",
@@ -5048,7 +5048,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 5,
-            "latency_ms": 0.06,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5077,7 +5077,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.63,
+            "latency_ms": 0.58,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5129,7 +5129,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 12,
-            "latency_ms": 47.36,
+            "latency_ms": 54.06,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5151,7 +5151,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5183,13 +5183,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.06
+            "latency_ms": 0.05
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
-            "latency_ms": 0.63
+            "latency_ms": 0.58
           },
           {
             "operation": "traverse_graph",
@@ -5201,13 +5201,13 @@
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 p",
-            "latency_ms": 47.36
+            "latency_ms": 54.06
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.04
           },
           {
             "operation": "render_answer",
@@ -5342,7 +5342,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 49.46,
+        "latency_ms": 54.2,
         "retrieval_steps": 4,
         "tools_called": [
           "link_entities",
@@ -5418,7 +5418,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 5,
-            "latency_ms": 0.05,
+            "latency_ms": 0.07,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5447,7 +5447,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.63,
+            "latency_ms": 0.9,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5473,7 +5473,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5499,7 +5499,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 12,
-            "latency_ms": 48.08,
+            "latency_ms": 52.61,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5521,7 +5521,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.06,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0
           },
@@ -5543,7 +5543,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.1,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0
           }
@@ -5559,37 +5559,37 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.05
+            "latency_ms": 0.07
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
-            "latency_ms": 0.63
+            "latency_ms": 0.9
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=HELD_AT -> 5 event pages (0 new)",
-            "latency_ms": 0.03
+            "latency_ms": 0.04
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 p",
-            "latency_ms": 48.08
+            "latency_ms": 52.61
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.06
+            "latency_ms": 0.03
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Naim Süleymanoğlu' citing 1 document(s) :: gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer ",
-            "latency_ms": 0.1
+            "latency_ms": 0.05
           }
         ],
         "tokens_per_operation": [],
