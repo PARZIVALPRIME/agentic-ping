@@ -40,12 +40,12 @@ Final public run: 100 questions, **live** provider (Gemini 3.8 Flash + TigerGrap
 
 ### Comprehensive Benchmark Breakdown across 100 Public Questions
 
-| Pipeline | Accuracy | Complete | Citation F1 | Latency | Context Tok | LLM Calls / Q | Total Tok / Q | Tok / Correct |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Naive RAG | 42.0% | 43.2% | 31.4% | 440 ms | 251 | 1.0 | 1,085 | 2,583 |
-| GraphRAG | 62.0% | 64.8% | 58.2% | 780 ms | 886 | 1.0 | 1,849 | 2,982 |
-| **Agentic GraphRAG** | **100.0%** | **97.6%** | **91.5%** | 12,900 ms | **95** | 3.2 | 17,472 | 17,472 |
-| Capability Router | 98.0% | 97.1% | 89.8% | 9,820 ms | 162 | 2.3 | 16,748 | 17,090 |
+| Pipeline | Accuracy | Citation Prec | Citation Rec | Citation F1 | Latency | Context Tok | LLM Calls / Q | Total Tok / Q | Tok / Correct |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Naive RAG | 42.0% | 58.9% | 64.3% | 61.5% | 2,335 ms | 251 | 1.0 | 1,085 | 2,584 |
+| GraphRAG | 62.0% | 72.2% | 57.6% | 64.1% | 1,926 ms | 886 | 1.0 | 1,849 | 2,982 |
+| **Agentic GraphRAG** | **100.0%** | 39.0% | **83.2%** | 53.1% | 12,898 ms | **95** | 5.6 | 17,472 | 17,472 |
+| Capability Router | 98.0% | 57.3% | **85.3%** | **68.5%** | 13,704 ms | 162 | 6.3 | 16,748 | 17,090 |
 
 ### Accuracy Breakdown by Question Type ($n = 100$)
 
@@ -75,8 +75,8 @@ Retrieval overtakes the agent on raw accuracy at k=160 — and pays **~102× the
 > *"Is the additional reasoning and retrieval complexity of Agentic GraphRAG worth the token cost?"*
 
 1. **For Single Lookups**: **No.** Naive RAG achieves 89.5% at 1,085 tokens. Paying 17,472 tokens (+1,500%) for a 10% gain is economically irrational.
-2. **For Complex Set Operations**: **Yes, absolutely.** Naive RAG and GraphRAG score **0.0%** on aggregations regardless of $k$ ($k=5$ to $k=160$). Without the agentic loop, cost per correct answer is infinite ($\infty$).
-3. **The Pareto Optimal Solution**: The **Capability Router** delivers **100.0% accuracy** across all categories while reducing token usage by **27.0%** (~472,366 tokens saved) via capability dispatch and adaptive escalation.
+2. **For Complex Set Operations**: **Yes, absolutely.** Naive RAG and GraphRAG score **0.0%** on aggregations and superlatives at standard production retrieval budgets ($k=5$). Without the agentic loop, cost per correct answer is infinite ($\infty$).
+3. **The Pareto Optimal Solution**: The **Capability Router** delivers **98.0% overall accuracy** (matching Agentic on 100% of aggregation, superlative, temporal, and multi-hop questions) while saving tokens and reducing query latency by dispatching lookups to single-shot RAG and escalating to Agentic GraphRAG only when confidence is low.
 
 ---
 
@@ -116,7 +116,7 @@ Retrieval overtakes the agent on raw accuracy at k=160 — and pays **~102× the
 
 Every Agentic GraphRAG execution is logged with complete, un-truncated telemetry across 10 key dimensions:
 
-1. **Retrieval vs. Reasoning Steps**: Explicitly separates physical retrievals (average **4.2 steps**) from cognitive adjudications and counts (average **2.6 steps**).
+1. **Retrieval vs. Reasoning Steps**: Explicitly separates physical retrievals (average **5.0 steps**) from cognitive ReAct loop iterations (average **5.4 steps**), evaluating an average of **24.8 candidates considered** per investigation.
 2. **Retrieval Methods Selected**: Categorized dynamically into `vector`, `graph`, `hybrid`, and `accumulator`.
 3. **Specialized Agents Invoked**: Maps ReAct steps to domain personas (`GraphNavigatorAgent`, `TemporalAuditorAgent`, `ConflictAdjudicatorAgent`, `VectorSearcherAgent`, `EvidenceSynthesizerAgent`).
 4. **Tools Called**: Exact execution trace of tool calls (`search_events`, `get_event_details`, `get_event_values`, `detect_conflicts`, `submit_answer`).
@@ -164,21 +164,76 @@ Olympics history (1987–2023) is rife with evolving facts, doping disqualificat
 
 ## 🚀 Differentiation Pillars & Innovations
 
-### 1. TigerGraph Cloud Backend & GSQL V2 Accumulators
-- **Live Cloud Connectivity**: Seamlessly interfaces with TigerGraph Cloud instances (`https://tg-...i.tgcloud.io`).
-- **Server-Side GSQL V2 Queries (`tg/queries.gsql`)**: Utilizes `SumAccum<INT>`, `MinAccum<INT>`, `MaxAccum<INT>`, and `SetAccum<STRING>` to compute sums, filters, and extremes inside the database engine without moving gigabytes of vertex data over the wire.
+### 1. TigerGraph Cloud Backend & Server-Side GSQL V2 Accumulators (`tg/`)
+- **Live TGCloud Enterprise Cluster**: Interfaces natively with TigerGraph Cloud 4.2.5 Enterprise:
+  - **Cluster Endpoint**: `https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io`
+  - **Graph Name**: `OlympicsKG`
+  - **Authentication**: RESTPP v2 token / basic authentication with `TG_USERNAME=tigergraph` and cluster secret/password
+  - **Active Environment Configuration**:
+    ```bash
+    TG_ENABLED=true
+    TG_HOST=https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io
+    TG_GRAPHNAME=OlympicsKG
+    TG_USERNAME=tigergraph
+    TG_PASSWORD=<cluster_password>
+    ```
+- **Server-Side GSQL V2 Accumulators (`tg/queries.gsql`)**:
+  - `tg_aggregate_stats`: Analytical reduction query running directly inside TigerGraph. Employs `SumAccum<INT> @@total_events`, `MinAccum<INT> @@earliest_year`, `MaxAccum<INT> @@latest_year`, and `SetAccum<STRING> @@unique_venues, @@unique_sports`. Eliminates transferring gigabytes of raw vertex records across the network.
+  - `tg_filter_events`: Evaluates sport, venue, season, and year intervals in-engine, returning `ListAccum<STRING> @@ids` with `ORDER BY v.seq ASC` to guarantee parity with the verified local corpus order.
+  - `tg_neighbours`: Bidirectional traversal utilizing `SetAccum<EDGE> @@edges` across relationship edges (`IN_SPORT`, `HELD_AT`, `WON_BY`, `PART_OF`, `PREV`, `NEXT`).
+  - `tg_event`: Fetches individual Event vertices by ID with `ListAccum<VERTEX<Event>>`.
+- **Query Verification & Cluster Diagnostics**:
+  ```powershell
+  # Verify live cloud connection and accumulators (48 unit tests)
+  python tools/test_tg_backend.py
+  # Re-install or verify schema & queries on TGCloud
+  python tools/tg_ingest.py --install
+  ```
 - **Resilient Fallback**: Automatically mirrors the 2,951 documents into an in-memory graph so local development or network hiccups never break a run.
 
 ### 2. Model Context Protocol (MCP) Server (`tools/mcp_server.py`)
-- Standardized RFC-compliant JSON-RPC 2.0 stdio server.
-- Exposes 6 enterprise tools to any MCP-compatible client (Claude Desktop, Cursor, IDEs):
-  `tg_filter_events`, `tg_neighbours`, `tg_event`, `tg_aggregate_stats`, `detect_conflicts`, and `agentic_investigate`.
-- Exposes graph schema resource at `tigergraph://schema/OlympicsKG`.
+- **Standardized RFC-Compliant stdio Server**: Implements the official JSON-RPC 2.0 stdio Model Context Protocol, exposing TigerGraph Cloud primitives and multi-agent reasoning tools directly to Claude Desktop, Cursor, and IDEs.
+- **6 Enterprise Tools Exposed**:
+  1. `tg_filter_events`: Attribute filter over TigerGraph vertices with sport, venue, season, year range, and limit.
+  2. `tg_neighbours`: Multi-hop edge traversal exploring `WON_BY`, `HELD_AT`, `PART_OF`, `IN_SPORT`, `PREV`, `NEXT`.
+  3. `tg_event`: Direct vertex lookup and existence probe.
+  4. `tg_aggregate_stats`: Server-side GSQL accumulator query computing event totals, year spans, and unique counts.
+  5. `detect_conflicts`: 4-tier Round 2 conflict adjudication engine.
+  6. `agentic_investigate`: Autonomous multi-agent investigation workflow over TigerGraph.
+- **Resources Advertised**:
+  - `tigergraph://schema/OlympicsKG`: Full schema specification with vertex and edge definitions.
+- **Automated Verification**:
+  ```powershell
+  python tools/mcp_server.py --test
+  ```
+- **Claude Desktop Configuration (`claude_desktop_config.json`)**:
+  ```json
+  {
+    "mcpServers": {
+      "tigergraph-olympics": {
+        "command": "python",
+        "args": ["tools/mcp_server.py"],
+        "env": {
+          "TG_ENABLED": "true",
+          "TG_HOST": "https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io",
+          "TG_GRAPHNAME": "OlympicsKG",
+          "TG_USERNAME": "tigergraph",
+          "TG_PASSWORD": "<cluster_password>"
+        }
+      }
+    }
+  }
+  ```
 
 ### 3. Visual UI Studio & Dynamic Subgraph Traversal Explorer
 - **Interactive SVG Subgraph Network**: Real-time rendering of visited Event vertices, Sport nodes, Venue nodes, and Medallist entities with color-coded directional edges (`IN_SPORT`, `HELD_AT`, `WON_BY`).
 - **Live Investigation Playground**: Interactive query tester with live capability routing, token savings calculator, and ReAct step simulations.
 - **Conflict Adjudication Matrix**: Live showcase of real Olympic controversies (Marion Jones doping stripping, 100m Olympic record progression, USSR to Russia succession).
+
+### 4. 3-Tier Pareto Capability Router with Adaptive Escalation (`pipelines/router_pipeline.py`)
+- **Structure-Aware Dispatch**: Pre-routes questions based on structural requirements rather than empirical overfitting. Lookups are dispatched to fast single-shot RAG (~1,085 tokens, 2.3s), multi-hop questions to 1-hop GraphRAG (~1,849 tokens, 1.9s), and complex set operations (aggregations, superlatives, chronologies) to Agentic GraphRAG.
+- **Adaptive Confidence Escalation**: If the fast arm returns confidence below 0.85, an empty response, or `insufficient_retrieved_evidence`, the Router autonomously escalates to Agentic GraphRAG with no user intervention.
+- **98.0% Accuracy at Optimized Cost**: Matches Agentic GraphRAG on 100% of aggregation (21/21), superlative (10/10), temporal (22/22), and multi-hop (28/28), saving 72,377 tokens compared to running full ReAct loops on simple lookups.
 
 ---
 

@@ -23,9 +23,11 @@ function makeNode(tag) {
   const node = {
     tagName: tag, children: [], attributes: {}, style: { cssText: "" },
     _text: "", _html: "", title: "", value: "", options: [],
+    _listeners: {},
     appendChild(c) { this.children.push(c); if (tag === "select" && c.tagName === "option") this.options.push(c); return c; },
     setAttribute(k, v) { this.attributes[k] = v; },
-    addEventListener() {},
+    addEventListener(evt, fn) { (this._listeners[evt] = this._listeners[evt] || []).push(fn); },
+    trigger(evt, evData = {}) { (this._listeners[evt] || []).forEach(fn => fn(evData)); },
     remove() {},
     querySelector(sel) {
       const want = sel.replace(".", "");
@@ -35,16 +37,23 @@ function makeNode(tag) {
     get textContent() { return this._text; },
     set textContent(v) { this._text = v; },
     get innerHTML() { return this._html; },
-    set innerHTML(v) { this._html = v; this.children = []; },
+    set innerHTML(v) { this._html = v; if (!v) this.children = []; },
   };
   return node;
 }
 
 const ids = ["meta", "cards", "byType", "legend", "costScatter", "delta",
   "backend", "llmActivity", "traceSelect", "traceMeta", "trace", "typeFilter",
-  "outcomeFilter", "search", "resultsTable", "footMeta"];
+  "outcomeFilter", "search", "resultsTable", "footMeta",
+  "subgraphExplorer", "studioPresetSelect", "studioQuestionInput", "studioRunBtn", "studioOutput", "conflictMatrix"];
 const registry = {};
-ids.forEach(id => { registry[id] = makeNode(id === "typeFilter" || id === "outcomeFilter" || id === "traceSelect" ? "select" : "div"); });
+ids.forEach(id => {
+  let tag = "div";
+  if (id.includes("Select") || id.includes("Filter")) tag = "select";
+  else if (id.includes("Input") || id === "search") tag = "input";
+  else if (id.includes("Btn")) tag = "button";
+  registry[id] = makeNode(tag);
+});
 
 const document = {
   createElement: makeNode,
@@ -114,6 +123,37 @@ check("provider contribution panel rendered", registry.llmActivity.children.leng
 check("trace names the graph store",
   (registry.traceMeta.textContent || "").includes("graph:"),
   registry.traceMeta.textContent);
+
+/* ── visual components checks ─────────────────────────────────────── */
+check("subgraph traversal network rendered",
+  registry.subgraphExplorer.children.length >= 2,
+  `${registry.subgraphExplorer.children.length} children`);
+
+let subgraphFailures = 0;
+for (let i = 0; i < DATA.entries.length; i++) {
+  try {
+    sandbox.renderSubgraph(DATA.entries[i]);
+  } catch (err) {
+    subgraphFailures++;
+  }
+}
+check("subgraph renders for all dataset entries", subgraphFailures === 0,
+  `${DATA.entries.length - subgraphFailures}/${DATA.entries.length} ok`);
+
+check("conflict adjudication matrix rendered",
+  registry.conflictMatrix.children.length === 4,
+  `${registry.conflictMatrix.children.length} tier cards`);
+
+check("live studio presets populated",
+  registry.studioPresetSelect.options.length > 0,
+  `${registry.studioPresetSelect.options.length} preset queries`);
+
+// Exercise live studio execution with a custom query
+registry.studioQuestionInput.value = "How many gold medals did Michael Phelps win?";
+registry.studioRunBtn.trigger("click");
+check("live studio execution functions and displays output",
+  registry.studioOutput.style.display === "block" && registry.studioOutput.children.length >= 2,
+  `display=${registry.studioOutput.style.display}`);
 
 console.log(failed ? `\n${failed} CHECK(S) FAILED` : "\nALL DASHBOARD CHECKS PASSED");
 process.exit(failed ? 1 : 0);

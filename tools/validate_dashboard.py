@@ -139,6 +139,15 @@ console.log('helpers ok; entries=' + entries.length +
         os.remove(harness_path)
     except OSError:
         pass          # Windows may still hold the handle; leftovers are ignored
+
+    # 6. run comprehensive headless smoke test for all visual & interactive components
+    smoke = os.path.join(ROOT, "dashboard", "test_dashboard.js")
+    if os.path.exists(smoke):
+        r_smoke = subprocess.run([node, smoke, HTML], capture_output=True, text=True,
+                                 encoding="utf-8", errors="replace")
+        check("visual components (SVG traversal, studio, conflict matrix)",
+              r_smoke.returncode == 0,
+              (r_smoke.stdout or r_smoke.stderr).strip()[-300:])
 else:
     print("SKIP node not found — JS syntax check skipped")
 

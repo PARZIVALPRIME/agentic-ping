@@ -37,7 +37,7 @@
           "accuracy": 0.0
         }
       },
-      "avg_latency_ms": 37.392,
+      "avg_latency_ms": 57.792,
       "avg_context_tokens": 289.4,
       "avg_input_tokens": 318.0,
       "avg_output_tokens": 0.0,
@@ -105,7 +105,7 @@
           "accuracy": 0.0
         }
       },
-      "avg_latency_ms": 178.52,
+      "avg_latency_ms": 245.322,
       "avg_context_tokens": 889.6,
       "avg_input_tokens": 918.2,
       "avg_output_tokens": 0.0,
@@ -171,7 +171,7 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 43.952,
+      "avg_latency_ms": 55.08,
       "avg_context_tokens": 280.8,
       "avg_input_tokens": 0.0,
       "avg_output_tokens": 0.0,
@@ -246,7 +246,7 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 51.096,
+      "avg_latency_ms": 63.94,
       "avg_context_tokens": 299.0,
       "avg_input_tokens": 172.0,
       "avg_output_tokens": 0.0,
@@ -365,7 +365,7 @@
     }
   },
   "run_mode": "deterministic",
-  "wall_clock_s": 1.6,
+  "wall_clock_s": 2.2,
   "backend": {
     "requested": "tigergraph",
     "active": "local",

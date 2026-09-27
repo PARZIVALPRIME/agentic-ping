@@ -187,13 +187,12 @@ powershell -File tools/bench_status.ps1           # progress / live tally
 python tools/validate_hidden.py                   # hidden slot coverage
 ```
 
-The published numbers were produced with the **local open-weights profile**:
-`LLM_PROVIDER=ollama` against `http://localhost:11434`, `qwen3.5:4b` for the
-planner, agent and judge (see `.env`; nothing leaves the machine and no quota
-is spent). The cloud profile is the drop-in alternative — set
-`LLM_PROVIDER=groq` and `GROQ_API_KEY` in `.env` (planner/evaluator:
-`openai/gpt-oss-120b`), and keep `LLM_TPM`/`LLM_CIRCUIT_THRESHOLD` live so the
-free tier's 8K TPM is paced instead of 429-thrashed.
+The verified published run was produced with **Google Gemini 3.8 Flash**
+(`LLM_PROVIDER=gemini`) connected live to the **TigerGraph Cloud Enterprise cluster**
+(`OlympicsKG`). Local open-weights execution is also fully supported via
+`LLM_PROVIDER=ollama` (e.g. `qwen3.5:4b` against `http://localhost:11434`), as well
+as Groq (`LLM_PROVIDER=groq`), with circuit breaker pacing
+(`LLM_TPM`/`LLM_CIRCUIT_THRESHOLD`) preventing rate-limit thrashing.
 
 `docs/ablation_study.md` and `docs/baseline_ceiling.md` quote the deterministic
 studies, not this live sweep; `python tools/verify_doc_numbers.py` re-checks
