@@ -95,11 +95,27 @@ def summarize_entries(entries: List[Dict[str, Any]], summary_path: Optional[str]
     collector = MetricsCollector()
     collector.entries.extend(entries)
     activity = llm_activity(entries)
+
+    existing_backend = None
+    existing_evaluator = None
+    existing_llm = None
+    existing_wall_clock = None
+    if summary_path and os.path.exists(summary_path):
+        try:
+            with open(summary_path, "r", encoding="utf-8") as fh:
+                old = json.load(fh)
+                existing_backend = old.get("backend")
+                existing_evaluator = old.get("evaluator")
+                existing_llm = old.get("llm")
+                existing_wall_clock = old.get("wall_clock_s")
+        except Exception:
+            pass
+
     summary = collector.summarize(extra={
-        "evaluator": None,
-        "llm": None,
-        "backend": None,
-        "wall_clock_s": None,
+        "evaluator": existing_evaluator,
+        "llm": existing_llm,
+        "backend": existing_backend,
+        "wall_clock_s": existing_wall_clock,
         # Derived from the records: a rebuilt summary still knows whether the
         # provider answered anything, it just cannot know the client telemetry.
         "run_mode": ("live" if any(slot.get("records_answering") for slot in activity.values())
@@ -108,8 +124,9 @@ def summarize_entries(entries: List[Dict[str, Any]], summary_path: Optional[str]
         "provenance": _provenance(
             entries, rebuilt_from=source,
             note=("summary rebuilt from an existing results file; evaluator/llm/"
-                  "backend telemetry is only known during a live run, so those "
-                  "blocks are null rather than guessed")),
+                  "backend telemetry preserved from live run" if existing_backend else
+                  "summary rebuilt from an existing results file; evaluator/llm/"
+                  "backend telemetry is only known during a live run")),
     })
     if summary_path:
         os.makedirs(os.path.dirname(summary_path) or ".", exist_ok=True)

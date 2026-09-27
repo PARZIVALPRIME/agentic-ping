@@ -33,8 +33,9 @@
           "Q47105341",
           "Q47155365"
         ],
-        "latency_ms": 35.0,
+        "latency_ms": 27.03,
         "retrieval_steps": 1,
+        "reasoning_steps": 0,
         "tools_called": [
           "similarity_search"
         ],
@@ -76,12 +77,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 34.18
+            "latency_ms": 26.27
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.25
+            "latency_ms": 0.24
           }
         ],
         "tokens_per_operation": [
@@ -152,6 +153,9 @@
           "similarity": 0.0,
           "citation_precision": 1.0,
           "citation_recall": 0.3636,
+          "citation_f1": 0.5333,
+          "completeness": 0.0,
+          "grounding_category": "grounded_incorrect",
           "judge_reason": ""
         }
       },
@@ -172,8 +176,9 @@
           "Q47155541",
           "Q47155408"
         ],
-        "latency_ms": 125.4,
+        "latency_ms": 130.72,
         "retrieval_steps": 2,
+        "reasoning_steps": 0,
         "tools_called": [
           "hybrid_search",
           "structural_retrieve"
@@ -236,17 +241,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 61.9
+            "latency_ms": 67.51
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 62.64
+            "latency_ms": 62.31
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.29
+            "latency_ms": 0.3
           }
         ],
         "tokens_per_operation": [
@@ -369,6 +374,9 @@
           "similarity": 1.0,
           "citation_precision": 0.8,
           "citation_recall": 0.7273,
+          "citation_f1": 0.7619,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -384,8 +392,9 @@
           "Q47155425",
           "Q47155408"
         ],
-        "latency_ms": 3.04,
+        "latency_ms": 3.02,
         "retrieval_steps": 2,
+        "reasoning_steps": 4,
         "tools_called": [
           "link_entities",
           "traverse_graph",
@@ -403,7 +412,7 @@
         ],
         "chunks_retrieved": 0,
         "docs_retrieved": 11,
-        "context_tokens": 0,
+        "context_tokens": 12,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -441,7 +450,8 @@
             "new_documents": 11,
             "latency_ms": 0.13,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -468,7 +478,8 @@
             "new_documents": 0,
             "latency_ms": 0.11,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -495,7 +506,8 @@
             "new_documents": 0,
             "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -509,9 +521,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -534,7 +547,8 @@
             "new_documents": 0,
             "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -558,9 +572,10 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 2.46,
+            "latency_ms": 2.38,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -586,7 +601,7 @@
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "evaluate_evidence",
@@ -598,7 +613,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
-            "latency_ms": 2.46
+            "latency_ms": 2.38
           }
         ],
         "tokens_per_operation": [],
@@ -708,6 +723,26 @@
           "uncertainty": 0.03,
           "tool_calls": [],
           "docs_touched": 11,
+          "retrieval_methods_selected": [
+            "accumulator",
+            "graph"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "GraphTraverser",
+            "Aggregator",
+            "Aggregator",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "confidence_reached",
+            "why": "Investigation terminated: confidence_reached",
+            "stopping_condition_met": true,
+            "when_latency_ms": 3.02
+          },
           "plan_skips": []
         },
         "unresolved": [],
@@ -718,6 +753,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4545,
+          "citation_f1": 0.625,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -733,8 +771,9 @@
           "Q47155425",
           "Q47155408"
         ],
-        "latency_ms": 0.65,
+        "latency_ms": 0.7,
         "retrieval_steps": 2,
+        "reasoning_steps": 4,
         "tools_called": [
           "link_entities",
           "traverse_graph",
@@ -753,7 +792,7 @@
         ],
         "chunks_retrieved": 0,
         "docs_retrieved": 11,
-        "context_tokens": 0,
+        "context_tokens": 12,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -808,9 +847,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 0.11,
+            "latency_ms": 0.12,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -835,9 +875,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.1,
+            "latency_ms": 0.11,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -864,7 +905,8 @@
             "new_documents": 0,
             "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -880,7 +922,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -903,7 +946,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -929,7 +973,8 @@
             "new_documents": 0,
             "latency_ms": 0.04,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -943,13 +988,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Biathlon; games->GAMES::2018::Winter",
-            "latency_ms": 0.11
+            "latency_ms": 0.12
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
-            "latency_ms": 0.1
+            "latency_ms": 0.11
           },
           {
             "operation": "count_threshold",
@@ -1083,6 +1128,26 @@
           "uncertainty": 0.03,
           "tool_calls": [],
           "docs_touched": 11,
+          "retrieval_methods_selected": [
+            "accumulator",
+            "graph"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "GraphTraverser",
+            "Aggregator",
+            "Aggregator",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "confidence_reached",
+            "why": "Investigation terminated: confidence_reached",
+            "stopping_condition_met": true,
+            "when_latency_ms": 0.57
+          },
           "plan_skips": [],
           "router": {
             "routed_to": "Agentic GraphRAG",
@@ -1100,7 +1165,7 @@
             },
             "routing_table": {
               "lookup": "RAG",
-              "multi_hop": "Agentic GraphRAG",
+              "multi_hop": "GraphRAG",
               "temporal": "Agentic GraphRAG",
               "aggregation": "Agentic GraphRAG",
               "superlative": "Agentic GraphRAG"
@@ -1117,6 +1182,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4545,
+          "citation_f1": 0.625,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       }
@@ -1142,8 +1210,9 @@
         "qtype": "temporal",
         "answer": "",
         "citations": [],
-        "latency_ms": 51.35,
+        "latency_ms": 62.89,
         "retrieval_steps": 1,
+        "reasoning_steps": 0,
         "tools_called": [
           "similarity_search"
         ],
@@ -1185,12 +1254,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 50.78
+            "latency_ms": 62.44
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.04
+            "latency_ms": 0.05
           }
         ],
         "tokens_per_operation": [
@@ -1240,6 +1309,9 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
+          "citation_f1": null,
+          "completeness": 0.0,
+          "grounding_category": "unretrieved_failure",
           "judge_reason": ""
         }
       },
@@ -1251,8 +1323,9 @@
         "citations": [
           "Q1050909"
         ],
-        "latency_ms": 237.26,
+        "latency_ms": 312.26,
         "retrieval_steps": 2,
+        "reasoning_steps": 0,
         "tools_called": [
           "hybrid_search",
           "structural_retrieve"
@@ -1315,17 +1388,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 113.74
+            "latency_ms": 154.31
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 122.7
+            "latency_ms": 156.99
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.26
+            "latency_ms": 0.31
           }
         ],
         "tokens_per_operation": [
@@ -1399,6 +1472,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
+          "citation_f1": 0.6667,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -1411,8 +1487,9 @@
           "Q1050909",
           "Q26233122"
         ],
-        "latency_ms": 147.5,
+        "latency_ms": 173.18,
         "retrieval_steps": 4,
+        "reasoning_steps": 2,
         "tools_called": [
           "link_entities",
           "resolve_anchor",
@@ -1431,7 +1508,7 @@
         ],
         "chunks_retrieved": 8,
         "docs_retrieved": 60,
-        "context_tokens": 618,
+        "context_tokens": 623,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -1471,9 +1548,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 60,
-            "latency_ms": 18.41,
+            "latency_ms": 21.93,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -1503,9 +1581,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 9.33,
+            "latency_ms": 10.53,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -1534,9 +1613,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 9.29,
+            "latency_ms": 12.13,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -1562,9 +1642,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.09,
+            "latency_ms": 0.18,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -1588,9 +1669,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 8,
-            "latency_ms": 109.85,
+            "latency_ms": 127.61,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -1659,9 +1741,10 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.05,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 7,
@@ -1712,9 +1795,10 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.1,
+            "latency_ms": 0.12,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -1722,43 +1806,43 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "latency_ms": 18.41
+            "latency_ms": 21.93
           },
           {
             "operation": "resolve_anchor",
             "agent": "TemporalReasoner",
             "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "latency_ms": 9.33
+            "latency_ms": 10.53
           },
           {
             "operation": "resolve_event",
             "agent": "TemporalReasoner",
             "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "latency_ms": 9.29
+            "latency_ms": 12.13
           },
           {
             "operation": "verify_chain",
             "agent": "TemporalReasoner",
             "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "latency_ms": 0.09
+            "latency_ms": 0.18
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
-            "latency_ms": 109.85
+            "latency_ms": 127.61
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.05
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
-            "latency_ms": 0.1
+            "latency_ms": 0.12
           }
         ],
         "tokens_per_operation": [],
@@ -1929,6 +2013,26 @@
           "uncertainty": 0.1,
           "tool_calls": [],
           "docs_touched": 60,
+          "retrieval_methods_selected": [
+            "vector"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "TemporalReasoner",
+            "TemporalReasoner",
+            "TemporalReasoner",
+            "VectorSearcher",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "confidence_reached",
+            "why": "Investigation terminated: confidence_reached",
+            "stopping_condition_met": true,
+            "when_latency_ms": 173.18
+          },
           "plan_skips": []
         },
         "unresolved": [],
@@ -1939,6 +2043,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
+          "citation_f1": 1.0,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -1951,8 +2058,9 @@
           "Q1050909",
           "Q26233122"
         ],
-        "latency_ms": 146.27,
+        "latency_ms": 159.86,
         "retrieval_steps": 4,
+        "reasoning_steps": 2,
         "tools_called": [
           "link_entities",
           "resolve_anchor",
@@ -1972,7 +2080,7 @@
         ],
         "chunks_retrieved": 8,
         "docs_retrieved": 60,
-        "context_tokens": 618,
+        "context_tokens": 623,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -2031,9 +2139,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 60,
-            "latency_ms": 18.51,
+            "latency_ms": 18.91,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -2063,9 +2172,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 9.34,
+            "latency_ms": 10.04,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -2094,9 +2204,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 9.2,
+            "latency_ms": 9.89,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -2122,9 +2233,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.09,
+            "latency_ms": 0.16,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -2148,9 +2260,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 8,
-            "latency_ms": 108.4,
+            "latency_ms": 120.08,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -2221,7 +2334,8 @@
             "new_documents": 0,
             "latency_ms": 0.03,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 7,
@@ -2274,7 +2388,8 @@
             "new_documents": 0,
             "latency_ms": 0.09,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -2288,31 +2403,31 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "latency_ms": 18.51
+            "latency_ms": 18.91
           },
           {
             "operation": "resolve_anchor",
             "agent": "TemporalReasoner",
             "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "latency_ms": 9.34
+            "latency_ms": 10.04
           },
           {
             "operation": "resolve_event",
             "agent": "TemporalReasoner",
             "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "latency_ms": 9.2
+            "latency_ms": 9.89
           },
           {
             "operation": "verify_chain",
             "agent": "TemporalReasoner",
             "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "latency_ms": 0.09
+            "latency_ms": 0.16
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
-            "latency_ms": 108.4
+            "latency_ms": 120.08
           },
           {
             "operation": "evaluate_evidence",
@@ -2495,6 +2610,26 @@
           "uncertainty": 0.1,
           "tool_calls": [],
           "docs_touched": 60,
+          "retrieval_methods_selected": [
+            "vector"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "TemporalReasoner",
+            "TemporalReasoner",
+            "TemporalReasoner",
+            "VectorSearcher",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "confidence_reached",
+            "why": "Investigation terminated: confidence_reached",
+            "stopping_condition_met": true,
+            "when_latency_ms": 159.67
+          },
           "plan_skips": [],
           "router": {
             "routed_to": "Agentic GraphRAG",
@@ -2512,7 +2647,7 @@
             },
             "routing_table": {
               "lookup": "RAG",
-              "multi_hop": "Agentic GraphRAG",
+              "multi_hop": "GraphRAG",
               "temporal": "Agentic GraphRAG",
               "aggregation": "Agentic GraphRAG",
               "superlative": "Agentic GraphRAG"
@@ -2529,6 +2664,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
+          "citation_f1": 1.0,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       }
@@ -2569,8 +2707,9 @@
         "qtype": "aggregation",
         "answer": "",
         "citations": [],
-        "latency_ms": 46.41,
+        "latency_ms": 38.31,
         "retrieval_steps": 1,
+        "reasoning_steps": 0,
         "tools_called": [
           "similarity_search"
         ],
@@ -2612,7 +2751,7 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 46.09
+            "latency_ms": 38.02
           },
           {
             "operation": "extractive_answer",
@@ -2667,6 +2806,9 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
+          "citation_f1": null,
+          "completeness": 0.0,
+          "grounding_category": "unretrieved_failure",
           "judge_reason": ""
         }
       },
@@ -2687,8 +2829,9 @@
           "Q7500832",
           "Q7500834"
         ],
-        "latency_ms": 166.47,
+        "latency_ms": 176.02,
         "retrieval_steps": 2,
+        "reasoning_steps": 0,
         "tools_called": [
           "hybrid_search",
           "structural_retrieve"
@@ -2751,17 +2894,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 80.27
+            "latency_ms": 87.45
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 85.43
+            "latency_ms": 87.75
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.25
+            "latency_ms": 0.27
           }
         ],
         "tokens_per_operation": [
@@ -2884,6 +3027,9 @@
           "similarity": 0.0,
           "citation_precision": 0.7,
           "citation_recall": 0.4118,
+          "citation_f1": 0.5185,
+          "completeness": 0.0,
+          "grounding_category": "grounded_incorrect",
           "judge_reason": ""
         }
       },
@@ -2902,8 +3048,9 @@
           "Q4354615",
           "Q5481589"
         ],
-        "latency_ms": 0.54,
+        "latency_ms": 0.66,
         "retrieval_steps": 2,
+        "reasoning_steps": 4,
         "tools_called": [
           "link_entities",
           "traverse_graph",
@@ -2921,7 +3068,7 @@
         ],
         "chunks_retrieved": 0,
         "docs_retrieved": 17,
-        "context_tokens": 0,
+        "context_tokens": 12,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -2957,9 +3104,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.12,
+            "latency_ms": 0.14,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -2984,9 +3132,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.1,
+            "latency_ms": 0.11,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -3016,7 +3165,8 @@
             "new_documents": 0,
             "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -3032,7 +3182,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -3055,7 +3206,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -3082,9 +3234,10 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.06,
+            "latency_ms": 0.07,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -3092,13 +3245,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Shooting; games->GAMES::2004::Summer",
-            "latency_ms": 0.12
+            "latency_ms": 0.14
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
-            "latency_ms": 0.1
+            "latency_ms": 0.11
           },
           {
             "operation": "count_threshold",
@@ -3122,7 +3275,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
-            "latency_ms": 0.06
+            "latency_ms": 0.07
           }
         ],
         "tokens_per_operation": [],
@@ -3238,6 +3391,26 @@
           "uncertainty": 0.03,
           "tool_calls": [],
           "docs_touched": 17,
+          "retrieval_methods_selected": [
+            "accumulator",
+            "graph"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "GraphTraverser",
+            "Aggregator",
+            "Aggregator",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "confidence_reached",
+            "why": "Investigation terminated: confidence_reached",
+            "stopping_condition_met": true,
+            "when_latency_ms": 0.66
+          },
           "plan_skips": []
         },
         "unresolved": [],
@@ -3248,6 +3421,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4706,
+          "citation_f1": 0.64,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -3266,8 +3442,9 @@
           "Q4354615",
           "Q5481589"
         ],
-        "latency_ms": 0.55,
+        "latency_ms": 0.7,
         "retrieval_steps": 2,
+        "reasoning_steps": 4,
         "tools_called": [
           "link_entities",
           "traverse_graph",
@@ -3286,7 +3463,7 @@
         ],
         "chunks_retrieved": 0,
         "docs_retrieved": 17,
-        "context_tokens": 0,
+        "context_tokens": 12,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -3341,9 +3518,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.11,
+            "latency_ms": 0.12,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -3368,9 +3546,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.1,
+            "latency_ms": 0.13,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -3400,7 +3579,8 @@
             "new_documents": 0,
             "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -3416,7 +3596,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -3439,7 +3620,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -3466,9 +3648,10 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.04,
+            "latency_ms": 0.05,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -3482,13 +3665,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Shooting; games->GAMES::2004::Summer",
-            "latency_ms": 0.11
+            "latency_ms": 0.12
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
-            "latency_ms": 0.1
+            "latency_ms": 0.13
           },
           {
             "operation": "count_threshold",
@@ -3512,7 +3695,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
-            "latency_ms": 0.04
+            "latency_ms": 0.05
           }
         ],
         "tokens_per_operation": [],
@@ -3628,6 +3811,26 @@
           "uncertainty": 0.03,
           "tool_calls": [],
           "docs_touched": 17,
+          "retrieval_methods_selected": [
+            "accumulator",
+            "graph"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "GraphTraverser",
+            "Aggregator",
+            "Aggregator",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "confidence_reached",
+            "why": "Investigation terminated: confidence_reached",
+            "stopping_condition_met": true,
+            "when_latency_ms": 0.57
+          },
           "plan_skips": [],
           "router": {
             "routed_to": "Agentic GraphRAG",
@@ -3645,7 +3848,7 @@
             },
             "routing_table": {
               "lookup": "RAG",
-              "multi_hop": "Agentic GraphRAG",
+              "multi_hop": "GraphRAG",
               "temporal": "Agentic GraphRAG",
               "aggregation": "Agentic GraphRAG",
               "superlative": "Agentic GraphRAG"
@@ -3662,6 +3865,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4706,
+          "citation_f1": 0.64,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       }
@@ -3728,8 +3934,9 @@
         "qtype": "superlative",
         "answer": "",
         "citations": [],
-        "latency_ms": 44.61,
+        "latency_ms": 38.41,
         "retrieval_steps": 1,
+        "reasoning_steps": 0,
         "tools_called": [
           "similarity_search"
         ],
@@ -3771,7 +3978,7 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 44.32
+            "latency_ms": 38.12
           },
           {
             "operation": "extractive_answer",
@@ -3826,6 +4033,9 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
+          "citation_f1": null,
+          "completeness": 0.0,
+          "grounding_category": "unretrieved_failure",
           "judge_reason": ""
         }
       },
@@ -3837,8 +4047,9 @@
         "citations": [
           "Q922361"
         ],
-        "latency_ms": 165.29,
+        "latency_ms": 188.14,
         "retrieval_steps": 2,
+        "reasoning_steps": 0,
         "tools_called": [
           "hybrid_search",
           "structural_retrieve"
@@ -3901,17 +4112,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 81.34
+            "latency_ms": 95.64
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 83.25
+            "latency_ms": 91.77
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.23
+            "latency_ms": 0.25
           }
         ],
         "tokens_per_operation": [
@@ -3989,6 +4200,9 @@
           "similarity": 0.7525,
           "citation_precision": 1.0,
           "citation_recall": 0.0233,
+          "citation_f1": 0.0455,
+          "completeness": 0.7368,
+          "grounding_category": "grounded_incorrect",
           "judge_reason": ""
         }
       },
@@ -4000,8 +4214,9 @@
         "citations": [
           "Q693595"
         ],
-        "latency_ms": 0.53,
+        "latency_ms": 0.58,
         "retrieval_steps": 2,
+        "reasoning_steps": 4,
         "tools_called": [
           "link_entities",
           "traverse_graph",
@@ -4019,7 +4234,7 @@
         ],
         "chunks_retrieved": 0,
         "docs_retrieved": 43,
-        "context_tokens": 0,
+        "context_tokens": 12,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -4057,7 +4272,8 @@
             "new_documents": 43,
             "latency_ms": 0.13,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -4084,7 +4300,8 @@
             "new_documents": 0,
             "latency_ms": 0.11,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -4105,7 +4322,8 @@
             "new_documents": 0,
             "latency_ms": 0.03,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -4122,7 +4340,8 @@
             "new_documents": 0,
             "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -4144,7 +4363,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -4166,7 +4386,8 @@
             "new_documents": 0,
             "latency_ms": 0.03,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -4304,6 +4525,25 @@
           "uncertainty": 0.15,
           "tool_calls": [],
           "docs_touched": 43,
+          "retrieval_methods_selected": [
+            "graph"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "GraphTraverser",
+            "Comparator",
+            "Comparator",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "no_new_information",
+            "why": "Investigation terminated: no_new_information",
+            "stopping_condition_met": true,
+            "when_latency_ms": 0.58
+          },
           "plan_skips": []
         },
         "unresolved": [],
@@ -4314,6 +4554,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.0233,
+          "citation_f1": 0.0455,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -4325,8 +4568,9 @@
         "citations": [
           "Q693595"
         ],
-        "latency_ms": 0.55,
+        "latency_ms": 0.61,
         "retrieval_steps": 2,
+        "reasoning_steps": 4,
         "tools_called": [
           "link_entities",
           "traverse_graph",
@@ -4345,7 +4589,7 @@
         ],
         "chunks_retrieved": 0,
         "docs_retrieved": 43,
-        "context_tokens": 0,
+        "context_tokens": 12,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -4400,9 +4644,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 43,
-            "latency_ms": 0.11,
+            "latency_ms": 0.12,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -4429,7 +4674,8 @@
             "new_documents": 0,
             "latency_ms": 0.1,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -4450,7 +4696,8 @@
             "new_documents": 0,
             "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -4467,7 +4714,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -4489,7 +4737,8 @@
             "new_documents": 0,
             "latency_ms": 0.01,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -4511,7 +4760,8 @@
             "new_documents": 0,
             "latency_ms": 0.02,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -4525,7 +4775,7 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2008::Summer",
-            "latency_ms": 0.11
+            "latency_ms": 0.12
           },
           {
             "operation": "traverse_graph",
@@ -4655,6 +4905,25 @@
           "uncertainty": 0.15,
           "tool_calls": [],
           "docs_touched": 43,
+          "retrieval_methods_selected": [
+            "graph"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "GraphTraverser",
+            "Comparator",
+            "Comparator",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "no_new_information",
+            "why": "Investigation terminated: no_new_information",
+            "stopping_condition_met": true,
+            "when_latency_ms": 0.5
+          },
           "plan_skips": [],
           "router": {
             "routed_to": "Agentic GraphRAG",
@@ -4672,7 +4941,7 @@
             },
             "routing_table": {
               "lookup": "RAG",
-              "multi_hop": "Agentic GraphRAG",
+              "multi_hop": "GraphRAG",
               "temporal": "Agentic GraphRAG",
               "aggregation": "Agentic GraphRAG",
               "superlative": "Agentic GraphRAG"
@@ -4689,6 +4958,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.0233,
+          "citation_f1": 0.0455,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       }
@@ -4715,8 +4987,9 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 18.25,
+        "latency_ms": 20.32,
         "retrieval_steps": 1,
+        "reasoning_steps": 0,
         "tools_called": [
           "similarity_search"
         ],
@@ -4758,12 +5031,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 17.42
+            "latency_ms": 19.43
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.58
+            "latency_ms": 0.63
           }
         ],
         "tokens_per_operation": [
@@ -4819,6 +5092,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
+          "citation_f1": 1.0,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -4830,8 +5106,9 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 86.05,
+        "latency_ms": 85.46,
         "retrieval_steps": 2,
+        "reasoning_steps": 0,
         "tools_called": [
           "hybrid_search",
           "structural_retrieve"
@@ -4894,17 +5171,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 44.44
+            "latency_ms": 40.24
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 39.89
+            "latency_ms": 43.45
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 1.31
+            "latency_ms": 1.36
           }
         ],
         "tokens_per_operation": [
@@ -4981,6 +5258,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
+          "citation_f1": 1.0,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -4992,8 +5272,9 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 42.54,
+        "latency_ms": 42.32,
         "retrieval_steps": 4,
+        "reasoning_steps": 2,
         "tools_called": [
           "link_entities",
           "resolve_venue_date",
@@ -5012,7 +5293,7 @@
         ],
         "chunks_retrieved": 12,
         "docs_retrieved": 5,
-        "context_tokens": 740,
+        "context_tokens": 745,
         "input_tokens": 0,
         "output_tokens": 0,
         "total_tokens": 0,
@@ -5050,7 +5331,8 @@
             "new_documents": 5,
             "latency_ms": 0.05,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 2,
@@ -5077,9 +5359,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.54,
+            "latency_ms": 0.57,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 3,
@@ -5105,7 +5388,8 @@
             "new_documents": 0,
             "latency_ms": 0.03,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 4,
@@ -5129,9 +5413,10 @@
             },
             "confidence_after": 0.0,
             "new_documents": 12,
-            "latency_ms": 41.48,
+            "latency_ms": 41.24,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 5,
@@ -5153,7 +5438,8 @@
             "new_documents": 0,
             "latency_ms": 0.03,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           },
           {
             "index": 6,
@@ -5173,9 +5459,10 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.06,
+            "latency_ms": 0.05,
             "input_tokens": 0,
-            "output_tokens": 0
+            "output_tokens": 0,
+            "cumulative_tokens": 0
           }
         ],
         "time_per_operation": [
@@ -5189,7 +5476,7 @@
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
-            "latency_ms": 0.54
+            "latency_ms": 0.57
           },
           {
             "operation": "traverse_graph",
@@ -5201,7 +5488,7 @@
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 p",
-            "latency_ms": 41.48
+            "latency_ms": 41.24
           },
           {
             "operation": "evaluate_evidence",
@@ -5213,7 +5500,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Naim Süleymanoğlu' citing 1 document(s) :: gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer ",
-            "latency_ms": 0.06
+            "latency_ms": 0.05
           }
         ],
         "tokens_per_operation": [],
@@ -5321,6 +5608,26 @@
           "uncertainty": 0.1,
           "tool_calls": [],
           "docs_touched": 5,
+          "retrieval_methods_selected": [
+            "graph",
+            "vector"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "LookupResolver",
+            "GraphTraverser",
+            "VectorSearcher",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "confidence_reached",
+            "why": "Investigation terminated: confidence_reached",
+            "stopping_condition_met": true,
+            "when_latency_ms": 42.32
+          },
           "plan_skips": []
         },
         "unresolved": [],
@@ -5331,6 +5638,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
+          "citation_f1": 1.0,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       },
@@ -5342,59 +5652,47 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 45.32,
-        "retrieval_steps": 4,
+        "latency_ms": 93.61,
+        "retrieval_steps": 2,
+        "reasoning_steps": 0,
         "tools_called": [
-          "link_entities",
-          "resolve_venue_date",
-          "traverse_graph",
-          "vector_search",
-          "evaluate_evidence",
-          "render_answer"
+          "hybrid_search",
+          "structural_retrieve"
         ],
         "agents_invoked": [
-          "Router",
-          "EntityLinker",
-          "LookupResolver",
-          "GraphTraverser",
-          "VectorSearcher",
-          "EvidenceEvaluator",
-          "Synthesizer"
+          "Router"
         ],
-        "chunks_retrieved": 12,
-        "docs_retrieved": 5,
-        "context_tokens": 740,
-        "input_tokens": 0,
+        "chunks_retrieved": 10,
+        "docs_retrieved": 10,
+        "context_tokens": 836,
+        "input_tokens": 860,
         "output_tokens": 0,
-        "total_tokens": 0,
+        "total_tokens": 860,
         "llm_calls": 0,
-        "method": "structured",
-        "strategy_changed": true,
-        "stop_reason": "confidence_reached",
-        "confidence": 0.9,
-        "uncertainty": 0.1,
+        "method": "extractive",
+        "strategy_changed": false,
+        "stop_reason": "resolved",
+        "confidence": 0.85,
+        "uncertainty": 0.15,
         "plan": [
-          "Router.route->Agentic GraphRAG",
-          "EntityLinker.link_entities",
-          "LookupResolver.resolve_venue_date",
-          "GraphTraverser.traverse_graph",
-          "VectorSearcher.vector_search",
-          "EvidenceEvaluator.evaluate_evidence",
-          "Synthesizer.render_answer"
+          "Router.route->GraphRAG",
+          "hybrid_search",
+          "graph_expand",
+          "answer"
         ],
-        "loop_iterations": 0,
-        "candidates_considered": 12,
+        "loop_iterations": 1,
+        "candidates_considered": 0,
         "steps": [
           {
             "step": 0,
             "agent": "Router",
             "operation": "classify_and_route",
-            "detail": "qtype=multi_hop -> Agentic GraphRAG",
+            "detail": "qtype=multi_hop -> GraphRAG",
             "observation": {
               "qtype": "multi_hop",
-              "routed_to": "Agentic GraphRAG",
+              "routed_to": "GraphRAG",
               "requirement": "two sources linked: (venue, date) -> event page -> target field",
-              "capability_reason": "the intermediate link must be resolved and verified before the field can be read, which is a planning step rather than a similarity lookup",
+              "capability_reason": "graph neighborhood expansion bridges the (venue, date) -> event traversal efficiently; escalates adaptively to Agentic GraphRAG if confidence < 0.85",
               "method": "rules",
               "confidence": 0.7,
               "min_confidence": 0.65,
@@ -5404,302 +5702,128 @@
             }
           },
           {
-            "index": 1,
-            "agent": "EntityLinker",
-            "operation": "link_entities",
-            "detail": "venue->1 vertex/vertices (score 1.0)",
-            "observation": {
-              "sport": null,
-              "sport_score": 0.0,
-              "venue_score": 1.0,
-              "games": null,
-              "edition_chain": [],
-              "implied_event_pages": 5
-            },
-            "confidence_after": 0.0,
-            "new_documents": 5,
-            "latency_ms": 0.05,
-            "input_tokens": 0,
-            "output_tokens": 0
+            "step": 1,
+            "agent": "HybridRetriever",
+            "operation": "hybrid_search",
+            "detail": "RRF fusion, 5 seed documents",
+            "doc_ids": [
+              "Q25239316",
+              "Q25239321",
+              "Q25239317",
+              "Q25239314",
+              "Q25239533"
+            ]
           },
           {
-            "index": 2,
-            "agent": "LookupResolver",
-            "operation": "resolve_venue_date",
-            "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
-            "observation": {
-              "matched": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-              "score": 1.0,
-              "venue_affinity": 1.0,
-              "num_candidates": 5,
-              "disambiguation": {
-                "ambiguous": true,
-                "top": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-                "runner_up": "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
-                "date_score_gap": 0.05,
-                "separating_signal": "venue/sport affinity"
-              },
-              "top_candidates": [
-                "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg"
-              ]
-            },
-            "confidence_after": 0.0,
-            "new_documents": 0,
-            "latency_ms": 0.58,
-            "input_tokens": 0,
-            "output_tokens": 0
-          },
-          {
-            "index": 3,
+            "step": 2,
             "agent": "GraphTraverser",
-            "operation": "traverse_graph",
-            "detail": "structural retrieval: strategy=HELD_AT -> 5 event pages (0 new)",
-            "observation": {
-              "strategy": "HELD_AT",
-              "relations": [
-                "HELD_AT"
-              ],
-              "events": 5,
-              "new_documents": 0,
-              "sample_titles": [
-                "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 52 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's +110 kg"
-              ]
-            },
-            "confidence_after": 0.0,
-            "new_documents": 0,
-            "latency_ms": 0.04,
-            "input_tokens": 0,
-            "output_tokens": 0
-          },
-          {
-            "index": 4,
-            "agent": "VectorSearcher",
-            "operation": "vector_search",
-            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 passages (12 new documents)",
-            "observation": {
-              "query": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
-              "widening": 0,
-              "chunks": 12,
-              "doc_ids": [
-                "Q25239316",
-                "Q25239321",
-                "Q25239317",
-                "Q25239314",
-                "Q25239533",
-                "Q10719573",
-                "Q10522554",
-                "Q55615398"
-              ]
-            },
-            "confidence_after": 0.0,
-            "new_documents": 12,
-            "latency_ms": 44.12,
-            "input_tokens": 0,
-            "output_tokens": 0
-          },
-          {
-            "index": 5,
-            "agent": "EvidenceEvaluator",
-            "operation": "evaluate_evidence",
-            "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "observation": {
-              "confidence": 0.9,
-              "sufficient": true,
-              "signals": {
-                "score": 1.0,
-                "venue_affinity": 1.0,
-                "venue_score": 1.0,
-                "num_candidates": 5
-              },
-              "gaps": []
-            },
-            "confidence_after": 0.9,
-            "new_documents": 0,
-            "latency_ms": 0.04,
-            "input_tokens": 0,
-            "output_tokens": 0
-          },
-          {
-            "index": 6,
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "detail": "[structured] answer='Naim Süleymanoğlu' citing 1 document(s) :: gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
-            "observation": {
-              "answer": "Naim Süleymanoğlu",
-              "source": "structured",
-              "rationale": "gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
-              "citations": [
-                "Q25239316"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.1,
-              "conflicts": {}
-            },
-            "confidence_after": 0.9,
-            "new_documents": 0,
-            "latency_ms": 0.05,
-            "input_tokens": 0,
-            "output_tokens": 0
+            "operation": "structural_retrieve",
+            "detail": "2-hop expansion over PREV/NEXT, SAME_VENUE, SAME_SPORT_GAMES",
+            "doc_ids": [
+              "Q25239316",
+              "Q25239321",
+              "Q25239317",
+              "Q7979973",
+              "Q7979972",
+              "Q25239314",
+              "Q7979969",
+              "Q7979971",
+              "Q7979974",
+              "Q7979977"
+            ],
+            "new_docs": 6
           }
         ],
         "time_per_operation": [
           {
             "operation": "classify_and_route",
             "agent": "Router",
-            "detail": "-> Agentic GraphRAG",
+            "detail": "-> GraphRAG",
             "latency_ms": 0.02
           },
           {
-            "operation": "link_entities",
-            "agent": "EntityLinker",
-            "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.05
+            "operation": "hybrid_search",
+            "detail": "lexical + vector RRF",
+            "latency_ms": 45.14
           },
           {
-            "operation": "resolve_venue_date",
-            "agent": "LookupResolver",
-            "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
-            "latency_ms": 0.58
+            "operation": "graph_expand",
+            "detail": "2-hop neighbourhood",
+            "latency_ms": 46.47
           },
           {
-            "operation": "traverse_graph",
-            "agent": "GraphTraverser",
-            "detail": "structural retrieval: strategy=HELD_AT -> 5 event pages (0 new)",
-            "latency_ms": 0.04
-          },
-          {
-            "operation": "vector_search",
-            "agent": "VectorSearcher",
-            "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 p",
-            "latency_ms": 44.12
-          },
-          {
-            "operation": "evaluate_evidence",
-            "agent": "EvidenceEvaluator",
-            "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.04
-          },
-          {
-            "operation": "render_answer",
-            "agent": "Synthesizer",
-            "detail": "[structured] answer='Naim Süleymanoğlu' citing 1 document(s) :: gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer ",
-            "latency_ms": 0.05
+            "operation": "extractive_answer",
+            "detail": "read infobox fields from passages",
+            "latency_ms": 1.45
           }
         ],
-        "tokens_per_operation": [],
-        "evidence": [
+        "tokens_per_operation": [
           {
-            "agent": "LookupResolver",
-            "operation": "resolve_venue_date",
-            "observation": {
-              "matched": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-              "score": 1.0,
-              "venue_affinity": 1.0,
-              "num_candidates": 5,
-              "disambiguation": {
-                "ambiguous": true,
-                "top": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-                "runner_up": "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
-                "date_score_gap": 0.05,
-                "separating_signal": "venue/sport affinity"
-              },
-              "top_candidates": [
-                "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg"
-              ]
-            }
+            "operation": "prompt:question",
+            "input_tokens": 24,
+            "output_tokens": 0,
+            "total_tokens": 24,
+            "detail": ""
           },
           {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "Naim Süleymanoğlu",
-              "source": "structured",
-              "rationale": "gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
-              "citations": [
-                "Q25239316"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.1,
-              "conflicts": {}
-            }
+            "operation": "context:graph_expanded",
+            "input_tokens": 836,
+            "output_tokens": 0,
+            "total_tokens": 836,
+            "detail": "10 documents"
+          }
+        ],
+        "evidence": [
+          {
+            "doc_id": "Q25239316",
+            "title": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+            "venue": "Olympic Weightlifting Gymnasium",
+            "date": "20 September 1988",
+            "gold": "Naim Süleymanoğlu"
           }
         ],
         "metadata": {
-          "pipeline": "Agentic GraphRAG",
-          "agent_mode": "hybrid",
-          "classification": {
-            "qtype": "multi_hop",
-            "method": "rules",
-            "confidence": 0.7,
-            "reason": "template match for 'multi_hop'",
-            "rule_type": "multi_hop",
-            "llm_agrees_with_rules": null,
-            "rule_disagreement": null,
-            "templates_enabled": true,
-            "policy": "llm_first_templates_validate"
-          },
-          "slot_report": {
-            "used": false,
-            "filled": [],
-            "rejected": []
-          },
-          "parse_report": {
-            "method": "rules",
-            "llm_used": false,
-            "filled_by_rules": [],
-            "rejected": [],
-            "conflicts": [],
-            "confidence": 0.0,
-            "corpus_validated": [],
-            "templates_enabled": true,
-            "llm_error": null,
-            "reason": "no model available: template parse only",
-            "rule_qtype": "multi_hop",
-            "parse_mode": "semantic"
-          },
-          "spec": {
-            "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
-            "qtype": "multi_hop",
-            "sport": "",
-            "year": 0,
-            "season": "",
-            "event_desc": "",
-            "venue": "Olympic Weightlifting Gymnasium",
-            "date_text": "20 September 1988",
-            "threshold": null,
-            "comparator": "gt",
-            "direction": "max",
-            "target_title": "",
-            "before_year": null,
-            "years_mentioned": [
-              1988
-            ],
-            "season_unresolved": true,
-            "parse_method": "rules"
-          },
-          "strategy_changes": [
-            "plan: template for 'multi_hop'"
+          "retriever": "hybrid+graph",
+          "num_hops": 2,
+          "seed_doc_ids": [
+            "Q25239316",
+            "Q25239321",
+            "Q25239317",
+            "Q25239314",
+            "Q25239533"
           ],
-          "resolved_gaps": [],
-          "gaps_remaining": [],
-          "synth_source": "structured",
-          "rationale": "gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
-          "adjudication": {},
-          "conflicts": {},
-          "uncertainty": 0.1,
-          "tool_calls": [],
-          "docs_touched": 5,
-          "plan_skips": [],
+          "expanded_doc_ids": [
+            "Q25239316",
+            "Q25239321",
+            "Q25239317",
+            "Q7979973",
+            "Q7979972",
+            "Q25239314",
+            "Q7979969",
+            "Q7979971",
+            "Q7979974",
+            "Q7979977"
+          ],
+          "graph_relations": [
+            "graph:NEXT_EDITION",
+            "graph:SAME_SPORT_GAMES",
+            "hybrid"
+          ],
+          "retrieved_titles": [
+            "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
+            "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
+            "Weightlifting at the 1988 Summer Olympics – Men's +110 kg",
+            "Weightlifting at the 1992 Summer Olympics – Men's 60 kg",
+            "Weightlifting at the 1992 Summer Olympics – Men's 56 kg",
+            "Weightlifting at the 1988 Summer Olympics – Men's 52 kg",
+            "Weightlifting at the 1992 Summer Olympics – Men's 110 kg",
+            "Weightlifting at the 1992 Summer Olympics – Men's 52 kg",
+            "Weightlifting at the 1992 Summer Olympics – Men's 67.5 kg",
+            "Weightlifting at the 1992 Summer Olympics – Men's 82.5 kg"
+          ],
+          "docs_with_infobox": 10,
           "router": {
-            "routed_to": "Agentic GraphRAG",
+            "routed_to": "GraphRAG",
             "qtype": "multi_hop",
             "classification": {
               "qtype": "multi_hop",
@@ -5714,14 +5838,14 @@
             },
             "routing_table": {
               "lookup": "RAG",
-              "multi_hop": "Agentic GraphRAG",
+              "multi_hop": "GraphRAG",
               "temporal": "Agentic GraphRAG",
               "aggregation": "Agentic GraphRAG",
               "superlative": "Agentic GraphRAG"
             },
             "fallback_used": false
           },
-          "inner_pipeline": "Agentic GraphRAG"
+          "inner_pipeline": "GraphRAG"
         },
         "unresolved": [],
         "evaluation": {
@@ -5731,6 +5855,9 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
+          "citation_f1": 1.0,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
           "judge_reason": ""
         }
       }

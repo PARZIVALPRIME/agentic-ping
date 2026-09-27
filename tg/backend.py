@@ -212,6 +212,7 @@ class TigerGraphBackend(KnowledgeGraph):
         self.checked: Dict[str, Optional[bool]] = {"filter_events": None,
                                                    "neighbours": None}
         self.counters: Dict[str, int] = {"filter_events": 0, "neighbours": 0,
+                                         "aggregate_stats": 0,
                                          "remote_rows": 0, "fallbacks": 0}
         self.notes: List[str] = []
 
@@ -481,6 +482,7 @@ class TigerGraphBackend(KnowledgeGraph):
                 acc = accumulators(self.client, "tg_aggregate_stats", {
                     "sport": sport or "", "venue": venue or "", "season": season or "",
                     "year_from": int(year_from or 0), "year_to": int(year_to or 0)})
+                self.counters["aggregate_stats"] = self.counters.get("aggregate_stats", 0) + 1
                 return {
                     "total_events": int(acc.get("total_events", 0)),
                     "earliest_year": int(acc.get("earliest_year", 0)),

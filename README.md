@@ -12,7 +12,7 @@ An enterprise-grade, explainable, and multi-agent GraphRAG system built for the 
 ---
 
 ## 📑 Table of Contents
-1. [Headline Benchmark & Pareto Efficiency](#headline-benchmark--pareto-efficiency)
+1. [Headline Result & Pareto Efficiency](#headline-result)
 2. [The 4 Retrieval & Reasoning Pipelines](#the-4-retrieval--reasoning-pipelines)
 3. [Agentic Behavior & Trace Architecture (10 Dimensions)](#agentic-behavior--trace-architecture-10-dimensions)
 4. [Round 2: Conflict Adjudication & Uncertainty Engine](#round-2-conflict-adjudication--uncertainty-engine)
@@ -27,30 +27,49 @@ An enterprise-grade, explainable, and multi-agent GraphRAG system built for the 
 
 ---
 
-## 🏆 Headline Benchmark & Pareto Efficiency
+## Headline result
 
-Final verified benchmark across all 100 public questions (`results/public_results.json` and `results/metrics_summary.json`):
+Final public run: 100 questions, **live** provider (Gemini 3.8 Flash + TigerGraph Cloud), every pipeline recording provider calls — `results/metrics_summary.json`.
 
-```
-┌───────────────────┬──────────┬──────────┬─────────────┬────────────┬─────────────┬──────────────┬───────────────┬────────────────┐
-│ Pipeline          │ Accuracy │ Complete │ Citation F1 │ Latency    │ Context Tok │ LLM Calls / Q│ Total Tok / Q │ Tok / Correct  │
-├───────────────────┼──────────┼──────────┼─────────────┼────────────┼─────────────┼──────────────┼───────────────┼────────────────┤
-│ Naive RAG         │  39.0%   │  43.2%   │   31.4%     │   440 ms   │   1,420     │     1.0      │    1,085      │     2,782      │
-│ GraphRAG          │  61.0%   │  64.8%   │   58.2%     │   780 ms   │   2,890     │     1.0      │    1,849      │     3,030      │
-│ Agentic GraphRAG  │ 100.0%   │  97.6%   │   91.5%     │ 14,250 ms  │   6,840     │     3.2      │   17,472      │    17,472      │
-│ Capability Router │ 100.0%   │  97.1%   │   89.8%     │  9,820 ms  │   4,910     │     2.3      │   12,748      │    12,748      │
-└───────────────────┴──────────┴──────────┴─────────────┴────────────┴─────────────┴──────────────┴───────────────┴────────────────┘
-```
+| Pipeline | Accuracy | aggregation | superlative | avg tokens/q |
+|---|---|---|---|---|
+| RAG | 42% | 0% | 0% | 1,085 |
+| GraphRAG | 62% | 33% | 50% | 1,849 |
+| **Agentic GraphRAG** | **100%** | 100% | 100% | 17,472 |
+| Router | 98% | 100% | 100% | 16,748 |
+
+### Comprehensive Benchmark Breakdown across 100 Public Questions
+
+| Pipeline | Accuracy | Complete | Citation F1 | Latency | Context Tok | LLM Calls / Q | Total Tok / Q | Tok / Correct |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Naive RAG | 42.0% | 43.2% | 31.4% | 440 ms | 251 | 1.0 | 1,085 | 2,583 |
+| GraphRAG | 62.0% | 64.8% | 58.2% | 780 ms | 886 | 1.0 | 1,849 | 2,982 |
+| **Agentic GraphRAG** | **100.0%** | **97.6%** | **91.5%** | 12,900 ms | **95** | 3.2 | 17,472 | 17,472 |
+| Capability Router | 98.0% | 97.1% | 89.8% | 9,820 ms | 162 | 2.3 | 16,748 | 17,090 |
 
 ### Accuracy Breakdown by Question Type ($n = 100$)
 
 | Question Type | $n$ | Naive RAG | GraphRAG | Agentic GraphRAG | Capability Router | Why Pipelines Diverge |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **`lookup`** | 21 | 89.5% | 90.5% | **100.0%** | **100.0%** | **RAG is optimal**: Single document contains the answer. Vector retrieval gets it at ~1,085 tokens. Agentic invocation is overkill. |
-| **`multi_hop`** | 19 | 42.1% | 85.7% | **100.0%** | **100.0%** | **GraphRAG excels**: 1-hop neighborhood traversal bridges (venue, date) $\to$ event. Router routes to GraphRAG, adaptively escalating only when confidence < 0.85. |
-| **`temporal`** | 28 | 17.9% | 46.4% | **100.0%** | **100.0%** | **Top-$k$ fails**: Unordered vector similarity cannot traverse the chronological `PREV_EDITION` / `NEXT_EDITION` graph edge. |
-| **`aggregation`** | 10 | **0.0%** | **0.0%** | **100.0%** | **100.0%** | **Structural Top-$k$ Ceiling**: Counting requires complete entity enumeration. No top-$k$ window contains the full set. Agentic accumulator traversal is mandatory. |
-| **`superlative`** | 22 | 9.1% | 31.8% | **100.0%** | **100.0%** | **Extreme Value Blindness**: Top-$k$ similarity returns documents matching query keywords, not the entity holding the mathematical maximum. |
+| **`lookup`** | 19 | 89.5% | 73.7% | **100.0%** | 89.5% | **RAG is optimal**: Single document contains the answer. Vector retrieval gets it at ~1,085 tokens. Graph neighborhood expansion crowds out the passage (73.7%). |
+| **`multi_hop`** | 28 | 60.7% | 85.7% | **100.0%** | **100.0%** | **GraphRAG excels**: 1-hop neighborhood traversal bridges (venue, date) $\to$ event. Router routes to GraphRAG, achieving 100.0% with adaptive escalation. |
+| **`temporal`** | 22 | 36.4% | 54.5% | **100.0%** | **100.0%** | **Top-$k$ fails**: Unordered vector similarity cannot traverse chronological `PREV_EDITION` / `NEXT_EDITION` edges. |
+| **`aggregation`** | 21 | **0.0%** | 33.3% | **100.0%** | **100.0%** | **Structural Top-$k$ Ceiling**: Counting requires complete entity enumeration. No top-$k$ window contains the full set. Agentic accumulator traversal is mandatory. |
+| **`superlative`** | 10 | **0.0%** | 50.0% | **100.0%** | **100.0%** | **Extreme Value Blindness**: Top-$k$ similarity returns documents matching query keywords, not the entity holding the mathematical maximum. |
+
+### We tested the obvious objection against ourselves
+
+*"Your baselines are weak because k=5 is too small."* We swept k from 5 to 160 ([docs/baseline_ceiling.md](docs/baseline_ceiling.md)) and the critique partly lands: **RAG reaches 91% at k=160**, so our original claim that no retriever could win at any *k* was wrong, and we removed it.
+
+What survives is the cost result:
+
+| Pipeline | Accuracy | ctx tokens/q |
+|---|---:|---:|
+| RAG (best, k=160) | 91% | 9,680 |
+| GraphRAG (best, k=160) | 74% | 13,785 |
+| **Agentic GraphRAG** | **100%** | **95** |
+
+Retrieval overtakes the agent on raw accuracy at k=160 — and pays **~102× the context cost per question** to do it (9,680 vs 95 tokens), while still topping out at 76% on aggregation. GraphRAG is also *non-monotonic* in k (64% at k=20, 61% at k=40): wider retrieval crowds out the correct document.
 
 ### The Cost vs. Complexity Justification (Pareto Frontier)
 > *"Is the additional reasoning and retrieval complexity of Agentic GraphRAG worth the token cost?"*

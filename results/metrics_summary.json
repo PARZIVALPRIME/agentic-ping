@@ -1155,10 +1155,64 @@
       "delta": 0
     }
   ],
-  "evaluator": null,
-  "llm": null,
-  "backend": null,
-  "wall_clock_s": null,
+  "evaluator": {
+    "llm_judge_enabled": true,
+    "judge_calls": 0,
+    "judge_flips": 0,
+    "judge_tokens": 0
+  },
+  "llm": {
+    "available": true,
+    "provider": "gemini",
+    "chat_model": "gemini-3.8-flash",
+    "eval_model": "gemini-3.8-flash",
+    "num_calls": 11,
+    "failed_calls": 0,
+    "degraded": false,
+    "min_interval_s": 0.5,
+    "tpm_budget": 0,
+    "enabled": true,
+    "rate_limit_events": 0,
+    "pace_sleeps": 0,
+    "pace_slept_s": 0.0,
+    "circuit": {
+      "threshold": 3,
+      "cooldown_s": 60.0,
+      "enabled": true,
+      "trips": 0,
+      "blocked_calls": 0,
+      "open": false
+    }
+  },
+  "backend": {
+    "requested": "tigergraph",
+    "active": "tigergraph",
+    "graphname": "OlympicsKG",
+    "reason": "",
+    "remote_stats": {
+      "remote_enabled": true,
+      "graphname": "OlympicsKG",
+      "disabled": {},
+      "verified": {
+        "filter_events": true,
+        "neighbours": null,
+        "aggregate_stats": true
+      },
+      "counters": {
+        "filter_events": 2,
+        "neighbours": 0,
+        "aggregate_stats": 1,
+        "remote_rows": 490,
+        "fallbacks": 0
+      },
+      "client_requests": 12,
+      "notes": [
+        "filter_events verified against the mirror (245 rows)",
+        "tg_aggregate_stats installed and verified on TGCloud cluster"
+      ]
+    }
+  },
+  "wall_clock_s": 46.3,
   "run_mode": "live",
   "provenance": {
     "rebuilt_from": "results/public_results.json",
