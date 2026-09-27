@@ -37,6 +37,25 @@ def verify_canonical_metrics(canonical_path: str) -> bool:
     with open(canonical_path, "r", encoding="utf-8") as fh:
         data = json.load(fh)
 
+    # Static verification validates an artifact; it does not execute a live
+    # benchmark and must not supply defaults for missing measurements.
+    from benchmark.schema import validate_summary
+    metadata = data.get("evaluation")
+    defects = validate_summary(metadata) if isinstance(metadata, dict) else [
+        "missing canonical evaluation provenance"]
+    if defects:
+        print_banner("STATIC / ARTIFACT VERIFICATION: STALE")
+        print("Do not publish this artifact: " + "; ".join(defects))
+        return False
+    print_banner("STATIC / ARTIFACT VERIFICATION")
+    print(f"dataset={metadata['dataset']} hash={metadata['dataset_hash']}")
+    print(f"commit={metadata['git_commit']} mode={metadata['run_mode']} "
+          f"provider={metadata['model_provider']} model={metadata['model']}")
+    for name, metrics in data.get("pipelines", {}).items():
+        print(f"{name}: accuracy={metrics.get('accuracy', 'unavailable')} "
+              f"questions={metrics.get('num_evaluated', 0)}")
+    return True
+
     agentic = data.get("pipelines", {}).get("Agentic GraphRAG", {})
     router = data.get("pipelines", {}).get("Router", {})
     rag = data.get("pipelines", {}).get("RAG", {})
@@ -105,7 +124,7 @@ def main() -> int:
     if not (args.verify or args.public or args.hidden or args.ood):
         args.all = True
 
-    canonical_path = os.path.join(_ROOT, "results", "final_submission_metrics.json")
+    canonical_path = os.path.join(_ROOT, "results", "deterministic_results_summary.json")
     success = True
 
     if args.verify or args.all:
@@ -124,7 +143,7 @@ def main() -> int:
         ok = run_ood_suite(no_llm=args.no_llm)
         success = success and ok
 
-    print_banner(f"FINAL SUBMISSION BENCHMARK VERIFICATION: {'PASSED (100.0%)' if success else 'FAILED'}")
+    print_banner(f"STATIC / ARTIFACT VERIFICATION: {'PASSED' if success else 'FAILED'}")
     return 0 if success else 1
 
 
