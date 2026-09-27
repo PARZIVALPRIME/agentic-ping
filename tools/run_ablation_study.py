@@ -31,6 +31,7 @@ from pipelines.ablations import build_8way_ablations
 from retrieval import load_index
 from utils.llm import LLMHelper, build_llm
 from benchmark.evaluator import Evaluator
+from benchmark.schema import run_metadata
 
 
 def select_stratified_questions(questions_path: str, per_type: int = 4) -> List[Dict[str, Any]]:
@@ -50,7 +51,8 @@ def select_stratified_questions(questions_path: str, per_type: int = 4) -> List[
 
 
 def run_ablation_study(questions: List[Dict[str, Any]], pipelines: List[Any],
-                       evaluator: Evaluator, verbose: bool = True) -> Dict[str, Any]:
+                       evaluator: Evaluator, verbose: bool = True,
+                       dataset_path: str = "", run_mode: str = "deterministic") -> Dict[str, Any]:
     """Execute the full 8-way ablation study."""
     matrix: Dict[str, Dict[str, Any]] = {}
     per_question_results: List[Dict[str, Any]] = []
@@ -85,10 +87,26 @@ def run_ablation_study(questions: List[Dict[str, Any]], pipelines: List[Any],
                 ans = res.answer
                 cites = res.citations
                 toks = getattr(res, "total_tokens", 0)
+                ablation_controls = (getattr(res, "metadata", {}) or {}).get(
+                    "ablation_controls", [])
+                config_verified = bool((getattr(res, "metadata", {}) or {}).get(
+                    "ablation_config_verified", False))
+                # No-op controls leave an explicit trace marker. Some controls
+                # (for example no conflict resolution where no conflict arose)
+                # are configuration-verifiable but cannot be trace-exercised by
+                # every question; report that distinction instead of pretending.
+                trace_verified = any(
+                    "disabled" in str(step.get("detail", "")).lower()
+                    or "ablation" in str(step.get("observation", {})).lower()
+                    for step in getattr(res, "steps", [])
+                )
             except Exception as exc:
                 ans = f"ERROR: {exc}"
                 cites = []
                 toks = 0
+                ablation_controls = []
+                config_verified = False
+                trace_verified = False
             dur_ms = (time.perf_counter() - t0) * 1000.0
 
             ev = evaluator.evaluate(qtext, golds, ans, cites, gold_docs, qtype=qtype)
@@ -109,6 +127,9 @@ def run_ablation_study(questions: List[Dict[str, Any]], pipelines: List[Any],
                 "is_correct": ev.is_correct,
                 "match_type": ev.match_type,
                 "latency_ms": round(dur_ms, 1),
+                "ablation_controls": ablation_controls,
+                "ablation_config_verified": config_verified,
+                "ablation_trace_exercised": trace_verified,
             }
 
         per_question_results.append(q_entry)
@@ -154,7 +175,7 @@ def run_ablation_study(questions: List[Dict[str, Any]], pipelines: List[Any],
         print(f"{row['variant']:<32s} | {row['accuracy']:<10s} | {row['delta_acc']:<10s} | {row['avg_latency_ms']:<12s}")
     print(f"{'='*78}\n")
 
-    return {
+    result = {
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "num_questions": len(questions),
         "baseline_pipeline": full_pipe_name,
@@ -162,6 +183,18 @@ def run_ablation_study(questions: List[Dict[str, Any]], pipelines: List[Any],
         "summary_table": summary_table,
         "questions": per_question_results,
     }
+    # An ablation result is valid only for the exact data/configuration that
+    # generated it. This block makes a five-question deterministic study
+    # visibly different from a full live evaluation.
+    result["evaluation"] = run_metadata(
+        dataset_path=dataset_path,
+        dataset_size=len(questions),
+        config=config,
+        pipeline_names=matrix.keys(),
+        run_mode=run_mode,
+        backend=describe_backend(),
+    )
+    return result
 
 
 def main() -> None:
@@ -169,7 +202,8 @@ def main() -> None:
     parser.add_argument("--questions", default=config.benchmark.public_questions_path)
     parser.add_argument("--per-type", type=int, default=4, help="Questions per question type (default: 4 = 20 total)")
     parser.add_argument("--no-tg", action="store_true", help="Force local graph")
-    parser.add_argument("--no-llm", action="store_true", help="Deterministic mode")
+    parser.add_argument("--allow-llm", action="store_true",
+                        help="Explicitly permit provider calls (off by default)")
     parser.add_argument("--out", default=os.path.join(_ROOT, "results", "ablation_8way_matrix.json"))
     args = parser.parse_args()
 
@@ -179,13 +213,17 @@ def main() -> None:
                     force_local=args.no_tg)
     index = load_index(config.benchmark.corpus_path, kg,
                        vector_backend=config.benchmark.vector_backend)
-    llm = LLMHelper() if args.no_llm else build_llm(config)
+    llm = build_llm(config) if args.allow_llm else LLMHelper()
 
     pipelines = build_8way_ablations(index, llm=llm)
-    evaluator = Evaluator(llm, use_llm_judge=False)
+    evaluator = Evaluator(llm, use_llm_judge=args.allow_llm)
 
     questions = select_stratified_questions(args.questions, per_type=args.per_type)
-    summary = run_ablation_study(questions, pipelines, evaluator, verbose=True)
+    summary = run_ablation_study(
+        questions, pipelines, evaluator, verbose=True,
+        dataset_path=args.questions,
+        run_mode="live" if args.allow_llm else "deterministic",
+    )
 
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as fh:

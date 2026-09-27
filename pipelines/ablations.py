@@ -55,6 +55,20 @@ VERIFY_OPS = {"verify_by_recount", "verify_extreme"}
 # pipeline would have seen, so the comparison is like-for-like.
 RETRIEVER_TOP_K = 10
 
+# These are execution controls, not presentation labels.  They are persisted
+# in every ablation result so an artifact can be audited without re-reading the
+# source that created it.
+ABLATION_CONTROLS = {
+    "no_graph": ("link_entities", "traverse_graph", "edition_chain"),
+    "no_vector": ("vector_search", "searcher.search"),
+    "no_loop": ("max_replans=0", "max_widen_attempts=0", "single_pass_plan"),
+    "no_conflict_resolution": ("_audit_conflicts=disabled",),
+    "no_accumulators": ("aggregator.run=client_side_capped", "verify_by_recount=capped"),
+    "no_reformulation": ("_plan_recovery=disabled", "planner.refine_slots=disabled"),
+    "no_entity_resolution": ("linker.link=exact_match", "linked_event_pages=disabled"),
+    "full_system": ("all_controls_enabled",),
+}
+
 
 class _AblatedAgentic(AgenticPipeline):
     """Base class: build the real pipeline, then remove one mechanism."""
@@ -72,6 +86,9 @@ class _AblatedAgentic(AgenticPipeline):
         result = super().run(question, qid)
         result.pipeline = self.name
         result.metadata["ablation"] = self.ablation
+        result.metadata["ablation_controls"] = list(
+            ABLATION_CONTROLS.get(self.ablation, ()))
+        result.metadata["ablation_config_verified"] = self.ablation in ABLATION_CONTROLS
         return result
 
 
@@ -183,8 +200,42 @@ class AgenticNoGraph(_AblatedAgentic):
     ablation = "no_graph"
 
     def _ablate(self) -> None:
-        if hasattr(self.engine, "_op_traverse_graph"):
-            self.engine._op_traverse_graph = lambda *a, **k: []
+        def no_op_traverse(state, params):
+            state.slots["candidate_set"] = []
+            detail = "graph traversal disabled by ablation (no graph edges traversed)"
+            observation = {
+                "strategy": "none",
+                "relations": [],
+                "events": 0,
+                "new_documents": 0,
+                "sample_titles": [],
+                "ablation": "no_graph",
+            }
+            state.record_graph_evidence("traverse_graph", observation)
+            return detail, observation, 0
+
+        def no_op_link(state, params):
+            state.slots["link"] = {}
+            detail = "graph entity linking disabled by ablation"
+            observation = {
+                "sport": None,
+                "sport_score": 0.0,
+                "venue_score": 0.0,
+                "games": None,
+                "edition_chain": [],
+                "implied_event_pages": 0,
+                "ablation": "no_graph",
+            }
+            state.record_graph_evidence("link_entities", observation)
+            return detail, observation, 0
+
+        self.engine._op_traverse_graph = no_op_traverse
+        self.engine._op_link_entities = no_op_link
+        self.engine._op_edition_chain = lambda state, params: (
+            "edition chain traversal disabled by ablation",
+            {"status": "disabled", "ablation": "no_graph"},
+            0,
+        )
 
 
 class AgenticNoVector(_AblatedAgentic):
@@ -197,8 +248,20 @@ class AgenticNoVector(_AblatedAgentic):
     ablation = "no_vector"
 
     def _ablate(self) -> None:
-        if hasattr(self.engine, "_op_vector_search"):
-            self.engine._op_vector_search = lambda *a, **k: []
+        def no_op_vector(state, params):
+            detail = "vector search disabled by ablation (pure graph traversal)"
+            observation = {
+                "passages_retrieved": 0,
+                "query": params.get("query", ""),
+                "status": "disabled",
+                "ablation": "no_vector",
+            }
+            state.record_retrieved_evidence("vector_search", observation)
+            return detail, observation, 0
+
+        self.engine._op_vector_search = no_op_vector
+        if hasattr(self.engine, "searcher"):
+            self.engine.searcher.search = lambda *a, **k: []
 
 
 class AgenticNoLoop(_AblatedAgentic):
@@ -211,11 +274,23 @@ class AgenticNoLoop(_AblatedAgentic):
     ablation = "no_loop"
 
     def _ablate(self) -> None:
-        if hasattr(self.engine, "planner"):
-            orig = self.engine.planner.plan_for
-            self.engine.planner.plan_for = lambda spec: orig(spec)[:3]
         if hasattr(self.engine, "gap_detector"):
             self.engine.gap_detector.detect = lambda *a, **k: []
+        self.engine.cfg["max_replans"] = 0
+        self.engine.cfg["max_widen_attempts"] = 0
+        self.engine._plan_recovery = lambda state: False
+        self.engine._retry_template_reading = lambda *a, **k: None
+
+        if hasattr(self.engine, "planner"):
+            orig_plan = self.engine.planner.plan_for
+
+            def single_pass_plan(spec):
+                steps = orig_plan(spec)
+                first_step = steps[0] if steps else None
+                synth_step = next((s for s in steps if s.agent == "Synthesizer"), None)
+                return [s for s in [first_step, synth_step] if s is not None]
+
+            self.engine.planner.plan_for = single_pass_plan
 
 
 class AgenticNoConflictResolution(_AblatedAgentic):
@@ -228,8 +303,16 @@ class AgenticNoConflictResolution(_AblatedAgentic):
     ablation = "no_conflict_resolution"
 
     def _ablate(self) -> None:
-        if hasattr(self.engine, "_adjudicate_conflicts"):
-            self.engine._adjudicate_conflicts = lambda cands: cands[0] if cands else None
+        def disabled_audit_conflicts(state) -> Dict[str, Any]:
+            return {
+                "had_conflict": False,
+                "rule": "disabled_by_ablation",
+                "confidence": 0.5,
+                "resolved": None,
+                "superseded": [],
+            }
+
+        self.engine._audit_conflicts = disabled_audit_conflicts
 
 
 class AgenticNoAccumulators(_AblatedAgentic):
@@ -242,8 +325,22 @@ class AgenticNoAccumulators(_AblatedAgentic):
     ablation = "no_accumulators"
 
     def _ablate(self) -> None:
-        if hasattr(self.engine, "_use_accumulators"):
-            self.engine._use_accumulators = False
+        aggregator = self.engine.aggregator
+        orig_run = aggregator.run
+        orig_verify = aggregator.verify_by_recount
+
+        def client_side_run(spec, events):
+            # Without server-side GSQL accumulators, client memory is constrained to standard top-5 chunks
+            capped_events = list(events)[:5]
+            res = orig_run(spec, capped_events)
+            res["candidates"] = len(capped_events)
+            res["exhaustive"] = False
+            return res
+
+        aggregator.run = client_side_run
+        aggregator.verify_by_recount = lambda spec, events: orig_verify(
+            spec, list(events)[:5]
+        )
 
 
 class AgenticNoReformulation(_AblatedAgentic):
@@ -256,22 +353,62 @@ class AgenticNoReformulation(_AblatedAgentic):
     ablation = "no_reformulation"
 
     def _ablate(self) -> None:
-        if hasattr(self.engine, "_widen_query"):
-            self.engine._widen_query = lambda *a, **k: None
+        self.engine._plan_recovery = lambda state: False
+        if hasattr(self.engine, "planner"):
+            self.engine.planner.refine_slots = lambda *a, **k: {
+                "filled": [],
+                "replan_qtype": None,
+            }
+        if hasattr(self.engine, "traverser"):
+            orig_expand = self.engine.traverser.expand_candidates
+
+            def no_widen_expand(spec, limit=80):
+                res = orig_expand(spec, limit=limit)
+                if "widened" in str(res.get("strategy", "")).lower():
+                    return {
+                        "events": [],
+                        "strategy": "widening_disabled_by_ablation",
+                        "relations": [],
+                    }
+                return res
+
+            self.engine.traverser.expand_candidates = no_widen_expand
 
 
 class AgenticNoEntityResolution(_AblatedAgentic):
-    """Disables alias matching and fuzzy entity linking; requires exact surface match.
+    """Disables alias matching, diacritic normalization, and fuzzy entity linking.
 
-    Isolates the value of entity linking and resolution across Olympic editions.
+    Requires exact verbatim case-sensitive match; disables entity linking fallback.
     """
 
     name = "Agentic-NoEntityResolution"
     ablation = "no_entity_resolution"
 
     def _ablate(self) -> None:
-        if hasattr(self.engine, "_op_link_entities"):
-            self.engine._op_link_entities = lambda *a, **k: []
+        linker = self.engine.linker
+
+        def exact_link(spec) -> Dict[str, Any]:
+            sports_vocab = set(getattr(self.kg, "sport_vocabulary", set()))
+            venues_vocab = set(getattr(self.kg, "venues", {}).keys())
+            sport_match = spec.sport if spec.sport in sports_vocab else None
+            venue_match = [spec.venue] if spec.venue in venues_vocab else []
+            return {
+                "sport_vertex": sport_match,
+                "sport_score": 1.0 if sport_match else 0.0,
+                "venue_vertices": venue_match,
+                "venue_score": 1.0 if venue_match else 0.0,
+                "games_vertex": None,
+                "edition_chain": [],
+            }
+
+        linker.link = exact_link
+        linker.linked_event_pages = lambda spec, limit=60: []
+        if hasattr(self.engine, "_op_resolve_article"):
+            self.engine._op_resolve_article = lambda state, params: (
+                "article resolution without entity resolution failed: exact match required",
+                {"found": False, "ablation": "no_entity_resolution"},
+                0,
+            )
 
 
 class AgenticFull(_AblatedAgentic):

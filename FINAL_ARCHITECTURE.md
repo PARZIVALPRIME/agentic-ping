@@ -78,12 +78,12 @@ Standard GraphRAG implementations treat knowledge graphs as passive retrieval ta
 
 The system preserves and benchmarks four distinct retrieval paradigms to validate the Pareto frontier of accuracy versus latency:
 
-| Pipeline | Mechanism | Typical Latency | Aggregation Accuracy | Multi-Hop Accuracy | Token Spend |
+| Pipeline | Mechanism | Typical Latency | Aggregation Accuracy | Multi-Hop Accuracy | Avg Total Tokens |
 |---|---|---|---|---|---|
-| **Naive RAG** | Vector Top-$k$ similarity chunking | 0.8s | 33.3% | 40.0% | 420 tokens |
-| **GraphRAG** | Vector retrieval + 1-hop graph entity enrichment | 1.9s | 33.3% | 60.0% | 850 tokens |
-| **Agentic GraphRAG** | Autonomous multi-turn ReAct with specialized agents | 12.9s | **100.0%** | **100.0%** | 1,580 tokens |
-| **Router Pipeline** | Capability-based dispatch with adaptive escalation | **4.2s** | **100.0%** | **100.0%** | **680 tokens** |
+| **Naive RAG** | Vector Top-$k$ similarity chunking | 2.3s | 0.0% (0/21) | 60.7% (17/28) | 1,085 tokens |
+| **GraphRAG** | Vector retrieval + 1-hop graph entity enrichment | 1.9s | 33.3% (7/21) | 85.7% (24/28) | 1,849 tokens |
+| **Agentic GraphRAG** | Autonomous multi-turn ReAct with specialized agents | 12.9s | **100.0% (21/21)** | **100.0% (28/28)** | 17,472 tokens |
+| **Router Pipeline** | Capability-based dispatch with adaptive escalation | 13.7s | **100.0% (21/21)** | **100.0% (28/28)** | 16,748 tokens |
 
 ### Router Capability Engine & Adaptive Escalation
 The `RouterPipeline` (`pipelines/router_pipeline.py`) acts as an intelligent economic broker:
@@ -280,3 +280,16 @@ Enterprise deployment demands comprehensive threat protection:
 - **GSQL Parameter Sanitization**: Neutralizes SQL/GSQL injection by stripping statement delimiters (`;`, `--`) and escaping malicious quotes.
 - **Path Traversal Defense**: Validates all file, corpus, and cache paths against base directory boundaries.
 - **Zero-Credential Storage**: All credentials reside strictly in environment variables with automated redaction across all logs, traces, and metrics.
+
+---
+
+## 13. One-Command Reproducibility Architecture
+
+The architecture includes dedicated one-command evaluation and verification CLI entrypoints:
+
+| Command | Module / Script | Architecture Verified | Output Artifact |
+|---|---|---|---|
+| `python -m benchmark.run_final` | `benchmark/run_final.py` | Complete 4-stage pipeline verification (Canonical JSON, Public 100, Hidden 50, OOD 13) | Standard output / Exit code 0 |
+| `python -m benchmark.run_ablation` | `benchmark/run_ablation.py` | 8-way ablation study demonstrating component necessity | `results/ablation_8way_matrix.json` |
+| `python -m benchmark.run_ood` | `benchmark/run_ood.py` | 7-dimension OOD generalization suite across graph topologies | `results/generalization_results.json` |
+| `python tools/selftest.py` | `tools/selftest.py` | 17-stage complete automated end-to-end self-test gate | Terminal summary / Exit code 0 |

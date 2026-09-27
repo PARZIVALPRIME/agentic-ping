@@ -179,6 +179,27 @@ For every question and pipeline, the system captures and persists:
 
 ## Reproducing
 
+The repository provides three authoritative one-command reproducibility CLI runners:
+
+```powershell
+# Master One-Command Benchmark & Verification Suite (Public 100, Hidden 50, OOD 13, Canonical JSON)
+python -m benchmark.run_final
+
+# 8-Way Architectural Ablation Matrix Runner
+python -m benchmark.run_ablation
+
+# 7-Dimension Out-of-Distribution (OOD) Generalization Suite
+python -m benchmark.run_ood
+
+# Comprehensive 17-Stage Automated Self-Test Suite
+python tools/selftest.py
+
+# Verify documentation number consistency across all files
+python tools/verify_doc_numbers.py
+```
+
+For custom benchmark sweeps and dashboard rebuilding:
+
 ```powershell
 python run_benchmark.py                  # public set (foreground)
 python run_benchmark.py --limit 5        # smoke

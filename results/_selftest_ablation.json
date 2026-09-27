@@ -1,18 +1,18 @@
 {
-  "timestamp": "2026-09-27T07:56:45Z",
+  "timestamp": "2026-09-27T11:50:55Z",
   "num_questions": 5,
   "baseline_pipeline": "Agentic-Full",
   "matrix": {
     "Agentic-NoGraph": {
       "num_evaluated": 5,
-      "correct": 5,
-      "accuracy": 1.0,
+      "correct": 4,
+      "accuracy": 0.8,
       "latencies_ms": [
-        3.6228999961167574,
-        90.647800010629,
-        41.499100043438375,
-        0.54240005556494,
-        194.4953000638634
+        4.427000065334141,
+        97.14790002908558,
+        47.23510006442666,
+        0.5043999990448356,
+        146.18669997435063
       ],
       "tokens": [
         0,
@@ -36,21 +36,21 @@
         },
         "superlative": {
           "total": 1,
-          "correct": 1
+          "correct": 0
         },
         "temporal": {
           "total": 1,
           "correct": 1
         }
       },
-      "avg_latency_ms": 66.2,
+      "avg_latency_ms": 59.1,
       "avg_tokens": 0.0,
-      "delta_accuracy": 0.0,
+      "delta_accuracy": -0.2,
       "type_accuracies": {
         "aggregation": 1.0,
         "lookup": 1.0,
         "multi_hop": 1.0,
-        "superlative": 1.0,
+        "superlative": 0.0,
         "temporal": 1.0
       }
     },
@@ -59,11 +59,11 @@
       "correct": 5,
       "accuracy": 1.0,
       "latencies_ms": [
-        0.6230000872164965,
-        0.36239996552467346,
-        1.3677999377250671,
-        0.548599986359477,
-        38.75419998075813
+        0.6483999313786626,
+        0.3315999638289213,
+        0.9747999720275402,
+        0.6309000309556723,
+        36.726599908433855
       ],
       "tokens": [
         0,
@@ -94,7 +94,7 @@
           "correct": 1
         }
       },
-      "avg_latency_ms": 8.3,
+      "avg_latency_ms": 7.9,
       "avg_tokens": 0.0,
       "delta_accuracy": 0.0,
       "type_accuracies": {
@@ -107,14 +107,14 @@
     },
     "Agentic-NoLoop": {
       "num_evaluated": 5,
-      "correct": 0,
-      "accuracy": 0.0,
+      "correct": 1,
+      "accuracy": 0.2,
       "latencies_ms": [
-        0.45679998584091663,
-        94.78320006746799,
-        0.789899961091578,
-        0.4288000054657459,
-        40.174800087697804
+        0.7146999705582857,
+        0.19829999655485153,
+        0.21900003775954247,
+        0.381799996830523,
+        22.54140004515648
       ],
       "tokens": [
         0,
@@ -126,7 +126,7 @@
       "by_type": {
         "aggregation": {
           "total": 1,
-          "correct": 0
+          "correct": 1
         },
         "lookup": {
           "total": 1,
@@ -145,11 +145,11 @@
           "correct": 0
         }
       },
-      "avg_latency_ms": 27.3,
+      "avg_latency_ms": 4.8,
       "avg_tokens": 0.0,
-      "delta_accuracy": -1.0,
+      "delta_accuracy": -0.8,
       "type_accuracies": {
-        "aggregation": 0.0,
+        "aggregation": 1.0,
         "lookup": 0.0,
         "multi_hop": 0.0,
         "superlative": 0.0,
@@ -161,11 +161,11 @@
       "correct": 5,
       "accuracy": 1.0,
       "latencies_ms": [
-        0.5245000356808305,
-        101.24210000503808,
-        42.95859998092055,
-        0.5034999921917915,
-        165.64719995949417
+        0.5373000167310238,
+        99.39770004712045,
+        50.04310002550483,
+        0.5663000047206879,
+        176.28360004164279
       ],
       "tokens": [
         0,
@@ -196,7 +196,7 @@
           "correct": 1
         }
       },
-      "avg_latency_ms": 62.2,
+      "avg_latency_ms": 65.4,
       "avg_tokens": 0.0,
       "delta_accuracy": 0.0,
       "type_accuracies": {
@@ -209,14 +209,14 @@
     },
     "Agentic-NoAccumulators": {
       "num_evaluated": 5,
-      "correct": 5,
-      "accuracy": 1.0,
+      "correct": 4,
+      "accuracy": 0.8,
       "latencies_ms": [
-        0.5292000714689493,
-        102.78229997493327,
-        39.85120006836951,
-        0.49320003017783165,
-        145.3056000173092
+        0.5311999702826142,
+        113.31430007703602,
+        47.74940002243966,
+        0.5453000776469707,
+        190.40899991523474
       ],
       "tokens": [
         0,
@@ -228,7 +228,7 @@
       "by_type": {
         "aggregation": {
           "total": 1,
-          "correct": 1
+          "correct": 0
         },
         "lookup": {
           "total": 1,
@@ -247,11 +247,11 @@
           "correct": 1
         }
       },
-      "avg_latency_ms": 57.8,
+      "avg_latency_ms": 70.5,
       "avg_tokens": 0.0,
-      "delta_accuracy": 0.0,
+      "delta_accuracy": -0.2,
       "type_accuracies": {
-        "aggregation": 1.0,
+        "aggregation": 0.0,
         "lookup": 1.0,
         "multi_hop": 1.0,
         "superlative": 1.0,
@@ -263,11 +263,11 @@
       "correct": 5,
       "accuracy": 1.0,
       "latencies_ms": [
-        0.5279999459162354,
-        86.54349995777011,
-        44.086000067181885,
-        0.5375000182539225,
-        147.52919995225966
+        0.519599998369813,
+        104.64359994512051,
+        52.72679997142404,
+        0.5379999056458473,
+        174.39040006138384
       ],
       "tokens": [
         0,
@@ -298,7 +298,7 @@
           "correct": 1
         }
       },
-      "avg_latency_ms": 55.8,
+      "avg_latency_ms": 66.6,
       "avg_tokens": 0.0,
       "delta_accuracy": 0.0,
       "type_accuracies": {
@@ -311,14 +311,14 @@
     },
     "Agentic-NoEntityResolution": {
       "num_evaluated": 5,
-      "correct": 5,
-      "accuracy": 1.0,
+      "correct": 4,
+      "accuracy": 0.8,
       "latencies_ms": [
-        0.43260003440082073,
-        81.44969993736595,
-        41.17039998527616,
-        0.4018999170511961,
-        134.11049998831004
+        0.4290000069886446,
+        209.95960000436753,
+        45.92450009658933,
+        0.45960000716149807,
+        167.9648000281304
       ],
       "tokens": [
         0,
@@ -334,7 +334,7 @@
         },
         "lookup": {
           "total": 1,
-          "correct": 1
+          "correct": 0
         },
         "multi_hop": {
           "total": 1,
@@ -349,12 +349,12 @@
           "correct": 1
         }
       },
-      "avg_latency_ms": 51.5,
+      "avg_latency_ms": 84.9,
       "avg_tokens": 0.0,
-      "delta_accuracy": 0.0,
+      "delta_accuracy": -0.2,
       "type_accuracies": {
         "aggregation": 1.0,
-        "lookup": 1.0,
+        "lookup": 0.0,
         "multi_hop": 1.0,
         "superlative": 1.0,
         "temporal": 1.0
@@ -365,11 +365,11 @@
       "correct": 5,
       "accuracy": 1.0,
       "latencies_ms": [
-        0.6407001055777073,
-        103.26640005223453,
-        40.25069996714592,
-        0.480600050650537,
-        149.97949998360127
+        0.5089999176561832,
+        107.6510000275448,
+        46.51829996146262,
+        0.5887000588700175,
+        188.01829998847097
       ],
       "tokens": [
         0,
@@ -400,7 +400,7 @@
           "correct": 1
         }
       },
-      "avg_latency_ms": 58.9,
+      "avg_latency_ms": 68.7,
       "avg_tokens": 0.0,
       "delta_accuracy": 0.0,
       "type_accuracies": {
@@ -415,14 +415,14 @@
   "summary_table": [
     {
       "variant": "Agentic-NoGraph",
-      "accuracy": "100.0%",
-      "delta_acc": "+0.0%",
-      "avg_latency_ms": "66.2ms",
+      "accuracy": "80.0%",
+      "delta_acc": "-20.0%",
+      "avg_latency_ms": "59.1ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
         "multi_hop": 1.0,
-        "superlative": 1.0,
+        "superlative": 0.0,
         "temporal": 1.0
       }
     },
@@ -430,7 +430,7 @@
       "variant": "Agentic-NoVector",
       "accuracy": "100.0%",
       "delta_acc": "+0.0%",
-      "avg_latency_ms": "8.3ms",
+      "avg_latency_ms": "7.9ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
@@ -441,11 +441,11 @@
     },
     {
       "variant": "Agentic-NoLoop",
-      "accuracy": "0.0%",
-      "delta_acc": "-100.0%",
-      "avg_latency_ms": "27.3ms",
+      "accuracy": "20.0%",
+      "delta_acc": "-80.0%",
+      "avg_latency_ms": "4.8ms",
       "by_type": {
-        "aggregation": 0.0,
+        "aggregation": 1.0,
         "lookup": 0.0,
         "multi_hop": 0.0,
         "superlative": 0.0,
@@ -456,7 +456,7 @@
       "variant": "Agentic-NoConflictResolution",
       "accuracy": "100.0%",
       "delta_acc": "+0.0%",
-      "avg_latency_ms": "62.2ms",
+      "avg_latency_ms": "65.4ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
@@ -467,11 +467,11 @@
     },
     {
       "variant": "Agentic-NoAccumulators",
-      "accuracy": "100.0%",
-      "delta_acc": "+0.0%",
-      "avg_latency_ms": "57.8ms",
+      "accuracy": "80.0%",
+      "delta_acc": "-20.0%",
+      "avg_latency_ms": "70.5ms",
       "by_type": {
-        "aggregation": 1.0,
+        "aggregation": 0.0,
         "lookup": 1.0,
         "multi_hop": 1.0,
         "superlative": 1.0,
@@ -482,7 +482,7 @@
       "variant": "Agentic-NoReformulation",
       "accuracy": "100.0%",
       "delta_acc": "+0.0%",
-      "avg_latency_ms": "55.8ms",
+      "avg_latency_ms": "66.6ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
@@ -493,12 +493,12 @@
     },
     {
       "variant": "Agentic-NoEntityResolution",
-      "accuracy": "100.0%",
-      "delta_acc": "+0.0%",
-      "avg_latency_ms": "51.5ms",
+      "accuracy": "80.0%",
+      "delta_acc": "-20.0%",
+      "avg_latency_ms": "84.9ms",
       "by_type": {
         "aggregation": 1.0,
-        "lookup": 1.0,
+        "lookup": 0.0,
         "multi_hop": 1.0,
         "superlative": 1.0,
         "temporal": 1.0
@@ -508,7 +508,7 @@
       "variant": "Agentic-Full",
       "accuracy": "100.0%",
       "delta_acc": "+0.0%",
-      "avg_latency_ms": "58.9ms",
+      "avg_latency_ms": "68.7ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
@@ -528,7 +528,7 @@
           "answer": "5",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 3.6
+          "latency_ms": 4.4
         },
         "Agentic-NoVector": {
           "answer": "5",
@@ -537,10 +537,10 @@
           "latency_ms": 0.6
         },
         "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 0.5
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.7
         },
         "Agentic-NoConflictResolution": {
           "answer": "5",
@@ -549,9 +549,9 @@
           "latency_ms": 0.5
         },
         "Agentic-NoAccumulators": {
-          "answer": "5",
-          "is_correct": true,
-          "match_type": "exact",
+          "answer": "2",
+          "is_correct": false,
+          "match_type": "none",
           "latency_ms": 0.5
         },
         "Agentic-NoReformulation": {
@@ -570,7 +570,7 @@
           "answer": "5",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.6
+          "latency_ms": 0.5
         }
       }
     },
@@ -583,49 +583,49 @@
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 90.6
+          "latency_ms": 97.1
         },
         "Agentic-NoVector": {
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.4
+          "latency_ms": 0.3
         },
         "Agentic-NoLoop": {
           "answer": "",
           "is_correct": false,
           "match_type": "none",
-          "latency_ms": 94.8
+          "latency_ms": 0.2
         },
         "Agentic-NoConflictResolution": {
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 101.2
+          "latency_ms": 99.4
         },
         "Agentic-NoAccumulators": {
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 102.8
+          "latency_ms": 113.3
         },
         "Agentic-NoReformulation": {
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 86.5
+          "latency_ms": 104.6
         },
         "Agentic-NoEntityResolution": {
-          "answer": "26",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 81.4
+          "answer": "",
+          "is_correct": false,
+          "match_type": "none",
+          "latency_ms": 210.0
         },
         "Agentic-Full": {
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 103.3
+          "latency_ms": 107.7
         }
       }
     },
@@ -638,49 +638,49 @@
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 41.5
+          "latency_ms": 47.2
         },
         "Agentic-NoVector": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 1.4
+          "latency_ms": 1.0
         },
         "Agentic-NoLoop": {
           "answer": "",
           "is_correct": false,
           "match_type": "none",
-          "latency_ms": 0.8
+          "latency_ms": 0.2
         },
         "Agentic-NoConflictResolution": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 43.0
+          "latency_ms": 50.0
         },
         "Agentic-NoAccumulators": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 39.9
+          "latency_ms": 47.7
         },
         "Agentic-NoReformulation": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 44.1
+          "latency_ms": 52.7
         },
         "Agentic-NoEntityResolution": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 41.2
+          "latency_ms": 45.9
         },
         "Agentic-Full": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 40.3
+          "latency_ms": 46.5
         }
       }
     },
@@ -690,16 +690,16 @@
       "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
       "results": {
         "Agentic-NoGraph": {
-          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-          "is_correct": true,
-          "match_type": "exact",
+          "answer": "",
+          "is_correct": false,
+          "match_type": "none",
           "latency_ms": 0.5
         },
         "Agentic-NoVector": {
           "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.5
+          "latency_ms": 0.6
         },
         "Agentic-NoLoop": {
           "answer": "",
@@ -711,7 +711,7 @@
           "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.5
+          "latency_ms": 0.6
         },
         "Agentic-NoAccumulators": {
           "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
@@ -729,13 +729,13 @@
           "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.4
+          "latency_ms": 0.5
         },
         "Agentic-Full": {
           "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.5
+          "latency_ms": 0.6
         }
       }
     },
@@ -748,49 +748,49 @@
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 194.5
+          "latency_ms": 146.2
         },
         "Agentic-NoVector": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 38.8
+          "latency_ms": 36.7
         },
         "Agentic-NoLoop": {
           "answer": "",
           "is_correct": false,
           "match_type": "none",
-          "latency_ms": 40.2
+          "latency_ms": 22.5
         },
         "Agentic-NoConflictResolution": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 165.6
+          "latency_ms": 176.3
         },
         "Agentic-NoAccumulators": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 145.3
+          "latency_ms": 190.4
         },
         "Agentic-NoReformulation": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 147.5
+          "latency_ms": 174.4
         },
         "Agentic-NoEntityResolution": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 134.1
+          "latency_ms": 168.0
         },
         "Agentic-Full": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 150.0
+          "latency_ms": 188.0
         }
       }
     }

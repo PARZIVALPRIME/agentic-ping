@@ -302,32 +302,46 @@ python tools/audit_leakage.py
 
 ## ⚡ Quick Verification & Self-Test
 
-Run the comprehensive end-to-end self-test suite (exercises all 17 automated stages without requiring network or API keys):
+Run the comprehensive one-command reproducibility and self-test suites (zero external API keys or network dependencies required):
 
 ```powershell
-# 1. Run the Full 17-Stage Self-Test Suite
+# ====================================================================
+# AUTHORITATIVE ONE-COMMAND REPRODUCIBILITY & BENCHMARK HARNESSES
+# ====================================================================
+
+# 1. Master Benchmark & Verification Suite (Public 100, Hidden 50, OOD 13, Canonical JSON)
+python -m benchmark.run_final
+
+# 2. 8-Way Architectural Ablation Matrix Runner
+python -m benchmark.run_ablation
+
+# 3. 7-Dimension Out-of-Distribution (OOD) Generalization Suite
+python -m benchmark.run_ood
+
+# ====================================================================
+# COMPONENT SELF-TESTS & EXTENDED VERIFICATION
+# ====================================================================
+
+# 4. Run the Full 17-Stage Automated Self-Test Suite
 python tools/selftest.py
 
-# 2. Run the 8-Way Component Ablation Study
-python tools/run_ablation_study.py --no-llm --no-tg
-
-# 3. Run Generalization & Out-of-Distribution (OOD) Suite (13 questions, 7 dimensions)
-python benchmark/generalization.py
-
-# 4. Run Security, Edge-Case, and Latency Profiling Suite
+# 5. Run Security, Edge-Case, and Latency Profiling Suite
 python tools/test_security_and_edge_cases.py
 
-# 5. Run Production REST API Endpoint Test
+# 6. Run Production REST API Endpoint Test
 python api/server.py --test
 
-# 6. Test Model Context Protocol (MCP) Server
+# 7. Test Model Context Protocol (MCP) Server
 python tools/mcp_server.py --test
 
-# 7. Validate Interactive Dashboards
+# 8. Validate Interactive Dashboards
 python tools/validate_dashboard.py
 python tools/validate_dashboard.py dashboard_hidden_llm.html
 
-# 8. Open Interactive Dashboards in Browser
+# 9. Verify Number Consistency Across All Documentation Files
+python tools/verify_doc_numbers.py
+
+# 10. Open Interactive Dashboards in Browser
 Start-Process "dashboard/index.html"
 Start-Process "dashboard/dashboard_hidden_llm.html"
 ```

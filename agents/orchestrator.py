@@ -940,13 +940,30 @@ class OrchestratorAgent:
         adjudication: Dict[str, Any] = {}
 
         context_items = self._context_items(state, citations)
-        if not answer:
-            # structured reasoning failed -> last-resort LLM answer over passages
-            llm_answer, llm_cites = self.synth.llm_fallback(
-                state.question, context_items, state.tokens)
-            if llm_answer:
-                answer, citations = llm_answer, (llm_cites or citations)
-                source = "llm_fallback"
+        is_empty_agg = (state.kind == "aggregation" and
+                        (state.slots.get("aggregation", {}).get("candidates", 0) == 0 or
+                         state.slots.get("aggregation", {}).get("threshold") is None))
+        if not answer or is_empty_agg:
+            # Check OOD graph reasoning before falling back to empty/llm
+            from reasoning.solvers import StructuredSolver
+            ood_solver = StructuredSolver(self.kg)
+            ood_res = ood_solver.solve_ood(state.question, state.spec)
+            if ood_res and ood_res.resolved:
+                answer = ood_res.answer
+                citations = ood_res.citations or citations
+                source = f"graph_ood:{ood_res.method}"
+                state.confidence = ood_res.confidence
+                for cid in citations:
+                    if cid and cid not in state.documents and cid in self.kg.events:
+                        ev = self.kg.events[cid]
+                        state.documents[cid] = {"title": ev.title, "text": getattr(ev, "snippet", ev.title)}
+            elif not answer:
+                # structured reasoning failed -> last-resort LLM answer over passages
+                llm_answer, llm_cites = self.synth.llm_fallback(
+                    state.question, context_items, state.tokens)
+                if llm_answer:
+                    answer, citations = llm_answer, (llm_cites or citations)
+                    source = "llm_fallback"
         elif self.llm is not None and getattr(self.llm, "available", False) and context_items:
             _agg = state.slots.get("aggregation") or {}
             refined, changed, payload = refine_answer(

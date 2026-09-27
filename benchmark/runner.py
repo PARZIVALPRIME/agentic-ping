@@ -22,6 +22,7 @@ from typing import Any, Dict, List, Optional
 from benchmark.evaluator import Evaluator
 from benchmark.metrics import (MetricsCollector, llm_activity,
                                llm_activity_warnings)
+from benchmark.schema import run_metadata
 # Imported at module level (not inside main) because the runner records the
 # active backend in the summary and the CLI prints it on every run.
 from kg.backend import describe_backend, open_graph
@@ -157,11 +158,14 @@ def _record(result) -> Dict[str, Any]:
 
 class BenchmarkRunner:
     def __init__(self, pipelines: List[Any], evaluator: Evaluator,
-                 results_dir: str = "results", llm: Any = None) -> None:
+                 results_dir: str = "results", llm: Any = None,
+                 config: Any = None, dataset_path: str = "") -> None:
         self.pipelines = pipelines
         self.evaluator = evaluator
         self.results_dir = results_dir
         self.llm = llm
+        self.config = config
+        self.dataset_path = dataset_path
         os.makedirs(results_dir, exist_ok=True)
 
     # ── core loop ──────────────────────────────────────────────────────
@@ -287,6 +291,18 @@ class BenchmarkRunner:
                 collector.entries, rebuilt_from=None,
                 note="live run: llm/evaluator/backend telemetry recorded above"),
         })
+        if self.config is not None:
+            # Keep canonical run identity separate from the aggregate
+            # ``pipelines`` table.  Fields that cannot be observed are null,
+            # never fabricated as zero.
+            summary["evaluation"] = run_metadata(
+                dataset_path=self.dataset_path,
+                dataset_size=len(questions),
+                config=self.config,
+                pipeline_names=summary["pipelines"].keys(),
+                run_mode=mode,
+                backend=summary["backend"],
+            )
         if summary_path:
             with open(summary_path, "w", encoding="utf-8") as fh:
                 json.dump(summary, fh, indent=2, ensure_ascii=False)
@@ -457,7 +473,8 @@ def main(questions_path: str, out_path: str = "results/public_results.json",
 
     evaluator = Evaluator(llm, use_llm_judge=llm_judge and not no_llm)
     runner = BenchmarkRunner(all_pipes, evaluator,
-                             results_dir=config.benchmark.results_dir, llm=llm)
+                             results_dir=config.benchmark.results_dir, llm=llm,
+                             config=config, dataset_path=questions_path)
     initial = None
     if resume and os.path.exists(out_path):
         initial = load_entries(out_path)

@@ -1,50 +1,20 @@
 {
-  "timestamp": "2026-09-27T07:33:04Z",
-  "num_questions": 20,
+  "timestamp": "2026-09-27T11:41:43Z",
+  "num_questions": 5,
   "baseline_pipeline": "Agentic-Full",
   "matrix": {
     "Agentic-NoGraph": {
-      "num_evaluated": 20,
-      "correct": 20,
-      "accuracy": 1.0,
+      "num_evaluated": 5,
+      "correct": 4,
+      "accuracy": 0.8,
       "latencies_ms": [
-        3.2742000184953213,
-        0.48310006968677044,
-        0.7117999484762549,
-        0.519599998369813,
-        88.51129992399365,
-        91.87510004267097,
-        125.67620002664626,
-        106.46130004897714,
-        44.08629995305091,
-        37.20050002448261,
-        134.5620999345556,
-        116.01260001771152,
-        0.6102999905124307,
-        0.48809999134391546,
-        0.4110999871045351,
-        0.4746000049635768,
-        157.8800999559462,
-        108.69020002428442,
-        128.83669999428093,
-        122.05379991792142
+        3.5948000149801373,
+        93.20550004485995,
+        51.24469997826964,
+        0.4483000375330448,
+        157.10379998199642
       ],
       "tokens": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -53,79 +23,49 @@
       ],
       "by_type": {
         "aggregation": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "lookup": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "multi_hop": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "superlative": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 0
         },
         "temporal": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         }
       },
-      "avg_latency_ms": 63.4,
+      "avg_latency_ms": 61.1,
       "avg_tokens": 0.0,
-      "delta_accuracy": 0.0,
+      "delta_accuracy": -0.2,
       "type_accuracies": {
         "aggregation": 1.0,
         "lookup": 1.0,
         "multi_hop": 1.0,
-        "superlative": 1.0,
+        "superlative": 0.0,
         "temporal": 1.0
       }
     },
     "Agentic-NoVector": {
-      "num_evaluated": 20,
-      "correct": 20,
+      "num_evaluated": 5,
+      "correct": 5,
       "accuracy": 1.0,
       "latencies_ms": [
-        0.6282000103965402,
-        0.5352000007405877,
-        0.6745000137016177,
-        0.5992000224068761,
-        0.31970010604709387,
-        0.3179999766871333,
-        0.33900002017617226,
-        0.3733000485226512,
-        0.9332000045105815,
-        1.3393000699579716,
-        1.1966999154537916,
-        1.552899950183928,
-        0.610699993558228,
-        0.6133998977020383,
-        0.44319999869912863,
-        0.611600000411272,
-        39.31630006991327,
-        10.230200015939772,
-        33.532700035721064,
-        20.48599999397993
+        0.6533999694511294,
+        0.3375000087544322,
+        0.9421999566257,
+        0.6536999717354774,
+        39.762399974279106
       ],
       "tokens": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -134,27 +74,27 @@
       ],
       "by_type": {
         "aggregation": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "lookup": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "multi_hop": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "superlative": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "temporal": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         }
       },
-      "avg_latency_ms": 5.7,
+      "avg_latency_ms": 8.5,
       "avg_tokens": 0.0,
       "delta_accuracy": 0.0,
       "type_accuracies": {
@@ -166,47 +106,17 @@
       }
     },
     "Agentic-NoLoop": {
-      "num_evaluated": 20,
-      "correct": 0,
-      "accuracy": 0.0,
+      "num_evaluated": 5,
+      "correct": 1,
+      "accuracy": 0.2,
       "latencies_ms": [
-        0.46220002695918083,
-        0.4344999324530363,
-        0.5278000608086586,
-        0.5133999511599541,
-        82.7485000481829,
-        104.7584000043571,
-        112.47420008294284,
-        107.01180004980415,
-        0.763599993661046,
-        1.1599999852478504,
-        0.8254999993368983,
-        1.3506000395864248,
-        0.4925000248476863,
-        0.5052000051364303,
-        0.36069995258003473,
-        0.4841999616473913,
-        40.18529993481934,
-        9.57679993007332,
-        33.67189993150532,
-        20.64310002606362
+        0.6966000655665994,
+        0.1973999897018075,
+        0.20220002625137568,
+        0.39930001366883516,
+        19.913500058464706
       ],
       "tokens": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -215,31 +125,31 @@
       ],
       "by_type": {
         "aggregation": {
-          "total": 4,
-          "correct": 0
+          "total": 1,
+          "correct": 1
         },
         "lookup": {
-          "total": 4,
+          "total": 1,
           "correct": 0
         },
         "multi_hop": {
-          "total": 4,
+          "total": 1,
           "correct": 0
         },
         "superlative": {
-          "total": 4,
+          "total": 1,
           "correct": 0
         },
         "temporal": {
-          "total": 4,
+          "total": 1,
           "correct": 0
         }
       },
-      "avg_latency_ms": 25.9,
+      "avg_latency_ms": 4.3,
       "avg_tokens": 0.0,
-      "delta_accuracy": -1.0,
+      "delta_accuracy": -0.8,
       "type_accuracies": {
-        "aggregation": 0.0,
+        "aggregation": 1.0,
         "lookup": 0.0,
         "multi_hop": 0.0,
         "superlative": 0.0,
@@ -247,47 +157,17 @@
       }
     },
     "Agentic-NoConflictResolution": {
-      "num_evaluated": 20,
-      "correct": 20,
+      "num_evaluated": 5,
+      "correct": 5,
       "accuracy": 1.0,
       "latencies_ms": [
-        0.537299900315702,
-        0.5363000091165304,
-        0.5926000885665417,
-        0.5966000026091933,
-        105.71250005159527,
-        99.21659994870424,
-        115.12129998300225,
-        98.89020002447069,
-        45.30200001318008,
-        45.61379994265735,
-        127.57510005030781,
-        130.7628999929875,
-        0.6578998873010278,
-        0.5752999568358064,
-        0.43180002830922604,
-        0.5400999216362834,
-        161.20149998459965,
-        109.7299000248313,
-        144.19160003308207,
-        123.23329993523657
+        0.5465999711304903,
+        106.13319999538362,
+        53.5395999904722,
+        0.5677000153809786,
+        164.9244000436738
       ],
       "tokens": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -296,27 +176,27 @@
       ],
       "by_type": {
         "aggregation": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "lookup": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "multi_hop": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "superlative": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "temporal": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         }
       },
-      "avg_latency_ms": 65.6,
+      "avg_latency_ms": 65.1,
       "avg_tokens": 0.0,
       "delta_accuracy": 0.0,
       "type_accuracies": {
@@ -328,47 +208,17 @@
       }
     },
     "Agentic-NoAccumulators": {
-      "num_evaluated": 20,
-      "correct": 20,
-      "accuracy": 1.0,
+      "num_evaluated": 5,
+      "correct": 4,
+      "accuracy": 0.8,
       "latencies_ms": [
-        0.5311000859364867,
-        0.5308999679982662,
-        0.5981998983770609,
-        0.5955999949947,
-        106.93879995960742,
-        96.97889990638942,
-        113.74880000948906,
-        88.03960005752742,
-        42.86449996288866,
-        40.609900024719536,
-        110.64180009998381,
-        112.4961000168696,
-        0.5652999971061945,
-        0.7074999157339334,
-        0.4361000610515475,
-        0.5433999467641115,
-        168.33589994348586,
-        130.28879999183118,
-        149.15760001167655,
-        133.35819996427745
+        0.5357000045478344,
+        99.72800000105053,
+        48.65150002297014,
+        0.5633999826386571,
+        164.898999966681
       ],
       "tokens": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -377,31 +227,31 @@
       ],
       "by_type": {
         "aggregation": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 0
         },
         "lookup": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "multi_hop": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "superlative": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "temporal": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         }
       },
-      "avg_latency_ms": 64.9,
+      "avg_latency_ms": 62.9,
       "avg_tokens": 0.0,
-      "delta_accuracy": 0.0,
+      "delta_accuracy": -0.2,
       "type_accuracies": {
-        "aggregation": 1.0,
+        "aggregation": 0.0,
         "lookup": 1.0,
         "multi_hop": 1.0,
         "superlative": 1.0,
@@ -409,47 +259,17 @@
       }
     },
     "Agentic-NoReformulation": {
-      "num_evaluated": 20,
-      "correct": 20,
+      "num_evaluated": 5,
+      "correct": 5,
       "accuracy": 1.0,
       "latencies_ms": [
-        0.5244999192655087,
-        0.5401000380516052,
-        0.7863000500947237,
-        0.584100023843348,
-        92.56789996288717,
-        88.19209993816912,
-        107.24559996742755,
-        101.26430005766451,
-        47.989799990318716,
-        51.91400006879121,
-        123.633399954997,
-        116.96200002916157,
-        0.6098999874666333,
-        0.7209000177681446,
-        0.4246999742463231,
-        0.5276999436318874,
-        185.7737998943776,
-        115.39719998836517,
-        136.47119991946965,
-        122.60450003668666
+        0.5315999733284116,
+        108.5192000027746,
+        65.49299997277558,
+        0.6119000026956201,
+        166.8591999914497
       ],
       "tokens": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -458,27 +278,27 @@
       ],
       "by_type": {
         "aggregation": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "lookup": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "multi_hop": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "superlative": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "temporal": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         }
       },
-      "avg_latency_ms": 64.7,
+      "avg_latency_ms": 68.4,
       "avg_tokens": 0.0,
       "delta_accuracy": 0.0,
       "type_accuracies": {
@@ -490,47 +310,17 @@
       }
     },
     "Agentic-NoEntityResolution": {
-      "num_evaluated": 20,
-      "correct": 20,
-      "accuracy": 1.0,
+      "num_evaluated": 5,
+      "correct": 4,
+      "accuracy": 0.8,
       "latencies_ms": [
-        0.4219000693410635,
-        0.43560005724430084,
-        0.6128000095486641,
-        0.47389999963343143,
-        86.57919999677688,
-        88.22379994671792,
-        150.24820005055517,
-        104.69790000934154,
-        43.38829999323934,
-        45.56120000779629,
-        116.18949996773154,
-        118.41920006554574,
-        0.45870000030845404,
-        0.5617999704554677,
-        0.381199992261827,
-        0.42799999937415123,
-        158.64140004850924,
-        102.41279995534569,
-        145.32419992610812,
-        133.47350002732128
+        0.43530005495995283,
+        200.45529992785305,
+        43.91760006546974,
+        0.4561000969260931,
+        174.35390001628548
       ],
       "tokens": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -539,79 +329,49 @@
       ],
       "by_type": {
         "aggregation": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "lookup": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 0
         },
         "multi_hop": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "superlative": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "temporal": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         }
       },
-      "avg_latency_ms": 64.8,
+      "avg_latency_ms": 83.9,
       "avg_tokens": 0.0,
-      "delta_accuracy": 0.0,
+      "delta_accuracy": -0.2,
       "type_accuracies": {
         "aggregation": 1.0,
-        "lookup": 1.0,
+        "lookup": 0.0,
         "multi_hop": 1.0,
         "superlative": 1.0,
         "temporal": 1.0
       }
     },
     "Agentic-Full": {
-      "num_evaluated": 20,
-      "correct": 20,
+      "num_evaluated": 5,
+      "correct": 5,
       "accuracy": 1.0,
       "latencies_ms": [
-        0.5092999199405313,
-        0.5313999718055129,
-        0.6617000326514244,
-        0.5846000276505947,
-        86.14070003386587,
-        108.65219996776432,
-        113.02920000161976,
-        91.5660000173375,
-        41.01209994405508,
-        38.14829990733415,
-        107.62230004183948,
-        115.33449997659773,
-        0.5988000193610787,
-        0.6052000680938363,
-        0.4287000047042966,
-        0.5258999299257994,
-        194.2983999615535,
-        112.97800007741898,
-        146.86810004059225,
-        144.70329997129738
+        0.5252000410109758,
+        103.206199943088,
+        44.25879998598248,
+        0.5686000222340226,
+        206.28139993641526
       ],
       "tokens": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0,
@@ -620,27 +380,27 @@
       ],
       "by_type": {
         "aggregation": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "lookup": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "multi_hop": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "superlative": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         },
         "temporal": {
-          "total": 4,
-          "correct": 4
+          "total": 1,
+          "correct": 1
         }
       },
-      "avg_latency_ms": 65.2,
+      "avg_latency_ms": 71.0,
       "avg_tokens": 0.0,
       "delta_accuracy": 0.0,
       "type_accuracies": {
@@ -655,14 +415,14 @@
   "summary_table": [
     {
       "variant": "Agentic-NoGraph",
-      "accuracy": "100.0%",
-      "delta_acc": "+0.0%",
-      "avg_latency_ms": "63.4ms",
+      "accuracy": "80.0%",
+      "delta_acc": "-20.0%",
+      "avg_latency_ms": "61.1ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
         "multi_hop": 1.0,
-        "superlative": 1.0,
+        "superlative": 0.0,
         "temporal": 1.0
       }
     },
@@ -670,7 +430,7 @@
       "variant": "Agentic-NoVector",
       "accuracy": "100.0%",
       "delta_acc": "+0.0%",
-      "avg_latency_ms": "5.7ms",
+      "avg_latency_ms": "8.5ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
@@ -681,11 +441,11 @@
     },
     {
       "variant": "Agentic-NoLoop",
-      "accuracy": "0.0%",
-      "delta_acc": "-100.0%",
-      "avg_latency_ms": "25.9ms",
+      "accuracy": "20.0%",
+      "delta_acc": "-80.0%",
+      "avg_latency_ms": "4.3ms",
       "by_type": {
-        "aggregation": 0.0,
+        "aggregation": 1.0,
         "lookup": 0.0,
         "multi_hop": 0.0,
         "superlative": 0.0,
@@ -696,7 +456,7 @@
       "variant": "Agentic-NoConflictResolution",
       "accuracy": "100.0%",
       "delta_acc": "+0.0%",
-      "avg_latency_ms": "65.6ms",
+      "avg_latency_ms": "65.1ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
@@ -707,11 +467,11 @@
     },
     {
       "variant": "Agentic-NoAccumulators",
-      "accuracy": "100.0%",
-      "delta_acc": "+0.0%",
-      "avg_latency_ms": "64.9ms",
+      "accuracy": "80.0%",
+      "delta_acc": "-20.0%",
+      "avg_latency_ms": "62.9ms",
       "by_type": {
-        "aggregation": 1.0,
+        "aggregation": 0.0,
         "lookup": 1.0,
         "multi_hop": 1.0,
         "superlative": 1.0,
@@ -722,7 +482,7 @@
       "variant": "Agentic-NoReformulation",
       "accuracy": "100.0%",
       "delta_acc": "+0.0%",
-      "avg_latency_ms": "64.7ms",
+      "avg_latency_ms": "68.4ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
@@ -733,12 +493,12 @@
     },
     {
       "variant": "Agentic-NoEntityResolution",
-      "accuracy": "100.0%",
-      "delta_acc": "+0.0%",
-      "avg_latency_ms": "64.8ms",
+      "accuracy": "80.0%",
+      "delta_acc": "-20.0%",
+      "avg_latency_ms": "83.9ms",
       "by_type": {
         "aggregation": 1.0,
-        "lookup": 1.0,
+        "lookup": 0.0,
         "multi_hop": 1.0,
         "superlative": 1.0,
         "temporal": 1.0
@@ -748,7 +508,7 @@
       "variant": "Agentic-Full",
       "accuracy": "100.0%",
       "delta_acc": "+0.0%",
-      "avg_latency_ms": "65.2ms",
+      "avg_latency_ms": "71.0ms",
       "by_type": {
         "aggregation": 1.0,
         "lookup": 1.0,
@@ -768,19 +528,19 @@
           "answer": "5",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 3.3
+          "latency_ms": 3.6
         },
         "Agentic-NoVector": {
           "answer": "5",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.6
+          "latency_ms": 0.7
         },
         "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 0.5
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.7
         },
         "Agentic-NoConflictResolution": {
           "answer": "5",
@@ -789,9 +549,9 @@
           "latency_ms": 0.5
         },
         "Agentic-NoAccumulators": {
-          "answer": "5",
-          "is_correct": true,
-          "match_type": "exact",
+          "answer": "2",
+          "is_correct": false,
+          "match_type": "none",
           "latency_ms": 0.5
         },
         "Agentic-NoReformulation": {
@@ -811,171 +571,6 @@
           "is_correct": true,
           "match_type": "exact",
           "latency_ms": 0.5
-        }
-      }
-    },
-    {
-      "qid": "pub-003",
-      "qtype": "aggregation",
-      "question": "According to the provided corpus, how many shooting events at the 2004 Summer Olympics had more than 37 competitors?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "8",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoVector": {
-          "answer": "8",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 0.4
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "8",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "8",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoReformulation": {
-          "answer": "8",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "8",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
-        "Agentic-Full": {
-          "answer": "8",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        }
-      }
-    },
-    {
-      "qid": "pub-010",
-      "qtype": "aggregation",
-      "question": "According to the provided corpus, how many cycling events at the 2000 Summer Olympics had more than 30 competitors?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "4",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.7
-        },
-        "Agentic-NoVector": {
-          "answer": "4",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.7
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "4",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "4",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoReformulation": {
-          "answer": "4",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.8
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "4",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-Full": {
-          "answer": "4",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.7
-        }
-      }
-    },
-    {
-      "qid": "pub-012",
-      "qtype": "aggregation",
-      "question": "According to the provided corpus, how many rowing events at the 2020 Summer Olympics had more than 36 competitors?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "6",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoVector": {
-          "answer": "6",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "6",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "6",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoReformulation": {
-          "answer": "6",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "6",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-Full": {
-          "answer": "6",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
         }
       }
     },
@@ -988,7 +583,7 @@
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 88.5
+          "latency_ms": 93.2
         },
         "Agentic-NoVector": {
           "answer": "26",
@@ -1000,202 +595,37 @@
           "answer": "",
           "is_correct": false,
           "match_type": "none",
-          "latency_ms": 82.7
+          "latency_ms": 0.2
         },
         "Agentic-NoConflictResolution": {
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 105.7
+          "latency_ms": 106.1
         },
         "Agentic-NoAccumulators": {
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 106.9
+          "latency_ms": 99.7
         },
         "Agentic-NoReformulation": {
           "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 92.6
+          "latency_ms": 108.5
         },
         "Agentic-NoEntityResolution": {
-          "answer": "26",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 86.6
-        },
-        "Agentic-Full": {
-          "answer": "26",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 86.1
-        }
-      }
-    },
-    {
-      "qid": "pub-025",
-      "qtype": "lookup",
-      "question": "How many nations competed in Judo at the 2016 Summer Olympics – Women's 57 kg?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "23",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 91.9
-        },
-        "Agentic-NoVector": {
-          "answer": "23",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.3
-        },
-        "Agentic-NoLoop": {
           "answer": "",
           "is_correct": false,
           "match_type": "none",
-          "latency_ms": 104.8
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "23",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 99.2
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "23",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 97.0
-        },
-        "Agentic-NoReformulation": {
-          "answer": "23",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 88.2
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "23",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 88.2
+          "latency_ms": 200.5
         },
         "Agentic-Full": {
-          "answer": "23",
+          "answer": "26",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 108.7
-        }
-      }
-    },
-    {
-      "qid": "pub-029",
-      "qtype": "lookup",
-      "question": "How many nations competed in Shooting at the 2012 Summer Olympics – Men's 50 metre rifle three positions?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "28",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 125.7
-        },
-        "Agentic-NoVector": {
-          "answer": "28",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.3
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 112.5
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "28",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 115.1
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "28",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 113.7
-        },
-        "Agentic-NoReformulation": {
-          "answer": "28",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 107.2
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "28",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 150.2
-        },
-        "Agentic-Full": {
-          "answer": "28",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 113.0
-        }
-      }
-    },
-    {
-      "qid": "pub-032",
-      "qtype": "lookup",
-      "question": "How many nations competed in Gymnastics at the 2016 Summer Olympics – Men's horizontal bar?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "34",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 106.5
-        },
-        "Agentic-NoVector": {
-          "answer": "34",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 107.0
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "34",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 98.9
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "34",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 88.0
-        },
-        "Agentic-NoReformulation": {
-          "answer": "34",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 101.3
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "34",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 104.7
-        },
-        "Agentic-Full": {
-          "answer": "34",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 91.6
+          "latency_ms": 103.2
         }
       }
     },
@@ -1208,7 +638,7 @@
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 44.1
+          "latency_ms": 51.2
         },
         "Agentic-NoVector": {
           "answer": "Naim Süleymanoğlu",
@@ -1220,202 +650,37 @@
           "answer": "",
           "is_correct": false,
           "match_type": "none",
-          "latency_ms": 0.8
+          "latency_ms": 0.2
         },
         "Agentic-NoConflictResolution": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 45.3
+          "latency_ms": 53.5
         },
         "Agentic-NoAccumulators": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 42.9
+          "latency_ms": 48.7
         },
         "Agentic-NoReformulation": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 48.0
+          "latency_ms": 65.5
         },
         "Agentic-NoEntityResolution": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 43.4
+          "latency_ms": 43.9
         },
         "Agentic-Full": {
           "answer": "Naim Süleymanoğlu",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 41.0
-        }
-      }
-    },
-    {
-      "qid": "pub-011",
-      "qtype": "multi_hop",
-      "question": "Who won the gold medal in the event held at Richmond Olympic Oval on 14 February 2010?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Martina Sáblíková",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 37.2
-        },
-        "Agentic-NoVector": {
-          "answer": "Martina Sáblíková",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 1.3
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 1.2
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "Martina Sáblíková",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 45.6
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "Martina Sáblíková",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 40.6
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Martina Sáblíková",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 51.9
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Martina Sáblíková",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 45.6
-        },
-        "Agentic-Full": {
-          "answer": "Martina Sáblíková",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 38.1
-        }
-      }
-    },
-    {
-      "qid": "pub-014",
-      "qtype": "multi_hop",
-      "question": "Who won the gold medal in the event held at Riocentro – Pavilion 4 on 11–19 August at the 2016 Summer Olympics?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Carolina Marín",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 134.6
-        },
-        "Agentic-NoVector": {
-          "answer": "Carolina Marín",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 1.2
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 0.8
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "Carolina Marín",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 127.6
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "Carolina Marín",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 110.6
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Carolina Marín",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 123.6
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Carolina Marín",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 116.2
-        },
-        "Agentic-Full": {
-          "answer": "Carolina Marín",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 107.6
-        }
-      }
-    },
-    {
-      "qid": "pub-015",
-      "qtype": "multi_hop",
-      "question": "Who won the gold medal in the event held at London Velopark on 3 to 4 August at the 2012 Summer Olympics?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Dani KingLaura TrottJoanna Rowsell",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 116.0
-        },
-        "Agentic-NoVector": {
-          "answer": "Dani KingLaura TrottJoanna Rowsell",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 1.6
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 1.4
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "Dani KingLaura TrottJoanna Rowsell",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 130.8
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "Dani KingLaura TrottJoanna Rowsell",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 112.5
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Dani KingLaura TrottJoanna Rowsell",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 117.0
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Dani KingLaura TrottJoanna Rowsell",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 118.4
-        },
-        "Agentic-Full": {
-          "answer": "Dani KingLaura TrottJoanna Rowsell",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 115.3
+          "latency_ms": 44.3
         }
       }
     },
@@ -1425,127 +690,17 @@
       "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
       "results": {
         "Agentic-NoGraph": {
-          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoVector": {
-          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoLoop": {
           "answer": "",
           "is_correct": false,
           "match_type": "none",
-          "latency_ms": 0.5
+          "latency_ms": 0.4
         },
-        "Agentic-NoConflictResolution": {
+        "Agentic-NoVector": {
           "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
           "latency_ms": 0.7
         },
-        "Agentic-NoAccumulators": {
-          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-Full": {
-          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        }
-      }
-    },
-    {
-      "qid": "pub-008",
-      "qtype": "superlative",
-      "question": "According to the provided corpus, which sailing event at the 2000 Summer Olympics had the highest number of competitors?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Sailing at the 2000 Summer Olympics – Soling",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoVector": {
-          "answer": "Sailing at the 2000 Summer Olympics – Soling",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "Sailing at the 2000 Summer Olympics – Soling",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "Sailing at the 2000 Summer Olympics – Soling",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.7
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Sailing at the 2000 Summer Olympics – Soling",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.7
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Sailing at the 2000 Summer Olympics – Soling",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        },
-        "Agentic-Full": {
-          "answer": "Sailing at the 2000 Summer Olympics – Soling",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.6
-        }
-      }
-    },
-    {
-      "qid": "pub-021",
-      "qtype": "superlative",
-      "question": "According to the provided corpus, which alpine skiing event at the 1988 Winter Olympics had the highest number of competitors?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Alpine skiing at the 1988 Winter Olympics – Men's giant slalom",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
-        "Agentic-NoVector": {
-          "answer": "Alpine skiing at the 1988 Winter Olympics – Men's giant slalom",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
         "Agentic-NoLoop": {
           "answer": "",
           "is_correct": false,
@@ -1553,89 +708,34 @@
           "latency_ms": 0.4
         },
         "Agentic-NoConflictResolution": {
-          "answer": "Alpine skiing at the 1988 Winter Olympics – Men's giant slalom",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "Alpine skiing at the 1988 Winter Olympics – Men's giant slalom",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Alpine skiing at the 1988 Winter Olympics – Men's giant slalom",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Alpine skiing at the 1988 Winter Olympics – Men's giant slalom",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
-        "Agentic-Full": {
-          "answer": "Alpine skiing at the 1988 Winter Olympics – Men's giant slalom",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        }
-      }
-    },
-    {
-      "qid": "pub-037",
-      "qtype": "superlative",
-      "question": "According to the provided corpus, which shooting event at the 2008 Summer Olympics had the highest number of competitors?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Shooting at the 2008 Summer Olympics – Men's 50 metre rifle prone",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoVector": {
-          "answer": "Shooting at the 2008 Summer Olympics – Men's 50 metre rifle prone",
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
           "latency_ms": 0.6
         },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 0.5
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "Shooting at the 2008 Summer Olympics – Men's 50 metre rifle prone",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.5
-        },
         "Agentic-NoAccumulators": {
-          "answer": "Shooting at the 2008 Summer Olympics – Men's 50 metre rifle prone",
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.5
+          "latency_ms": 0.6
         },
         "Agentic-NoReformulation": {
-          "answer": "Shooting at the 2008 Summer Olympics – Men's 50 metre rifle prone",
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 0.5
+          "latency_ms": 0.6
         },
         "Agentic-NoEntityResolution": {
-          "answer": "Shooting at the 2008 Summer Olympics – Men's 50 metre rifle prone",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 0.4
-        },
-        "Agentic-Full": {
-          "answer": "Shooting at the 2008 Summer Olympics – Men's 50 metre rifle prone",
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
           "is_correct": true,
           "match_type": "exact",
           "latency_ms": 0.5
+        },
+        "Agentic-Full": {
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.6
         }
       }
     },
@@ -1648,214 +748,49 @@
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 157.9
+          "latency_ms": 157.1
         },
         "Agentic-NoVector": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 39.3
+          "latency_ms": 39.8
         },
         "Agentic-NoLoop": {
           "answer": "",
           "is_correct": false,
           "match_type": "none",
-          "latency_ms": 40.2
+          "latency_ms": 19.9
         },
         "Agentic-NoConflictResolution": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 161.2
+          "latency_ms": 164.9
         },
         "Agentic-NoAccumulators": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 168.3
+          "latency_ms": 164.9
         },
         "Agentic-NoReformulation": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 185.8
+          "latency_ms": 166.9
         },
         "Agentic-NoEntityResolution": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 158.6
+          "latency_ms": 174.4
         },
         "Agentic-Full": {
           "answer": "Chen Ding",
           "is_correct": true,
           "match_type": "exact",
-          "latency_ms": 194.3
-        }
-      }
-    },
-    {
-      "qid": "pub-006",
-      "qtype": "temporal",
-      "question": "Who won the gold medal in the women's 57 kg judo event at the Summer Olympics held immediately before 2020?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Rafaela Silva",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 108.7
-        },
-        "Agentic-NoVector": {
-          "answer": "Rafaela Silva",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 10.2
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 9.6
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "Rafaela Silva",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 109.7
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "Rafaela Silva",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 130.3
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Rafaela Silva",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 115.4
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Rafaela Silva",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 102.4
-        },
-        "Agentic-Full": {
-          "answer": "Rafaela Silva",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 113.0
-        }
-      }
-    },
-    {
-      "qid": "pub-007",
-      "qtype": "temporal",
-      "question": "Who won the gold medal in the men's pole vault athletics event at the Summer Olympics held immediately before 2016?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Renaud Lavillenie",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 128.8
-        },
-        "Agentic-NoVector": {
-          "answer": "Renaud Lavillenie",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 33.5
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 33.7
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "Renaud Lavillenie",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 144.2
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "Renaud Lavillenie",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 149.2
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Renaud Lavillenie",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 136.5
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Renaud Lavillenie",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 145.3
-        },
-        "Agentic-Full": {
-          "answer": "Renaud Lavillenie",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 146.9
-        }
-      }
-    },
-    {
-      "qid": "pub-013",
-      "qtype": "temporal",
-      "question": "Who won the gold medal in the women's 200 metre freestyle swimming event at the Summer Olympics held immediately before 2016?",
-      "results": {
-        "Agentic-NoGraph": {
-          "answer": "Allison Schmitt",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 122.1
-        },
-        "Agentic-NoVector": {
-          "answer": "Allison Schmitt",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 20.5
-        },
-        "Agentic-NoLoop": {
-          "answer": "",
-          "is_correct": false,
-          "match_type": "none",
-          "latency_ms": 20.6
-        },
-        "Agentic-NoConflictResolution": {
-          "answer": "Allison Schmitt",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 123.2
-        },
-        "Agentic-NoAccumulators": {
-          "answer": "Allison Schmitt",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 133.4
-        },
-        "Agentic-NoReformulation": {
-          "answer": "Allison Schmitt",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 122.6
-        },
-        "Agentic-NoEntityResolution": {
-          "answer": "Allison Schmitt",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 133.5
-        },
-        "Agentic-Full": {
-          "answer": "Allison Schmitt",
-          "is_correct": true,
-          "match_type": "exact",
-          "latency_ms": 144.7
+          "latency_ms": 206.3
         }
       }
     }
