@@ -35,3 +35,45 @@ RESULTS (3 questions) -> results/hidden_llm.json
 evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
 backend: local (unreachable at https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io (server unreachable or auth failed: no token in token response: None))
 llm: {'available': True, 'provider': 'gemini', 'chat_model': 'gemini-3.8-flash', 'eval_model': 'gemini-3.8-flash', 'num_calls': 54, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.5, 'tpm_budget': 0, 'enabled': True, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': True, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+[07:38:11] building KG / index ...
+[kg] backend=tigergraph graph=OlympicsKG host=https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io (local graph retained as mirror/fallback)
+[07:38:23] graph backend: tigergraph (graph=OlympicsKG)
+[07:38:43] llm available: True (gemini/gemini-3.8-flash) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[07:38:43] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'Router']
+[07:38:43] resuming: 50 questions already completed
+
+MODE: live: the provider returned text for 174 record(s) across 793 call(s) (15.86 calls/question).
+
+============================================================================
+RESULTS (50 questions) -> results/hidden_llm.json
+  RAG                (no gold answers)
+     lookup       7 question(s) (unscored - no gold answers)
+     multi_hop    10 question(s) (unscored - no gold answers)
+     temporal     8 question(s) (unscored - no gold answers)
+     aggregation  15 question(s) (unscored - no gold answers)
+     superlative  10 question(s) (unscored - no gold answers)
+     avg tok=1071.16 lat=2239.2922ms steps=1.0
+  GraphRAG           (no gold answers)
+     lookup       7 question(s) (unscored - no gold answers)
+     multi_hop    10 question(s) (unscored - no gold answers)
+     temporal     8 question(s) (unscored - no gold answers)
+     aggregation  15 question(s) (unscored - no gold answers)
+     superlative  10 question(s) (unscored - no gold answers)
+     avg tok=1589.64 lat=1389.127ms steps=2.0
+  Agentic GraphRAG   (no gold answers)
+     lookup       7 question(s) (unscored - no gold answers)
+     multi_hop    10 question(s) (unscored - no gold answers)
+     temporal     8 question(s) (unscored - no gold answers)
+     aggregation  15 question(s) (unscored - no gold answers)
+     superlative  10 question(s) (unscored - no gold answers)
+     avg tok=21551.62 lat=13864.2486ms steps=5.94
+  Router             (no gold answers)
+     lookup       7 question(s) (unscored - no gold answers)
+     multi_hop    10 question(s) (unscored - no gold answers)
+     temporal     8 question(s) (unscored - no gold answers)
+     aggregation  15 question(s) (unscored - no gold answers)
+     superlative  10 question(s) (unscored - no gold answers)
+     avg tok=20499.28 lat=14902.6278ms steps=6.08
+evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
+backend: tigergraph graph=OlympicsKG
+llm: {'available': True, 'provider': 'gemini', 'chat_model': 'gemini-3.8-flash', 'eval_model': 'gemini-3.8-flash', 'num_calls': 0, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.5, 'tpm_budget': 0, 'enabled': True, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': True, 'trips': 0, 'blocked_calls': 0, 'open': False}}

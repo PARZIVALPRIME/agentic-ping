@@ -44,6 +44,7 @@ param(
   [switch]$SkipPublic,
   [switch]$SkipHidden,
   [switch]$PublicResume,
+  [switch]$HiddenResume,
   [switch]$NoLlm
 )
 
@@ -78,11 +79,12 @@ if (-not $SkipPublic) {
 }
 
 if (-not $SkipHidden) {
+  $resumeFlag = if ($HiddenResume -or (Test-Path $HiddenOut)) { " --resume" } else { "" }
   $limitFlag = if ($Limit -gt 0) { " --limit $Limit" } else { "" }
   $noLlmFlag = if ($NoLlm) { " --no-llm" } else { "" }
-  $hidCmd = "python -u run_benchmark.py `"$HiddenQuestions`" --out `"$HiddenOut`" --summary `"$HiddenSummary`"$limitFlag$noLlmFlag"
+  $hidCmd = "python -u run_benchmark.py `"$HiddenQuestions`" --out `"$HiddenOut`" --summary `"$HiddenSummary`"$limitFlag$resumeFlag$noLlmFlag"
   Write-Host "hidden : $hidCmd (log $HiddenLog)"
-  cmd.exe /c "$hidCmd > `"$HiddenLog`" 2>&1"
+  cmd.exe /c "$hidCmd >> `"$HiddenLog`" 2>&1"
   Write-Host "hidden run exited with code $LASTEXITCODE"
 }
 
