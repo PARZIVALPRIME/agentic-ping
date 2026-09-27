@@ -1,92 +1,37 @@
-[23:36:23] building KG / index ...
-[23:36:23] graph backend: local [disabled in config]
-[23:36:43] llm available: True (gemini/gemini-3.8-flash) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
-[23:36:43] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'Router']
-[23:37:29]   1/50 eval-001 multi_hop   RAG=- Graph=- Agent=- Router=- tok=65623 took=45.8s elapsed=46s eta=37.4m
-[23:37:46]   2/50 eval-002 lookup      RAG=- Graph=- Agent=- Router=- tok=12177 took=17.4s elapsed=63s eta=25.3m
-[23:38:16]   3/50 eval-003 aggregation RAG=- Graph=- Agent=- Router=- tok=30213 took=29.5s elapsed=93s eta=24.2m
-[23:38:52]   4/50 eval-004 multi_hop   RAG=- Graph=- Agent=- Router=- tok=61996 took=36.0s elapsed=129s eta=24.7m
-[23:39:14]   5/50 eval-005 superlative RAG=- Graph=- Agent=- Router=- tok=20378 took=22.7s elapsed=151s eta=22.7m
-[23:40:01]   6/50 eval-006 aggregation RAG=- Graph=- Agent=- Router=- tok=74116 took=47.0s elapsed=198s eta=24.2m
-[23:40:26]   7/50 eval-007 temporal    RAG=- Graph=- Agent=- Router=- tok=21013 took=24.9s elapsed=223s eta=22.9m
-[23:41:06]   8/50 eval-008 aggregation RAG=- Graph=- Agent=- Router=- tok=62005 took=40.0s elapsed=263s eta=23.0m
-[23:41:34]   9/50 eval-009 superlative RAG=- Graph=- Agent=- Router=- tok=20497 took=27.2s elapsed=291s eta=22.1m
-[23:41:54]  10/50 eval-010 lookup      RAG=- Graph=- Agent=- Router=- tok=14921 took=20.1s elapsed=311s eta=20.7m
-[23:42:31]  11/50 eval-011 aggregation RAG=- Graph=- Agent=- Router=- tok=49397 took=37.2s elapsed=348s eta=20.6m
-[23:42:50]  12/50 eval-012 lookup      RAG=- Graph=- Agent=- Router=- tok=11990 took=19.4s elapsed=367s eta=19.4m
-[23:43:37]  13/50 eval-013 aggregation RAG=- Graph=- Agent=- Router=- tok=74667 took=47.0s elapsed=414s eta=19.7m
-[23:44:04]  14/50 eval-014 multi_hop   RAG=- Graph=- Agent=- Router=- tok=31361 took=26.1s elapsed=440s eta=18.9m
-[23:44:20]  15/50 eval-015 lookup      RAG=- Graph=- Agent=- Router=- tok=11626 took=16.4s elapsed=457s eta=17.8m
-[23:44:36]  16/50 eval-016 lookup      RAG=- Graph=- Agent=- Router=- tok=11862 took=16.0s elapsed=473s eta=16.7m
-[23:45:17]  17/50 eval-017 multi_hop   RAG=- Graph=- Agent=- Router=- tok=54631 took=40.7s elapsed=513s eta=16.6m
-[23:45:52]  18/50 eval-018 multi_hop   RAG=- Graph=- Agent=- Router=- tok=58957 took=35.7s elapsed=549s eta=16.3m
-[23:46:24]  19/50 eval-019 aggregation RAG=- Graph=- Agent=- Router=- tok=42027 took=32.1s elapsed=581s eta=15.8m
-[23:47:05]  20/50 eval-020 multi_hop   RAG=- Graph=- Agent=- Router=- tok=74933 took=40.8s elapsed=622s eta=15.6m
-could not parse JSON from parser.semantic response
-[23:47:29]  21/50 eval-021 temporal    RAG=- Graph=- Agent=- Router=- tok=18854 took=23.7s elapsed=646s eta=14.9m
-[23:47:48]  22/50 eval-022 lookup      RAG=- Graph=- Agent=- Router=- tok=15104 took=18.9s elapsed=665s eta=14.1m
-[23:48:30]  23/50 eval-023 aggregation RAG=- Graph=- Agent=- Router=- tok=85149 took=42.0s elapsed=707s eta=13.8m
-[23:49:13]  24/50 eval-024 superlative RAG=- Graph=- Agent=- Router=- tok=76613 took=42.9s elapsed=750s eta=13.5m
-[23:49:54]  25/50 eval-025 superlative RAG=- Graph=- Agent=- Router=- tok=72567 took=41.7s elapsed=791s eta=13.2m
-[23:50:09]  26/50 eval-026 lookup      RAG=- Graph=- Agent=- Router=- tok=12017 took=14.6s elapsed=806s eta=12.4m
-[23:50:34]  27/50 eval-027 superlative RAG=- Graph=- Agent=- Router=- tok=20364 took=24.6s elapsed=830s eta=11.8m
-[23:51:13]  28/50 eval-028 aggregation RAG=- Graph=- Agent=- Router=- tok=71583 took=39.9s elapsed=870s eta=11.4m
-[23:52:04]  29/50 eval-029 aggregation RAG=- Graph=- Agent=- Router=- tok=77962 took=50.1s elapsed=920s eta=11.1m
-[23:52:22]  30/50 eval-030 superlative RAG=- Graph=- Agent=- Router=- tok=16490 took=18.5s elapsed=939s eta=10.4m
-[23:52:46]  31/50 eval-031 temporal    RAG=- Graph=- Agent=- Router=- tok=24914 took=24.1s elapsed=963s eta=9.8m
-[23:53:33]  32/50 eval-032 multi_hop   RAG=- Graph=- Agent=- Router=- tok=77180 took=47.0s elapsed=1010s eta=9.5m
-[23:54:14]  33/50 eval-033 aggregation RAG=- Graph=- Agent=- Router=- tok=76023 took=41.2s elapsed=1051s eta=9.0m
-[23:54:43]  34/50 eval-034 temporal    RAG=- Graph=- Agent=- Router=- tok=38365 took=28.2s elapsed=1079s eta=8.5m
-[23:55:22]  35/50 eval-035 superlative RAG=- Graph=- Agent=- Router=- tok=74018 took=39.2s elapsed=1119s eta=8.0m
-[23:56:00]  36/50 eval-036 aggregation RAG=- Graph=- Agent=- Router=- tok=73157 took=38.3s elapsed=1157s eta=7.5m
-[23:56:24]  37/50 eval-037 superlative RAG=- Graph=- Agent=- Router=- tok=23262 took=24.0s elapsed=1181s eta=6.9m
-[23:57:17]  38/50 eval-038 aggregation RAG=- Graph=- Agent=- Router=- tok=89867 took=52.6s elapsed=1234s eta=6.5m
-[23:57:45]  39/50 eval-039 aggregation RAG=- Graph=- Agent=- Router=- tok=37891 took=28.0s elapsed=1262s eta=5.9m
-[23:58:14]  40/50 eval-040 multi_hop   RAG=- Graph=- Agent=- Router=- tok=47994 took=29.7s elapsed=1291s eta=5.4m
-[23:58:58]  41/50 eval-041 aggregation RAG=- Graph=- Agent=- Router=- tok=76223 took=43.5s elapsed=1335s eta=4.9m
-[23:59:20]  42/50 eval-042 temporal    RAG=- Graph=- Agent=- Router=- tok=16338 took=21.9s elapsed=1357s eta=4.3m
-[00:00:17]  43/50 eval-043 multi_hop   RAG=- Graph=- Agent=- Router=- tok=81015 took=57.7s elapsed=1414s eta=3.8m
-[00:00:46]  44/50 eval-044 temporal    RAG=- Graph=- Agent=- Router=- tok=32432 took=28.6s elapsed=1443s eta=3.3m
-[00:01:07]  45/50 eval-045 temporal    RAG=- Graph=- Agent=- Router=- tok=18312 took=21.2s elapsed=1464s eta=2.7m
-[00:01:28]  46/50 eval-046 temporal    RAG=- Graph=- Agent=- Router=- tok=17928 took=21.1s elapsed=1485s eta=2.2m
-[00:02:02]  47/50 eval-047 superlative RAG=- Graph=- Agent=- Router=- tok=53954 took=33.7s elapsed=1519s eta=1.6m
-[00:02:36]  48/50 eval-048 aggregation RAG=- Graph=- Agent=- Router=- tok=59360 took=33.6s elapsed=1553s eta=1.1m
-[00:02:56]  49/50 eval-049 superlative RAG=- Graph=- Agent=- Router=- tok=17003 took=20.1s elapsed=1573s eta=0.5m
-could not parse JSON from graphrag.adjudicate response
-[00:03:27]  50/50 eval-050 multi_hop   RAG=- Graph=- Agent=- Router=- tok=25876 took=31.1s elapsed=1604s eta=0.0m
+[07:18:06] building KG / index ...
+[kg] TigerGraph requested but unusable: unreachable at https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io (server unreachable or auth failed: no token in token response: None)
+[kg] falling back to the corpus-built local graph
+[07:19:07] graph backend: local [unreachable at https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io (server unreachable or auth failed: no token in token response: None)]
+[07:19:26] llm available: True (gemini/gemini-3.8-flash) | index: {'num_docs': 2951, 'num_chunks': 56765, 'embedding_backend': 'tfidf-sparse', 'embedding_dim': 1350710}
+[07:19:26] pipelines: ['RAG', 'GraphRAG', 'Agentic GraphRAG', 'Router']
+[07:20:15]   1/3 eval-001 multi_hop   RAG=- Graph=- Agent=- Router=- tok=70324 took=48.7s elapsed=49s eta=1.6m
+[07:20:31]   2/3 eval-002 lookup      RAG=- Graph=- Agent=- Router=- tok=12135 took=15.6s elapsed=64s eta=0.5m
+[07:21:08]   3/3 eval-003 aggregation RAG=- Graph=- Agent=- Router=- tok=62483 took=37.4s elapsed=102s eta=0.0m
 
-MODE: live: the provider returned text for 174 record(s) across 792 call(s) (15.84 calls/question).
+MODE: live: the provider returned text for 11 record(s) across 50 call(s) (16.67 calls/question).
 
 ============================================================================
-RESULTS (50 questions) -> results/hidden_llm.json
+RESULTS (3 questions) -> results/hidden_llm.json
   RAG                (no gold answers)
-     lookup       7 question(s) (unscored - no gold answers)
-     multi_hop    10 question(s) (unscored - no gold answers)
-     temporal     8 question(s) (unscored - no gold answers)
-     aggregation  15 question(s) (unscored - no gold answers)
-     superlative  10 question(s) (unscored - no gold answers)
-     avg tok=1071.18 lat=2258.7566ms steps=1.0
+     lookup       1 question(s) (unscored - no gold answers)
+     multi_hop    1 question(s) (unscored - no gold answers)
+     aggregation  1 question(s) (unscored - no gold answers)
+     avg tok=1362.3333 lat=2481.7167ms steps=1.0
   GraphRAG           (no gold answers)
-     lookup       7 question(s) (unscored - no gold answers)
-     multi_hop    10 question(s) (unscored - no gold answers)
-     temporal     8 question(s) (unscored - no gold answers)
-     aggregation  15 question(s) (unscored - no gold answers)
-     superlative  10 question(s) (unscored - no gold answers)
-     avg tok=1589.64 lat=1379.9942ms steps=2.0
+     lookup       1 question(s) (unscored - no gold answers)
+     multi_hop    1 question(s) (unscored - no gold answers)
+     aggregation  1 question(s) (unscored - no gold answers)
+     avg tok=1944.0 lat=1568.3133ms steps=2.0
   Agentic GraphRAG   (no gold answers)
-     lookup       7 question(s) (unscored - no gold answers)
-     multi_hop    10 question(s) (unscored - no gold answers)
-     temporal     8 question(s) (unscored - no gold answers)
-     aggregation  15 question(s) (unscored - no gold answers)
-     superlative  10 question(s) (unscored - no gold answers)
-     avg tok=21557.6 lat=13614.7326ms steps=5.94
+     lookup       1 question(s) (unscored - no gold answers)
+     multi_hop    1 question(s) (unscored - no gold answers)
+     aggregation  1 question(s) (unscored - no gold answers)
+     avg tok=28131.0 lat=17124.7633ms steps=8.3333
   Router             (no gold answers)
-     lookup       7 question(s) (unscored - no gold answers)
-     multi_hop    10 question(s) (unscored - no gold answers)
-     temporal     8 question(s) (unscored - no gold answers)
-     aggregation  15 question(s) (unscored - no gold answers)
-     superlative  10 question(s) (unscored - no gold answers)
-     avg tok=20425.68 lat=14767.156ms steps=6.06
+     lookup       1 question(s) (unscored - no gold answers)
+     multi_hop    1 question(s) (unscored - no gold answers)
+     aggregation  1 question(s) (unscored - no gold answers)
+     avg tok=16876.6667 lat=12706.09ms steps=4.6667
 evaluator: {'llm_judge_enabled': True, 'judge_calls': 0, 'judge_flips': 0, 'judge_tokens': 0}
-backend: local (disabled in config)
-llm: {'available': True, 'provider': 'gemini', 'chat_model': 'gemini-3.8-flash', 'eval_model': 'gemini-3.8-flash', 'num_calls': 859, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.5, 'tpm_budget': 0, 'enabled': True, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': True, 'trips': 0, 'blocked_calls': 0, 'open': False}}
+backend: local (unreachable at https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io (server unreachable or auth failed: no token in token response: None))
+llm: {'available': True, 'provider': 'gemini', 'chat_model': 'gemini-3.8-flash', 'eval_model': 'gemini-3.8-flash', 'num_calls': 54, 'failed_calls': 0, 'degraded': False, 'min_interval_s': 0.5, 'tpm_budget': 0, 'enabled': True, 'rate_limit_events': 0, 'pace_sleeps': 0, 'pace_slept_s': 0.0, 'circuit': {'threshold': 3, 'cooldown_s': 60.0, 'enabled': True, 'trips': 0, 'blocked_calls': 0, 'open': False}}
