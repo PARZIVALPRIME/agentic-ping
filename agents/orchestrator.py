@@ -37,6 +37,7 @@ from reasoning.query_parser import (QuerySpec, parse_question_with_llm)
 from reasoning.solvers import resolve_sport, resolve_venue
 from utils.llm import refine_answer
 from utils.metrics import TokenCounter
+from utils.policy import check_budget
 from utils.thresholds import thresholds
 
 from .aggregator import Aggregator
@@ -299,6 +300,11 @@ class OrchestratorAgent:
         budget = budget or self.cfg["max_steps"]
 
         while True:
+            within_budget, budget_reason = check_budget(state)
+            if not within_budget:
+                state.stop_reason = budget_reason
+                break
+
             if state.num_steps >= budget:
                 state.stop_reason = "max_steps_reached"
                 break
@@ -359,6 +365,10 @@ class OrchestratorAgent:
             new_docs = 0
         latency = (time.perf_counter() - t0) * 1000.0
         step.done = True
+        delta_unc, unc_reason = state.evaluate_uncertainty_reduction(step.operation, observation)
+        observation["uncertainty_delta"] = delta_unc
+        observation["reasoning_progress"] = unc_reason
+        observation["remaining_gaps"] = list(state.missing_info)
         state.record(step.agent, step.operation, detail, observation, new_docs,
                      latency_ms=latency,
                      input_tokens=state.tokens.input_tokens - before_in,
@@ -491,6 +501,7 @@ class OrchestratorAgent:
             "edition_chain": link.get("edition_chain", []),
             "implied_event_pages": len(pages),
         }
+        state.record_graph_evidence("link_entities", observation)
         return detail, observation, new
 
     def _op_traverse_graph(self, state: AgentState, params: Dict[str, Any]):
@@ -522,6 +533,7 @@ class OrchestratorAgent:
         observation = {"strategy": strategy, "relations": relations,
                        "events": len(events), "new_documents": new,
                        "sample_titles": [getattr(e, "title", "") for e in events[:5]]}
+        state.record_graph_evidence("traverse_graph", observation)
         return detail, observation, new
 
     def _op_vector_search(self, state: AgentState, params: Dict[str, Any]):
@@ -535,6 +547,7 @@ class OrchestratorAgent:
         observation = {"query": query, "widening": widening,
                        "chunks": len(chunks),
                        "doc_ids": [c.get("doc_id") for c in chunks[:8]]}
+        state.record_retrieved_evidence("vector_search", observation)
         return detail, observation, new
 
     # ─ handlers: counting + comparison ────────────────────────────────
@@ -554,6 +567,8 @@ class OrchestratorAgent:
                        "exhaustive": result["exhaustive"],
                        "missing_field": len(result["missing_field"]),
                        "kept_doc_ids": [k["doc_id"] for k in result["kept"]][:20]}
+        if result.get("count") is not None:
+            state.record_candidate(str(result["count"]), "Aggregator", state.confidence, observation)
         return detail, observation, 0
 
     def _op_verify_recount(self, state: AgentState, params: Dict[str, Any]):
@@ -588,6 +603,8 @@ class OrchestratorAgent:
                        "candidates": result.get("candidates"),
                        "missing_field": result.get("missing_field"),
                        "unique_winner": result.get("unique_winner")}
+        if winner.get("title"):
+            state.record_candidate(str(winner.get("title")), "Comparator", state.confidence, observation)
         return detail, observation, 0
 
     def _op_verify_extreme(self, state: AgentState, params: Dict[str, Any]):
@@ -678,6 +695,10 @@ class OrchestratorAgent:
                        "score": result.get("score"),
                        "value": result.get("value"),
                        "searched_titles": result.get("searched")}
+        if result.get("value"):
+            state.record_candidate(str(result.get("value")), "LookupResolver", state.confidence, observation)
+        elif getattr(matched, "title", None):
+            state.record_candidate(str(getattr(matched, "title", None)), "LookupResolver", state.confidence, observation)
         return detail, observation, new
 
     def _op_resolve_venue_date(self, state: AgentState, params: Dict[str, Any]):
@@ -699,6 +720,8 @@ class OrchestratorAgent:
                        "disambiguation": disambiguation,
                        "top_candidates": [c.get("title") for c in
                                           (result.get("candidates") or [])[:3]]}
+        if getattr(matched, "title", None):
+            state.record_candidate(str(getattr(matched, "title", None)), "LookupResolver", state.confidence, observation)
         return detail, observation, new
 # ─ handlers: evidence audit + synthesis ───────────────────────────
     def _evidence_for(self, state: AgentState) -> Dict[str, Any]:
@@ -956,6 +979,18 @@ class OrchestratorAgent:
         state.fact_conflicts = self._audit_conflicts(state)
         state.uncertainty = round(max(0.0, min(1.0, 1.0 - state.confidence)), 3)
 
+        from reasoning.evidence import SufficiencyGate
+        bundle = SufficiencyGate.audit_evidence(
+            spec=state.spec,
+            kind=state.kind,
+            candidate_answer=state.answer,
+            citations=state.citations,
+            state_documents=state.documents,
+            state_chunks=state.chunks,
+            slots=state.slots,
+        )
+        state.evidence_bundle = bundle.to_dict()
+
         detail = (f"[{source}] answer={state.answer!r} citing "
                   f"{len(state.citations)} document(s) :: {rendered.rationale}")
         if state.fact_conflicts.get("rule") not in (None, "", "no_conflict"):
@@ -966,5 +1001,7 @@ class OrchestratorAgent:
                        "citations": state.citations,
                        "adjudication": adjudication,
                        "uncertainty": state.uncertainty,
-                       "conflicts": state.fact_conflicts}
+                       "conflicts": state.fact_conflicts,
+                       "evidence_bundle": state.evidence_bundle,
+                       "sufficiency_verdict": bundle.sufficiency_verdict}
         return detail, observation, 0

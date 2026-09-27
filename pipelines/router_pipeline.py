@@ -65,6 +65,19 @@ class Route:
     why: str             # why that pipeline meets the requirement (incl. cost)
 
 
+@dataclass
+class CapabilityAnalysis:
+    """Explicit capability analysis report for a question."""
+
+    qtype: str
+    confidence: float
+    required_capabilities: List[str]
+    dispatched_target: str
+    reason: str
+    is_escalated: bool
+    classification_details: Dict[str, Any]
+
+
 #: Capability routing table. Contains no accuracy figures by construction.
 CAPABILITY_ROUTES: Dict[str, Route] = {
     "lookup": Route(
@@ -154,26 +167,59 @@ class RouterPipeline:
                 f"'{route.target}' was not built in this run, using '{target}'"
         return target, route, note
 
+    @staticmethod
+    def infer_required_capabilities(qtype: str) -> List[str]:
+        """Map question type to formal structural requirements."""
+        mapping = {
+            "lookup": ["single_fact_retrieval", "entity_linking"],
+            "multi_hop": ["venue_date_linking", "graph_neighbourhood", "winner_traversal"],
+            "temporal": ["chronological_sequence", "temporal_anchor_linking", "edition_traversal"],
+            "aggregation": ["set_enumeration", "filter_threshold", "exhaustive_count", "accumulator_stats"],
+            "superlative": ["set_enumeration", "extreme_reduction", "total_ordering", "argmax_argmin"],
+        }
+        return list(mapping.get(qtype, ["general_investigation", "vector_search", "full_agentic_loop"]))
 
-    def run(self, question: str, qid: str = "") -> PipelineResult:
-        started = time.perf_counter()
-        counter = TokenCounter()
-
-        t0 = time.perf_counter()
+    def analyze_capabilities(self, question: str, counter: Optional[TokenCounter] = None) -> CapabilityAnalysis:
+        """Perform formal capability analysis to determine required pipeline capabilities."""
         try:
             classification = self.classifier.classify(question, counter=counter)
-        except Exception as exc:  # classification must never sink a question
+        except Exception as exc:
             classification = {"qtype": "", "method": "error",
                               "reason": f"{exc.__class__.__name__}: {exc}",
                               "confidence": 0.0}
-        classify_ms = (time.perf_counter() - t0) * 1000.0
-
         qtype = str(classification.get("qtype", "") or "")
         try:
             confidence = float(classification.get("confidence", 1.0) or 0.0)
         except (TypeError, ValueError):
             confidence = 0.0
         target, route, route_note = self._dispatch_target(qtype, confidence)
+        reqs = self.infer_required_capabilities(qtype)
+        is_esc = route is UNKNOWN_ROUTE or target == "Agentic GraphRAG"
+        reason = route.why + (f" ({route_note})" if route_note else "")
+        return CapabilityAnalysis(
+            qtype=qtype,
+            confidence=confidence,
+            required_capabilities=reqs,
+            dispatched_target=target,
+            reason=reason,
+            is_escalated=is_esc,
+            classification_details=classification,
+        )
+
+    def run(self, question: str, qid: str = "") -> PipelineResult:
+        started = time.perf_counter()
+        counter = TokenCounter()
+
+        t0 = time.perf_counter()
+        analysis = self.analyze_capabilities(question, counter=counter)
+        classify_ms = (time.perf_counter() - t0) * 1000.0
+
+        qtype = analysis.qtype
+        confidence = analysis.confidence
+        target = analysis.dispatched_target
+        classification = analysis.classification_details
+        route = CAPABILITY_ROUTES.get(qtype, UNKNOWN_ROUTE)
+        route_note = analysis.reason
 
         inner = self._by_name[target].run(question, qid)
 

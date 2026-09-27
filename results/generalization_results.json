@@ -1,0 +1,253 @@
+{
+  "pipeline": "Router",
+  "total_questions": 13,
+  "total_passed": 3,
+  "overall_accuracy": 0.2308,
+  "total_time_seconds": 1.9,
+  "dimension_scores": {
+    "2_hop_traversal": {
+      "accuracy": 0.0,
+      "passed": 0,
+      "total": 2,
+      "avg_latency_ms": 155.7
+    },
+    "3_hop_traversal": {
+      "accuracy": 0.0,
+      "passed": 0,
+      "total": 2,
+      "avg_latency_ms": 109.4
+    },
+    "cyclic_queries": {
+      "accuracy": 0.0,
+      "passed": 0,
+      "total": 1,
+      "avg_latency_ms": 70.9
+    },
+    "negation_queries": {
+      "accuracy": 0.0,
+      "passed": 0,
+      "total": 2,
+      "avg_latency_ms": 188.2
+    },
+    "multi_edition_temporal": {
+      "accuracy": 0.0,
+      "passed": 0,
+      "total": 2,
+      "avg_latency_ms": 179.1
+    },
+    "multi_constraint_aggregation": {
+      "accuracy": 0.5,
+      "passed": 1,
+      "total": 2,
+      "avg_latency_ms": 46.1
+    },
+    "counterfactual_unanswerable": {
+      "accuracy": 1.0,
+      "passed": 2,
+      "total": 2,
+      "avg_latency_ms": 234.3
+    }
+  },
+  "records": {
+    "2_hop_traversal": [
+      {
+        "qid": "ood-2hop-01",
+        "dimension": "2_hop_traversal",
+        "question": "Which venue hosted the event won by Chen Ding at the 2012 Summer Olympics?",
+        "prediction": "",
+        "gold_answers": [
+          "Olympic Stadium",
+          "The Mall",
+          "London Olympic Stadium"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 201.3,
+        "hops": 2
+      },
+      {
+        "qid": "ood-2hop-02",
+        "dimension": "2_hop_traversal",
+        "question": "What country did the competitor who won gold at London Velopark on 4 August 2012 represent?",
+        "prediction": "",
+        "gold_answers": [
+          "Great Britain",
+          "United Kingdom",
+          "GBR"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 110.0,
+        "hops": 2
+      }
+    ],
+    "3_hop_traversal": [
+      {
+        "qid": "ood-3hop-01",
+        "dimension": "3_hop_traversal",
+        "question": "In which city was the Olympics held where Naim Süleymanoğlu won gold at Olympic Weightlifting Gymnasium?",
+        "prediction": "",
+        "gold_answers": [
+          "Seoul"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 161.0,
+        "hops": 3
+      },
+      {
+        "qid": "ood-3hop-02",
+        "dimension": "3_hop_traversal",
+        "question": "What sport was contested at the venue where Carolina Marín won gold in August 2016?",
+        "prediction": "",
+        "gold_answers": [
+          "Badminton"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 57.8,
+        "hops": 3
+      }
+    ],
+    "cyclic_queries": [
+      {
+        "qid": "ood-cyclic-01",
+        "dimension": "cyclic_queries",
+        "question": "Starting from Chen Ding, find the 2012 event he won, locate the sport of that event, and list all gold medallists from that sport at the 2012 Games.",
+        "prediction": "",
+        "gold_answers": [
+          "Chen Ding"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 70.9,
+        "hops": 4
+      }
+    ],
+    "negation_queries": [
+      {
+        "qid": "ood-negation-01",
+        "dimension": "negation_queries",
+        "question": "According to the provided corpus, did biathlon at the 2018 Winter Olympics have any event with 0 competitors?",
+        "prediction": "",
+        "gold_answers": [
+          "No",
+          "0",
+          "None"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 157.3,
+        "hops": 2
+      },
+      {
+        "qid": "ood-negation-02",
+        "dimension": "negation_queries",
+        "question": "Which sailing events at the 2000 Summer Olympics had fewer than 10 competitors?",
+        "prediction": "",
+        "gold_answers": [
+          "None",
+          "0"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 219.0,
+        "hops": 2
+      }
+    ],
+    "multi_edition_temporal": [
+      {
+        "qid": "ood-temporal-01",
+        "dimension": "multi_edition_temporal",
+        "question": "List the host cities of the Summer Olympics in 2008, 2012, and 2016 in chronological order.",
+        "prediction": "",
+        "gold_answers": [
+          "Beijing, London, Rio de Janeiro",
+          "Beijing, London, Rio"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 189.5,
+        "hops": 3
+      },
+      {
+        "qid": "ood-temporal-02",
+        "dimension": "multi_edition_temporal",
+        "question": "Which Olympic edition occurred immediately between the 2008 Beijing Olympics and the 2016 Rio Olympics?",
+        "prediction": "",
+        "gold_answers": [
+          "2012 London Olympics",
+          "2012 Summer Olympics",
+          "London 2012",
+          "2012"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 168.6,
+        "hops": 2
+      }
+    ],
+    "multi_constraint_aggregation": [
+      {
+        "qid": "ood-multi-agg-01",
+        "dimension": "multi_constraint_aggregation",
+        "question": "According to the corpus, how many cycling events at the 2000 Summer Olympics had between 30 and 40 competitors?",
+        "prediction": "0",
+        "gold_answers": [
+          "2"
+        ],
+        "is_correct": false,
+        "match_type": "none",
+        "latency_ms": 91.7,
+        "hops": 2
+      },
+      {
+        "qid": "ood-multi-agg-02",
+        "dimension": "multi_constraint_aggregation",
+        "question": "How many alpine skiing events at the 2014 Winter Olympics had more than 100 competitors?",
+        "prediction": "2",
+        "gold_answers": [
+          "2"
+        ],
+        "is_correct": true,
+        "match_type": "exact",
+        "latency_ms": 0.6,
+        "hops": 2
+      }
+    ],
+    "counterfactual_unanswerable": [
+      {
+        "qid": "ood-counterfactual-01",
+        "dimension": "counterfactual_unanswerable",
+        "question": "If the 2020 Tokyo Summer Olympics were held in Antarctica in 1850, who won the gold medal in women's skateboarding?",
+        "prediction": "",
+        "gold_answers": [
+          "Unanswerable",
+          "Not in corpus",
+          "Hypothetical / Did not occur",
+          "None"
+        ],
+        "is_correct": true,
+        "match_type": "refusal_passed",
+        "latency_ms": 218.3,
+        "hops": 1
+      },
+      {
+        "qid": "ood-counterfactual-02",
+        "dimension": "counterfactual_unanswerable",
+        "question": "Who won the gold medal in the men's 5000 metres swimming event at the 1996 Summer Olympics?",
+        "prediction": "",
+        "gold_answers": [
+          "Unanswerable",
+          "Event did not exist",
+          "No such event",
+          "None"
+        ],
+        "is_correct": true,
+        "match_type": "refusal_passed",
+        "latency_ms": 250.3,
+        "hops": 1
+      }
+    ]
+  }
+}

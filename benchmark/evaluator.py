@@ -20,6 +20,7 @@ from typing import Any, Dict, List, Optional
 
 from kg.textutil import normalize, similarity
 from utils.metrics import TokenCounter
+from benchmark.type_evaluator import TypeAwareEvaluator
 
 JUDGE_SYSTEM_PROMPT = (
     "You are a strict quiz grader. You are given a question, the gold answer "
@@ -52,6 +53,7 @@ class Evaluation:
     completeness: float = 0.0                    # token-level F1 / semantic completeness
     grounding_category: str = "unretrieved_failure" # grounded_correct | ungrounded_correct | grounded_incorrect | unretrieved_failure
     judge_reason: str = ""
+    type_evaluation: Optional[Dict[str, Any]] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return self.__dict__.copy()
@@ -109,7 +111,8 @@ class Evaluator:
     # ── main entry ─────────────────────────────────────────────────────
     def evaluate(self, question: str, golds: List[str], pred: str,
                  citations: List[str],
-                 gold_doc_ids: Optional[List[str]] = None) -> Evaluation:
+                 gold_doc_ids: Optional[List[str]] = None,
+                 qtype: str = "") -> Evaluation:
         ev = Evaluation()
         match, sim = self._best(golds or [], pred or "")
         ev.similarity = round(sim, 4)
@@ -118,7 +121,19 @@ class Evaluator:
             ev.is_correct = True
             ev.match_type = match
             ev.accuracy_score = 1.0
-        elif self.use_llm_judge and (pred or "").strip() and golds \
+
+        # Run type-aware evaluation ladder
+        try:
+            type_res = TypeAwareEvaluator.evaluate(question, golds or [], pred or "", qtype=qtype)
+            ev.type_evaluation = type_res.to_dict()
+            if not ev.is_correct and type_res.is_correct:
+                ev.is_correct = True
+                ev.match_type = type_res.metric_name
+                ev.accuracy_score = 1.0
+        except Exception:
+            pass
+
+        if not ev.is_correct and self.use_llm_judge and (pred or "").strip() and golds \
                 and sim >= self.judge_min_similarity:
             verdict = self._llm_judge(question, golds, pred)
             ev.judge_reason = verdict.get("reason", "")

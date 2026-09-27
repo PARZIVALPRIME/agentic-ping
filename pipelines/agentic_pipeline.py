@@ -146,7 +146,12 @@ class AgenticPipeline:
             accepted_why = state.trace[-1].observation.get("answer_accepted_because", "")
 
         tool_steps = [s for s in state.trace if s.operation.startswith("tool:")]
-        if tool_steps:
+        if getattr(state, "evidence_bundle", None) and state.evidence_bundle.get("items"):
+            result.evidence = [
+                {"agent": "EvidenceSynthesizerAgent", "operation": "evidence_item",
+                 "observation": it} for it in state.evidence_bundle["items"]
+            ] + ([{"agent": s.agent, "operation": s.operation, "observation": s.observation} for s in tool_steps] if tool_steps else [])
+        elif tool_steps:
             result.evidence = [
                 {"agent": s.agent, "operation": s.operation,
                  "observation": s.observation} for s in tool_steps]
@@ -167,6 +172,7 @@ class AgenticPipeline:
             "strategy_changes": state.strategy_changes,
             "resolved_gaps": state.resolved_gaps,
             "gaps_remaining": state.missing_info,
+            "evidence_bundle": getattr(state, "evidence_bundle", {}),
             "synth_source": state.synth_source,
             "rationale": state.rationale,
             "adjudication": state.adjudication,

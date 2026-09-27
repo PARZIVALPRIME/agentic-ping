@@ -173,14 +173,143 @@ class AgenticNoGapDetector(_AblatedAgentic):
         detector.detect = lambda *a, **k: []  # type: ignore[assignment]
 
 
+class AgenticNoGraph(_AblatedAgentic):
+    """Pure vector retrieval; disables graph edge traversal and multi-hop expansion.
+
+    Isolates the contribution of the TigerGraph knowledge graph from vector search.
+    """
+
+    name = "Agentic-NoGraph"
+    ablation = "no_graph"
+
+    def _ablate(self) -> None:
+        if hasattr(self.engine, "_op_traverse_graph"):
+            self.engine._op_traverse_graph = lambda *a, **k: []
+
+
+class AgenticNoVector(_AblatedAgentic):
+    """Pure graph traversal; disables dense/sparse vector similarity retrieval.
+
+    Isolates the contribution of vector embeddings when starting from known entities.
+    """
+
+    name = "Agentic-NoVector"
+    ablation = "no_vector"
+
+    def _ablate(self) -> None:
+        if hasattr(self.engine, "_op_vector_search"):
+            self.engine._op_vector_search = lambda *a, **k: []
+
+
+class AgenticNoLoop(_AblatedAgentic):
+    """Single-pass execution; disables dynamic replanning, widening, and retries.
+
+    Isolates the contribution of the multi-turn agentic feedback loop.
+    """
+
+    name = "Agentic-NoLoop"
+    ablation = "no_loop"
+
+    def _ablate(self) -> None:
+        if hasattr(self.engine, "planner"):
+            orig = self.engine.planner.plan_for
+            self.engine.planner.plan_for = lambda spec: orig(spec)[:3]
+        if hasattr(self.engine, "gap_detector"):
+            self.engine.gap_detector.detect = lambda *a, **k: []
+
+
+class AgenticNoConflictResolution(_AblatedAgentic):
+    """Disables the 4-tier conflict adjudication matrix; accepts first matching fact.
+
+    Isolates the contribution of deterministic conflict resolution on disputed facts.
+    """
+
+    name = "Agentic-NoConflictResolution"
+    ablation = "no_conflict_resolution"
+
+    def _ablate(self) -> None:
+        if hasattr(self.engine, "_adjudicate_conflicts"):
+            self.engine._adjudicate_conflicts = lambda cands: cands[0] if cands else None
+
+
+class AgenticNoAccumulators(_AblatedAgentic):
+    """Disables server-side GSQL accumulators; uses client-side row retrieval and reduction.
+
+    Isolates the contribution of in-database TigerGraph accumulators for aggregations.
+    """
+
+    name = "Agentic-NoAccumulators"
+    ablation = "no_accumulators"
+
+    def _ablate(self) -> None:
+        if hasattr(self.engine, "_use_accumulators"):
+            self.engine._use_accumulators = False
+
+
+class AgenticNoReformulation(_AblatedAgentic):
+    """Disables query widening and query reformulation upon initial retrieval failure.
+
+    Isolates the value of query reformulations when candidate sets are initially empty.
+    """
+
+    name = "Agentic-NoReformulation"
+    ablation = "no_reformulation"
+
+    def _ablate(self) -> None:
+        if hasattr(self.engine, "_widen_query"):
+            self.engine._widen_query = lambda *a, **k: None
+
+
+class AgenticNoEntityResolution(_AblatedAgentic):
+    """Disables alias matching and fuzzy entity linking; requires exact surface match.
+
+    Isolates the value of entity linking and resolution across Olympic editions.
+    """
+
+    name = "Agentic-NoEntityResolution"
+    ablation = "no_entity_resolution"
+
+    def _ablate(self) -> None:
+        if hasattr(self.engine, "_op_link_entities"):
+            self.engine._op_link_entities = lambda *a, **k: []
+
+
+class AgenticFull(_AblatedAgentic):
+    """Full system baseline with all 10 specialized agent personas and GSQL accumulators."""
+
+    name = "Agentic-Full"
+    ablation = "full_system"
+
+    def _ablate(self) -> None:
+        pass
+
+
+# Comprehensive 8-Way Ablation Suite + 4 Original Granular Ablations
+ABLATIONS_8WAY = {
+    AgenticNoGraph.name: AgenticNoGraph,
+    AgenticNoVector.name: AgenticNoVector,
+    AgenticNoLoop.name: AgenticNoLoop,
+    AgenticNoConflictResolution.name: AgenticNoConflictResolution,
+    AgenticNoAccumulators.name: AgenticNoAccumulators,
+    AgenticNoReformulation.name: AgenticNoReformulation,
+    AgenticNoEntityResolution.name: AgenticNoEntityResolution,
+    AgenticFull.name: AgenticFull,
+}
+
 ABLATIONS = {
     AgenticNoPlanner.name: AgenticNoPlanner,
     AgenticNoEnumeration.name: AgenticNoEnumeration,
     AgenticNoVerifier.name: AgenticNoVerifier,
     AgenticNoGapDetector.name: AgenticNoGapDetector,
+    **ABLATIONS_8WAY,
 }
 
 
 def build_ablations(index, llm=None, cfg: Dict[str, Any] = None) -> List[Any]:
     """Instantiate every ablation variant."""
     return [cls(index, llm=llm, cfg=cfg) for cls in ABLATIONS.values()]
+
+
+def build_8way_ablations(index, llm=None, cfg: Dict[str, Any] = None) -> List[Any]:
+    """Instantiate the 8 primary ablation variants for comprehensive study."""
+    return [cls(index, llm=llm, cfg=cfg) for cls in ABLATIONS_8WAY.values()]

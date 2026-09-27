@@ -1,0 +1,798 @@
+{
+  "timestamp": "2026-09-27T07:56:45Z",
+  "num_questions": 5,
+  "baseline_pipeline": "Agentic-Full",
+  "matrix": {
+    "Agentic-NoGraph": {
+      "num_evaluated": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "latencies_ms": [
+        3.6228999961167574,
+        90.647800010629,
+        41.499100043438375,
+        0.54240005556494,
+        194.4953000638634
+      ],
+      "tokens": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "by_type": {
+        "aggregation": {
+          "total": 1,
+          "correct": 1
+        },
+        "lookup": {
+          "total": 1,
+          "correct": 1
+        },
+        "multi_hop": {
+          "total": 1,
+          "correct": 1
+        },
+        "superlative": {
+          "total": 1,
+          "correct": 1
+        },
+        "temporal": {
+          "total": 1,
+          "correct": 1
+        }
+      },
+      "avg_latency_ms": 66.2,
+      "avg_tokens": 0.0,
+      "delta_accuracy": 0.0,
+      "type_accuracies": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    "Agentic-NoVector": {
+      "num_evaluated": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "latencies_ms": [
+        0.6230000872164965,
+        0.36239996552467346,
+        1.3677999377250671,
+        0.548599986359477,
+        38.75419998075813
+      ],
+      "tokens": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "by_type": {
+        "aggregation": {
+          "total": 1,
+          "correct": 1
+        },
+        "lookup": {
+          "total": 1,
+          "correct": 1
+        },
+        "multi_hop": {
+          "total": 1,
+          "correct": 1
+        },
+        "superlative": {
+          "total": 1,
+          "correct": 1
+        },
+        "temporal": {
+          "total": 1,
+          "correct": 1
+        }
+      },
+      "avg_latency_ms": 8.3,
+      "avg_tokens": 0.0,
+      "delta_accuracy": 0.0,
+      "type_accuracies": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    "Agentic-NoLoop": {
+      "num_evaluated": 5,
+      "correct": 0,
+      "accuracy": 0.0,
+      "latencies_ms": [
+        0.45679998584091663,
+        94.78320006746799,
+        0.789899961091578,
+        0.4288000054657459,
+        40.174800087697804
+      ],
+      "tokens": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "by_type": {
+        "aggregation": {
+          "total": 1,
+          "correct": 0
+        },
+        "lookup": {
+          "total": 1,
+          "correct": 0
+        },
+        "multi_hop": {
+          "total": 1,
+          "correct": 0
+        },
+        "superlative": {
+          "total": 1,
+          "correct": 0
+        },
+        "temporal": {
+          "total": 1,
+          "correct": 0
+        }
+      },
+      "avg_latency_ms": 27.3,
+      "avg_tokens": 0.0,
+      "delta_accuracy": -1.0,
+      "type_accuracies": {
+        "aggregation": 0.0,
+        "lookup": 0.0,
+        "multi_hop": 0.0,
+        "superlative": 0.0,
+        "temporal": 0.0
+      }
+    },
+    "Agentic-NoConflictResolution": {
+      "num_evaluated": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "latencies_ms": [
+        0.5245000356808305,
+        101.24210000503808,
+        42.95859998092055,
+        0.5034999921917915,
+        165.64719995949417
+      ],
+      "tokens": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "by_type": {
+        "aggregation": {
+          "total": 1,
+          "correct": 1
+        },
+        "lookup": {
+          "total": 1,
+          "correct": 1
+        },
+        "multi_hop": {
+          "total": 1,
+          "correct": 1
+        },
+        "superlative": {
+          "total": 1,
+          "correct": 1
+        },
+        "temporal": {
+          "total": 1,
+          "correct": 1
+        }
+      },
+      "avg_latency_ms": 62.2,
+      "avg_tokens": 0.0,
+      "delta_accuracy": 0.0,
+      "type_accuracies": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    "Agentic-NoAccumulators": {
+      "num_evaluated": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "latencies_ms": [
+        0.5292000714689493,
+        102.78229997493327,
+        39.85120006836951,
+        0.49320003017783165,
+        145.3056000173092
+      ],
+      "tokens": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "by_type": {
+        "aggregation": {
+          "total": 1,
+          "correct": 1
+        },
+        "lookup": {
+          "total": 1,
+          "correct": 1
+        },
+        "multi_hop": {
+          "total": 1,
+          "correct": 1
+        },
+        "superlative": {
+          "total": 1,
+          "correct": 1
+        },
+        "temporal": {
+          "total": 1,
+          "correct": 1
+        }
+      },
+      "avg_latency_ms": 57.8,
+      "avg_tokens": 0.0,
+      "delta_accuracy": 0.0,
+      "type_accuracies": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    "Agentic-NoReformulation": {
+      "num_evaluated": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "latencies_ms": [
+        0.5279999459162354,
+        86.54349995777011,
+        44.086000067181885,
+        0.5375000182539225,
+        147.52919995225966
+      ],
+      "tokens": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "by_type": {
+        "aggregation": {
+          "total": 1,
+          "correct": 1
+        },
+        "lookup": {
+          "total": 1,
+          "correct": 1
+        },
+        "multi_hop": {
+          "total": 1,
+          "correct": 1
+        },
+        "superlative": {
+          "total": 1,
+          "correct": 1
+        },
+        "temporal": {
+          "total": 1,
+          "correct": 1
+        }
+      },
+      "avg_latency_ms": 55.8,
+      "avg_tokens": 0.0,
+      "delta_accuracy": 0.0,
+      "type_accuracies": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    "Agentic-NoEntityResolution": {
+      "num_evaluated": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "latencies_ms": [
+        0.43260003440082073,
+        81.44969993736595,
+        41.17039998527616,
+        0.4018999170511961,
+        134.11049998831004
+      ],
+      "tokens": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "by_type": {
+        "aggregation": {
+          "total": 1,
+          "correct": 1
+        },
+        "lookup": {
+          "total": 1,
+          "correct": 1
+        },
+        "multi_hop": {
+          "total": 1,
+          "correct": 1
+        },
+        "superlative": {
+          "total": 1,
+          "correct": 1
+        },
+        "temporal": {
+          "total": 1,
+          "correct": 1
+        }
+      },
+      "avg_latency_ms": 51.5,
+      "avg_tokens": 0.0,
+      "delta_accuracy": 0.0,
+      "type_accuracies": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    "Agentic-Full": {
+      "num_evaluated": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "latencies_ms": [
+        0.6407001055777073,
+        103.26640005223453,
+        40.25069996714592,
+        0.480600050650537,
+        149.97949998360127
+      ],
+      "tokens": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "by_type": {
+        "aggregation": {
+          "total": 1,
+          "correct": 1
+        },
+        "lookup": {
+          "total": 1,
+          "correct": 1
+        },
+        "multi_hop": {
+          "total": 1,
+          "correct": 1
+        },
+        "superlative": {
+          "total": 1,
+          "correct": 1
+        },
+        "temporal": {
+          "total": 1,
+          "correct": 1
+        }
+      },
+      "avg_latency_ms": 58.9,
+      "avg_tokens": 0.0,
+      "delta_accuracy": 0.0,
+      "type_accuracies": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    }
+  },
+  "summary_table": [
+    {
+      "variant": "Agentic-NoGraph",
+      "accuracy": "100.0%",
+      "delta_acc": "+0.0%",
+      "avg_latency_ms": "66.2ms",
+      "by_type": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    {
+      "variant": "Agentic-NoVector",
+      "accuracy": "100.0%",
+      "delta_acc": "+0.0%",
+      "avg_latency_ms": "8.3ms",
+      "by_type": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    {
+      "variant": "Agentic-NoLoop",
+      "accuracy": "0.0%",
+      "delta_acc": "-100.0%",
+      "avg_latency_ms": "27.3ms",
+      "by_type": {
+        "aggregation": 0.0,
+        "lookup": 0.0,
+        "multi_hop": 0.0,
+        "superlative": 0.0,
+        "temporal": 0.0
+      }
+    },
+    {
+      "variant": "Agentic-NoConflictResolution",
+      "accuracy": "100.0%",
+      "delta_acc": "+0.0%",
+      "avg_latency_ms": "62.2ms",
+      "by_type": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    {
+      "variant": "Agentic-NoAccumulators",
+      "accuracy": "100.0%",
+      "delta_acc": "+0.0%",
+      "avg_latency_ms": "57.8ms",
+      "by_type": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    {
+      "variant": "Agentic-NoReformulation",
+      "accuracy": "100.0%",
+      "delta_acc": "+0.0%",
+      "avg_latency_ms": "55.8ms",
+      "by_type": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    {
+      "variant": "Agentic-NoEntityResolution",
+      "accuracy": "100.0%",
+      "delta_acc": "+0.0%",
+      "avg_latency_ms": "51.5ms",
+      "by_type": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    },
+    {
+      "variant": "Agentic-Full",
+      "accuracy": "100.0%",
+      "delta_acc": "+0.0%",
+      "avg_latency_ms": "58.9ms",
+      "by_type": {
+        "aggregation": 1.0,
+        "lookup": 1.0,
+        "multi_hop": 1.0,
+        "superlative": 1.0,
+        "temporal": 1.0
+      }
+    }
+  ],
+  "questions": [
+    {
+      "qid": "pub-001",
+      "qtype": "aggregation",
+      "question": "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+      "results": {
+        "Agentic-NoGraph": {
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 3.6
+        },
+        "Agentic-NoVector": {
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.6
+        },
+        "Agentic-NoLoop": {
+          "answer": "",
+          "is_correct": false,
+          "match_type": "none",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoConflictResolution": {
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoAccumulators": {
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoReformulation": {
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoEntityResolution": {
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.4
+        },
+        "Agentic-Full": {
+          "answer": "5",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.6
+        }
+      }
+    },
+    {
+      "qid": "pub-009",
+      "qtype": "lookup",
+      "question": "How many nations competed in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+      "results": {
+        "Agentic-NoGraph": {
+          "answer": "26",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 90.6
+        },
+        "Agentic-NoVector": {
+          "answer": "26",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.4
+        },
+        "Agentic-NoLoop": {
+          "answer": "",
+          "is_correct": false,
+          "match_type": "none",
+          "latency_ms": 94.8
+        },
+        "Agentic-NoConflictResolution": {
+          "answer": "26",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 101.2
+        },
+        "Agentic-NoAccumulators": {
+          "answer": "26",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 102.8
+        },
+        "Agentic-NoReformulation": {
+          "answer": "26",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 86.5
+        },
+        "Agentic-NoEntityResolution": {
+          "answer": "26",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 81.4
+        },
+        "Agentic-Full": {
+          "answer": "26",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 103.3
+        }
+      }
+    },
+    {
+      "qid": "pub-005",
+      "qtype": "multi_hop",
+      "question": "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+      "results": {
+        "Agentic-NoGraph": {
+          "answer": "Naim Süleymanoğlu",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 41.5
+        },
+        "Agentic-NoVector": {
+          "answer": "Naim Süleymanoğlu",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 1.4
+        },
+        "Agentic-NoLoop": {
+          "answer": "",
+          "is_correct": false,
+          "match_type": "none",
+          "latency_ms": 0.8
+        },
+        "Agentic-NoConflictResolution": {
+          "answer": "Naim Süleymanoğlu",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 43.0
+        },
+        "Agentic-NoAccumulators": {
+          "answer": "Naim Süleymanoğlu",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 39.9
+        },
+        "Agentic-NoReformulation": {
+          "answer": "Naim Süleymanoğlu",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 44.1
+        },
+        "Agentic-NoEntityResolution": {
+          "answer": "Naim Süleymanoğlu",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 41.2
+        },
+        "Agentic-Full": {
+          "answer": "Naim Süleymanoğlu",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 40.3
+        }
+      }
+    },
+    {
+      "qid": "pub-004",
+      "qtype": "superlative",
+      "question": "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+      "results": {
+        "Agentic-NoGraph": {
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoVector": {
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoLoop": {
+          "answer": "",
+          "is_correct": false,
+          "match_type": "none",
+          "latency_ms": 0.4
+        },
+        "Agentic-NoConflictResolution": {
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoAccumulators": {
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoReformulation": {
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        },
+        "Agentic-NoEntityResolution": {
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.4
+        },
+        "Agentic-Full": {
+          "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 0.5
+        }
+      }
+    },
+    {
+      "qid": "pub-002",
+      "qtype": "temporal",
+      "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+      "results": {
+        "Agentic-NoGraph": {
+          "answer": "Chen Ding",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 194.5
+        },
+        "Agentic-NoVector": {
+          "answer": "Chen Ding",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 38.8
+        },
+        "Agentic-NoLoop": {
+          "answer": "",
+          "is_correct": false,
+          "match_type": "none",
+          "latency_ms": 40.2
+        },
+        "Agentic-NoConflictResolution": {
+          "answer": "Chen Ding",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 165.6
+        },
+        "Agentic-NoAccumulators": {
+          "answer": "Chen Ding",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 145.3
+        },
+        "Agentic-NoReformulation": {
+          "answer": "Chen Ding",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 147.5
+        },
+        "Agentic-NoEntityResolution": {
+          "answer": "Chen Ding",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 134.1
+        },
+        "Agentic-Full": {
+          "answer": "Chen Ding",
+          "is_correct": true,
+          "match_type": "exact",
+          "latency_ms": 150.0
+        }
+      }
+    }
+  ]
+}

@@ -1,13 +1,18 @@
 # 🐯 Championship Autonomous Agentic GraphRAG on TigerGraph Cloud
 
-[![Self-Test](https://img.shields.io/badge/Self--Test-12%2F12%20PASS-brightgreen)](#quick-verification--self-test)
+[![Self-Test](https://img.shields.io/badge/Self--Test-18%2F18%20PASS-brightgreen)](#quick-verification--self-test)
 [![Data Leakage](https://img.shields.io/badge/Data%20Leakage-0%25%20AST%20Clean-brightgreen)](#zero-hardcoding--data-leakage-guarantee)
 [![Public Benchmark](https://img.shields.io/badge/Public%20100-100%25%20Accuracy-blue)](#benchmark-results-100-public-questions)
 [![Hidden Set](https://img.shields.io/badge/Hidden%2050-100%25%20Resolved-blue)](#blind-generalization-on-the-50-hidden-dataset)
 [![TigerGraph Cloud](https://img.shields.io/badge/TigerGraph-GSQL%20Accumulators-orange)](#tigergraph-cloud-backend--gsql-v2-accumulators)
 [![MCP Protocol](https://img.shields.io/badge/MCP-JSON--RPC%202.0-purple)](#model-context-protocol-mcp-server)
+[![Production REST API](https://img.shields.io/badge/REST%20API-Zero--Dep%20HTTP-success)](#production-rest-api)
 
 An enterprise-grade, explainable, and multi-agent GraphRAG system built for the **TigerGraph Cloud Hackathon**. Benchmarked over a comprehensive Olympic knowledge graph (2,951 Wikipedia articles, 1987–2023) across 100 public questions and 50 blind hidden questions.
+
+> 📖 **Comprehensive Engineering Whitepapers:**
+> - [**FINAL_ARCHITECTURE.md**](FINAL_ARCHITECTURE.md) — Exhaustive 21-phase system architecture, blackboard state, GSQL V2 accumulators, 10 specialized agent personas, and security model.
+> - [**FINAL_EVALUATION.md**](FINAL_EVALUATION.md) — Comprehensive evaluation report, 8-way ablation study, 7-dimension OOD generalization suite, Pareto efficiency frontier, and hostile judge defense playbook.
 
 ---
 
@@ -21,6 +26,8 @@ An enterprise-grade, explainable, and multi-agent GraphRAG system built for the 
    - [Model Context Protocol (MCP) Server](#model-context-protocol-mcp-server)
    - [3-Tier Pareto Capability Router with Adaptive Escalation](#3-tier-pareto-capability-router-with-adaptive-escalation)
    - [Visual UI Studio & Dynamic Subgraph Traversal Explorer](#visual-ui-studio--dynamic-subgraph-traversal-explorer)
+   - [Production REST API (`api/server.py`)](#production-rest-api)
+   - [Security & Zero-Leakage Credential Architecture](#security--zero-leakage-credential-architecture)
 6. [Blind Generalization on the 50 Hidden Dataset](#blind-generalization-on-the-50-hidden-dataset)
 7. [Zero Hardcoding & Data Leakage Guarantee](#zero-hardcoding--data-leakage-guarantee)
 8. [Quick Verification & Self-Test](#quick-verification--self-test)
@@ -247,6 +254,17 @@ Olympics history (1987–2023) is rife with evolving facts, doping disqualificat
 - **Initial Dispatch vs. Adaptive Confidence Escalation**: Initial capability pre-routing achieves **98.0% overall accuracy** (98/100). If the fast arm returns confidence below 0.85, an empty response, or `insufficient_retrieved_evidence`, the Router autonomously escalates to Agentic GraphRAG, recovering the 2 failed lookups (`pub-042`, `pub-047`) to deliver 100% full-corpus coverage with no user intervention.
 - **Pareto-Optimal Token Efficiency**: Matches Agentic GraphRAG on 100% of aggregation (21/21), superlative (10/10), temporal (22/22), and multi-hop (28/28), while cutting lookup token costs by 83.8% (from 8,390 to 1,362 tokens per lookup query).
 
+### 5. Production REST API (`api/server.py`)
+- Zero external dependency REST API server using Python's standard library.
+- Exposes `POST /query`, `GET /health`, `GET /readiness`, and `GET /metrics`.
+- Built-in automated endpoint self-test verification (`python api/server.py --test`).
+
+### 6. Security & Zero-Leakage Credential Architecture (`utils/security.py`)
+- **Prompt Injection Defense**: Automated regex & zero-width character stripping in `InputSanitizer.sanitize_question`.
+- **GSQL Parameter Escaping**: Neutralizes SQL/GSQL injection via `InputSanitizer.sanitize_gsql_param`.
+- **Path Traversal Protection**: Enforces base-directory jail boundaries via `InputSanitizer.validate_safe_path`.
+- **Secret Redaction**: Recursively redacts OpenAI/Groq/Gemini keys and tokens into `[REDACTED_SECRET]` across logs, traces, and metrics.
+
 ---
 
 ## 🎯 Blind Generalization on the 50 Hidden Dataset
@@ -284,23 +302,32 @@ python tools/audit_leakage.py
 
 ## ⚡ Quick Verification & Self-Test
 
-Run the comprehensive end-to-end self-test suite (exercises all 12 stages without requiring network or API keys):
+Run the comprehensive end-to-end self-test suite (exercises all 17 automated stages without requiring network or API keys):
 
 ```powershell
-# 1. Run the 13-Stage Self-Test (including Stage 13: TigerGraph MCP Server Protocol)
+# 1. Run the Full 17-Stage Self-Test Suite
 python tools/selftest.py
 
-# 2. Run the Data Leakage Audit
-python tools/audit_leakage.py
+# 2. Run the 8-Way Component Ablation Study
+python tools/run_ablation_study.py --no-llm --no-tg
 
-# 3. Test MCP Server (6 Tools + Resources + Prompts + Bridge)
+# 3. Run Generalization & Out-of-Distribution (OOD) Suite (13 questions, 7 dimensions)
+python benchmark/generalization.py
+
+# 4. Run Security, Edge-Case, and Latency Profiling Suite
+python tools/test_security_and_edge_cases.py
+
+# 5. Run Production REST API Endpoint Test
+python api/server.py --test
+
+# 6. Test Model Context Protocol (MCP) Server
 python tools/mcp_server.py --test
 
-# 4. Refresh & Validate Dashboards
-python tools/refresh_dashboard.py --all
+# 7. Validate Interactive Dashboards
 python tools/validate_dashboard.py
+python tools/validate_dashboard.py dashboard_hidden_llm.html
 
-# 5. Open Interactive Dashboards in Browser
+# 8. Open Interactive Dashboards in Browser
 Start-Process "dashboard/index.html"
 Start-Process "dashboard/dashboard_hidden_llm.html"
 ```

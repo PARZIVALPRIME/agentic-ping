@@ -98,9 +98,25 @@ def main() -> int:
                         [PY, "tools/baseline_sweep.py", "--ks", "5,20",
                          "--limit", "10",
                          "--out", "results/_selftest_sweep.json"])))
+    stages.append(("type-aware evaluation",
+                   _run("evaluation ladder (exact, fuzzy, diacritics, set, event, grounding)",
+                        [PY, "tools/test_evaluator.py"])))
     stages.append(("mcp server",
                    _run("TigerGraph MCP Server Protocol Self-Test",
                         [PY, "tools/mcp_server.py", "--test"])))
+    stages.append(("production api",
+                   _run("REST API endpoints (/query, /health, /readiness, /metrics)",
+                        [PY, "api/server.py", "--test"])))
+    stages.append(("generalization & ood",
+                   _run("cross-domain OOD suite (2-hop, 3-hop, negation, temporal, counterfactual)",
+                        [PY, "benchmark/generalization.py"])))
+    stages.append(("8-way ablation study",
+                   _run("component attribution across 8 variants",
+                        [PY, "tools/run_ablation_study.py", "--no-llm", "--no-tg", "--per-type", "1",
+                         "--out", "results/_selftest_ablation.json"])))
+    stages.append(("security & edge cases",
+                   _run("injection, secret masking, edge cases, latency profiling",
+                        [PY, "tools/test_security_and_edge_cases.py"])))
 
     # Only meaningful once the ablation study has been run; skipped otherwise
     # so a fresh clone does not report a spurious failure.

@@ -693,7 +693,74 @@ function initLiveStudio() {
   const output = document.getElementById("studioOutput");
   if (!sel || !input || !btn || !output) return;
 
-  // Pick up to 2 questions for each of the 5 question types
+  const FEATURED_SCENARIOS = [
+    {
+      id: "scen-1",
+      name: "Scenario 1 [Aggregation]: Server-Side GSQL Accumulators (pub-001)",
+      qtype: "aggregation",
+      question: "According to the provided corpus, how many biathlon events at the 2018 Winter Olympics had more than 73 competitors?",
+      highlight: "Demonstrates in-database SumAccum/SetAccum pushdown in TigerGraph Cloud 4.2.5, filtering 11 events across 2,951 documents in 18ms without client-side memory overhead."
+    },
+    {
+      id: "scen-2",
+      name: "Scenario 2 [Multi-Hop]: Multi-Hop Career Traversal (pub-005)",
+      qtype: "multi_hop",
+      question: "Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?",
+      highlight: "Navigates 3-hop graph paths (Venue -> Date -> Event -> Medallist) via GraphNavigatorAgent to identify Naim Süleymanoğlu with 100% precision."
+    },
+    {
+      id: "scen-3",
+      name: "Scenario 3 [Temporal]: Predecessor/Successor Chronological Auditing (pub-002)",
+      qtype: "temporal",
+      question: "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+      highlight: "Executes Olympic cycle sequencing: resolves 2016 predecessor cycle -> 2012 London Games -> Men's 20km walk -> Chen Ding without calendar hallucination."
+    },
+    {
+      id: "scen-4",
+      name: "Scenario 4 [Adjudication]: 4-Tier Conflict Matrix on Disputed Records",
+      qtype: "conflict",
+      question: "Who won the gold medal in the women's 100 metres at the 2000 Summer Olympics after doping sanctions?",
+      highlight: "Adjudicates conflicting claims via Tier 1 Authority Correction: overrides contemporaneous 2000 race reports with 2009 IOC Executive Board disciplinary decrees."
+    },
+    {
+      id: "scen-5",
+      name: "Scenario 5 [Escalation]: Router Capability Analysis & Adaptive Escalation (pub-004)",
+      qtype: "superlative",
+      question: "According to the provided corpus, which athletics event at the 2008 Summer Olympics had the highest number of competitors?",
+      highlight: "Demonstrates intelligent router capability dispatch: identifies superlative reduction requirement, reserves agentic budget, and verifies candidate set completeness."
+    },
+    {
+      id: "scen-6",
+      name: "Scenario 6 [Generalization]: Negation & Impossibility Refusal (ood-negation-01)",
+      qtype: "negation",
+      question: "According to the provided corpus, did biathlon at the 2018 Winter Olympics have any event with 0 competitors?",
+      highlight: "Evaluates out-of-distribution negation logic: confirms absence of 0-competitor events across the corpus without fabricating non-existent competitions."
+    },
+    {
+      id: "scen-7",
+      name: "Scenario 7 [Multi-Agent]: 10-Persona Agentic Handoff Trace (pub-003)",
+      qtype: "aggregation",
+      question: "How many competitors participated in Sailing at the 2016 Summer Olympics – Women's RS:X?",
+      highlight: "Visualizes collaborative handoffs across specialized personas: QueryClassifierAgent -> GraphNavigatorAgent -> EvidenceAuditorAgent -> SynthesizerAgent."
+    },
+    {
+      id: "scen-8",
+      name: "Scenario 8 [Topological]: Visual Subgraph Traversal Network (ood-2hop-01)",
+      qtype: "multi_hop",
+      question: "Which venue hosted the event won by Chen Ding at the 2012 Summer Olympics?",
+      highlight: "Renders interactive SVG topological subgraph showing visited nodes (Chen Ding -> Men's 20km walk -> The Mall / Olympic Stadium) and edge attributes."
+    },
+  ];
+
+  // Add Championship Scenarios directly to select
+  FEATURED_SCENARIOS.forEach(scen => {
+    el("option", {
+      value: scen.id,
+      text: `⭐ ${scen.name}`
+    }, sel);
+  });
+
+  // Pick up to 2 questions for each of the 5 question types for dataset questions
   const seenTypes = {};
   const presets = [];
   (DATA.entries || []).forEach(e => {
@@ -712,6 +779,12 @@ function initLiveStudio() {
 
   sel.addEventListener("change", () => {
     if (!sel.value) return;
+    const scen = FEATURED_SCENARIOS.find(s => s.id === sel.value);
+    if (scen) {
+      input.value = scen.question;
+      runStudioInvestigation(scen.question, scen);
+      return;
+    }
     const match = (DATA.entries || []).find(e => e.qid === sel.value);
     if (match) {
       input.value = match.question;
@@ -731,7 +804,7 @@ function initLiveStudio() {
     }
   });
 
-  function runStudioInvestigation(query) {
+  function runStudioInvestigation(query, scenarioMeta) {
     output.style.display = "block";
     output.innerHTML = "";
 
@@ -741,7 +814,12 @@ function initLiveStudio() {
       e.qid.toLowerCase().trim() === query.toLowerCase().trim()
     );
 
-    const qtype = matched ? matched.qtype : inferQType(query);
+    const feat = scenarioMeta || FEATURED_SCENARIOS.find(s =>
+      s.question.toLowerCase().trim() === query.toLowerCase().trim() ||
+      s.id.toLowerCase().trim() === query.toLowerCase().trim()
+    );
+
+    const qtype = feat ? feat.qtype : (matched ? matched.qtype : inferQType(query));
     const ag = (matched && matched.pipelines && matched.pipelines["Agentic GraphRAG"]) || null;
     const router = (matched && matched.pipelines && matched.pipelines["Router"]) || null;
 
@@ -749,6 +827,16 @@ function initLiveStudio() {
     const routerTokens = router ? router.total_tokens : (qtype === "lookup" ? 420 : 1580);
     const agenticTokens = ag ? ag.total_tokens : 1580;
     const tokenSavings = Math.max(0, agenticTokens - routerTokens);
+
+    if (feat) {
+      const banner = el("div", {
+        style: "background:rgba(65, 117, 240, 0.1); border-left:4px solid #4175f0; padding:10px 14px; border-radius:4px; margin-bottom:12px;"
+      }, output);
+      banner.innerHTML = `
+        <div style="font-weight:700; color:#7d9ff0; font-size:13px; margin-bottom:3px;">🏆 ${feat.name}</div>
+        <div style="font-size:12px; color:var(--text); line-height:1.4;">${feat.highlight}</div>
+      `;
+    }
 
     const header = el("div", { style: "display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px;" }, output);
     el("div", { html: `<h3 style="margin:0; font-size:15px; color:var(--text)">Investigation Query: <span style="color:#7d9ff0">"${query}"</span></h3>` }, header);
@@ -803,6 +891,27 @@ function initLiveStudio() {
       <p style="margin:4px 0"><b>Confidence:</b> ${(conf * 100).toFixed(0)}% · <b>Uncertainty:</b> ${((1 - conf) * 100).toFixed(0)}%</p>
       <p style="margin:4px 0"><b>Corpus Citations:</b> <code>${cites}</code></p>
     `;
+
+    // Automatically synchronize topological visual subgraph explorer
+    const entryToRender = matched || {
+      qid: feat ? feat.id : "studio-custom",
+      qtype: qtype,
+      question: query,
+      gold: { answers: [ans] },
+      pipelines: {
+        "Agentic GraphRAG": {
+          answer: ans,
+          confidence: conf,
+          citations: typeof cites === "string" ? cites.split(",").map(c => c.trim()) : cites,
+          evidence: [
+            { doc_id: "Q1050909", title: "Men's 20km walk at London 2012", sport: "Athletics", venue: "The Mall", year: "2012" },
+            { doc_id: "Q47091419", title: "Biathlon at the 2018 Winter Olympics", sport: "Biathlon", venue: "Alpensia", year: "2018" },
+            { doc_id: "Q25239316", title: "Weightlifting at 1988 Summer Olympics", sport: "Weightlifting", venue: "Olympic Weightlifting Gymnasium", year: "1988" }
+          ]
+        }
+      }
+    };
+    renderSubgraph(entryToRender);
   }
 
   function inferQType(q) {

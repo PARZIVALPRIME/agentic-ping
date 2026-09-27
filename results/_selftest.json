@@ -33,7 +33,7 @@
           "Q47105341",
           "Q47155365"
         ],
-        "latency_ms": 30.9,
+        "latency_ms": 35.8,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -77,12 +77,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 30.11
+            "latency_ms": 35.08
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.25
+            "latency_ms": 0.22
           }
         ],
         "tokens_per_operation": [
@@ -156,7 +156,19 @@
           "citation_f1": 0.5333,
           "completeness": 0.0,
           "grounding_category": "grounded_incorrect",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": false,
+            "answer_type": "numeric",
+            "score": 0.3333,
+            "metric_name": "numeric_exact",
+            "tolerance_used": 0.0,
+            "details": {
+              "pred_val": 3.0,
+              "target_val": 5.0,
+              "absolute_diff": 2.0
+            }
+          }
         }
       },
       "GraphRAG": {
@@ -176,7 +188,7 @@
           "Q47155541",
           "Q47155408"
         ],
-        "latency_ms": 146.5,
+        "latency_ms": 119.66,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -241,17 +253,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 67.73
+            "latency_ms": 58.23
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 77.9
+            "latency_ms": 60.62
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.29
+            "latency_ms": 0.27
           }
         ],
         "tokens_per_operation": [
@@ -377,7 +389,19 @@
           "citation_f1": 0.7619,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "numeric",
+            "score": 1.0,
+            "metric_name": "numeric_exact",
+            "tolerance_used": 0.0,
+            "details": {
+              "pred_val": 5.0,
+              "target_val": 5.0,
+              "absolute_diff": 0.0
+            }
+          }
         }
       },
       "Agentic GraphRAG": {
@@ -392,7 +416,7 @@
           "Q47155425",
           "Q47155408"
         ],
-        "latency_ms": 2.71,
+        "latency_ms": 3.97,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -444,11 +468,14 @@
               "venue_score": 0.0,
               "games": "GAMES::2018::Winter",
               "edition_chain": [],
-              "implied_event_pages": 11
+              "implied_event_pages": 11,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 0.13,
+            "latency_ms": 0.12,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -472,11 +499,14 @@
                 "Biathlon at the 2018 Winter Olympics – Women's relay",
                 "Biathlon at the 2018 Winter Olympics – Women's sprint",
                 "Biathlon at the 2018 Winter Olympics – Women's pursuit"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'traverse_graph' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.11,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -500,7 +530,10 @@
                 "Q47105341",
                 "Q47155425",
                 "Q47155408"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'count_threshold' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
@@ -517,11 +550,14 @@
             "observation": {
               "recount": 5,
               "documents_with_field": 11,
-              "recount_matches": true
+              "recount_matches": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'verify_by_recount' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -541,11 +577,14 @@
                 "independent_recount": 5,
                 "recount_matches": true
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.97,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.97 (new confidence: 0.97)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -568,11 +607,35 @@
               ],
               "adjudication": {},
               "uncertainty": 0.03,
-              "conflicts": {}
+              "conflicts": {},
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "aggregation_accumulator",
+                    "source_type": "accumulator",
+                    "field": "count",
+                    "value": 5,
+                    "snippet": "Counted 5 events meeting threshold",
+                    "grounded": true,
+                    "confidence": 0.92
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Count 5 verified with recount agreement",
+                "num_items": 1,
+                "num_grounded": 1
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.03",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 2.07,
+            "latency_ms": 3.3,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -583,13 +646,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Biathlon; games->GAMES::2018::Winter",
-            "latency_ms": 0.13
+            "latency_ms": 0.12
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
-            "latency_ms": 0.11
+            "latency_ms": 0.1
           },
           {
             "operation": "count_threshold",
@@ -601,60 +664,34 @@
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
-            "latency_ms": 2.07
+            "latency_ms": 3.3
           }
         ],
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "Aggregator",
-            "operation": "count_threshold",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "count": 5,
-              "candidates": 11,
-              "threshold": 73,
-              "comparator": "gt",
-              "field_completeness": 1.0,
-              "exhaustive": true,
-              "missing_field": 0,
-              "kept_doc_ids": [
-                "Q47155555",
-                "Q47091419",
-                "Q47105341",
-                "Q47155425",
-                "Q47155408"
-              ]
-            }
-          },
-          {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "5",
-              "source": "structured",
-              "rationale": "5 of 11 enumerated events had more than 73 competitors",
-              "citations": [
-                "Q47155555",
-                "Q47091419",
-                "Q47105341",
-                "Q47155425",
-                "Q47155408"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.03,
-              "conflicts": {}
+              "doc_id": "aggregation_accumulator",
+              "source_type": "accumulator",
+              "field": "count",
+              "value": 5,
+              "snippet": "Counted 5 events meeting threshold",
+              "grounded": true,
+              "confidence": 0.92
             }
           }
         ],
@@ -716,6 +753,26 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "aggregation_accumulator",
+                "source_type": "accumulator",
+                "field": "count",
+                "value": 5,
+                "snippet": "Counted 5 events meeting threshold",
+                "grounded": true,
+                "confidence": 0.92
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Count 5 verified with recount agreement",
+            "num_items": 1,
+            "num_grounded": 1
+          },
           "synth_source": "structured",
           "rationale": "5 of 11 enumerated events had more than 73 competitors",
           "adjudication": {},
@@ -741,7 +798,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 2.71
+            "when_latency_ms": 3.97
           },
           "plan_skips": []
         },
@@ -756,7 +813,19 @@
           "citation_f1": 0.625,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "numeric",
+            "score": 1.0,
+            "metric_name": "numeric_exact",
+            "tolerance_used": 0.0,
+            "details": {
+              "pred_val": 5.0,
+              "target_val": 5.0,
+              "absolute_diff": 0.0
+            }
+          }
         }
       },
       "Router": {
@@ -771,7 +840,7 @@
           "Q47155425",
           "Q47155408"
         ],
-        "latency_ms": 0.88,
+        "latency_ms": 0.76,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -828,7 +897,7 @@
               "confidence": 0.9,
               "min_confidence": 0.65,
               "reason": "template match for 'aggregation'",
-              "routing_note": "",
+              "routing_note": "a count is only correct if every candidate is enumerated, and no top-k window contains the complete set",
               "escalated": false
             }
           },
@@ -843,11 +912,14 @@
               "venue_score": 0.0,
               "games": "GAMES::2018::Winter",
               "edition_chain": [],
-              "implied_event_pages": 11
+              "implied_event_pages": 11,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 0.17,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -871,11 +943,14 @@
                 "Biathlon at the 2018 Winter Olympics – Women's relay",
                 "Biathlon at the 2018 Winter Olympics – Women's sprint",
                 "Biathlon at the 2018 Winter Olympics – Women's pursuit"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'traverse_graph' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.15,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -899,7 +974,10 @@
                 "Q47105341",
                 "Q47155425",
                 "Q47155408"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'count_threshold' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
@@ -916,11 +994,14 @@
             "observation": {
               "recount": 5,
               "documents_with_field": 11,
-              "recount_matches": true
+              "recount_matches": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'verify_by_recount' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -940,11 +1021,14 @@
                 "independent_recount": 5,
                 "recount_matches": true
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.97,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.97 (new confidence: 0.97)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -967,7 +1051,31 @@
               ],
               "adjudication": {},
               "uncertainty": 0.03,
-              "conflicts": {}
+              "conflicts": {},
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "aggregation_accumulator",
+                    "source_type": "accumulator",
+                    "field": "count",
+                    "value": 5,
+                    "snippet": "Counted 5 events meeting threshold",
+                    "grounded": true,
+                    "confidence": 0.92
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Count 5 verified with recount agreement",
+                "num_items": 1,
+                "num_grounded": 1
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.03",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
@@ -982,19 +1090,19 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.01
+            "latency_ms": 0.03
           },
           {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Biathlon; games->GAMES::2018::Winter",
-            "latency_ms": 0.17
+            "latency_ms": 0.11
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
-            "latency_ms": 0.15
+            "latency_ms": 0.1
           },
           {
             "operation": "count_threshold",
@@ -1006,13 +1114,13 @@
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.01
           },
           {
             "operation": "render_answer",
@@ -1024,42 +1132,16 @@
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "Aggregator",
-            "operation": "count_threshold",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "count": 5,
-              "candidates": 11,
-              "threshold": 73,
-              "comparator": "gt",
-              "field_completeness": 1.0,
-              "exhaustive": true,
-              "missing_field": 0,
-              "kept_doc_ids": [
-                "Q47155555",
-                "Q47091419",
-                "Q47105341",
-                "Q47155425",
-                "Q47155408"
-              ]
-            }
-          },
-          {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "5",
-              "source": "structured",
-              "rationale": "5 of 11 enumerated events had more than 73 competitors",
-              "citations": [
-                "Q47155555",
-                "Q47091419",
-                "Q47105341",
-                "Q47155425",
-                "Q47155408"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.03,
-              "conflicts": {}
+              "doc_id": "aggregation_accumulator",
+              "source_type": "accumulator",
+              "field": "count",
+              "value": 5,
+              "snippet": "Counted 5 events meeting threshold",
+              "grounded": true,
+              "confidence": 0.92
             }
           }
         ],
@@ -1121,6 +1203,26 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "aggregation_accumulator",
+                "source_type": "accumulator",
+                "field": "count",
+                "value": 5,
+                "snippet": "Counted 5 events meeting threshold",
+                "grounded": true,
+                "confidence": 0.92
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Count 5 verified with recount agreement",
+            "num_items": 1,
+            "num_grounded": 1
+          },
           "synth_source": "structured",
           "rationale": "5 of 11 enumerated events had more than 73 competitors",
           "adjudication": {},
@@ -1146,7 +1248,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.74
+            "when_latency_ms": 0.62
           },
           "plan_skips": [],
           "router": {
@@ -1185,7 +1287,19 @@
           "citation_f1": 0.625,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "numeric",
+            "score": 1.0,
+            "metric_name": "numeric_exact",
+            "tolerance_used": 0.0,
+            "details": {
+              "pred_val": 5.0,
+              "target_val": 5.0,
+              "absolute_diff": 0.0
+            }
+          }
         }
       }
     }
@@ -1210,7 +1324,7 @@
         "qtype": "temporal",
         "answer": "",
         "citations": [],
-        "latency_ms": 55.65,
+        "latency_ms": 47.87,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -1254,7 +1368,7 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 55.16
+            "latency_ms": 47.41
           },
           {
             "operation": "extractive_answer",
@@ -1312,7 +1426,15 @@
           "citation_f1": null,
           "completeness": 0.0,
           "grounding_category": "unretrieved_failure",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": false,
+            "answer_type": "entity",
+            "score": 0.0,
+            "metric_name": "entity_match",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       },
       "GraphRAG": {
@@ -1323,7 +1445,7 @@
         "citations": [
           "Q1050909"
         ],
-        "latency_ms": 267.01,
+        "latency_ms": 247.11,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -1388,17 +1510,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 121.58
+            "latency_ms": 121.99
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 144.53
+            "latency_ms": 124.21
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.31
+            "latency_ms": 0.26
           }
         ],
         "tokens_per_operation": [
@@ -1475,7 +1597,15 @@
           "citation_f1": 0.6667,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       },
       "Agentic GraphRAG": {
@@ -1487,7 +1617,7 @@
           "Q1050909",
           "Q26233122"
         ],
-        "latency_ms": 156.25,
+        "latency_ms": 157.29,
         "retrieval_steps": 4,
         "reasoning_steps": 2,
         "tools_called": [
@@ -1544,11 +1674,14 @@
                 "2016 Summer",
                 "2012 Summer"
               ],
-              "implied_event_pages": 60
+              "implied_event_pages": 60,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 60,
-            "latency_ms": 18.72,
+            "latency_ms": 17.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1577,11 +1710,14 @@
                   }
                 ]
               },
-              "reasoning": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)"
+              "reasoning": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'resolve_anchor' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 9.4,
+            "latency_ms": 9.21,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1609,11 +1745,14 @@
                   "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
                   "score": 0.827
                 }
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'resolve_event' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 9.37,
+            "latency_ms": 9.73,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1638,11 +1777,14 @@
                 2008,
                 2012,
                 2016
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'verify_chain' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.12,
+            "latency_ms": 0.15,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1665,11 +1807,14 @@
                 "Q3628781",
                 "Q853023",
                 "Q26233320"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'vector_search' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 8,
-            "latency_ms": 117.97,
+            "latency_ms": 120.32,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1737,11 +1882,14 @@
                 "anchor_confirmed": true,
                 "event_match_score": 1.0
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.97,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.97 (new confidence: 0.97)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1791,11 +1939,44 @@
                 ],
                 "confidence_after": 0.9,
                 "decisive": true
-              }
+              },
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "Q1050909",
+                    "source_type": "graph_vertex",
+                    "field": "gold",
+                    "value": "Chen Ding",
+                    "snippet": "Event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk gold medallist: Chen Ding",
+                    "grounded": true,
+                    "confidence": 0.9
+                  },
+                  {
+                    "doc_id": "Q26233122",
+                    "source_type": "passage",
+                    "field": "text",
+                    "value": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: ",
+                    "snippet": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: 2016 Summer | venue: Pontal | date: 12 A",
+                    "grounded": true,
+                    "confidence": 0.88
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Matched event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk for temporal",
+                "num_items": 2,
+                "num_grounded": 2
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.10",
+              "remaining_gaps": []
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.1,
+            "latency_ms": 0.18,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1806,115 +1987,71 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "latency_ms": 18.72
+            "latency_ms": 17.1
           },
           {
             "operation": "resolve_anchor",
             "agent": "TemporalReasoner",
             "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "latency_ms": 9.4
+            "latency_ms": 9.21
           },
           {
             "operation": "resolve_event",
             "agent": "TemporalReasoner",
             "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "latency_ms": 9.37
+            "latency_ms": 9.73
           },
           {
             "operation": "verify_chain",
             "agent": "TemporalReasoner",
             "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "latency_ms": 0.12
+            "latency_ms": 0.15
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
-            "latency_ms": 117.97
+            "latency_ms": 120.32
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.02
+            "latency_ms": 0.03
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
-            "latency_ms": 0.1
+            "latency_ms": 0.18
           }
         ],
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "TemporalReasoner",
-            "operation": "resolve_event",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "sport": "Athletics",
-              "score": 1.0,
-              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-              "num_events_in_games": 42,
-              "candidates": [
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-                  "score": 1.0
-                },
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
-                  "score": 0.828
-                },
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
-                  "score": 0.827
-                }
-              ]
+              "doc_id": "Q1050909",
+              "source_type": "graph_vertex",
+              "field": "gold",
+              "value": "Chen Ding",
+              "snippet": "Event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk gold medallist: Chen Ding",
+              "grounded": true,
+              "confidence": 0.9
             }
           },
           {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "answer": "Chen Ding",
-              "source": "structured",
-              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
-              "citations": [
-                "Q1050909",
-                "Q26233122"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.1,
-              "conflicts": {
-                "field": "gold",
-                "rule": "recency",
-                "resolved": "Wang Zhen",
-                "confidence": 0.9,
-                "versions_compared": 2,
-                "explanation": "Q26233122 (2016) is the most recent statement and supersedes 1 earlier version(s)",
-                "superseded": [
-                  {
-                    "value": "Chen Ding",
-                    "doc_id": "Q1050909",
-                    "year": 2012
-                  }
-                ],
-                "versions": [
-                  {
-                    "value": "Chen Ding",
-                    "doc_id": "Q1050909",
-                    "year": 2012,
-                    "source_type": "infobox"
-                  },
-                  {
-                    "value": "Wang Zhen",
-                    "doc_id": "Q26233122",
-                    "year": 2016,
-                    "source_type": "infobox"
-                  }
-                ],
-                "confidence_after": 0.9,
-                "decisive": true
-              }
+              "doc_id": "Q26233122",
+              "source_type": "passage",
+              "field": "text",
+              "value": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: ",
+              "snippet": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: 2016 Summer | venue: Pontal | date: 12 A",
+              "grounded": true,
+              "confidence": 0.88
             }
           }
         ],
@@ -1976,6 +2113,35 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "Q1050909",
+                "source_type": "graph_vertex",
+                "field": "gold",
+                "value": "Chen Ding",
+                "snippet": "Event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk gold medallist: Chen Ding",
+                "grounded": true,
+                "confidence": 0.9
+              },
+              {
+                "doc_id": "Q26233122",
+                "source_type": "passage",
+                "field": "text",
+                "value": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: ",
+                "snippet": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: 2016 Summer | venue: Pontal | date: 12 A",
+                "grounded": true,
+                "confidence": 0.88
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Matched event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk for temporal",
+            "num_items": 2,
+            "num_grounded": 2
+          },
           "synth_source": "structured",
           "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
           "adjudication": {},
@@ -2031,7 +2197,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 156.25
+            "when_latency_ms": 157.29
           },
           "plan_skips": []
         },
@@ -2046,7 +2212,15 @@
           "citation_f1": 1.0,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       },
       "Router": {
@@ -2058,7 +2232,7 @@
           "Q1050909",
           "Q26233122"
         ],
-        "latency_ms": 196.24,
+        "latency_ms": 150.86,
         "retrieval_steps": 4,
         "reasoning_steps": 2,
         "tools_called": [
@@ -2117,7 +2291,7 @@
               "confidence": 0.9,
               "min_confidence": 0.65,
               "reason": "template match for 'temporal'",
-              "routing_note": "",
+              "routing_note": "the PREV/NEXT edition chain must be walked and confirmed; top-k retrieval cannot follow an edge",
               "escalated": false
             }
           },
@@ -2135,11 +2309,14 @@
                 "2016 Summer",
                 "2012 Summer"
               ],
-              "implied_event_pages": 60
+              "implied_event_pages": 60,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 60,
-            "latency_ms": 18.76,
+            "latency_ms": 18.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -2168,11 +2345,14 @@
                   }
                 ]
               },
-              "reasoning": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)"
+              "reasoning": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'resolve_anchor' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 11.18,
+            "latency_ms": 9.56,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -2200,11 +2380,14 @@
                   "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
                   "score": 0.827
                 }
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'resolve_event' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 10.64,
+            "latency_ms": 9.68,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -2229,11 +2412,14 @@
                 2008,
                 2012,
                 2016
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'verify_chain' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.22,
+            "latency_ms": 0.16,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -2256,11 +2442,14 @@
                 "Q3628781",
                 "Q853023",
                 "Q26233320"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'vector_search' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 8,
-            "latency_ms": 154.68,
+            "latency_ms": 112.48,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -2328,11 +2517,14 @@
                 "anchor_confirmed": true,
                 "event_match_score": 1.0
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.97,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.97 (new confidence: 0.97)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -2382,11 +2574,44 @@
                 ],
                 "confidence_after": 0.9,
                 "decisive": true
-              }
+              },
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "Q1050909",
+                    "source_type": "graph_vertex",
+                    "field": "gold",
+                    "value": "Chen Ding",
+                    "snippet": "Event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk gold medallist: Chen Ding",
+                    "grounded": true,
+                    "confidence": 0.9
+                  },
+                  {
+                    "doc_id": "Q26233122",
+                    "source_type": "passage",
+                    "field": "text",
+                    "value": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: ",
+                    "snippet": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: 2016 Summer | venue: Pontal | date: 12 A",
+                    "grounded": true,
+                    "confidence": 0.88
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Matched event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk for temporal",
+                "num_items": 2,
+                "num_grounded": 2
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.10",
+              "remaining_gaps": []
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.09,
+            "latency_ms": 0.12,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -2397,121 +2622,77 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.02
+            "latency_ms": 0.05
           },
           {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "latency_ms": 18.76
+            "latency_ms": 18.04
           },
           {
             "operation": "resolve_anchor",
             "agent": "TemporalReasoner",
             "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "latency_ms": 11.18
+            "latency_ms": 9.56
           },
           {
             "operation": "resolve_event",
             "agent": "TemporalReasoner",
             "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "latency_ms": 10.64
+            "latency_ms": 9.68
           },
           {
             "operation": "verify_chain",
             "agent": "TemporalReasoner",
             "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "latency_ms": 0.22
+            "latency_ms": 0.16
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
-            "latency_ms": 154.68
+            "latency_ms": 112.48
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
-            "latency_ms": 0.09
+            "latency_ms": 0.12
           }
         ],
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "TemporalReasoner",
-            "operation": "resolve_event",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "sport": "Athletics",
-              "score": 1.0,
-              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-              "num_events_in_games": 42,
-              "candidates": [
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-                  "score": 1.0
-                },
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
-                  "score": 0.828
-                },
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
-                  "score": 0.827
-                }
-              ]
+              "doc_id": "Q1050909",
+              "source_type": "graph_vertex",
+              "field": "gold",
+              "value": "Chen Ding",
+              "snippet": "Event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk gold medallist: Chen Ding",
+              "grounded": true,
+              "confidence": 0.9
             }
           },
           {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "answer": "Chen Ding",
-              "source": "structured",
-              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
-              "citations": [
-                "Q1050909",
-                "Q26233122"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.1,
-              "conflicts": {
-                "field": "gold",
-                "rule": "recency",
-                "resolved": "Wang Zhen",
-                "confidence": 0.9,
-                "versions_compared": 2,
-                "explanation": "Q26233122 (2016) is the most recent statement and supersedes 1 earlier version(s)",
-                "superseded": [
-                  {
-                    "value": "Chen Ding",
-                    "doc_id": "Q1050909",
-                    "year": 2012
-                  }
-                ],
-                "versions": [
-                  {
-                    "value": "Chen Ding",
-                    "doc_id": "Q1050909",
-                    "year": 2012,
-                    "source_type": "infobox"
-                  },
-                  {
-                    "value": "Wang Zhen",
-                    "doc_id": "Q26233122",
-                    "year": 2016,
-                    "source_type": "infobox"
-                  }
-                ],
-                "confidence_after": 0.9,
-                "decisive": true
-              }
+              "doc_id": "Q26233122",
+              "source_type": "passage",
+              "field": "text",
+              "value": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: ",
+              "snippet": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: 2016 Summer | venue: Pontal | date: 12 A",
+              "grounded": true,
+              "confidence": 0.88
             }
           }
         ],
@@ -2573,6 +2754,35 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "Q1050909",
+                "source_type": "graph_vertex",
+                "field": "gold",
+                "value": "Chen Ding",
+                "snippet": "Event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk gold medallist: Chen Ding",
+                "grounded": true,
+                "confidence": 0.9
+              },
+              {
+                "doc_id": "Q26233122",
+                "source_type": "passage",
+                "field": "text",
+                "value": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: ",
+                "snippet": "Infobox of Athletics at the 2016 Summer Olympics – Men's 20 kilometres walk -> event: Men's 20 kilometres walk | games: 2016 Summer | venue: Pontal | date: 12 A",
+                "grounded": true,
+                "confidence": 0.88
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Matched event Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk for temporal",
+            "num_items": 2,
+            "num_grounded": 2
+          },
           "synth_source": "structured",
           "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
           "adjudication": {},
@@ -2628,7 +2838,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 196.06
+            "when_latency_ms": 150.63
           },
           "plan_skips": [],
           "router": {
@@ -2667,7 +2877,15 @@
           "citation_f1": 1.0,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       }
     }
@@ -2707,7 +2925,7 @@
         "qtype": "aggregation",
         "answer": "",
         "citations": [],
-        "latency_ms": 42.28,
+        "latency_ms": 37.75,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -2751,7 +2969,7 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 41.98
+            "latency_ms": 37.47
           },
           {
             "operation": "extractive_answer",
@@ -2809,7 +3027,18 @@
           "citation_f1": null,
           "completeness": 0.0,
           "grounding_category": "unretrieved_failure",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": false,
+            "answer_type": "numeric",
+            "score": 0.0,
+            "metric_name": "numeric_exact",
+            "tolerance_used": 0.0,
+            "details": {
+              "error": "no_numeric_found_in_prediction",
+              "raw_pred": ""
+            }
+          }
         }
       },
       "GraphRAG": {
@@ -2829,7 +3058,7 @@
           "Q7500832",
           "Q7500834"
         ],
-        "latency_ms": 185.73,
+        "latency_ms": 170.22,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -2894,17 +3123,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 91.96
+            "latency_ms": 79.16
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 93.02
+            "latency_ms": 90.27
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.25
+            "latency_ms": 0.26
           }
         ],
         "tokens_per_operation": [
@@ -3030,7 +3259,19 @@
           "citation_f1": 0.5185,
           "completeness": 0.0,
           "grounding_category": "grounded_incorrect",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": false,
+            "answer_type": "numeric",
+            "score": 0.1429,
+            "metric_name": "numeric_exact",
+            "tolerance_used": 0.0,
+            "details": {
+              "pred_val": 2.0,
+              "target_val": 8.0,
+              "absolute_diff": 6.0
+            }
+          }
         }
       },
       "Agentic GraphRAG": {
@@ -3048,7 +3289,7 @@
           "Q4354615",
           "Q5481589"
         ],
-        "latency_ms": 0.52,
+        "latency_ms": 0.73,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -3100,11 +3341,14 @@
               "venue_score": 0.0,
               "games": "GAMES::2004::Summer",
               "edition_chain": [],
-              "implied_event_pages": 17
+              "implied_event_pages": 17,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.11,
+            "latency_ms": 0.13,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3128,11 +3372,14 @@
                 "Shooting at the 2004 Summer Olympics – Women's 50 metre rifle three positions",
                 "Shooting at the 2004 Summer Olympics – Men's 50 metre pistol",
                 "Shooting at the 2004 Summer Olympics – Women's double trap"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'traverse_graph' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.09,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3159,11 +3406,14 @@
                 "Q4354074",
                 "Q4354615",
                 "Q5481589"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'count_threshold' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3176,11 +3426,14 @@
             "observation": {
               "recount": 8,
               "documents_with_field": 17,
-              "recount_matches": true
+              "recount_matches": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'verify_by_recount' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3200,7 +3453,10 @@
                 "independent_recount": 8,
                 "recount_matches": true
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.97,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.97 (new confidence: 0.97)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
@@ -3230,11 +3486,35 @@
               ],
               "adjudication": {},
               "uncertainty": 0.03,
-              "conflicts": {}
+              "conflicts": {},
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "aggregation_accumulator",
+                    "source_type": "accumulator",
+                    "field": "count",
+                    "value": 8,
+                    "snippet": "Counted 8 events meeting threshold",
+                    "grounded": true,
+                    "confidence": 0.92
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Count 8 verified with recount agreement",
+                "num_items": 1,
+                "num_grounded": 1
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.03",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.09,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3245,25 +3525,25 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Shooting; games->GAMES::2004::Summer",
-            "latency_ms": 0.11
+            "latency_ms": 0.13
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
-            "latency_ms": 0.09
+            "latency_ms": 0.11
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
-            "latency_ms": 0.02
+            "latency_ms": 0.03
           },
           {
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 8 (documents with the field: 17); matches the primary count",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "evaluate_evidence",
@@ -3275,54 +3555,22 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
-            "latency_ms": 0.05
+            "latency_ms": 0.09
           }
         ],
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "Aggregator",
-            "operation": "count_threshold",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "count": 8,
-              "candidates": 17,
-              "threshold": 37,
-              "comparator": "gt",
-              "field_completeness": 1.0,
-              "exhaustive": true,
-              "missing_field": 0,
-              "kept_doc_ids": [
-                "Q7500827",
-                "Q7500832",
-                "Q7500834",
-                "Q5395306",
-                "Q7500829",
-                "Q4354074",
-                "Q4354615",
-                "Q5481589"
-              ]
-            }
-          },
-          {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "8",
-              "source": "structured",
-              "rationale": "8 of 17 enumerated events had more than 37 competitors",
-              "citations": [
-                "Q7500827",
-                "Q7500832",
-                "Q7500834",
-                "Q5395306",
-                "Q7500829",
-                "Q4354074",
-                "Q4354615",
-                "Q5481589"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.03,
-              "conflicts": {}
+              "doc_id": "aggregation_accumulator",
+              "source_type": "accumulator",
+              "field": "count",
+              "value": 8,
+              "snippet": "Counted 8 events meeting threshold",
+              "grounded": true,
+              "confidence": 0.92
             }
           }
         ],
@@ -3384,6 +3632,26 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "aggregation_accumulator",
+                "source_type": "accumulator",
+                "field": "count",
+                "value": 8,
+                "snippet": "Counted 8 events meeting threshold",
+                "grounded": true,
+                "confidence": 0.92
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Count 8 verified with recount agreement",
+            "num_items": 1,
+            "num_grounded": 1
+          },
           "synth_source": "structured",
           "rationale": "8 of 17 enumerated events had more than 37 competitors",
           "adjudication": {},
@@ -3409,7 +3677,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.52
+            "when_latency_ms": 0.73
           },
           "plan_skips": []
         },
@@ -3424,7 +3692,19 @@
           "citation_f1": 0.64,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "numeric",
+            "score": 1.0,
+            "metric_name": "numeric_exact",
+            "tolerance_used": 0.0,
+            "details": {
+              "pred_val": 8.0,
+              "target_val": 8.0,
+              "absolute_diff": 0.0
+            }
+          }
         }
       },
       "Router": {
@@ -3442,7 +3722,7 @@
           "Q4354615",
           "Q5481589"
         ],
-        "latency_ms": 0.54,
+        "latency_ms": 0.71,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -3499,7 +3779,7 @@
               "confidence": 0.9,
               "min_confidence": 0.65,
               "reason": "template match for 'aggregation'",
-              "routing_note": "",
+              "routing_note": "a count is only correct if every candidate is enumerated, and no top-k window contains the complete set",
               "escalated": false
             }
           },
@@ -3514,11 +3794,14 @@
               "venue_score": 0.0,
               "games": "GAMES::2004::Summer",
               "edition_chain": [],
-              "implied_event_pages": 17
+              "implied_event_pages": 17,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.1,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3542,11 +3825,14 @@
                 "Shooting at the 2004 Summer Olympics – Women's 50 metre rifle three positions",
                 "Shooting at the 2004 Summer Olympics – Men's 50 metre pistol",
                 "Shooting at the 2004 Summer Olympics – Women's double trap"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'traverse_graph' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.09,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3573,11 +3859,14 @@
                 "Q4354074",
                 "Q4354615",
                 "Q5481589"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'count_threshold' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3590,7 +3879,10 @@
             "observation": {
               "recount": 8,
               "documents_with_field": 17,
-              "recount_matches": true
+              "recount_matches": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'verify_by_recount' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
@@ -3614,7 +3906,10 @@
                 "independent_recount": 8,
                 "recount_matches": true
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.97,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.97 (new confidence: 0.97)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
@@ -3644,11 +3939,35 @@
               ],
               "adjudication": {},
               "uncertainty": 0.03,
-              "conflicts": {}
+              "conflicts": {},
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "aggregation_accumulator",
+                    "source_type": "accumulator",
+                    "field": "count",
+                    "value": 8,
+                    "snippet": "Counted 8 events meeting threshold",
+                    "grounded": true,
+                    "confidence": 0.92
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Count 8 verified with recount agreement",
+                "num_items": 1,
+                "num_grounded": 1
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.03",
+              "remaining_gaps": []
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.04,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3659,25 +3978,25 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Shooting; games->GAMES::2004::Summer",
-            "latency_ms": 0.1
+            "latency_ms": 0.11
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
-            "latency_ms": 0.09
+            "latency_ms": 0.1
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "verify_by_recount",
@@ -3695,54 +4014,22 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
-            "latency_ms": 0.04
+            "latency_ms": 0.05
           }
         ],
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "Aggregator",
-            "operation": "count_threshold",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "count": 8,
-              "candidates": 17,
-              "threshold": 37,
-              "comparator": "gt",
-              "field_completeness": 1.0,
-              "exhaustive": true,
-              "missing_field": 0,
-              "kept_doc_ids": [
-                "Q7500827",
-                "Q7500832",
-                "Q7500834",
-                "Q5395306",
-                "Q7500829",
-                "Q4354074",
-                "Q4354615",
-                "Q5481589"
-              ]
-            }
-          },
-          {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "8",
-              "source": "structured",
-              "rationale": "8 of 17 enumerated events had more than 37 competitors",
-              "citations": [
-                "Q7500827",
-                "Q7500832",
-                "Q7500834",
-                "Q5395306",
-                "Q7500829",
-                "Q4354074",
-                "Q4354615",
-                "Q5481589"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.03,
-              "conflicts": {}
+              "doc_id": "aggregation_accumulator",
+              "source_type": "accumulator",
+              "field": "count",
+              "value": 8,
+              "snippet": "Counted 8 events meeting threshold",
+              "grounded": true,
+              "confidence": 0.92
             }
           }
         ],
@@ -3804,6 +4091,26 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "aggregation_accumulator",
+                "source_type": "accumulator",
+                "field": "count",
+                "value": 8,
+                "snippet": "Counted 8 events meeting threshold",
+                "grounded": true,
+                "confidence": 0.92
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Count 8 verified with recount agreement",
+            "num_items": 1,
+            "num_grounded": 1
+          },
           "synth_source": "structured",
           "rationale": "8 of 17 enumerated events had more than 37 competitors",
           "adjudication": {},
@@ -3829,7 +4136,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.43
+            "when_latency_ms": 0.58
           },
           "plan_skips": [],
           "router": {
@@ -3868,7 +4175,19 @@
           "citation_f1": 0.64,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "numeric",
+            "score": 1.0,
+            "metric_name": "numeric_exact",
+            "tolerance_used": 0.0,
+            "details": {
+              "pred_val": 8.0,
+              "target_val": 8.0,
+              "absolute_diff": 0.0
+            }
+          }
         }
       }
     }
@@ -3934,7 +4253,7 @@
         "qtype": "superlative",
         "answer": "",
         "citations": [],
-        "latency_ms": 45.66,
+        "latency_ms": 54.77,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -3978,7 +4297,7 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 45.32
+            "latency_ms": 54.44
           },
           {
             "operation": "extractive_answer",
@@ -4036,7 +4355,15 @@
           "citation_f1": null,
           "completeness": 0.0,
           "grounding_category": "unretrieved_failure",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": false,
+            "answer_type": "entity",
+            "score": 0.0,
+            "metric_name": "entity_match",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       },
       "GraphRAG": {
@@ -4047,7 +4374,7 @@
         "citations": [
           "Q922361"
         ],
-        "latency_ms": 200.39,
+        "latency_ms": 184.16,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -4112,17 +4439,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 98.43
+            "latency_ms": 98.72
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 101.18
+            "latency_ms": 84.75
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.26
+            "latency_ms": 0.22
           }
         ],
         "tokens_per_operation": [
@@ -4203,7 +4530,18 @@
           "citation_f1": 0.0455,
           "completeness": 0.7368,
           "grounding_category": "grounded_incorrect",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": false,
+            "answer_type": "entity",
+            "score": 0.3763,
+            "metric_name": "entity_mismatch",
+            "tolerance_used": 0.0,
+            "details": {
+              "similarity": 0.7525000000000001,
+              "matched_rule": "none"
+            }
+          }
         }
       },
       "Agentic GraphRAG": {
@@ -4214,7 +4552,7 @@
         "citations": [
           "Q693595"
         ],
-        "latency_ms": 0.63,
+        "latency_ms": 0.62,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -4266,11 +4604,14 @@
               "venue_score": 0.0,
               "games": "GAMES::2008::Summer",
               "edition_chain": [],
-              "implied_event_pages": 43
+              "implied_event_pages": 43,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 43,
-            "latency_ms": 0.15,
+            "latency_ms": 0.12,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4294,11 +4635,14 @@
                 "Athletics at the 2008 Summer Olympics – Men's high jump",
                 "Athletics at the 2008 Summer Olympics – Women's 1500 metres",
                 "Athletics at the 2008 Summer Olympics – Women's discus throw"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'traverse_graph' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.12,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4316,11 +4660,14 @@
               "margin": 10,
               "candidates": 43,
               "missing_field": 0,
-              "unique_winner": true
+              "unique_winner": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'arg_extreme' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.04,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4334,7 +4681,10 @@
               "verified": true,
               "extreme_value": 95,
               "violations": [],
-              "documents_with_field": 43
+              "documents_with_field": 43,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'verify_extreme' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
@@ -4357,7 +4707,10 @@
                 "unique_winner": true,
                 "extreme_verified": true
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.85,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.85 (new confidence: 0.85)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.85,
             "new_documents": 0,
@@ -4380,11 +4733,35 @@
               ],
               "adjudication": {},
               "uncertainty": 0.15,
-              "conflicts": {}
+              "conflicts": {},
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "Q693595",
+                    "source_type": "graph_vertex",
+                    "field": "competitors",
+                    "value": 95,
+                    "snippet": "Winner Athletics at the 2008 Summer Olympics – Men's marathon competitors: 95",
+                    "grounded": true,
+                    "confidence": 0.92
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Superlative extreme Athletics at the 2008 Summer Olympics – Men's marathon verified",
+                "num_items": 1,
+                "num_grounded": 1
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.15",
+              "remaining_gaps": []
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4395,19 +4772,19 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2008::Summer",
-            "latency_ms": 0.15
+            "latency_ms": 0.12
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 43 event pages (0 new)",
-            "latency_ms": 0.12
+            "latency_ms": 0.1
           },
           {
             "operation": "arg_extreme",
             "agent": "Comparator",
             "detail": "argmax over 43 events -> \"Athletics at the 2008 Summer Olympics – Men's marathon\" (95); margin over runner-up: 10",
-            "latency_ms": 0.04
+            "latency_ms": 0.03
           },
           {
             "operation": "verify_extreme",
@@ -4425,38 +4802,22 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer=\"Athletics at the 2008 Summer Olympics – Men's marathon\" citing 1 document(s) :: 'Athletics at the 2008 Summer Olympics – Men's marathon' ha",
-            "latency_ms": 0.03
+            "latency_ms": 0.05
           }
         ],
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "Comparator",
-            "operation": "arg_extreme",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "winner": "Athletics at the 2008 Summer Olympics – Men's marathon",
-              "winner_doc_id": "Q693595",
-              "winner_value": 95,
-              "runner_up": "Athletics at the 2008 Summer Olympics – Women's 100 metres",
-              "margin": 10,
-              "candidates": 43,
-              "missing_field": 0,
-              "unique_winner": true
-            }
-          },
-          {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-              "source": "structured",
-              "rationale": "'Athletics at the 2008 Summer Olympics – Men's marathon' had the highest competitor count (95) among 43 enumerated events",
-              "citations": [
-                "Q693595"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.15,
-              "conflicts": {}
+              "doc_id": "Q693595",
+              "source_type": "graph_vertex",
+              "field": "competitors",
+              "value": 95,
+              "snippet": "Winner Athletics at the 2008 Summer Olympics – Men's marathon competitors: 95",
+              "grounded": true,
+              "confidence": 0.92
             }
           }
         ],
@@ -4518,6 +4879,26 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "Q693595",
+                "source_type": "graph_vertex",
+                "field": "competitors",
+                "value": 95,
+                "snippet": "Winner Athletics at the 2008 Summer Olympics – Men's marathon competitors: 95",
+                "grounded": true,
+                "confidence": 0.92
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Superlative extreme Athletics at the 2008 Summer Olympics – Men's marathon verified",
+            "num_items": 1,
+            "num_grounded": 1
+          },
           "synth_source": "structured",
           "rationale": "'Athletics at the 2008 Summer Olympics – Men's marathon' had the highest competitor count (95) among 43 enumerated events",
           "adjudication": {},
@@ -4542,7 +4923,7 @@
             "stop_reason": "no_new_information",
             "why": "Investigation terminated: no_new_information",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.63
+            "when_latency_ms": 0.62
           },
           "plan_skips": []
         },
@@ -4557,7 +4938,15 @@
           "citation_f1": 0.0455,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       },
       "Router": {
@@ -4568,7 +4957,7 @@
         "citations": [
           "Q693595"
         ],
-        "latency_ms": 0.64,
+        "latency_ms": 0.62,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -4625,7 +5014,7 @@
               "confidence": 0.9,
               "min_confidence": 0.65,
               "reason": "template match for 'superlative'",
-              "routing_note": "",
+              "routing_note": "the extreme need not be in the retrieved window at all, so the set must be enumerated and compared rather than sampled",
               "escalated": false
             }
           },
@@ -4640,11 +5029,14 @@
               "venue_score": 0.0,
               "games": "GAMES::2008::Summer",
               "edition_chain": [],
-              "implied_event_pages": 43
+              "implied_event_pages": 43,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 43,
-            "latency_ms": 0.13,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4668,11 +5060,14 @@
                 "Athletics at the 2008 Summer Olympics – Men's high jump",
                 "Athletics at the 2008 Summer Olympics – Women's 1500 metres",
                 "Athletics at the 2008 Summer Olympics – Women's discus throw"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'traverse_graph' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.11,
+            "latency_ms": 0.09,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4690,11 +5085,14 @@
               "margin": 10,
               "candidates": 43,
               "missing_field": 0,
-              "unique_winner": true
+              "unique_winner": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'arg_extreme' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4708,11 +5106,14 @@
               "verified": true,
               "extreme_value": 95,
               "violations": [],
-              "documents_with_field": 43
+              "documents_with_field": 43,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'verify_extreme' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4731,7 +5132,10 @@
                 "unique_winner": true,
                 "extreme_verified": true
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.85,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.85 (new confidence: 0.85)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.85,
             "new_documents": 0,
@@ -4754,11 +5158,35 @@
               ],
               "adjudication": {},
               "uncertainty": 0.15,
-              "conflicts": {}
+              "conflicts": {},
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "Q693595",
+                    "source_type": "graph_vertex",
+                    "field": "competitors",
+                    "value": 95,
+                    "snippet": "Winner Athletics at the 2008 Summer Olympics – Men's marathon competitors: 95",
+                    "grounded": true,
+                    "confidence": 0.92
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Superlative extreme Athletics at the 2008 Summer Olympics – Men's marathon verified",
+                "num_items": 1,
+                "num_grounded": 1
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.15",
+              "remaining_gaps": []
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4769,31 +5197,31 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2008::Summer",
-            "latency_ms": 0.13
+            "latency_ms": 0.1
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 43 event pages (0 new)",
-            "latency_ms": 0.11
+            "latency_ms": 0.09
           },
           {
             "operation": "arg_extreme",
             "agent": "Comparator",
             "detail": "argmax over 43 events -> \"Athletics at the 2008 Summer Olympics – Men's marathon\" (95); margin over runner-up: 10",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "verify_extreme",
             "agent": "Comparator",
             "detail": "cross-check of the extreme value (no violations) across 43 documents",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "evaluate_evidence",
@@ -4805,38 +5233,22 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer=\"Athletics at the 2008 Summer Olympics – Men's marathon\" citing 1 document(s) :: 'Athletics at the 2008 Summer Olympics – Men's marathon' ha",
-            "latency_ms": 0.02
+            "latency_ms": 0.04
           }
         ],
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "Comparator",
-            "operation": "arg_extreme",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "winner": "Athletics at the 2008 Summer Olympics – Men's marathon",
-              "winner_doc_id": "Q693595",
-              "winner_value": 95,
-              "runner_up": "Athletics at the 2008 Summer Olympics – Women's 100 metres",
-              "margin": 10,
-              "candidates": 43,
-              "missing_field": 0,
-              "unique_winner": true
-            }
-          },
-          {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "Athletics at the 2008 Summer Olympics – Men's marathon",
-              "source": "structured",
-              "rationale": "'Athletics at the 2008 Summer Olympics – Men's marathon' had the highest competitor count (95) among 43 enumerated events",
-              "citations": [
-                "Q693595"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.15,
-              "conflicts": {}
+              "doc_id": "Q693595",
+              "source_type": "graph_vertex",
+              "field": "competitors",
+              "value": 95,
+              "snippet": "Winner Athletics at the 2008 Summer Olympics – Men's marathon competitors: 95",
+              "grounded": true,
+              "confidence": 0.92
             }
           }
         ],
@@ -4898,6 +5310,26 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "Q693595",
+                "source_type": "graph_vertex",
+                "field": "competitors",
+                "value": 95,
+                "snippet": "Winner Athletics at the 2008 Summer Olympics – Men's marathon competitors: 95",
+                "grounded": true,
+                "confidence": 0.92
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Superlative extreme Athletics at the 2008 Summer Olympics – Men's marathon verified",
+            "num_items": 1,
+            "num_grounded": 1
+          },
           "synth_source": "structured",
           "rationale": "'Athletics at the 2008 Summer Olympics – Men's marathon' had the highest competitor count (95) among 43 enumerated events",
           "adjudication": {},
@@ -4922,7 +5354,7 @@
             "stop_reason": "no_new_information",
             "why": "Investigation terminated: no_new_information",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.52
+            "when_latency_ms": 0.5
           },
           "plan_skips": [],
           "router": {
@@ -4961,7 +5393,15 @@
           "citation_f1": 0.0455,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       }
     }
@@ -4987,7 +5427,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 21.38,
+        "latency_ms": 20.12,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -5031,12 +5471,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 20.47
+            "latency_ms": 19.21
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.63
+            "latency_ms": 0.68
           }
         ],
         "tokens_per_operation": [
@@ -5095,7 +5535,15 @@
           "citation_f1": 1.0,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       },
       "GraphRAG": {
@@ -5106,7 +5554,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 96.35,
+        "latency_ms": 95.54,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -5171,17 +5619,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 46.16
+            "latency_ms": 46.63
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 48.27
+            "latency_ms": 46.89
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 1.48
+            "latency_ms": 1.47
           }
         ],
         "tokens_per_operation": [
@@ -5261,7 +5709,15 @@
           "citation_f1": 1.0,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       },
       "Agentic GraphRAG": {
@@ -5272,7 +5728,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 47.3,
+        "latency_ms": 42.9,
         "retrieval_steps": 4,
         "reasoning_steps": 2,
         "tools_called": [
@@ -5325,11 +5781,14 @@
               "venue_score": 1.0,
               "games": null,
               "edition_chain": [],
-              "implied_event_pages": 5
+              "implied_event_pages": 5,
+              "uncertainty_delta": -1.0,
+              "reasoning_progress": "Action 'link_entities' raised uncertainty by 1.00 due to conflicting evidence",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 5,
-            "latency_ms": 0.08,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -5355,11 +5814,14 @@
                 "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
                 "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
                 "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'resolve_venue_date' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.62,
+            "latency_ms": 0.58,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -5382,7 +5844,10 @@
                 "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
                 "Weightlifting at the 1988 Summer Olympics – Men's 52 kg",
                 "Weightlifting at the 1988 Summer Olympics – Men's +110 kg"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'traverse_graph' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 0,
@@ -5409,11 +5874,14 @@
                 "Q10719573",
                 "Q10522554",
                 "Q55615398"
-              ]
+              ],
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'vector_search' maintained uncertainty at 1.00",
+              "remaining_gaps": []
             },
             "confidence_after": 0.0,
             "new_documents": 12,
-            "latency_ms": 46.07,
+            "latency_ms": 41.7,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -5432,11 +5900,14 @@
                 "venue_score": 1.0,
                 "num_candidates": 5
               },
-              "gaps": []
+              "gaps": [],
+              "uncertainty_delta": 0.9,
+              "reasoning_progress": "Action 'evaluate_evidence' reduced uncertainty by 0.90 (new confidence: 0.90)",
+              "remaining_gaps": []
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -5455,11 +5926,35 @@
               ],
               "adjudication": {},
               "uncertainty": 0.1,
-              "conflicts": {}
+              "conflicts": {},
+              "evidence_bundle": {
+                "items": [
+                  {
+                    "doc_id": "Q25239316",
+                    "source_type": "graph_vertex",
+                    "field": "gold",
+                    "value": "Naim Süleymanoğlu",
+                    "snippet": "Event Weightlifting at the 1988 Summer Olympics – Men's 60 kg gold medallist: Naim Süleymanoğlu",
+                    "grounded": true,
+                    "confidence": 0.9
+                  }
+                ],
+                "sufficiency_verdict": true,
+                "confidence": 0.9,
+                "uncertainty": 0.1,
+                "gaps": [],
+                "rationale": "Matched event Weightlifting at the 1988 Summer Olympics – Men's 60 kg for multi_hop",
+                "num_items": 1,
+                "num_grounded": 1
+              },
+              "sufficiency_verdict": true,
+              "uncertainty_delta": 0.0,
+              "reasoning_progress": "Action 'render_answer' maintained uncertainty at 0.10",
+              "remaining_gaps": []
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.08,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -5470,13 +5965,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.08
+            "latency_ms": 0.05
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
-            "latency_ms": 0.62
+            "latency_ms": 0.58
           },
           {
             "operation": "traverse_graph",
@@ -5488,58 +5983,34 @@
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 p",
-            "latency_ms": 46.07
+            "latency_ms": 41.7
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Naim Süleymanoğlu' citing 1 document(s) :: gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer ",
-            "latency_ms": 0.05
+            "latency_ms": 0.08
           }
         ],
         "tokens_per_operation": [],
         "evidence": [
           {
-            "agent": "LookupResolver",
-            "operation": "resolve_venue_date",
+            "agent": "EvidenceSynthesizerAgent",
+            "operation": "evidence_item",
             "observation": {
-              "matched": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-              "score": 1.0,
-              "venue_affinity": 1.0,
-              "num_candidates": 5,
-              "disambiguation": {
-                "ambiguous": true,
-                "top": "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-                "runner_up": "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
-                "date_score_gap": 0.05,
-                "separating_signal": "venue/sport affinity"
-              },
-              "top_candidates": [
-                "Weightlifting at the 1988 Summer Olympics – Men's 60 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 56 kg",
-                "Weightlifting at the 1988 Summer Olympics – Men's 67.5 kg"
-              ]
-            }
-          },
-          {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "Naim Süleymanoğlu",
-              "source": "structured",
-              "rationale": "gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
-              "citations": [
-                "Q25239316"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.1,
-              "conflicts": {}
+              "doc_id": "Q25239316",
+              "source_type": "graph_vertex",
+              "field": "gold",
+              "value": "Naim Süleymanoğlu",
+              "snippet": "Event Weightlifting at the 1988 Summer Olympics – Men's 60 kg gold medallist: Naim Süleymanoğlu",
+              "grounded": true,
+              "confidence": 0.9
             }
           }
         ],
@@ -5601,6 +6072,26 @@
           ],
           "resolved_gaps": [],
           "gaps_remaining": [],
+          "evidence_bundle": {
+            "items": [
+              {
+                "doc_id": "Q25239316",
+                "source_type": "graph_vertex",
+                "field": "gold",
+                "value": "Naim Süleymanoğlu",
+                "snippet": "Event Weightlifting at the 1988 Summer Olympics – Men's 60 kg gold medallist: Naim Süleymanoğlu",
+                "grounded": true,
+                "confidence": 0.9
+              }
+            ],
+            "sufficiency_verdict": true,
+            "confidence": 0.9,
+            "uncertainty": 0.1,
+            "gaps": [],
+            "rationale": "Matched event Weightlifting at the 1988 Summer Olympics – Men's 60 kg for multi_hop",
+            "num_items": 1,
+            "num_grounded": 1
+          },
           "synth_source": "structured",
           "rationale": "gold medallist read from 'Weightlifting at the 1988 Summer Olympics – Men's 60 kg' (1988 Summer Olympics)",
           "adjudication": {},
@@ -5626,7 +6117,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 47.3
+            "when_latency_ms": 42.9
           },
           "plan_skips": []
         },
@@ -5641,7 +6132,15 @@
           "citation_f1": 1.0,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       },
       "Router": {
@@ -5652,7 +6151,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 93.17,
+        "latency_ms": 95.21,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -5697,7 +6196,7 @@
               "confidence": 0.7,
               "min_confidence": 0.65,
               "reason": "template match for 'multi_hop'",
-              "routing_note": "",
+              "routing_note": "graph neighborhood expansion bridges the (venue, date) -> event traversal efficiently; escalates adaptively to Agentic GraphRAG if confidence < 0.85",
               "escalated": false
             }
           },
@@ -5739,22 +6238,22 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> GraphRAG",
-            "latency_ms": 0.02
+            "latency_ms": 0.04
           },
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 45.31
+            "latency_ms": 42.55
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 45.79
+            "latency_ms": 50.86
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 1.54
+            "latency_ms": 1.3
           }
         ],
         "tokens_per_operation": [
@@ -5858,7 +6357,15 @@
           "citation_f1": 1.0,
           "completeness": 1.0,
           "grounding_category": "grounded_correct",
-          "judge_reason": ""
+          "judge_reason": "",
+          "type_evaluation": {
+            "is_correct": true,
+            "answer_type": "entity",
+            "score": 1.0,
+            "metric_name": "entity_exact",
+            "tolerance_used": 0.0,
+            "details": {}
+          }
         }
       }
     }

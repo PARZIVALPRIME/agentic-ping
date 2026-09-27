@@ -157,10 +157,11 @@ MCP_PROMPTS = [
 class TigerGraphMCPServer:
     """Zero-dependency stdio JSON-RPC 2.0 MCP server for TigerGraph."""
 
-    def __init__(self) -> None:
+    def __init__(self, force_local: bool = False) -> None:
         self.kg = open_graph(
             config.benchmark.corpus_path, config,
             cache_path=config.benchmark.kg_cache_path,
+            force_local=force_local,
         )
         self.tools = GraphTools(self.kg, index=None)
         self._cached_agent = None
@@ -275,13 +276,20 @@ class TigerGraphMCPServer:
                 v_id = str(args.get("vertex_id", ""))
                 e_type = str(args.get("edge_type", ""))
                 limit = int(args.get("limit", 50))
-                hops = self.kg.neighbours(v_id, cap=limit)
-                filtered = [h for h in hops if not e_type or h[1] == e_type]
+                try:
+                    hops = self.kg.neighbours(v_id, cap=limit)
+                except TypeError:
+                    hops = self.kg.neighbours(v_id)
+                filtered = [h for h in hops if not e_type or (len(h) > 0 and h[0] == e_type)]
                 return {
                     "from_vertex": v_id,
-                    "num_hops": len(filtered),
+                    "num_hops": len(filtered[:limit]),
                     "hops": [
-                        {"direction": h[0], "edge_type": h[1], "target": h[2]}
+                        {
+                            "edge_type": h[0] if len(h) > 0 else "",
+                            "direction": h[1] if len(h) > 1 else "",
+                            "target": h[2] if len(h) > 2 else ""
+                        }
                         for h in filtered[:limit]
                     ],
                 }
@@ -538,7 +546,7 @@ def run_self_test() -> int:
     print("=" * 60)
     print(" TigerGraph Model Context Protocol (MCP) Server Self-Test")
     print("=" * 60)
-    server = TigerGraphMCPServer()
+    server = TigerGraphMCPServer(force_local=True)
 
     # 1. Initialize
     init_res = server.handle_request({"jsonrpc": "2.0", "id": 1, "method": "initialize"})
