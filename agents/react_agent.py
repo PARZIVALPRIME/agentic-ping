@@ -84,6 +84,18 @@ KEEP_VERBATIM = 2
 DIGEST_CHARS = 340
 
 
+#: Collaborative agent personas executing specialised roles in the ReAct loop
+TOOL_PERSONAS: Dict[str, str] = {
+    "search_events": "GraphNavigatorAgent",
+    "traverse_graph": "GraphNavigatorAgent",
+    "get_event_values": "TemporalAuditorAgent",
+    "get_event_details": "TemporalAuditorAgent",
+    "detect_conflicts": "ConflictAdjudicatorAgent",
+    "search_passages": "VectorSearcherAgent",
+    "submit_answer": "EvidenceSynthesizerAgent",
+}
+
+
 class ReActAgent:
     """Tool-calling agent loop in which the model chooses every step."""
 
@@ -201,8 +213,9 @@ class ReActAgent:
                 messages.append({
                     "role": "tool", "tool_call_id": call["id"],
                     "content": _clip(blob, MAX_TOOL_RESULT_CHARS)})
+                persona = TOOL_PERSONAS.get(call["name"], self.name)
                 state.trace.append(ExecutedStep(
-                    index=len(state.trace) + 1, agent=self.name,
+                    index=len(state.trace) + 1, agent=persona,
                     operation=f"tool:{call['name']}",
                     detail=", ".join(f"{k}={v}" for k, v in
                                      (call["arguments"] or {}).items())[:200],

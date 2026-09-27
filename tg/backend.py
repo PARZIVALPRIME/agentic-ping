@@ -469,3 +469,39 @@ class TigerGraphBackend(KnowledgeGraph):
         self.counters["neighbours"] += 1
         self.counters["remote_rows"] += len(hops)
         return hops[:budget]
+
+    def aggregate_stats(self, sport: str = "", venue: str = "", season: str = "",
+                        year_from: Optional[int] = None, year_to: Optional[int] = None) -> Dict[str, Any]:
+        """Server-side analytical aggregation on TigerGraph using GSQL accumulators.
+
+        Falls back to local scan if remote query is unavailable or fails.
+        """
+        if self._remote_ok("aggregate_stats"):
+            try:
+                acc = accumulators(self.client, "tg_aggregate_stats", {
+                    "sport": sport or "", "venue": venue or "", "season": season or "",
+                    "year_from": int(year_from or 0), "year_to": int(year_to or 0)})
+                return {
+                    "total_events": int(acc.get("total_events", 0)),
+                    "earliest_year": int(acc.get("earliest_year", 0)),
+                    "latest_year": int(acc.get("latest_year", 0)),
+                    "num_venues": int(acc.get("num_venues", 0)),
+                    "num_sports": int(acc.get("num_sports", 0)),
+                    "backend": "tigergraph",
+                }
+            except Exception as exc:
+                self.log(f"aggregate_stats: remote failed ({exc}), using local mirror")
+        # Local mirror fallback computation
+        events = self.filter_events(sport=sport, venue=venue, season=season,
+                                    year_from=year_from, year_to=year_to)
+        years = [e.year for e in events if e.year is not None and e.year > 0]
+        venues = {e.venue for e in events if e.venue}
+        sports = {e.sport for e in events if e.sport}
+        return {
+            "total_events": len(events),
+            "earliest_year": min(years) if years else 0,
+            "latest_year": max(years) if years else 0,
+            "num_venues": len(venues),
+            "num_sports": len(sports),
+            "backend": "local",
+        }

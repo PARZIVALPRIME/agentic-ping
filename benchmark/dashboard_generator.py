@@ -102,6 +102,31 @@ HTML_HEAD = """<!DOCTYPE html>
   </section>
 
   <section class="panel">
+    <h2>Visual Subgraph Traversal Network</h2>
+    <p class="hint">Topological graph traversal path explored across TigerGraph Cloud (OlympicsKG) vertices and multi-hop edges for the selected investigation.</p>
+    <div id="subgraphExplorer" class="subgraph-wrap"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Live Investigation Studio &amp; Query Playground</h2>
+    <p class="hint">Test custom Olympic questions or explore benchmark queries live. Inspect the Router's capability-based dispatch, agent handoffs, and token efficiency in real time.</p>
+    <div class="studio-controls">
+      <select id="studioPresetSelect">
+        <option value="">-- Choose a Featured Benchmark Query --</option>
+      </select>
+      <input id="studioQuestionInput" type="text" placeholder="Or type any custom Olympic investigation query...">
+      <button id="studioRunBtn" class="btn-primary">Investigate Graph</button>
+    </div>
+    <div id="studioOutput" class="studio-output"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Round 2: Temporal &amp; Conflicting Fact Adjudication Matrix</h2>
+    <p class="hint">Demonstrating our 4-tier precedence hierarchy (Authority Correction &gt; Recency &gt; Entity Succession &gt; Majority) on real historical Olympic controversies.</p>
+    <div id="conflictMatrix" class="conflict-matrix-wrap"></div>
+  </section>
+
+  <section class="panel">
     <h2>Per-question results</h2>
     <div class="table-controls">
       <select id="typeFilter">

@@ -114,3 +114,32 @@ CREATE QUERY tg_stats() FOR GRAPH OlympicsKG SYNTAX V2 {
   v_venues   = {Venue.*};   @@venues   = v_venues.size();
   PRINT @@events, @@athletes, @@games, @@sports, @@venues;
 }
+
+CREATE QUERY tg_aggregate_stats(
+  STRING sport="", STRING venue="", STRING season="",
+  INT year_from=0, INT year_to=0
+) FOR GRAPH OlympicsKG SYNTAX V2 {
+  // Server-side analytical aggregation query using GSQL accumulators.
+  // Computes aggregate totals and year spans directly inside TigerGraph.
+  SumAccum<INT> @@total_events;
+  MinAccum<INT> @@earliest_year;
+  MaxAccum<INT> @@latest_year;
+  SetAccum<STRING> @@unique_venues;
+  SetAccum<STRING> @@unique_sports;
+
+  Events = {Event.*};
+  Events = SELECT v FROM Events:v
+    WHERE (sport     == "" OR lower(v.sport)  == lower(sport))
+      AND (venue     == "" OR lower(v.venue)  == lower(venue))
+      AND (season    == "" OR lower(v.season) == lower(season))
+      AND (year_from == 0  OR v.year >= year_from)
+      AND (year_to   == 0  OR v.year <= year_to)
+    ACCUM
+      @@total_events += 1,
+      IF v.year > 0 THEN @@earliest_year += v.year, @@latest_year += v.year END,
+      IF v.venue != "" THEN @@unique_venues += v.venue END,
+      IF v.sport != "" THEN @@unique_sports += v.sport END;
+
+  PRINT @@total_events, @@earliest_year, @@latest_year, @@unique_venues.size() AS num_venues, @@unique_sports.size() AS num_sports;
+}
+

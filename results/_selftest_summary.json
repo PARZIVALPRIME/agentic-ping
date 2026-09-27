@@ -32,7 +32,7 @@
           "accuracy": 0.0
         }
       },
-      "avg_latency_ms": 35.748,
+      "avg_latency_ms": 39.124,
       "avg_context_tokens": 289.4,
       "avg_input_tokens": 318.0,
       "avg_output_tokens": 0.0,
@@ -86,7 +86,7 @@
           "accuracy": 0.0
         }
       },
-      "avg_latency_ms": 158.172,
+      "avg_latency_ms": 156.094,
       "avg_context_tokens": 889.6,
       "avg_input_tokens": 918.2,
       "avg_output_tokens": 0.0,
@@ -139,7 +139,7 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 40.098,
+      "avg_latency_ms": 38.83,
       "avg_context_tokens": 271.6,
       "avg_input_tokens": 0.0,
       "avg_output_tokens": 0.0,
@@ -202,7 +202,7 @@
           "accuracy": 1.0
         }
       },
-      "avg_latency_ms": 37.768,
+      "avg_latency_ms": 38.668,
       "avg_context_tokens": 271.6,
       "avg_input_tokens": 0.0,
       "avg_output_tokens": 0.0,

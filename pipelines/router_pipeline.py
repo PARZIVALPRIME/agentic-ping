@@ -177,6 +177,34 @@ class RouterPipeline:
 
         inner = self._by_name[target].run(question, qid)
 
+        # Adaptive Escalation: If the dispatched arm reports insufficient evidence,
+        # low confidence (< 0.85), or an empty answer, escalate to the agentic arm.
+        # This guarantees 100% investigation coverage without paying agentic token
+        # costs on clean, unambiguous lookups.
+        escalation_note = ""
+        agentic_arm = "Agentic GraphRAG"
+        if target != agentic_arm and agentic_arm in self._by_name:
+            needs_escalation = (
+                (inner.confidence is not None and inner.confidence < 0.85)
+                or inner.stop_reason in ("insufficient_retrieved_evidence", "no_candidate_docs_retrieved")
+                or not (inner.answer or "").strip()
+            )
+            if needs_escalation:
+                orig_target = target
+                escalation_note = (
+                    f"adaptive escalation: {orig_target} yielded confidence={inner.confidence} "
+                    f"stop_reason='{inner.stop_reason}'; escalated to {agentic_arm}"
+                )
+                escalated_run = self._by_name[agentic_arm].run(question, qid)
+                # Combine telemetry: router honestly accounts for tokens spent in both passes
+                escalated_run.input_tokens += inner.input_tokens
+                escalated_run.output_tokens += inner.output_tokens
+                escalated_run.total_tokens += inner.total_tokens
+                escalated_run.latency_ms += inner.latency_ms
+                escalated_run.steps = inner.steps + escalated_run.steps
+                inner = escalated_run
+                target = agentic_arm
+
         # Present the inner run as a Router run, but keep every routing fact
         # visible so the decision is auditable rather than magic.
         result = PipelineResult(**inner.to_dict())
@@ -187,7 +215,7 @@ class RouterPipeline:
             "step": 0,
             "agent": "Router",
             "operation": "classify_and_route",
-            "detail": f"qtype={qtype or 'unknown'} -> {target}",
+            "detail": f"qtype={qtype or 'unknown'} -> {target}" + (f" ({escalation_note})" if escalation_note else ""),
             "observation": {
                 "qtype": qtype,
                 "routed_to": target,
@@ -197,8 +225,8 @@ class RouterPipeline:
                 "confidence": classification.get("confidence"),
                 "min_confidence": thresholds().router_min_confidence,
                 "reason": classification.get("reason"),
-                "routing_note": route_note,
-                "escalated": route is UNKNOWN_ROUTE,
+                "routing_note": (route_note + ("; " + escalation_note if escalation_note else "")).strip("; "),
+                "escalated": route is UNKNOWN_ROUTE or bool(escalation_note),
             },
         }
         result.steps = [routing_step] + list(inner.steps)
