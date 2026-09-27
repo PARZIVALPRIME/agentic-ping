@@ -163,6 +163,7 @@ class MetricsCollector:
                 "n": len(sub),
                 "correct": sum(1 for r in sub_eval
                                if r["evaluation"]["is_correct"]),
+                "avg_tokens": _mean([r.get("total_tokens", 0) for r in sub]),
             }
             if sub_eval:
                 by_type[qtype]["accuracy"] = round(
@@ -177,10 +178,14 @@ class MetricsCollector:
         out["avg_total_tokens"] = _mean([r.get("total_tokens", 0) for r in recs])
         out["avg_llm_calls"] = _mean([r.get("llm_calls", 0) for r in recs])
         out["avg_retrieval_steps"] = _mean([r.get("retrieval_steps", 0) for r in recs])
+        out["avg_reasoning_steps"] = _mean([r.get("reasoning_steps", 0) for r in recs])
         out["avg_chunks_retrieved"] = _mean([r.get("chunks_retrieved", 0) for r in recs])
         out["avg_candidates_considered"] = _mean(
             [r.get("candidates_considered", 0) for r in recs])
         out["total_tokens"] = sum(r.get("total_tokens", 0) for r in recs)
+        out["tokens_per_correct_answer"] = round(
+            out["total_tokens"] / max(1, out["correct"]), 2
+        ) if out.get("correct") else None
 
         # grounding
         prec = [r["evaluation"]["citation_precision"] for r in evaluated
@@ -189,6 +194,16 @@ class MetricsCollector:
                if r["evaluation"].get("citation_recall") is not None]
         out["avg_citation_precision"] = _mean(prec)
         out["avg_citation_recall"] = _mean(rec)
+        p_val = out["avg_citation_precision"] or 0.0
+        r_val = out["avg_citation_recall"] or 0.0
+        out["citation_f1"] = round((2.0 * p_val * r_val) / (p_val + r_val), 4) if (p_val + r_val) > 0 else 0.0
+
+        completeness_vals = [r["evaluation"].get("completeness", 0.0) for r in evaluated
+                             if r["evaluation"].get("completeness") is not None]
+        out["avg_completeness"] = _mean(completeness_vals)
+        out["grounding_distribution"] = dict(Counter(
+            r["evaluation"].get("grounding_category", "unretrieved_failure") for r in evaluated
+        ))
 
         # process markers (mostly agentic)
         out["match_types"] = dict(Counter(

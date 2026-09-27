@@ -51,7 +51,8 @@ SUCCESSION: Dict[str, str] = {
 # carrying one of these outranks a plain statement of the same fact.
 AUTHORITY_MARKERS = (
     "disqualified", "stripped", "reallocated", "upgraded", "annulled",
-    "doping", "corrected", "revised", "superseded",
+    "doping", "corrected", "revised", "superseded", "tested positive",
+    "cas ruling", "anti-doping", "retroactively awarded", "sanctioned",
 )
 
 # Ordered most-authoritative first; used only as a tie-break.
@@ -210,7 +211,32 @@ def resolve(field_name: str, raw_candidates: List[Any]) -> Resolution:
         key = c.normalised()
         counts[key] = counts.get(key, 0) + 1
         first_seen.setdefault(key, c)
-    best_key = max(counts, key=lambda k: (counts[k], -first_seen[k].rank()))
+
+    # Numerical order-of-magnitude filter: if numbers are being compared and one
+    # candidate is >1000x the median of other candidates with only 1 attestation,
+    # it is an extreme typographical outlier (e.g. 41000000 vs 41).
+    def _to_num(val: str) -> Optional[float]:
+        try:
+            return float(val.replace(",", "").strip())
+        except (ValueError, TypeError):
+            return None
+
+    nums = {k: _to_num(k) for k in counts if _to_num(k) is not None}
+    if len(nums) > 1:
+        valid_keys = list(counts.keys())
+        for k, n in nums.items():
+            others = [v for ok, v in nums.items() if ok != k and v is not None and v > 0]
+            if others and counts[k] == 1:
+                median_other = sorted(others)[len(others) // 2]
+                if n > median_other * 1000 and len(valid_keys) > 1:
+                    valid_keys.remove(k)
+        if valid_keys:
+            best_key = max(valid_keys, key=lambda k: (counts[k], -first_seen[k].rank()))
+        else:
+            best_key = max(counts, key=lambda k: (counts[k], -first_seen[k].rank()))
+    else:
+        best_key = max(counts, key=lambda k: (counts[k], -first_seen[k].rank()))
+
     winner = first_seen[best_key]
     share = counts[best_key] / len(cands)
     res.resolved = winner.value

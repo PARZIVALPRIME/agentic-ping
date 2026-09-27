@@ -45,6 +45,7 @@ class PipelineResult:
     # ── outcome / cost metrics ────────────────────────────────────────
     latency_ms: float = 0.0
     retrieval_steps: int = 0
+    reasoning_steps: int = 0
     tools_called: List[str] = field(default_factory=list)
     agents_invoked: List[str] = field(default_factory=list)
     chunks_retrieved: int = 0

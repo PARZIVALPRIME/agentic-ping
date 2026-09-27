@@ -48,6 +48,9 @@ class Evaluation:
     similarity: float = 0.0           # best fuzzy similarity vs any gold
     citation_precision: Optional[float] = None   # cited ∩ gold / cited
     citation_recall: Optional[float] = None      # cited ∩ gold / gold
+    citation_f1: Optional[float] = None          # 2 * P * R / (P + R)
+    completeness: float = 0.0                    # token-level F1 / semantic completeness
+    grounding_category: str = "unretrieved_failure" # grounded_correct | ungrounded_correct | grounded_incorrect | unretrieved_failure
     judge_reason: str = ""
 
     def to_dict(self) -> Dict[str, Any]:
@@ -85,6 +88,10 @@ class Evaluator:
             best_sim = max(best_sim, sim)
             # containment either way (same rule used in smoke tests)
             if len(gn) >= 2 and len(pn) >= 2 and (gn in pn or pn in gn):
+                if gn.isdigit() or pn.isdigit():
+                    if gn == pn:
+                        return "exact", 1.0
+                    continue
                 return "fuzzy", max(sim, 0.95)
         return "none", best_sim
 
@@ -121,9 +128,36 @@ class Evaluator:
                 ev.accuracy_score = 1.0
                 self.judge_flips += 1
 
+        # Completeness (token-level semantic overlap / F1 vs gold answers)
+        if golds and (pred or "").strip():
+            pred_toks = set(normalize(pred).split())
+            best_f1 = 0.0
+            for g in golds:
+                gold_toks = set(normalize(g).split())
+                if pred_toks and gold_toks:
+                    common = len(pred_toks & gold_toks)
+                    f1 = (2.0 * common) / (len(pred_toks) + len(gold_toks))
+                    best_f1 = max(best_f1, f1)
+            ev.completeness = round(best_f1, 4)
+        elif ev.is_correct:
+            ev.completeness = 1.0
+
         p, r = self.citation_overlap(citations or [], gold_doc_ids or [])
         ev.citation_precision = None if p is None else round(p, 4)
         ev.citation_recall = None if r is None else round(r, 4)
+        if p is not None and r is not None and (p + r) > 0:
+            ev.citation_f1 = round((2.0 * p * r) / (p + r), 4)
+
+        # Grounded correctness classification
+        has_recall = (ev.citation_recall or 0.0) > 0.0
+        if ev.is_correct and has_recall:
+            ev.grounding_category = "grounded_correct"
+        elif ev.is_correct and not has_recall:
+            ev.grounding_category = "ungrounded_correct"
+        elif not ev.is_correct and has_recall:
+            ev.grounding_category = "grounded_incorrect"
+        else:
+            ev.grounding_category = "unretrieved_failure"
         return ev
 
     def _llm_judge(self, question: str, golds: List[str], pred: str) -> Dict[str, Any]:

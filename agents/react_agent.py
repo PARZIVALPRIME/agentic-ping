@@ -130,7 +130,6 @@ class ReActAgent:
             {"role": "system", "content": system_prompt()},
             {"role": "user", "content": f"Question: {question}"},
         ]
-        state.strategy_changes.append("strategy: LLM tool-calling loop (ReAct)")
         retries_left = self.max_retries
         # Everything the tools have returned, kept verbatim: this is the evidence
         # an answer is validated against (see validate_answer).
@@ -205,6 +204,11 @@ class ReActAgent:
             messages.append(_assistant_message(text, calls))
 
             submitted = False
+            llm_latency_ms = (time.perf_counter() - t0) * 1000.0
+            per_call_llm_ms = llm_latency_ms / max(1, len(calls))
+            delta_in = (state.tokens.input_tokens - before_in) // max(1, len(calls))
+            delta_out = (state.tokens.output_tokens - before_out) // max(1, len(calls))
+
             for call in calls:
                 result = tools.execute(call["name"], call["arguments"])
                 record = tools.calls[-1]
@@ -214,6 +218,7 @@ class ReActAgent:
                     "role": "tool", "tool_call_id": call["id"],
                     "content": _clip(blob, MAX_TOOL_RESULT_CHARS)})
                 persona = TOOL_PERSONAS.get(call["name"], self.name)
+                step_latency = round(per_call_llm_ms + record["latency_ms"], 2)
                 state.trace.append(ExecutedStep(
                     index=len(state.trace) + 1, agent=persona,
                     operation=f"tool:{call['name']}",
@@ -225,9 +230,10 @@ class ReActAgent:
                                  "result": _clip(json.dumps(result, default=str, ensure_ascii=False), 900)},
                     confidence_after=round(state.confidence, 3),
                     new_documents=_absorb(state, call["name"], result),
-                    latency_ms=record["latency_ms"],
-                    input_tokens=state.tokens.input_tokens - before_in,
-                    output_tokens=state.tokens.output_tokens - before_out))
+                    latency_ms=step_latency,
+                    input_tokens=delta_in,
+                    output_tokens=delta_out,
+                    cumulative_tokens=state.tokens.total_tokens))
                 if call["name"] == "submit_answer":
                     candidate = str(result.get("answer", "")).strip()
                     ok, why = validate_answer(candidate, spec, evidence_text)
@@ -235,6 +241,9 @@ class ReActAgent:
                         state.answer = candidate
                         state.rationale = str(result.get("reasoning", ""))[:600]
                         state.trace[-1].observation["answer_accepted_because"] = why
+                        submitted_cites = [d for d in (result.get("doc_ids") or []) if d]
+                        if submitted_cites:
+                            state.citations = submitted_cites
                         submitted = True
                     elif rejections_left > 0:
                         # Tell the model why it was refused and let it try again.
@@ -266,8 +275,12 @@ class ReActAgent:
         state.synth_source = "react_tool_calling"
         if not state.stop_reason:
             state.stop_reason = "max_steps"
-        state.confidence = {"submitted_answer": 0.9, "text_answer": 0.6}.get(
+        base_conf = {"submitted_answer": 0.9, "text_answer": 0.6}.get(
             state.stop_reason, 0.3 if state.answer else 0.0)
+        if state.fact_conflicts and "confidence" in state.fact_conflicts:
+            state.confidence = min(base_conf, float(state.fact_conflicts["confidence"]))
+        else:
+            state.confidence = base_conf
         return state
 
 
@@ -313,6 +326,13 @@ def _assistant_message(text: str, calls: List[Dict[str, Any]]) -> Dict[str, Any]
 def _absorb(state: AgentState, tool: str, result: Any) -> int:
     """Fold a tool result into the shared blackboard. Returns new doc count."""
     if not isinstance(result, dict):
+        return 0
+    if tool == "detect_conflicts":
+        state.fact_conflicts = result
+        if "uncertainty" in result:
+            state.uncertainty = float(result["uncertainty"])
+        if "confidence" in result:
+            state.confidence = float(result["confidence"])
         return 0
     doc_ids = [d for d in (result.get("doc_ids") or []) if d]
     new = state.add_documents(doc_ids)

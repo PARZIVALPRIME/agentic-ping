@@ -14,6 +14,7 @@ questions - and it reports *why* it stopped (confidence, budget, staleness).
 
 from __future__ import annotations
 
+import json
 import time
 from typing import Any, Dict, List
 
@@ -76,6 +77,14 @@ class AgenticPipeline:
                                      if op in RETRIEVAL_OPS
                                      or (op.startswith("tool:")
                                          and op != "tool:submit_answer"))
+        reasoning_ops = {
+            "get_event_values", "detect_conflicts", "submit_answer",
+            "count_threshold", "verify_by_recount", "arg_extreme",
+            "verify_extreme", "evaluate_evidence", "render_answer",
+            "final_answer", "retry",
+        }
+        result.reasoning_steps = sum(1 for op in trace_ops
+                                     if op.replace("tool:", "") in reasoning_ops)
         result.tools_called = list(dict.fromkeys(
             tool_names if tool_names else [op for op in trace_ops]))
         result.agents_invoked = list(dict.fromkeys(s.agent for s in state.trace))
@@ -103,8 +112,39 @@ class AgenticPipeline:
         result.llm_calls = sum(1 for op in state.tokens.per_operation
                                if str(op.get("operation", "")).startswith(LLM_PREFIXES))
 
-        context_text = "\n".join(c.get("text", "") for c in state.chunks.values())
+        observed_payloads = [
+            json.dumps(s.observation.get("result", s.observation.get("summary", "")),
+                       ensure_ascii=False, default=str)
+            for s in state.trace if s.observation
+        ]
+        chunk_texts = [
+            c.get("text") or json.dumps(c, ensure_ascii=False, default=str)
+            for c in state.chunks.values() if c
+        ]
+        context_text = "\n".join(observed_payloads + chunk_texts)
         result.context_tokens = count_tokens(context_text)
+
+        retrieval_method_map = {
+            "search_passages": "hybrid",
+            "vector_search": "vector",
+            "search_events": "graph",
+            "traverse_graph": "graph",
+            "get_event_details": "graph",
+            "resolve_article": "graph",
+            "get_event_values": "accumulator",
+            "aggregate_stats": "accumulator",
+            "count_threshold": "accumulator",
+        }
+        selected_methods = set()
+        for op in trace_ops:
+            clean = op.replace("tool:", "")
+            if clean in retrieval_method_map:
+                selected_methods.add(retrieval_method_map[clean])
+
+        accepted_why = ""
+        if state.trace and isinstance(state.trace[-1].observation, dict):
+            accepted_why = state.trace[-1].observation.get("answer_accepted_because", "")
+
         tool_steps = [s for s in state.trace if s.operation.startswith("tool:")]
         if tool_steps:
             result.evidence = [
@@ -134,9 +174,23 @@ class AgenticPipeline:
             "uncertainty": result.uncertainty,
             "tool_calls": list(state.tool_calls),
             "docs_touched": len(state.documents),
+            "retrieval_methods_selected": sorted(selected_methods) if selected_methods else ["graph"],
+            "persona_handoffs": [s.agent for s in state.trace if s.agent],
+            "stopping_decision": {
+                "when_step": state.iterations,
+                "when_tokens": result.total_tokens,
+                "stop_reason": state.stop_reason,
+                "why": (
+                    f"Answer verified via {accepted_why or 'evidence grounding'} with confidence {state.confidence:.2f}"
+                    if state.stop_reason == "submitted_answer" else
+                    f"Investigation terminated: {state.stop_reason}"
+                ),
+                "stopping_condition_met": True,
+            },
             "plan_skips": [{"agent": s.agent, "operation": s.operation,
                             "skip_reason": s.skip_reason}
                            for s in state.plan if s.skipped],
         }
         result.latency_ms = round((time.perf_counter() - started) * 1000.0, 2)
+        result.metadata["stopping_decision"]["when_latency_ms"] = result.latency_ms
         return result

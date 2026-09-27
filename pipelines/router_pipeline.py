@@ -73,10 +73,10 @@ CAPABILITY_ROUTES: Dict[str, Route] = {
         "top-k vector retrieval reaches that document and is the cheapest arm "
         "(1 LLM call, ~5 chunks); no graph traversal or iteration is required"),
     "multi_hop": Route(
-        "Agentic GraphRAG",
+        "GraphRAG",
         "two sources linked: (venue, date) -> event page -> target field",
-        "the intermediate link must be resolved and verified before the field "
-        "can be read, which is a planning step rather than a similarity lookup"),
+        "graph neighborhood expansion bridges the (venue, date) -> event traversal "
+        "efficiently; escalates adaptively to Agentic GraphRAG if confidence < 0.85"),
     "temporal": Route(
         "Agentic GraphRAG",
         "the edition immediately before/after a stated one",
@@ -196,11 +196,17 @@ class RouterPipeline:
                     f"stop_reason='{inner.stop_reason}'; escalated to {agentic_arm}"
                 )
                 escalated_run = self._by_name[agentic_arm].run(question, qid)
-                # Combine telemetry: router honestly accounts for tokens spent in both passes
+                # Combine telemetry: router honestly accounts for all resources spent in both passes
+                escalated_run.context_tokens += inner.context_tokens
                 escalated_run.input_tokens += inner.input_tokens
                 escalated_run.output_tokens += inner.output_tokens
                 escalated_run.total_tokens += inner.total_tokens
                 escalated_run.latency_ms += inner.latency_ms
+                escalated_run.llm_calls += inner.llm_calls
+                escalated_run.retrieval_steps += inner.retrieval_steps
+                escalated_run.reasoning_steps += getattr(inner, "reasoning_steps", 0)
+                escalated_run.chunks_retrieved += inner.chunks_retrieved
+                escalated_run.docs_retrieved = max(escalated_run.docs_retrieved, inner.docs_retrieved)
                 escalated_run.steps = inner.steps + escalated_run.steps
                 inner = escalated_run
                 target = agentic_arm

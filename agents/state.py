@@ -49,6 +49,7 @@ class ExecutedStep:
     latency_ms: float = 0.0
     input_tokens: int = 0
     output_tokens: int = 0
+    cumulative_tokens: int = 0
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -58,6 +59,7 @@ class ExecutedStep:
             "new_documents": self.new_documents,
             "latency_ms": round(self.latency_ms, 2),
             "input_tokens": self.input_tokens, "output_tokens": self.output_tokens,
+            "cumulative_tokens": self.cumulative_tokens,
         }
 
 

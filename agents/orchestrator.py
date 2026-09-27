@@ -182,6 +182,12 @@ class OrchestratorAgent:
                 # the submit_answer tool has been through the grounded path, so
                 # only that one is allowed to skip the deterministic solvers.
                 if state.stop_reason == "submitted_answer":
+                    if not state.fact_conflicts:
+                        conflicts = self._audit_conflicts(state)
+                        if conflicts:
+                            state.fact_conflicts = conflicts
+                            if "confidence_after" in conflicts:
+                                state.confidence = conflicts["confidence_after"]
                     return state
                 state.strategy_changes.append(
                     f"discarded ungrounded ReAct answer ({state.stop_reason}); "

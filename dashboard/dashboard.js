@@ -151,11 +151,19 @@ function renderCards() {
     const callsQ = ps.avg_llm_calls != null ? ps.avg_llm_calls
       : act && act.records ? +(act.calls / act.records).toFixed(2) : 0;
     const served = act ? (act.records_answering || 0) : null;
+    const reas = ps.avg_reasoning_steps ?? 0;
+    const retr = ps.avg_retrieval_steps ?? 0;
     el("div", { class: "row", html:
       `<span>${short(ps.avg_latency_ms)} ms avg</span>` +
       `<span>${callsQ} LLM calls/q` +
       `${served === 0 ? " · none answered" : ""}</span>` +
-      `<span>${ps.avg_retrieval_steps ?? 0} steps</span>` }, card);
+      `<span>${retr} retr / ${reas} reas</span>` }, card);
+    if (ps.tokens_per_correct_answer || ps.avg_completeness !== undefined) {
+      el("div", { class: "row", style: "font-size:11px;opacity:0.8;margin-top:2px", html:
+        `<span>${ps.tokens_per_correct_answer ? short(ps.tokens_per_correct_answer) + ' tok/correct' : ''}</span>` +
+        `<span>${ps.avg_completeness !== undefined ? (ps.avg_completeness * 100).toFixed(1) + '% comp' : ''}</span>` +
+        `<span>${ps.citation_f1 !== undefined ? (ps.citation_f1 * 100).toFixed(1) + '% cite F1' : ''}</span>` }, card);
+    }
   }
 }
 
@@ -308,11 +316,45 @@ function renderTrace(i) {
     el("div", { class: "ms", style: "white-space:pre",
       text: `${Math.round(s.latency_ms || 0)} ms` + (stepTok ? `\n${stepTok} tok` : "") }, row);
   });
+  const metaObj = ag.metadata || {};
   const agents = el("p", { class: "hint", style: "margin-top:10px" }, host);
-  agents.innerHTML = "agents: " +
-    (ag.agents_invoked || []).map(a => `<span class="chip same">${a}</span>`).join(" ");
-  const ans = el("p", { class: "hint" }, host);
-  ans.innerHTML = `<b>answer:</b> ${(ag.answer || "–").slice(0, 300)}`;
+  const retrMethods = metaObj.retrieval_methods_selected || [];
+  agents.innerHTML = "<b>agents:</b> " +
+    (ag.agents_invoked || []).map(a => `<span class="chip same">${a}</span>`).join(" ") +
+    (retrMethods.length ? ` · <b>retrieval:</b> ` + retrMethods.map(m => `<span class="chip same" style="background:#1e293b">${m}</span>`).join(" ") : "");
+
+  const ev = ag.evaluation || {};
+  const evBox = el("p", { class: "hint" }, host);
+  const gCat = ev.grounding_category || "unretrieved_failure";
+  const gCls = gCat === "grounded_correct" ? "up" : gCat === "ungrounded_correct" ? "same" : "down";
+  evBox.innerHTML = `<b>answer:</b> ${(ag.answer || "–").slice(0, 300)}<br>` +
+    `<span style="display:inline-block;margin-top:4px">` +
+    `<b>grounding:</b> <span class="chip ${gCls}">${gCat}</span> · ` +
+    `<b>completeness:</b> ${ev.completeness !== undefined ? (ev.completeness * 100).toFixed(1) + '%' : '–'} · ` +
+    `<b>citations:</b> ${(ag.citations || []).length} cited (recall: ${ev.citation_recall !== undefined && ev.citation_recall !== null ? (ev.citation_recall * 100).toFixed(1) + '%' : '–'})` +
+    `</span>`;
+
+  // Stopping Decision
+  const stopDec = metaObj.stopping_decision;
+  if (stopDec) {
+    const sBox = el("div", { class: "trace-detail open", style: "margin-top:8px;border-left:3px solid var(--ok);background:rgba(16,185,129,0.06);padding:8px;border-radius:4px;" }, host);
+    sBox.innerHTML = `<b style="color:var(--ok)">Stopping Decision:</b> ` +
+      `<b>Trigger:</b> <span class="chip same">${stopDec.stop_reason || ag.stop_reason || "–"}</span> · ` +
+      `<b>At:</b> step ${stopDec.when_step ?? ag.loop_iterations ?? '–'} (${Math.round(stopDec.when_latency_ms || ag.latency_ms || 0)} ms, ${short(stopDec.when_tokens || ag.total_tokens || 0)} tok) · ` +
+      `<b>Rationale:</b> <i>${stopDec.why || "evidence condition satisfied"}</i>`;
+  }
+
+  // Round 2 Conflict Adjudication & Uncertainty Badge if present
+  const conf = metaObj.conflicts || {};
+  if (conf && (conf.field || conf.rule || conf.had_conflict || ag.uncertainty > 0.05)) {
+    const cBox = el("div", { class: "trace-detail open", style: "margin-top:8px;border-left:3px solid var(--accent);background:rgba(99,102,241,0.08);padding:8px;border-radius:4px;" }, host);
+    cBox.innerHTML = `<b style="color:var(--accent)">Round 2 Conflict Adjudication:</b> ` +
+      `<b>Rule:</b> <span class="chip same">${conf.rule || 'authority_correction'}</span> · ` +
+      `<b>Residual Uncertainty:</b> <span class="chip down">±${ag.uncertainty ?? 0.10}</span>` +
+      (conf.resolved ? ` · <b>Resolved:</b> <i>${conf.resolved}</i>` : "") +
+      (conf.explanation ? `<div style="margin-top:4px;font-size:11px;opacity:0.9">${conf.explanation}</div>` : "");
+  }
+
   renderSubgraph(e);
 }
 
