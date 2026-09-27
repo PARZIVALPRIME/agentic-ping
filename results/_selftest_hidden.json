@@ -104,7 +104,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 3,
-            "latency_ms": 0.07,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -134,7 +134,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.51,
+            "latency_ms": 0.58,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -159,7 +159,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -186,7 +186,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 9,
-            "latency_ms": 82.21,
+            "latency_ms": 98.64,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -209,7 +209,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.07,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -232,7 +232,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 2.28,
+            "latency_ms": 2.48,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -243,37 +243,37 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.07
+            "latency_ms": 0.1
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['olympic tennis centre'] (score 1.0); date match 1.0 over 3 candidates -> \"Tennis at the 2004 Summer Olympics – Women's doubles\"",
-            "latency_ms": 0.51
+            "latency_ms": 0.58
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=HELD_AT -> 3 event pages (0 new)",
-            "latency_ms": 0.03
+            "latency_ms": 0.04
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?' (widening=0) -> 12 passages",
-            "latency_ms": 82.21
+            "latency_ms": 98.64
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.07
+            "latency_ms": 0.04
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Li TingSun Tiantian' citing 1 document(s) :: gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer O",
-            "latency_ms": 2.28
+            "latency_ms": 2.48
           }
         ],
         "tokens_per_operation": []
@@ -318,7 +318,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 85.82,
+      "latency_ms": 102.61,
       "error": null
     },
     {
@@ -383,7 +383,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -401,7 +401,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 1,
-            "latency_ms": 0.04,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -428,7 +428,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 10,
-            "latency_ms": 135.15,
+            "latency_ms": 166.34,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -471,7 +471,7 @@
             },
             "confidence_after": 0.95,
             "new_documents": 0,
-            "latency_ms": 0.06,
+            "latency_ms": 0.07,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -482,19 +482,19 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "no graph vertices linked; will fall back to text retrieval",
-            "latency_ms": 0.02
+            "latency_ms": 0.03
           },
           {
             "operation": "resolve_article",
             "agent": "LookupResolver",
             "detail": "resolved title \"Fencing at the 1988 Summer Olympics – Men's foil\" (score 1.0); field 'nations' = '29'",
-            "latency_ms": 0.04
+            "latency_ms": 0.05
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?\" (widening=0) -> 12 passages (10 new doc",
-            "latency_ms": 135.15
+            "latency_ms": 166.34
           },
           {
             "operation": "evaluate_evidence",
@@ -506,7 +506,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='29' citing 1 document(s) :: Fencing at the 1988 Summer Olympics – Men's foil lists 29 participating nations (infobox field 'nations')",
-            "latency_ms": 0.06
+            "latency_ms": 0.07
           }
         ],
         "tokens_per_operation": []
@@ -539,7 +539,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 135.8,
+      "latency_ms": 167.06,
       "error": null
     },
     {
@@ -613,7 +613,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 18,
-            "latency_ms": 0.16,
+            "latency_ms": 0.2,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -641,7 +641,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.13,
+            "latency_ms": 0.16,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -672,7 +672,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -713,7 +713,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -743,7 +743,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.08,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -754,19 +754,19 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Cycling; games->GAMES::2008::Summer",
-            "latency_ms": 0.16
+            "latency_ms": 0.2
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 18 event pages (0 new)",
-            "latency_ms": 0.13
+            "latency_ms": 0.16
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 18 enumerated events on competitors gt 30 -> 8 pass (field coverage 100%)",
-            "latency_ms": 0.03
+            "latency_ms": 0.04
           },
           {
             "operation": "verify_by_recount",
@@ -778,13 +778,13 @@
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 18 enumerated events had more than 30 competitors",
-            "latency_ms": 0.08
+            "latency_ms": 0.11
           }
         ],
         "tokens_per_operation": []
@@ -837,7 +837,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 0.79,
+      "latency_ms": 0.92,
       "error": null
     },
     {
@@ -905,7 +905,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.06,
+            "latency_ms": 0.08,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -935,7 +935,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 2.15,
+            "latency_ms": 2.53,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -962,7 +962,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.04,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -989,7 +989,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 59.58,
+            "latency_ms": 125.19,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1012,7 +1012,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.06,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1035,7 +1035,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.15,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1046,37 +1046,37 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.06
+            "latency_ms": 0.08
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['sydney international shooting centre'] (score 1.0); date match 1.0 over 17 candidates -> \"Shooting at the 2000 Summer Olympics – Women's 25 metre pisto",
-            "latency_ms": 2.15
+            "latency_ms": 2.53
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=HELD_AT -> 17 event pages (0 new)",
-            "latency_ms": 0.04
+            "latency_ms": 0.05
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Sydney International Shooting Centre on 22 September 2000?' (widening=0) ->",
-            "latency_ms": 59.58
+            "latency_ms": 125.19
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.06
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Mariya Grozdeva' citing 1 document(s) :: gold medallist read from 'Shooting at the 2000 Summer Olympics – Women's 25 metre pistol' (2000 Su",
-            "latency_ms": 0.05
+            "latency_ms": 0.15
           }
         ],
         "tokens_per_operation": []
@@ -1121,7 +1121,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 62.31,
+      "latency_ms": 129.12,
       "error": null
     },
     {
@@ -1188,7 +1188,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 10,
-            "latency_ms": 0.16,
+            "latency_ms": 0.38,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1216,7 +1216,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.13,
+            "latency_ms": 0.53,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1238,7 +1238,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.07,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1256,7 +1256,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1279,7 +1279,7 @@
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.01,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1302,7 +1302,7 @@
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.22,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1313,37 +1313,37 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Sailing; games->GAMES::2016::Summer",
-            "latency_ms": 0.16
+            "latency_ms": 0.38
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 10 event pages (0 new)",
-            "latency_ms": 0.13
+            "latency_ms": 0.53
           },
           {
             "operation": "arg_extreme",
             "agent": "Comparator",
             "detail": "argmax over 10 events -> \"Sailing at the 2016 Summer Olympics – Men's 470\" (52); margin over runner-up: 6",
-            "latency_ms": 0.03
+            "latency_ms": 0.07
           },
           {
             "operation": "verify_extreme",
             "agent": "Comparator",
             "detail": "cross-check of the extreme value (no violations) across 10 documents",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.85, sufficient",
-            "latency_ms": 0.01
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer=\"Sailing at the 2016 Summer Olympics – Men's 470\" citing 1 document(s) :: 'Sailing at the 2016 Summer Olympics – Men's 470' had the highest ",
-            "latency_ms": 0.03
+            "latency_ms": 0.22
           }
         ],
         "tokens_per_operation": []
@@ -1380,7 +1380,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 0.68,
+      "latency_ms": 1.89,
       "error": null
     }
   ]
