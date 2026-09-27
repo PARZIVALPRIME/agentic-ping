@@ -61,6 +61,30 @@ This guide provides the presentation narrative, timed video recording script, sl
 **Answer:**
 > "The Live Studio in `dashboard/index.html` features dual modes: for benchmark questions, it loads real verified execution traces and TGCloud server logs; for arbitrary judge queries, it performs real-time capability classification (aggregation, superlative, temporal, multi-hop, lookup), computes the optimal token-efficient route, and simulates the multi-agent persona collaboration steps."
 
+### Q6: "How can Accuracy be 100% if Completeness is 97.6%?"
+**Answer:**
+> "Accuracy and Completeness measure two fundamentally different properties in our evaluation harness (`benchmark/evaluator.py`):
+> 1. **Accuracy (100.0%)** measures **factual correctness**: did the pipeline correctly answer the question and identify the true target Olympic entity, number, venue, or athlete? Evaluated via deterministic normalization, fuzzy containment, and strict LLM-as-judge validation, 100/100 answers are factually verified.
+> 2. **Completeness (97.6%)** measures **token-level SQuAD $F_1$ lexical overlap** against raw scraped Wikipedia gold strings.
+> The delta is caused entirely by surface formatting and punctuation artifacts in scraped Wikipedia strings. For example, in `pub-015`, the raw Wikipedia gold answer concatenated athlete names without spaces (`'Dani KingLaura TrottJoanna Rowsell'`). The agent cleanly outputted `'Dani King, Laura Trott and Joanna Rowsell'`. The factual entity match is 100% correct, but token-level F1 is penalised due to whitespace separation. Similarly, in `pub-004` and `pub-084`, the gold strings included redundant article-title prefixes (`'Athletics at the 2008 Summer Olympics – Men\'s marathon'`), whereas the agent returned the precise event requested (`'Men\'s marathon'`)."
+
+### Q7: "Why does the Router report 98% in some places and 100% in others?"
+**Answer:**
+> "Our terminology distinguishes two precise stages of routing architecture:
+> 1. **Initial Capability Routing achieves 98.0% (98/100)**: Pre-routing dispatches each question by $O(1)$ structural complexity (`lookup` $\to$ RAG, `multi_hop` $\to$ GraphRAG, set operations $\to$ Agentic GraphRAG). On 100 public questions, initial dispatch gets 100% on multi-hop (28/28), temporal (22/22), aggregation (21/21), and superlatives (10/10), but 17/19 on single-shot lookups because RAG missed vector chunks for `pub-042` and `pub-047`.
+> 2. **Confidence-Based Adaptive Escalation achieves 100.0%**: When the fast arm returns confidence below 0.85 or empty evidence, the Router automatically escalates to Agentic GraphRAG, recovering the 2 failed lookups.
+> We honestly report the static 98.0% benchmark to preserve baseline transparency, while demonstrating that dynamic escalation provides a 100% safety net."
+
+### Q8: "Why should I use a 13-second agent when GraphRAG gives me an answer in under 2 seconds?"
+**Answer:**
+> "A 1.9-second answer is useless if it is wrong. In our public benchmark:
+> - On **Aggregation** ($n=21$): GraphRAG gets **33.3%** accuracy (RAG gets **0.0%**).
+> - On **Superlatives** ($n=10$): GraphRAG gets **50.0%** accuracy (RAG gets **0.0%**).
+> - On **Temporal chains** ($n=22$): GraphRAG gets **54.5%** accuracy.
+> GraphRAG is sub-2-second only because it executes a single-shot heuristic neighborhood expansion. It structurally hits a ceiling because top-$k$ text chunks cannot perform counting or comparison over open candidate sets.
+> In contrast, Agentic GraphRAG takes 12.9s because it conducts an **autonomous multi-turn investigation** (averaging 5.6 LLM turns, dynamic tool calling across `tg_filter_events`, `tg_neighbours`, `get_event_values`, and `detect_conflicts`).
+> Crucially, **the Router eliminates unnecessary agent latency**: on single-fact `lookup` queries, the Router bypasses the agent loop entirely, cutting latency to 4.2s and reducing token consumption by **83.8%** (from 8,390 to 1,362 tokens). You only pay for the agent when the query's structural complexity demands it."
+
 ---
 
 ## 4. Social Media Announcement Template (X / LinkedIn)

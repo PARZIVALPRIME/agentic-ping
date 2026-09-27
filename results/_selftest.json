@@ -33,7 +33,7 @@
           "Q47105341",
           "Q47155365"
         ],
-        "latency_ms": 54.1,
+        "latency_ms": 29.94,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -77,12 +77,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 53.09
+            "latency_ms": 29.16
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.32
+            "latency_ms": 0.25
           }
         ],
         "tokens_per_operation": [
@@ -176,7 +176,7 @@
           "Q47155541",
           "Q47155408"
         ],
-        "latency_ms": 280.84,
+        "latency_ms": 146.55,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -241,17 +241,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 142.7
+            "latency_ms": 79.31
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 137.13
+            "latency_ms": 66.36
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.33
+            "latency_ms": 0.29
           }
         ],
         "tokens_per_operation": [
@@ -392,7 +392,7 @@
           "Q47155425",
           "Q47155408"
         ],
-        "latency_ms": 3.15,
+        "latency_ms": 3.23,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -448,7 +448,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 0.16,
+            "latency_ms": 0.13,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -476,7 +476,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.13,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -504,7 +504,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -521,7 +521,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -572,7 +572,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 2.3,
+            "latency_ms": 2.57,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -583,25 +583,25 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Biathlon; games->GAMES::2018::Winter",
-            "latency_ms": 0.16
+            "latency_ms": 0.13
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
-            "latency_ms": 0.13
+            "latency_ms": 0.11
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 11 enumerated events on competitors gt 73 -> 5 pass (field coverage 100%)",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "evaluate_evidence",
@@ -613,7 +613,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
-            "latency_ms": 2.3
+            "latency_ms": 2.57
           }
         ],
         "tokens_per_operation": [],
@@ -741,7 +741,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 3.15
+            "when_latency_ms": 3.23
           },
           "plan_skips": []
         },
@@ -771,7 +771,7 @@
           "Q47155425",
           "Q47155408"
         ],
-        "latency_ms": 0.92,
+        "latency_ms": 0.76,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -847,7 +847,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 0.15,
+            "latency_ms": 0.14,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -875,7 +875,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.12,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -903,7 +903,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -920,7 +920,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -971,7 +971,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.08,
+            "latency_ms": 0.06,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -982,31 +982,31 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Biathlon; games->GAMES::2018::Winter",
-            "latency_ms": 0.15
+            "latency_ms": 0.14
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 11 event pages (0 new)",
-            "latency_ms": 0.12
+            "latency_ms": 0.11
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 11 enumerated events on competitors gt 73 -> 5 pass (field coverage 100%)",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 5 (documents with the field: 11); matches the primary count",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "evaluate_evidence",
@@ -1018,7 +1018,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='5' citing 5 document(s) :: 5 of 11 enumerated events had more than 73 competitors",
-            "latency_ms": 0.08
+            "latency_ms": 0.06
           }
         ],
         "tokens_per_operation": [],
@@ -1146,7 +1146,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.73
+            "when_latency_ms": 0.62
           },
           "plan_skips": [],
           "router": {
@@ -1210,7 +1210,7 @@
         "qtype": "temporal",
         "answer": "",
         "citations": [],
-        "latency_ms": 92.56,
+        "latency_ms": 53.03,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -1254,12 +1254,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 91.89
+            "latency_ms": 52.55
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.06
+            "latency_ms": 0.04
           }
         ],
         "tokens_per_operation": [
@@ -1323,7 +1323,7 @@
         "citations": [
           "Q1050909"
         ],
-        "latency_ms": 417.58,
+        "latency_ms": 299.79,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -1388,17 +1388,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 201.29
+            "latency_ms": 154.3
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 215.18
+            "latency_ms": 144.4
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.34
+            "latency_ms": 0.41
           }
         ],
         "tokens_per_operation": [
@@ -1487,7 +1487,7 @@
           "Q1050909",
           "Q26233122"
         ],
-        "latency_ms": 249.67,
+        "latency_ms": 179.14,
         "retrieval_steps": 4,
         "reasoning_steps": 2,
         "tools_called": [
@@ -1548,7 +1548,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 60,
-            "latency_ms": 20.76,
+            "latency_ms": 22.98,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1581,7 +1581,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 10.46,
+            "latency_ms": 11.15,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1613,7 +1613,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 12.03,
+            "latency_ms": 10.65,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1642,7 +1642,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.25,
+            "latency_ms": 0.16,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1669,7 +1669,598 @@
             },
             "confidence_after": 0.0,
             "new_documents": 8,
-            "latency_ms": 205.3,
+            "latency_ms": 133.42,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cumulative_tokens": 0
+          },
+          {
+            "index": 6,
+            "agent": "EvidenceEvaluator",
+            "operation": "evaluate_evidence",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "observation": {
+              "confidence": 0.97,
+              "sufficient": true,
+              "signals": {
+                "sport": "Athletics",
+                "matched": {
+                  "doc_id": "Q1050909",
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "url": "https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk",
+                  "sport": "Athletics",
+                  "year": 2012,
+                  "season": "Summer",
+                  "games_label": "2012 Summer",
+                  "event_name": "Men's 20 kilometres walk",
+                  "competitors": 56,
+                  "nations": 34,
+                  "venue": "The Mall",
+                  "venues": "",
+                  "date_raw": "4 August 2012",
+                  "dates_raw": "",
+                  "gold": "Chen Ding",
+                  "silver": "Erick Barrondo",
+                  "bronze": "Wang Zhen",
+                  "win_value": "1:18:46 OR",
+                  "win_label": "",
+                  "prev": "2008",
+                  "next": "2016",
+                  "source_type": "infobox",
+                  "fact_version_date": "2012-08-04",
+                  "approx_tokens": 1261,
+                  "prev_doc_id": "Q853023",
+                  "next_doc_id": "Q26233122",
+                  "months_found": [
+                    "august"
+                  ],
+                  "days_found": [
+                    "4"
+                  ]
+                },
+                "score": 1.0,
+                "candidates": [
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                    "score": 1.0
+                  },
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                    "score": 0.828
+                  },
+                  {
+                    "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                    "score": 0.827
+                  }
+                ],
+                "num_events_in_games": 42,
+                "anchor_confirmed": true,
+                "event_match_score": 1.0
+              },
+              "gaps": []
+            },
+            "confidence_after": 0.97,
+            "new_documents": 0,
+            "latency_ms": 0.03,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cumulative_tokens": 0
+          },
+          {
+            "index": 7,
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics) :: conflicts: recency (uncertainty 0.10)",
+            "observation": {
+              "answer": "Chen Ding",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+              "citations": [
+                "Q1050909",
+                "Q26233122"
+              ],
+              "adjudication": {},
+              "uncertainty": 0.1,
+              "conflicts": {
+                "field": "gold",
+                "rule": "recency",
+                "resolved": "Wang Zhen",
+                "confidence": 0.9,
+                "versions_compared": 2,
+                "explanation": "Q26233122 (2016) is the most recent statement and supersedes 1 earlier version(s)",
+                "superseded": [
+                  {
+                    "value": "Chen Ding",
+                    "doc_id": "Q1050909",
+                    "year": 2012
+                  }
+                ],
+                "versions": [
+                  {
+                    "value": "Chen Ding",
+                    "doc_id": "Q1050909",
+                    "year": 2012,
+                    "source_type": "infobox"
+                  },
+                  {
+                    "value": "Wang Zhen",
+                    "doc_id": "Q26233122",
+                    "year": 2016,
+                    "source_type": "infobox"
+                  }
+                ],
+                "confidence_after": 0.9,
+                "decisive": true
+              }
+            },
+            "confidence_after": 0.9,
+            "new_documents": 0,
+            "latency_ms": 0.13,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cumulative_tokens": 0
+          }
+        ],
+        "time_per_operation": [
+          {
+            "operation": "link_entities",
+            "agent": "EntityLinker",
+            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
+            "latency_ms": 22.98
+          },
+          {
+            "operation": "resolve_anchor",
+            "agent": "TemporalReasoner",
+            "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
+            "latency_ms": 11.15
+          },
+          {
+            "operation": "resolve_event",
+            "agent": "TemporalReasoner",
+            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
+            "latency_ms": 10.65
+          },
+          {
+            "operation": "verify_chain",
+            "agent": "TemporalReasoner",
+            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
+            "latency_ms": 0.16
+          },
+          {
+            "operation": "vector_search",
+            "agent": "VectorSearcher",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
+            "latency_ms": 133.42
+          },
+          {
+            "operation": "evaluate_evidence",
+            "agent": "EvidenceEvaluator",
+            "detail": "sufficiency audit -> confidence 0.97, sufficient",
+            "latency_ms": 0.03
+          },
+          {
+            "operation": "render_answer",
+            "agent": "Synthesizer",
+            "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
+            "latency_ms": 0.13
+          }
+        ],
+        "tokens_per_operation": [],
+        "evidence": [
+          {
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "observation": {
+              "sport": "Athletics",
+              "score": 1.0,
+              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+              "num_events_in_games": 42,
+              "candidates": [
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "score": 1.0
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                  "score": 0.828
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                  "score": 0.827
+                }
+              ]
+            }
+          },
+          {
+            "agent": "Synthesizer",
+            "operation": "render_answer",
+            "observation": {
+              "answer": "Chen Ding",
+              "source": "structured",
+              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+              "citations": [
+                "Q1050909",
+                "Q26233122"
+              ],
+              "adjudication": {},
+              "uncertainty": 0.1,
+              "conflicts": {
+                "field": "gold",
+                "rule": "recency",
+                "resolved": "Wang Zhen",
+                "confidence": 0.9,
+                "versions_compared": 2,
+                "explanation": "Q26233122 (2016) is the most recent statement and supersedes 1 earlier version(s)",
+                "superseded": [
+                  {
+                    "value": "Chen Ding",
+                    "doc_id": "Q1050909",
+                    "year": 2012
+                  }
+                ],
+                "versions": [
+                  {
+                    "value": "Chen Ding",
+                    "doc_id": "Q1050909",
+                    "year": 2012,
+                    "source_type": "infobox"
+                  },
+                  {
+                    "value": "Wang Zhen",
+                    "doc_id": "Q26233122",
+                    "year": 2016,
+                    "source_type": "infobox"
+                  }
+                ],
+                "confidence_after": 0.9,
+                "decisive": true
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "pipeline": "Agentic GraphRAG",
+          "agent_mode": "hybrid",
+          "classification": {
+            "qtype": "temporal",
+            "method": "rules",
+            "confidence": 0.9,
+            "reason": "template match for 'temporal'",
+            "rule_type": "temporal",
+            "llm_agrees_with_rules": null,
+            "rule_disagreement": null,
+            "templates_enabled": true,
+            "policy": "llm_first_templates_validate"
+          },
+          "slot_report": {
+            "used": false,
+            "filled": [],
+            "rejected": []
+          },
+          "parse_report": {
+            "method": "rules",
+            "llm_used": false,
+            "filled_by_rules": [],
+            "rejected": [],
+            "conflicts": [],
+            "confidence": 0.0,
+            "corpus_validated": [],
+            "templates_enabled": true,
+            "llm_error": null,
+            "reason": "no model available: template parse only",
+            "rule_qtype": "temporal",
+            "parse_mode": "semantic"
+          },
+          "spec": {
+            "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+            "qtype": "temporal",
+            "sport": "Athletics",
+            "year": 0,
+            "season": "Summer",
+            "event_desc": "men s 20 kilometres walk",
+            "venue": "",
+            "date_text": "",
+            "threshold": null,
+            "comparator": "gt",
+            "direction": "max",
+            "target_title": "",
+            "before_year": 2016,
+            "years_mentioned": [
+              2016
+            ],
+            "season_unresolved": false,
+            "parse_method": "rules"
+          },
+          "strategy_changes": [
+            "plan: template for 'temporal'"
+          ],
+          "resolved_gaps": [],
+          "gaps_remaining": [],
+          "synth_source": "structured",
+          "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
+          "adjudication": {},
+          "conflicts": {
+            "field": "gold",
+            "rule": "recency",
+            "resolved": "Wang Zhen",
+            "confidence": 0.9,
+            "versions_compared": 2,
+            "explanation": "Q26233122 (2016) is the most recent statement and supersedes 1 earlier version(s)",
+            "superseded": [
+              {
+                "value": "Chen Ding",
+                "doc_id": "Q1050909",
+                "year": 2012
+              }
+            ],
+            "versions": [
+              {
+                "value": "Chen Ding",
+                "doc_id": "Q1050909",
+                "year": 2012,
+                "source_type": "infobox"
+              },
+              {
+                "value": "Wang Zhen",
+                "doc_id": "Q26233122",
+                "year": 2016,
+                "source_type": "infobox"
+              }
+            ],
+            "confidence_after": 0.9,
+            "decisive": true
+          },
+          "uncertainty": 0.1,
+          "tool_calls": [],
+          "docs_touched": 60,
+          "retrieval_methods_selected": [
+            "vector"
+          ],
+          "persona_handoffs": [
+            "EntityLinker",
+            "TemporalReasoner",
+            "TemporalReasoner",
+            "TemporalReasoner",
+            "VectorSearcher",
+            "EvidenceEvaluator",
+            "Synthesizer"
+          ],
+          "stopping_decision": {
+            "when_step": 0,
+            "when_tokens": 0,
+            "stop_reason": "confidence_reached",
+            "why": "Investigation terminated: confidence_reached",
+            "stopping_condition_met": true,
+            "when_latency_ms": 179.14
+          },
+          "plan_skips": []
+        },
+        "unresolved": [],
+        "evaluation": {
+          "is_correct": true,
+          "match_type": "exact",
+          "accuracy_score": 1.0,
+          "similarity": 1.0,
+          "citation_precision": 1.0,
+          "citation_recall": 1.0,
+          "citation_f1": 1.0,
+          "completeness": 1.0,
+          "grounding_category": "grounded_correct",
+          "judge_reason": ""
+        }
+      },
+      "Router": {
+        "pipeline": "Router",
+        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+        "qtype": "temporal",
+        "answer": "Chen Ding",
+        "citations": [
+          "Q1050909",
+          "Q26233122"
+        ],
+        "latency_ms": 154.05,
+        "retrieval_steps": 4,
+        "reasoning_steps": 2,
+        "tools_called": [
+          "link_entities",
+          "resolve_anchor",
+          "resolve_event",
+          "verify_chain",
+          "vector_search",
+          "evaluate_evidence",
+          "render_answer"
+        ],
+        "agents_invoked": [
+          "Router",
+          "EntityLinker",
+          "TemporalReasoner",
+          "VectorSearcher",
+          "EvidenceEvaluator",
+          "Synthesizer"
+        ],
+        "chunks_retrieved": 8,
+        "docs_retrieved": 60,
+        "context_tokens": 623,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "method": "structured",
+        "strategy_changed": true,
+        "stop_reason": "confidence_reached",
+        "confidence": 0.9,
+        "uncertainty": 0.1,
+        "plan": [
+          "Router.route->Agentic GraphRAG",
+          "EntityLinker.link_entities",
+          "TemporalReasoner.resolve_anchor",
+          "TemporalReasoner.resolve_event",
+          "TemporalReasoner.verify_chain",
+          "VectorSearcher.vector_search",
+          "EvidenceEvaluator.evaluate_evidence",
+          "Synthesizer.render_answer"
+        ],
+        "loop_iterations": 0,
+        "candidates_considered": 65,
+        "steps": [
+          {
+            "step": 0,
+            "agent": "Router",
+            "operation": "classify_and_route",
+            "detail": "qtype=temporal -> Agentic GraphRAG",
+            "observation": {
+              "qtype": "temporal",
+              "routed_to": "Agentic GraphRAG",
+              "requirement": "the edition immediately before/after a stated one",
+              "capability_reason": "the PREV/NEXT edition chain must be walked and confirmed; top-k retrieval cannot follow an edge",
+              "method": "rules",
+              "confidence": 0.9,
+              "min_confidence": 0.65,
+              "reason": "template match for 'temporal'",
+              "routing_note": "",
+              "escalated": false
+            }
+          },
+          {
+            "index": 1,
+            "agent": "EntityLinker",
+            "operation": "link_entities",
+            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
+            "observation": {
+              "sport": "Athletics",
+              "sport_score": 1.0,
+              "venue_score": 0.0,
+              "games": "GAMES::2012::Summer",
+              "edition_chain": [
+                "2016 Summer",
+                "2012 Summer"
+              ],
+              "implied_event_pages": 60
+            },
+            "confidence_after": 0.0,
+            "new_documents": 60,
+            "latency_ms": 21.08,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cumulative_tokens": 0
+          },
+          {
+            "index": 2,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_anchor",
+            "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
+            "observation": {
+              "anchor_year": 2016,
+              "resolved_year": 2012,
+              "season": "Summer",
+              "season_resolution": "stated_season",
+              "resolution": {
+                "season": "Summer",
+                "year": 2012,
+                "method": "stated_season",
+                "target_year": 2016,
+                "sport": "Athletics",
+                "candidates": [
+                  {
+                    "season": "Summer",
+                    "year": 2012,
+                    "event_score": 1.0
+                  }
+                ]
+              },
+              "reasoning": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)"
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 8.46,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cumulative_tokens": 0
+          },
+          {
+            "index": 3,
+            "agent": "TemporalReasoner",
+            "operation": "resolve_event",
+            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
+            "observation": {
+              "sport": "Athletics",
+              "score": 1.0,
+              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+              "num_events_in_games": 42,
+              "candidates": [
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
+                  "score": 1.0
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
+                  "score": 0.828
+                },
+                {
+                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
+                  "score": 0.827
+                }
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 8.59,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cumulative_tokens": 0
+          },
+          {
+            "index": 4,
+            "agent": "TemporalReasoner",
+            "operation": "verify_chain",
+            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
+            "observation": {
+              "consistent": true,
+              "details": [
+                "corpus infobox 'next' field points to 2016",
+                "edition chain confirms 2012 is immediately before 2016"
+              ],
+              "edition_years": [
+                1988,
+                1992,
+                1996,
+                2000,
+                2004,
+                2008,
+                2012,
+                2016
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 0,
+            "latency_ms": 0.13,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "cumulative_tokens": 0
+          },
+          {
+            "index": 5,
+            "agent": "VectorSearcher",
+            "operation": "vector_search",
+            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?\" (widening=0) -> 12 passages (8 new documents)",
+            "observation": {
+              "query": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
+              "widening": 0,
+              "chunks": 12,
+              "doc_ids": [
+                "Q26233122",
+                "Q1050909",
+                "Q936622",
+                "Q936622",
+                "Q776944",
+                "Q3628781",
+                "Q853023",
+                "Q26233320"
+              ]
+            },
+            "confidence_after": 0.0,
+            "new_documents": 8,
+            "latency_ms": 114.97,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1795,7 +2386,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.15,
+            "latency_ms": 0.09,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1803,34 +2394,40 @@
         ],
         "time_per_operation": [
           {
+            "operation": "classify_and_route",
+            "agent": "Router",
+            "detail": "-> Agentic GraphRAG",
+            "latency_ms": 0.02
+          },
+          {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "latency_ms": 20.76
+            "latency_ms": 21.08
           },
           {
             "operation": "resolve_anchor",
             "agent": "TemporalReasoner",
             "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "latency_ms": 10.46
+            "latency_ms": 8.46
           },
           {
             "operation": "resolve_event",
             "agent": "TemporalReasoner",
             "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "latency_ms": 12.03
+            "latency_ms": 8.59
           },
           {
             "operation": "verify_chain",
             "agent": "TemporalReasoner",
             "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "latency_ms": 0.25
+            "latency_ms": 0.13
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
-            "latency_ms": 205.3
+            "latency_ms": 114.97
           },
           {
             "operation": "evaluate_evidence",
@@ -1842,7 +2439,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
-            "latency_ms": 0.15
+            "latency_ms": 0.09
           }
         ],
         "tokens_per_operation": [],
@@ -2031,604 +2628,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 249.67
-          },
-          "plan_skips": []
-        },
-        "unresolved": [],
-        "evaluation": {
-          "is_correct": true,
-          "match_type": "exact",
-          "accuracy_score": 1.0,
-          "similarity": 1.0,
-          "citation_precision": 1.0,
-          "citation_recall": 1.0,
-          "citation_f1": 1.0,
-          "completeness": 1.0,
-          "grounding_category": "grounded_correct",
-          "judge_reason": ""
-        }
-      },
-      "Router": {
-        "pipeline": "Router",
-        "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
-        "qtype": "temporal",
-        "answer": "Chen Ding",
-        "citations": [
-          "Q1050909",
-          "Q26233122"
-        ],
-        "latency_ms": 242.76,
-        "retrieval_steps": 4,
-        "reasoning_steps": 2,
-        "tools_called": [
-          "link_entities",
-          "resolve_anchor",
-          "resolve_event",
-          "verify_chain",
-          "vector_search",
-          "evaluate_evidence",
-          "render_answer"
-        ],
-        "agents_invoked": [
-          "Router",
-          "EntityLinker",
-          "TemporalReasoner",
-          "VectorSearcher",
-          "EvidenceEvaluator",
-          "Synthesizer"
-        ],
-        "chunks_retrieved": 8,
-        "docs_retrieved": 60,
-        "context_tokens": 623,
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "total_tokens": 0,
-        "llm_calls": 0,
-        "method": "structured",
-        "strategy_changed": true,
-        "stop_reason": "confidence_reached",
-        "confidence": 0.9,
-        "uncertainty": 0.1,
-        "plan": [
-          "Router.route->Agentic GraphRAG",
-          "EntityLinker.link_entities",
-          "TemporalReasoner.resolve_anchor",
-          "TemporalReasoner.resolve_event",
-          "TemporalReasoner.verify_chain",
-          "VectorSearcher.vector_search",
-          "EvidenceEvaluator.evaluate_evidence",
-          "Synthesizer.render_answer"
-        ],
-        "loop_iterations": 0,
-        "candidates_considered": 65,
-        "steps": [
-          {
-            "step": 0,
-            "agent": "Router",
-            "operation": "classify_and_route",
-            "detail": "qtype=temporal -> Agentic GraphRAG",
-            "observation": {
-              "qtype": "temporal",
-              "routed_to": "Agentic GraphRAG",
-              "requirement": "the edition immediately before/after a stated one",
-              "capability_reason": "the PREV/NEXT edition chain must be walked and confirmed; top-k retrieval cannot follow an edge",
-              "method": "rules",
-              "confidence": 0.9,
-              "min_confidence": 0.65,
-              "reason": "template match for 'temporal'",
-              "routing_note": "",
-              "escalated": false
-            }
-          },
-          {
-            "index": 1,
-            "agent": "EntityLinker",
-            "operation": "link_entities",
-            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "observation": {
-              "sport": "Athletics",
-              "sport_score": 1.0,
-              "venue_score": 0.0,
-              "games": "GAMES::2012::Summer",
-              "edition_chain": [
-                "2016 Summer",
-                "2012 Summer"
-              ],
-              "implied_event_pages": 60
-            },
-            "confidence_after": 0.0,
-            "new_documents": 60,
-            "latency_ms": 22.15,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cumulative_tokens": 0
-          },
-          {
-            "index": 2,
-            "agent": "TemporalReasoner",
-            "operation": "resolve_anchor",
-            "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "observation": {
-              "anchor_year": 2016,
-              "resolved_year": 2012,
-              "season": "Summer",
-              "season_resolution": "stated_season",
-              "resolution": {
-                "season": "Summer",
-                "year": 2012,
-                "method": "stated_season",
-                "target_year": 2016,
-                "sport": "Athletics",
-                "candidates": [
-                  {
-                    "season": "Summer",
-                    "year": 2012,
-                    "event_score": 1.0
-                  }
-                ]
-              },
-              "reasoning": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)"
-            },
-            "confidence_after": 0.0,
-            "new_documents": 0,
-            "latency_ms": 12.08,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cumulative_tokens": 0
-          },
-          {
-            "index": 3,
-            "agent": "TemporalReasoner",
-            "operation": "resolve_event",
-            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "observation": {
-              "sport": "Athletics",
-              "score": 1.0,
-              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-              "num_events_in_games": 42,
-              "candidates": [
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-                  "score": 1.0
-                },
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
-                  "score": 0.828
-                },
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
-                  "score": 0.827
-                }
-              ]
-            },
-            "confidence_after": 0.0,
-            "new_documents": 0,
-            "latency_ms": 10.29,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cumulative_tokens": 0
-          },
-          {
-            "index": 4,
-            "agent": "TemporalReasoner",
-            "operation": "verify_chain",
-            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "observation": {
-              "consistent": true,
-              "details": [
-                "corpus infobox 'next' field points to 2016",
-                "edition chain confirms 2012 is immediately before 2016"
-              ],
-              "edition_years": [
-                1988,
-                1992,
-                1996,
-                2000,
-                2004,
-                2008,
-                2012,
-                2016
-              ]
-            },
-            "confidence_after": 0.0,
-            "new_documents": 0,
-            "latency_ms": 0.25,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cumulative_tokens": 0
-          },
-          {
-            "index": 5,
-            "agent": "VectorSearcher",
-            "operation": "vector_search",
-            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?\" (widening=0) -> 12 passages (8 new documents)",
-            "observation": {
-              "query": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
-              "widening": 0,
-              "chunks": 12,
-              "doc_ids": [
-                "Q26233122",
-                "Q1050909",
-                "Q936622",
-                "Q936622",
-                "Q776944",
-                "Q3628781",
-                "Q853023",
-                "Q26233320"
-              ]
-            },
-            "confidence_after": 0.0,
-            "new_documents": 8,
-            "latency_ms": 196.73,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cumulative_tokens": 0
-          },
-          {
-            "index": 6,
-            "agent": "EvidenceEvaluator",
-            "operation": "evaluate_evidence",
-            "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "observation": {
-              "confidence": 0.97,
-              "sufficient": true,
-              "signals": {
-                "sport": "Athletics",
-                "matched": {
-                  "doc_id": "Q1050909",
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-                  "url": "https://en.wikipedia.org/wiki/Athletics_at_the_2012_Summer_Olympics_%E2%80%93_Men%27s_20_kilometres_walk",
-                  "sport": "Athletics",
-                  "year": 2012,
-                  "season": "Summer",
-                  "games_label": "2012 Summer",
-                  "event_name": "Men's 20 kilometres walk",
-                  "competitors": 56,
-                  "nations": 34,
-                  "venue": "The Mall",
-                  "venues": "",
-                  "date_raw": "4 August 2012",
-                  "dates_raw": "",
-                  "gold": "Chen Ding",
-                  "silver": "Erick Barrondo",
-                  "bronze": "Wang Zhen",
-                  "win_value": "1:18:46 OR",
-                  "win_label": "",
-                  "prev": "2008",
-                  "next": "2016",
-                  "source_type": "infobox",
-                  "fact_version_date": "2012-08-04",
-                  "approx_tokens": 1261,
-                  "prev_doc_id": "Q853023",
-                  "next_doc_id": "Q26233122",
-                  "months_found": [
-                    "august"
-                  ],
-                  "days_found": [
-                    "4"
-                  ]
-                },
-                "score": 1.0,
-                "candidates": [
-                  {
-                    "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-                    "score": 1.0
-                  },
-                  {
-                    "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
-                    "score": 0.828
-                  },
-                  {
-                    "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
-                    "score": 0.827
-                  }
-                ],
-                "num_events_in_games": 42,
-                "anchor_confirmed": true,
-                "event_match_score": 1.0
-              },
-              "gaps": []
-            },
-            "confidence_after": 0.97,
-            "new_documents": 0,
-            "latency_ms": 0.05,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cumulative_tokens": 0
-          },
-          {
-            "index": 7,
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics) :: conflicts: recency (uncertainty 0.10)",
-            "observation": {
-              "answer": "Chen Ding",
-              "source": "structured",
-              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
-              "citations": [
-                "Q1050909",
-                "Q26233122"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.1,
-              "conflicts": {
-                "field": "gold",
-                "rule": "recency",
-                "resolved": "Wang Zhen",
-                "confidence": 0.9,
-                "versions_compared": 2,
-                "explanation": "Q26233122 (2016) is the most recent statement and supersedes 1 earlier version(s)",
-                "superseded": [
-                  {
-                    "value": "Chen Ding",
-                    "doc_id": "Q1050909",
-                    "year": 2012
-                  }
-                ],
-                "versions": [
-                  {
-                    "value": "Chen Ding",
-                    "doc_id": "Q1050909",
-                    "year": 2012,
-                    "source_type": "infobox"
-                  },
-                  {
-                    "value": "Wang Zhen",
-                    "doc_id": "Q26233122",
-                    "year": 2016,
-                    "source_type": "infobox"
-                  }
-                ],
-                "confidence_after": 0.9,
-                "decisive": true
-              }
-            },
-            "confidence_after": 0.9,
-            "new_documents": 0,
-            "latency_ms": 0.15,
-            "input_tokens": 0,
-            "output_tokens": 0,
-            "cumulative_tokens": 0
-          }
-        ],
-        "time_per_operation": [
-          {
-            "operation": "classify_and_route",
-            "agent": "Router",
-            "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.03
-          },
-          {
-            "operation": "link_entities",
-            "agent": "EntityLinker",
-            "detail": "sport->Athletics; games->GAMES::2012::Summer; immediately-previous edition->2012",
-            "latency_ms": 22.15
-          },
-          {
-            "operation": "resolve_anchor",
-            "agent": "TemporalReasoner",
-            "detail": "latest Summer Games strictly before 2016 is 2012 (resolved by stated_season)",
-            "latency_ms": 12.08
-          },
-          {
-            "operation": "resolve_event",
-            "agent": "TemporalReasoner",
-            "detail": "matched event \"Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk\" (score 1.0) among 42 events in 2012 Summer",
-            "latency_ms": 10.29
-          },
-          {
-            "operation": "verify_chain",
-            "agent": "TemporalReasoner",
-            "detail": "corpus infobox 'next' field points to 2016; edition chain confirms 2012 is immediately before 2016",
-            "latency_ms": 0.25
-          },
-          {
-            "operation": "vector_search",
-            "agent": "VectorSearcher",
-            "detail": "text retrieval over 56765 chunks: query=\"Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2",
-            "latency_ms": 196.73
-          },
-          {
-            "operation": "evaluate_evidence",
-            "agent": "EvidenceEvaluator",
-            "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.05
-          },
-          {
-            "operation": "render_answer",
-            "agent": "Synthesizer",
-            "detail": "[structured] answer='Chen Ding' citing 2 document(s) :: gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer",
-            "latency_ms": 0.15
-          }
-        ],
-        "tokens_per_operation": [],
-        "evidence": [
-          {
-            "agent": "TemporalReasoner",
-            "operation": "resolve_event",
-            "observation": {
-              "sport": "Athletics",
-              "score": 1.0,
-              "matched": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-              "num_events_in_games": 42,
-              "candidates": [
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk",
-                  "score": 1.0
-                },
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Women's 20 kilometres walk",
-                  "score": 0.828
-                },
-                {
-                  "title": "Athletics at the 2012 Summer Olympics – Men's 50 kilometres walk",
-                  "score": 0.827
-                }
-              ]
-            }
-          },
-          {
-            "agent": "Synthesizer",
-            "operation": "render_answer",
-            "observation": {
-              "answer": "Chen Ding",
-              "source": "structured",
-              "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
-              "citations": [
-                "Q1050909",
-                "Q26233122"
-              ],
-              "adjudication": {},
-              "uncertainty": 0.1,
-              "conflicts": {
-                "field": "gold",
-                "rule": "recency",
-                "resolved": "Wang Zhen",
-                "confidence": 0.9,
-                "versions_compared": 2,
-                "explanation": "Q26233122 (2016) is the most recent statement and supersedes 1 earlier version(s)",
-                "superseded": [
-                  {
-                    "value": "Chen Ding",
-                    "doc_id": "Q1050909",
-                    "year": 2012
-                  }
-                ],
-                "versions": [
-                  {
-                    "value": "Chen Ding",
-                    "doc_id": "Q1050909",
-                    "year": 2012,
-                    "source_type": "infobox"
-                  },
-                  {
-                    "value": "Wang Zhen",
-                    "doc_id": "Q26233122",
-                    "year": 2016,
-                    "source_type": "infobox"
-                  }
-                ],
-                "confidence_after": 0.9,
-                "decisive": true
-              }
-            }
-          }
-        ],
-        "metadata": {
-          "pipeline": "Agentic GraphRAG",
-          "agent_mode": "hybrid",
-          "classification": {
-            "qtype": "temporal",
-            "method": "rules",
-            "confidence": 0.9,
-            "reason": "template match for 'temporal'",
-            "rule_type": "temporal",
-            "llm_agrees_with_rules": null,
-            "rule_disagreement": null,
-            "templates_enabled": true,
-            "policy": "llm_first_templates_validate"
-          },
-          "slot_report": {
-            "used": false,
-            "filled": [],
-            "rejected": []
-          },
-          "parse_report": {
-            "method": "rules",
-            "llm_used": false,
-            "filled_by_rules": [],
-            "rejected": [],
-            "conflicts": [],
-            "confidence": 0.0,
-            "corpus_validated": [],
-            "templates_enabled": true,
-            "llm_error": null,
-            "reason": "no model available: template parse only",
-            "rule_qtype": "temporal",
-            "parse_mode": "semantic"
-          },
-          "spec": {
-            "question": "Who won the gold medal in the men's 20 kilometres walk athletics event at the Summer Olympics held immediately before 2016?",
-            "qtype": "temporal",
-            "sport": "Athletics",
-            "year": 0,
-            "season": "Summer",
-            "event_desc": "men s 20 kilometres walk",
-            "venue": "",
-            "date_text": "",
-            "threshold": null,
-            "comparator": "gt",
-            "direction": "max",
-            "target_title": "",
-            "before_year": 2016,
-            "years_mentioned": [
-              2016
-            ],
-            "season_unresolved": false,
-            "parse_method": "rules"
-          },
-          "strategy_changes": [
-            "plan: template for 'temporal'"
-          ],
-          "resolved_gaps": [],
-          "gaps_remaining": [],
-          "synth_source": "structured",
-          "rationale": "gold medallist read from 'Athletics at the 2012 Summer Olympics – Men's 20 kilometres walk' (2012 Summer Olympics)",
-          "adjudication": {},
-          "conflicts": {
-            "field": "gold",
-            "rule": "recency",
-            "resolved": "Wang Zhen",
-            "confidence": 0.9,
-            "versions_compared": 2,
-            "explanation": "Q26233122 (2016) is the most recent statement and supersedes 1 earlier version(s)",
-            "superseded": [
-              {
-                "value": "Chen Ding",
-                "doc_id": "Q1050909",
-                "year": 2012
-              }
-            ],
-            "versions": [
-              {
-                "value": "Chen Ding",
-                "doc_id": "Q1050909",
-                "year": 2012,
-                "source_type": "infobox"
-              },
-              {
-                "value": "Wang Zhen",
-                "doc_id": "Q26233122",
-                "year": 2016,
-                "source_type": "infobox"
-              }
-            ],
-            "confidence_after": 0.9,
-            "decisive": true
-          },
-          "uncertainty": 0.1,
-          "tool_calls": [],
-          "docs_touched": 60,
-          "retrieval_methods_selected": [
-            "vector"
-          ],
-          "persona_handoffs": [
-            "EntityLinker",
-            "TemporalReasoner",
-            "TemporalReasoner",
-            "TemporalReasoner",
-            "VectorSearcher",
-            "EvidenceEvaluator",
-            "Synthesizer"
-          ],
-          "stopping_decision": {
-            "when_step": 0,
-            "when_tokens": 0,
-            "stop_reason": "confidence_reached",
-            "why": "Investigation terminated: confidence_reached",
-            "stopping_condition_met": true,
-            "when_latency_ms": 242.47
+            "when_latency_ms": 153.85
           },
           "plan_skips": [],
           "router": {
@@ -2707,7 +2707,7 @@
         "qtype": "aggregation",
         "answer": "",
         "citations": [],
-        "latency_ms": 72.98,
+        "latency_ms": 55.5,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -2751,12 +2751,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 72.6
+            "latency_ms": 55.15
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           }
         ],
         "tokens_per_operation": [
@@ -2829,7 +2829,7 @@
           "Q7500832",
           "Q7500834"
         ],
-        "latency_ms": 322.83,
+        "latency_ms": 193.7,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -2894,17 +2894,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 161.84
+            "latency_ms": 95.42
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 160.04
+            "latency_ms": 97.46
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.3
+            "latency_ms": 0.28
           }
         ],
         "tokens_per_operation": [
@@ -3048,7 +3048,7 @@
           "Q4354615",
           "Q5481589"
         ],
-        "latency_ms": 0.79,
+        "latency_ms": 0.61,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -3104,7 +3104,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.16,
+            "latency_ms": 0.13,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3132,7 +3132,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.13,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3163,7 +3163,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3180,7 +3180,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3204,7 +3204,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3234,7 +3234,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.1,
+            "latency_ms": 0.07,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3245,37 +3245,37 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Shooting; games->GAMES::2004::Summer",
-            "latency_ms": 0.16
+            "latency_ms": 0.13
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
-            "latency_ms": 0.13
+            "latency_ms": 0.1
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "verify_by_recount",
             "agent": "Aggregator",
             "detail": "independent recount -> 8 (documents with the field: 17); matches the primary count",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.97, sufficient",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
-            "latency_ms": 0.1
+            "latency_ms": 0.07
           }
         ],
         "tokens_per_operation": [],
@@ -3409,7 +3409,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.79
+            "when_latency_ms": 0.61
           },
           "plan_skips": []
         },
@@ -3442,7 +3442,7 @@
           "Q4354615",
           "Q5481589"
         ],
-        "latency_ms": 0.69,
+        "latency_ms": 0.6,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -3518,7 +3518,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.13,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3546,7 +3546,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.12,
+            "latency_ms": 0.1,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3577,7 +3577,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3648,7 +3648,7 @@
             },
             "confidence_after": 0.97,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -3665,19 +3665,19 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Shooting; games->GAMES::2004::Summer",
-            "latency_ms": 0.13
+            "latency_ms": 0.11
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 17 event pages (0 new)",
-            "latency_ms": 0.12
+            "latency_ms": 0.1
           },
           {
             "operation": "count_threshold",
             "agent": "Aggregator",
             "detail": "filtered 17 enumerated events on competitors gt 37 -> 8 pass (field coverage 100%)",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "verify_by_recount",
@@ -3695,7 +3695,7 @@
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='8' citing 8 document(s) :: 8 of 17 enumerated events had more than 37 competitors",
-            "latency_ms": 0.05
+            "latency_ms": 0.04
           }
         ],
         "tokens_per_operation": [],
@@ -3829,7 +3829,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.56
+            "when_latency_ms": 0.49
           },
           "plan_skips": [],
           "router": {
@@ -3934,7 +3934,7 @@
         "qtype": "superlative",
         "answer": "",
         "citations": [],
-        "latency_ms": 79.94,
+        "latency_ms": 42.22,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -3978,12 +3978,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 79.51
+            "latency_ms": 41.91
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           }
         ],
         "tokens_per_operation": [
@@ -4047,7 +4047,7 @@
         "citations": [
           "Q922361"
         ],
-        "latency_ms": 337.16,
+        "latency_ms": 229.6,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -4112,17 +4112,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 166.08
+            "latency_ms": 104.51
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 170.14
+            "latency_ms": 124.33
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.3
+            "latency_ms": 0.26
           }
         ],
         "tokens_per_operation": [
@@ -4214,7 +4214,7 @@
         "citations": [
           "Q693595"
         ],
-        "latency_ms": 0.86,
+        "latency_ms": 0.95,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -4270,7 +4270,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 43,
-            "latency_ms": 0.18,
+            "latency_ms": 0.23,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4298,7 +4298,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.14,
+            "latency_ms": 0.2,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4338,7 +4338,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4361,7 +4361,7 @@
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4384,7 +4384,7 @@
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.08,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4395,13 +4395,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2008::Summer",
-            "latency_ms": 0.18
+            "latency_ms": 0.23
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 43 event pages (0 new)",
-            "latency_ms": 0.14
+            "latency_ms": 0.2
           },
           {
             "operation": "arg_extreme",
@@ -4413,19 +4413,19 @@
             "operation": "verify_extreme",
             "agent": "Comparator",
             "detail": "cross-check of the extreme value (no violations) across 43 documents",
-            "latency_ms": 0.02
+            "latency_ms": 0.03
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.85, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer=\"Athletics at the 2008 Summer Olympics – Men's marathon\" citing 1 document(s) :: 'Athletics at the 2008 Summer Olympics – Men's marathon' ha",
-            "latency_ms": 0.08
+            "latency_ms": 0.04
           }
         ],
         "tokens_per_operation": [],
@@ -4542,7 +4542,7 @@
             "stop_reason": "no_new_information",
             "why": "Investigation terminated: no_new_information",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.86
+            "when_latency_ms": 0.95
           },
           "plan_skips": []
         },
@@ -4568,7 +4568,7 @@
         "citations": [
           "Q693595"
         ],
-        "latency_ms": 0.85,
+        "latency_ms": 1.07,
         "retrieval_steps": 2,
         "reasoning_steps": 4,
         "tools_called": [
@@ -4644,7 +4644,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 43,
-            "latency_ms": 0.16,
+            "latency_ms": 0.23,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4672,7 +4672,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.13,
+            "latency_ms": 0.21,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4735,7 +4735,7 @@
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.02,
+            "latency_ms": 0.01,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4758,7 +4758,7 @@
             },
             "confidence_after": 0.85,
             "new_documents": 0,
-            "latency_ms": 0.04,
+            "latency_ms": 0.03,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -4769,19 +4769,19 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> Agentic GraphRAG",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Athletics; games->GAMES::2008::Summer",
-            "latency_ms": 0.16
+            "latency_ms": 0.23
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 43 event pages (0 new)",
-            "latency_ms": 0.13
+            "latency_ms": 0.21
           },
           {
             "operation": "arg_extreme",
@@ -4799,13 +4799,13 @@
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.85, sufficient",
-            "latency_ms": 0.02
+            "latency_ms": 0.01
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer=\"Athletics at the 2008 Summer Olympics – Men's marathon\" citing 1 document(s) :: 'Athletics at the 2008 Summer Olympics – Men's marathon' ha",
-            "latency_ms": 0.04
+            "latency_ms": 0.03
           }
         ],
         "tokens_per_operation": [],
@@ -4922,7 +4922,7 @@
             "stop_reason": "no_new_information",
             "why": "Investigation terminated: no_new_information",
             "stopping_condition_met": true,
-            "when_latency_ms": 0.68
+            "when_latency_ms": 0.88
           },
           "plan_skips": [],
           "router": {
@@ -4987,7 +4987,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 37.23,
+        "latency_ms": 23.2,
         "retrieval_steps": 1,
         "reasoning_steps": 0,
         "tools_called": [
@@ -5031,12 +5031,12 @@
           {
             "operation": "vector_search",
             "detail": "top_k=5",
-            "latency_ms": 36.19
+            "latency_ms": 22.35
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 0.71
+            "latency_ms": 0.58
           }
         ],
         "tokens_per_operation": [
@@ -5106,7 +5106,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 130.95,
+        "latency_ms": 91.82,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -5171,17 +5171,17 @@
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 63.44
+            "latency_ms": 43.87
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 65.25
+            "latency_ms": 45.94
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 1.69
+            "latency_ms": 1.42
           }
         ],
         "tokens_per_operation": [
@@ -5272,7 +5272,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 93.5,
+        "latency_ms": 46.47,
         "retrieval_steps": 4,
         "reasoning_steps": 2,
         "tools_called": [
@@ -5329,7 +5329,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 5,
-            "latency_ms": 0.07,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -5359,7 +5359,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.68,
+            "latency_ms": 0.59,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -5413,7 +5413,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 12,
-            "latency_ms": 92.05,
+            "latency_ms": 45.27,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -5470,13 +5470,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.07
+            "latency_ms": 0.05
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['olympic weightlifting gymnasium'] (score 1.0); date match 1.0 over 5 candidates -> \"Weightlifting at the 1988 Summer Olympics – Men's 60 kg\"",
-            "latency_ms": 0.68
+            "latency_ms": 0.59
           },
           {
             "operation": "traverse_graph",
@@ -5488,7 +5488,7 @@
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Weightlifting Gymnasium on 20 September 1988?' (widening=0) -> 12 p",
-            "latency_ms": 92.05
+            "latency_ms": 45.27
           },
           {
             "operation": "evaluate_evidence",
@@ -5626,7 +5626,7 @@
             "stop_reason": "confidence_reached",
             "why": "Investigation terminated: confidence_reached",
             "stopping_condition_met": true,
-            "when_latency_ms": 93.5
+            "when_latency_ms": 46.47
           },
           "plan_skips": []
         },
@@ -5652,7 +5652,7 @@
         "citations": [
           "Q25239316"
         ],
-        "latency_ms": 158.98,
+        "latency_ms": 106.76,
         "retrieval_steps": 2,
         "reasoning_steps": 0,
         "tools_called": [
@@ -5739,22 +5739,22 @@
             "operation": "classify_and_route",
             "agent": "Router",
             "detail": "-> GraphRAG",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "hybrid_search",
             "detail": "lexical + vector RRF",
-            "latency_ms": 93.61
+            "latency_ms": 44.88
           },
           {
             "operation": "graph_expand",
             "detail": "2-hop neighbourhood",
-            "latency_ms": 62.93
+            "latency_ms": 58.65
           },
           {
             "operation": "extractive_answer",
             "detail": "read infobox fields from passages",
-            "latency_ms": 1.76
+            "latency_ms": 2.29
           }
         ],
         "tokens_per_operation": [
