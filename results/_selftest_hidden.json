@@ -104,7 +104,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 3,
-            "latency_ms": 0.06,
+            "latency_ms": 0.07,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -134,7 +134,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.49,
+            "latency_ms": 0.44,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -186,7 +186,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 9,
-            "latency_ms": 56.93,
+            "latency_ms": 47.89,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -209,7 +209,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -232,7 +232,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 2.07,
+            "latency_ms": 2.31,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -243,13 +243,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.06
+            "latency_ms": 0.07
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['olympic tennis centre'] (score 1.0); date match 1.0 over 3 candidates -> \"Tennis at the 2004 Summer Olympics – Women's doubles\"",
-            "latency_ms": 0.49
+            "latency_ms": 0.44
           },
           {
             "operation": "traverse_graph",
@@ -261,19 +261,19 @@
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Olympic Tennis Centre on 15 to 22 August 2004?' (widening=0) -> 12 passages",
-            "latency_ms": 56.93
+            "latency_ms": 47.89
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.05
+            "latency_ms": 0.04
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Li TingSun Tiantian' citing 1 document(s) :: gold medallist read from 'Tennis at the 2004 Summer Olympics – Women's doubles' (2004 Summer O",
-            "latency_ms": 2.07
+            "latency_ms": 2.31
           }
         ],
         "tokens_per_operation": []
@@ -318,7 +318,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 60.14,
+      "latency_ms": 51.28,
       "error": null
     },
     {
@@ -401,7 +401,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 1,
-            "latency_ms": 0.04,
+            "latency_ms": 0.05,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -428,7 +428,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 10,
-            "latency_ms": 114.15,
+            "latency_ms": 96.67,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -488,13 +488,13 @@
             "operation": "resolve_article",
             "agent": "LookupResolver",
             "detail": "resolved title \"Fencing at the 1988 Summer Olympics – Men's foil\" (score 1.0); field 'nations' = '29'",
-            "latency_ms": 0.04
+            "latency_ms": 0.05
           },
           {
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query=\"How many nations competed in Fencing at the 1988 Summer Olympics – Men's foil?\" (widening=0) -> 12 passages (10 new doc",
-            "latency_ms": 114.15
+            "latency_ms": 96.67
           },
           {
             "operation": "evaluate_evidence",
@@ -539,7 +539,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 114.68,
+      "latency_ms": 97.26,
       "error": null
     },
     {
@@ -613,7 +613,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 18,
-            "latency_ms": 0.15,
+            "latency_ms": 0.16,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -754,7 +754,7 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Cycling; games->GAMES::2008::Summer",
-            "latency_ms": 0.15
+            "latency_ms": 0.16
           },
           {
             "operation": "traverse_graph",
@@ -837,7 +837,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 0.68,
+      "latency_ms": 0.7,
       "error": null
     },
     {
@@ -905,7 +905,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 17,
-            "latency_ms": 0.05,
+            "latency_ms": 0.06,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -935,7 +935,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 1.89,
+            "latency_ms": 1.92,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -989,7 +989,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 11,
-            "latency_ms": 51.12,
+            "latency_ms": 39.59,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1012,7 +1012,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.03,
+            "latency_ms": 0.02,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1035,7 +1035,7 @@
             },
             "confidence_after": 0.9,
             "new_documents": 0,
-            "latency_ms": 0.05,
+            "latency_ms": 0.04,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1046,13 +1046,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "venue->1 vertex/vertices (score 1.0)",
-            "latency_ms": 0.05
+            "latency_ms": 0.06
           },
           {
             "operation": "resolve_venue_date",
             "agent": "LookupResolver",
             "detail": "venue->['sydney international shooting centre'] (score 1.0); date match 1.0 over 17 candidates -> \"Shooting at the 2000 Summer Olympics – Women's 25 metre pisto",
-            "latency_ms": 1.89
+            "latency_ms": 1.92
           },
           {
             "operation": "traverse_graph",
@@ -1064,19 +1064,19 @@
             "operation": "vector_search",
             "agent": "VectorSearcher",
             "detail": "text retrieval over 56765 chunks: query='Who won the gold medal in the event held at Sydney International Shooting Centre on 22 September 2000?' (widening=0) ->",
-            "latency_ms": 51.12
+            "latency_ms": 39.59
           },
           {
             "operation": "evaluate_evidence",
             "agent": "EvidenceEvaluator",
             "detail": "sufficiency audit -> confidence 0.90, sufficient",
-            "latency_ms": 0.03
+            "latency_ms": 0.02
           },
           {
             "operation": "render_answer",
             "agent": "Synthesizer",
             "detail": "[structured] answer='Mariya Grozdeva' citing 1 document(s) :: gold medallist read from 'Shooting at the 2000 Summer Olympics – Women's 25 metre pistol' (2000 Su",
-            "latency_ms": 0.05
+            "latency_ms": 0.04
           }
         ],
         "tokens_per_operation": []
@@ -1121,7 +1121,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 53.56,
+      "latency_ms": 42.07,
       "error": null
     },
     {
@@ -1188,7 +1188,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 10,
-            "latency_ms": 0.15,
+            "latency_ms": 0.13,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1216,7 +1216,7 @@
             },
             "confidence_after": 0.0,
             "new_documents": 0,
-            "latency_ms": 0.12,
+            "latency_ms": 0.11,
             "input_tokens": 0,
             "output_tokens": 0,
             "cumulative_tokens": 0
@@ -1313,13 +1313,13 @@
             "operation": "link_entities",
             "agent": "EntityLinker",
             "detail": "sport->Sailing; games->GAMES::2016::Summer",
-            "latency_ms": 0.15
+            "latency_ms": 0.13
           },
           {
             "operation": "traverse_graph",
             "agent": "GraphTraverser",
             "detail": "structural retrieval: strategy=IN_SPORT + PART_OF -> 10 event pages (0 new)",
-            "latency_ms": 0.12
+            "latency_ms": 0.11
           },
           {
             "operation": "arg_extreme",
@@ -1380,7 +1380,7 @@
         }
       ],
       "unresolved": [],
-      "latency_ms": 0.65,
+      "latency_ms": 0.58,
       "error": null
     }
   ]

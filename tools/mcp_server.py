@@ -128,6 +128,31 @@ MCP_RESOURCES = [
     },
 ]
 
+MCP_PROMPTS = [
+    {
+        "name": "investigate_olympic_question",
+        "description": "Structured system instructions for conducting an autonomous multi-step Olympic investigation over TigerGraph using tools.",
+        "arguments": [
+            {"name": "question", "description": "The Olympic question to investigate", "required": True},
+        ],
+    },
+    {
+        "name": "adjudicate_conflicting_facts",
+        "description": "System prompt for resolving conflicting, contested, or evolving historical facts using the 4-tier precedence matrix.",
+        "arguments": [
+            {"name": "field_name", "description": "Name of the fact (e.g. gold_medallist, venue)", "required": True},
+            {"name": "candidates", "description": "Summary of competing candidates and years", "required": True},
+        ],
+    },
+    {
+        "name": "explore_athlete_career",
+        "description": "Prompt for traversing an athlete's multi-hop Olympic career across Games editions, sports, and medal podiums.",
+        "arguments": [
+            {"name": "athlete_name", "description": "Name of the athlete", "required": True},
+        ],
+    },
+]
+
 
 class TigerGraphMCPServer:
     """Zero-dependency stdio JSON-RPC 2.0 MCP server for TigerGraph."""
@@ -138,6 +163,8 @@ class TigerGraphMCPServer:
             cache_path=config.benchmark.kg_cache_path,
         )
         self.tools = GraphTools(self.kg, index=None)
+        self._cached_agent = None
+        self._cached_index = None
 
     def handle_request(self, req: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         msg_id = req.get("id")
@@ -154,6 +181,7 @@ class TigerGraphMCPServer:
                     "capabilities": {
                         "tools": {"listChanged": False},
                         "resources": {"subscribe": False, "listChanged": False},
+                        "prompts": {"listChanged": False},
                     },
                 },
             }
@@ -189,6 +217,25 @@ class TigerGraphMCPServer:
                 "result": {
                     "contents": [{"uri": uri, "mimeType": "application/json", "text": json.dumps(content, indent=2)}],
                 },
+            }
+
+        if method == "prompts/list":
+            return {"jsonrpc": "2.0", "id": msg_id, "result": {"prompts": MCP_PROMPTS}}
+
+        if method == "prompts/get":
+            prompt_name = params.get("name")
+            prompt_args = params.get("arguments", {}) or {}
+            content = self.get_prompt(prompt_name, prompt_args)
+            if "error" in content:
+                return {
+                    "jsonrpc": "2.0",
+                    "id": msg_id,
+                    "error": {"code": -32602, "message": content["error"]},
+                }
+            return {
+                "jsonrpc": "2.0",
+                "id": msg_id,
+                "result": content,
             }
 
         if msg_id is not None:
@@ -241,7 +288,7 @@ class TigerGraphMCPServer:
 
             if name == "tg_event":
                 doc_id = str(args.get("doc_id", ""))
-                event = self.kg.event(doc_id)
+                event = getattr(self.kg, "events", {}).get(doc_id)
                 if not event:
                     return {"found": False, "doc_id": doc_id}
                 return {
@@ -290,14 +337,15 @@ class TigerGraphMCPServer:
                 }
 
             if name == "agentic_investigate":
-                from pipelines import make_pipelines
-                from retrieval.index import CorpusIndex
-                index = CorpusIndex(self.kg)
-                pipes = {p.name: p for p in make_pipelines(index)}
-                agent = pipes.get("Agentic GraphRAG")
-                if not agent:
+                if self._cached_agent is None:
+                    from pipelines import make_pipelines
+                    from retrieval.index import CorpusIndex
+                    self._cached_index = CorpusIndex(self.kg)
+                    pipes = {p.name: p for p in make_pipelines(self._cached_index)}
+                    self._cached_agent = pipes.get("Agentic GraphRAG")
+                if not self._cached_agent:
                     return {"error": "Agentic GraphRAG arm not found"}
-                res = agent.run(str(args.get("question", "")))
+                res = self._cached_agent.run(str(args.get("question", "")))
                 return {
                     "answer": res.answer,
                     "confidence": res.confidence,
@@ -328,6 +376,140 @@ class TigerGraphMCPServer:
                 "host": os.getenv("TG_HOST", "https://tg-fed265f1-0603-4e99-b6f3-6efd6d7fd5c5.tg-2635877100.i.tgcloud.io"),
             }
         return {"error": f"Resource not found: {uri}"}
+
+    def get_prompt(self, name: str, args: Dict[str, Any]) -> Dict[str, Any]:
+        if name == "investigate_olympic_question":
+            q = args.get("question", "")
+            return {
+                "description": "Olympic Investigation Prompt",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": {
+                            "type": "text",
+                            "text": (
+                                f"You are an expert Olympic researcher with direct access to TigerGraph Cloud (OlympicsKG).\n"
+                                f"Investigate the following question using the available TigerGraph tools:\n"
+                                f"Question: {q}\n\n"
+                                f"Methodology:\n"
+                                f"1. Filter relevant events via `tg_filter_events` (by sport, season, venue, or year).\n"
+                                f"2. Traverse relationship hops via `tg_neighbours` to find connected athletes, games, or venues.\n"
+                                f"3. Check for historical conflicts via `detect_conflicts` if multiple sources or years disagree.\n"
+                                f"4. Provide a grounded answer citing specific event doc_ids and graph evidence."
+                            ),
+                        },
+                    },
+                ],
+            }
+        if name == "adjudicate_conflicting_facts":
+            f = args.get("field_name", "fact")
+            c = args.get("candidates", "")
+            return {
+                "description": "Conflict Adjudication Prompt",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": {
+                            "type": "text",
+                            "text": (
+                                f"You are an Olympic Fact Adjudication specialist. Resolve the following conflict regarding '{f}':\n"
+                                f"Competing candidates: {c}\n\n"
+                                f"Apply the strict 4-Tier Precedence Hierarchy:\n"
+                                f"1. Authority Correction: Official IOC Executive Board disqualifications or medal reallocations supersede contemporaneous reports.\n"
+                                f"2. Temporal Recency: More recent Olympic records or editions supersede older historical marks.\n"
+                                f"3. Entity Succession: Geopolitical successor states (e.g. USSR -> Unified Team -> Russian Federation) preserve distinct medals.\n"
+                                f"4. Majority Consensus: Resolve naming variants by corpus frequency.\n"
+                                f"Use `detect_conflicts` to compute deterministic resolution and uncertainty."
+                            ),
+                        },
+                    },
+                ],
+            }
+        if name == "explore_athlete_career":
+            ath = args.get("athlete_name", "")
+            return {
+                "description": "Athlete Career Exploration Prompt",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": {
+                            "type": "text",
+                            "text": (
+                                f"Explore the Olympic career of athlete '{ath}' across TigerGraph Cloud:\n"
+                                f"1. Locate athlete vertices using `tg_neighbours` on relevant events or `tg_filter_events`.\n"
+                                f"2. Follow WON_BY edges to extract all gold, silver, and bronze podium finishes.\n"
+                                f"3. Follow PART_OF edges to enumerate every Olympic Games edition attended.\n"
+                                f"4. Summarize total medal counts, sports, and years active."
+                            ),
+                        },
+                    },
+                ],
+            }
+        return {"error": f"Unknown prompt: {name}"}
+
+
+class TigerGraphMCPBridge:
+    """In-process and programmatic client bridge to TigerGraph MCP Server.
+
+    Allows internal agents, evaluation pipelines, and test suites to invoke
+    TigerGraph primitives directly through the standardized Model Context Protocol.
+    """
+
+    def __init__(self, server: Optional[TigerGraphMCPServer] = None) -> None:
+        self.server = server or TigerGraphMCPServer()
+        self._request_counter = 0
+
+    def call_tool(self, name: str, arguments: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Execute an MCP tool via formal JSON-RPC 2.0 message exchange."""
+        self._request_counter += 1
+        req = {
+            "jsonrpc": "2.0",
+            "id": self._request_counter,
+            "method": "tools/call",
+            "params": {"name": name, "arguments": arguments or {}},
+        }
+        resp = self.server.handle_request(req)
+        if not resp or "result" not in resp:
+            return {"error": resp.get("error", "No response") if resp else "Null response"}
+        content = resp["result"].get("content", [])
+        if content and isinstance(content, list) and "text" in content[0]:
+            try:
+                return json.loads(content[0]["text"])
+            except Exception:
+                return {"text": content[0]["text"]}
+        return resp["result"]
+
+    def read_resource(self, uri: str) -> Dict[str, Any]:
+        """Read an MCP resource via JSON-RPC 2.0."""
+        self._request_counter += 1
+        req = {
+            "jsonrpc": "2.0",
+            "id": self._request_counter,
+            "method": "resources/read",
+            "params": {"uri": uri},
+        }
+        resp = self.server.handle_request(req)
+        if not resp or "result" not in resp:
+            return {"error": "Resource read failed"}
+        contents = resp["result"].get("contents", [])
+        if contents and "text" in contents[0]:
+            try:
+                return json.loads(contents[0]["text"])
+            except Exception:
+                return {"text": contents[0]["text"]}
+        return resp["result"]
+
+    def get_prompt(self, name: str, arguments: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """Retrieve an MCP prompt template via JSON-RPC 2.0."""
+        self._request_counter += 1
+        req = {
+            "jsonrpc": "2.0",
+            "id": self._request_counter,
+            "method": "prompts/get",
+            "params": {"name": name, "arguments": arguments or {}},
+        }
+        resp = self.server.handle_request(req)
+        return resp.get("result", resp)
 
     def run_stdio(self) -> None:
         """Standard JSON-RPC 2.0 stdio message pump."""
@@ -374,10 +556,14 @@ def run_self_test() -> int:
     assert filter_res["count"] > 0
     print(f"  PASS  tg_filter_events -> {filter_res['count']} events")
 
-    # 4. Call tg_neighbours
+    # 4. Call tg_neighbours & tg_event
     sample_id = filter_res["events"][0]["doc_id"]
     neigh_res = server.call_tool("tg_neighbours", {"vertex_id": sample_id, "limit": 10})
     print(f"  PASS  tg_neighbours from {sample_id} -> {neigh_res['num_hops']} hops")
+
+    event_res = server.call_tool("tg_event", {"doc_id": sample_id})
+    assert event_res.get("found") is True
+    print(f"  PASS  tg_event -> {sample_id} ({event_res['event']['title']})")
 
     # 5. Call tg_aggregate_stats
     stats_res = server.call_tool("tg_aggregate_stats", {"sport": "Athletics"})
@@ -400,6 +586,25 @@ def run_self_test() -> int:
     res_meta = server.read_resource("tigergraph://schema/OlympicsKG")
     assert res_meta["graph"] == "OlympicsKG"
     print("  PASS  resources/read tigergraph://schema/OlympicsKG")
+
+    # 8. Prompts list & get
+    prompts_res = server.handle_request({"jsonrpc": "2.0", "id": 8, "method": "prompts/list"})
+    prompts = prompts_res["result"]["prompts"]
+    assert len(prompts) >= 3
+    print(f"  PASS  prompts/list returned {len(prompts)} prompts: {', '.join(p['name'] for p in prompts)}")
+
+    prompt_get_res = server.handle_request({
+        "jsonrpc": "2.0", "id": 9, "method": "prompts/get",
+        "params": {"name": "investigate_olympic_question", "arguments": {"question": "Who won the men's 100m in 2008?"}},
+    })
+    assert "messages" in prompt_get_res["result"]
+    print("  PASS  prompts/get investigate_olympic_question")
+
+    # 9. TigerGraphMCPBridge execution
+    bridge = TigerGraphMCPBridge(server)
+    bridge_filter = bridge.call_tool("tg_filter_events", {"sport": "Athletics", "limit": 2})
+    assert bridge_filter.get("count", 0) > 0
+    print(f"  PASS  TigerGraphMCPBridge tool dispatch verified ({bridge_filter['count']} events)")
 
     print("=" * 60)
     print(" ALL MCP SERVER CHECKS PASSED (100% OPERATIONAL)")

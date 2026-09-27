@@ -98,6 +98,9 @@ def main() -> int:
                         [PY, "tools/baseline_sweep.py", "--ks", "5,20",
                          "--limit", "10",
                          "--out", "results/_selftest_sweep.json"])))
+    stages.append(("mcp server",
+                   _run("TigerGraph MCP Server Protocol Self-Test",
+                        [PY, "tools/mcp_server.py", "--test"])))
 
     # Only meaningful once the ablation study has been run; skipped otherwise
     # so a fresh clone does not report a spurious failure.

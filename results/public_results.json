@@ -163,7 +163,8 @@
           "similarity": 0.0,
           "citation_precision": 1.0,
           "citation_recall": 0.3636,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -391,7 +392,8 @@
           "similarity": 1.0,
           "citation_precision": 0.8,
           "citation_recall": 0.7273,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -838,7 +840,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -1551,7 +1554,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -1696,7 +1700,8 @@
           "similarity": 0.0,
           "citation_precision": 0.25,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -1873,7 +1878,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -2365,7 +2371,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0426,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -2827,7 +2834,8 @@
           "similarity": 1.0,
           "citation_precision": 0.4,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -2988,7 +2996,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.0588,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -3216,7 +3225,8 @@
           "similarity": 0.0,
           "citation_precision": 0.7,
           "citation_recall": 0.4118,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -3608,7 +3618,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -4274,7 +4285,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -4461,7 +4473,8 @@
           "similarity": 0.0,
           "citation_precision": 0.4,
           "citation_recall": 0.0465,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -4635,7 +4648,8 @@
           "similarity": 0.7525,
           "citation_precision": 1.0,
           "citation_recall": 0.0233,
-          "judge_reason": "The predicted event is the Women's hammer throw, whereas the gold answer is the Men's marathon."
+          "judge_reason": "The predicted event is the Women's hammer throw, whereas the gold answer is the Men's marathon.",
+          "completeness": 0.7368
         }
       },
       "Agentic GraphRAG": {
@@ -5159,7 +5173,8 @@
           "similarity": 0.95,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.5
         }
       },
       "Router": {
@@ -5741,7 +5756,8 @@
           "similarity": 0.95,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.5
         }
       }
     }
@@ -5889,7 +5905,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -6069,7 +6086,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -6530,7 +6548,8 @@
           "similarity": 1.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -7549,7 +7568,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -7695,7 +7715,8 @@
           "similarity": 0.0,
           "citation_precision": 0.4,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -7872,7 +7893,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -8580,7 +8602,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0256,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -9077,7 +9100,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0714,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -9223,7 +9247,8 @@
           "similarity": 1.0,
           "citation_precision": 0.5,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -9404,7 +9429,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -9722,7 +9748,8 @@
           "similarity": 1.0,
           "citation_precision": 0.5,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -10121,7 +10148,8 @@
           "similarity": 1.0,
           "citation_precision": 0.5,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -10273,7 +10301,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -10447,7 +10476,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.125,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -11221,7 +11251,8 @@
           "similarity": 1.0,
           "citation_precision": 0.2424,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -12157,7 +12188,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1818,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -12317,7 +12349,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -12505,7 +12538,8 @@
           "similarity": 0.275,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": "The predicted number (27) does not match the gold number (26)."
+          "judge_reason": "The predicted number (27) does not match the gold number (26).",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -12876,7 +12910,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -13079,7 +13114,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -13233,7 +13269,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.1,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -13449,7 +13486,8 @@
           "similarity": 1.0,
           "citation_precision": 0.75,
           "citation_recall": 0.6,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -14432,7 +14470,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -15528,7 +15567,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -15673,7 +15713,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -15853,7 +15894,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -16269,7 +16311,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -16743,7 +16786,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -16899,7 +16943,8 @@
           "similarity": 0.0,
           "citation_precision": 1.0,
           "citation_recall": 0.2143,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -17125,7 +17170,8 @@
           "similarity": 0.0,
           "citation_precision": 1.0,
           "citation_recall": 0.7143,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -17579,7 +17625,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -18262,7 +18309,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -18408,7 +18456,8 @@
           "similarity": 0.0,
           "citation_precision": 0.4,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -18585,7 +18634,8 @@
           "similarity": 0.1833,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -18966,7 +19016,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -19397,7 +19448,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0556,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -19545,7 +19597,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -19725,7 +19778,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -20208,7 +20262,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0455,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -20746,7 +20801,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0455,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -20891,7 +20947,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -21071,7 +21128,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -21670,7 +21728,8 @@
           "similarity": 0.6054,
           "citation_precision": 0.0769,
           "citation_recall": 1.0,
-          "judge_reason": "The predicted answer correctly identifies the three athletes from the gold answer, with appropriate punctuation and formatting."
+          "judge_reason": "The predicted answer correctly identifies the three athletes from the gold answer, with appropriate punctuation and formatting.",
+          "completeness": 0.3636
         }
       },
       "Router": {
@@ -22487,7 +22546,8 @@
           "similarity": 0.6054,
           "citation_precision": 0.0119,
           "citation_recall": 1.0,
-          "judge_reason": "The predicted answer contains the same three individuals as the gold answer, with standard spacing and punctuation."
+          "judge_reason": "The predicted answer contains the same three individuals as the gold answer, with standard spacing and punctuation.",
+          "completeness": 0.3636
         }
       }
     }
@@ -22634,7 +22694,8 @@
           "similarity": 1.0,
           "citation_precision": 0.2,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -22812,7 +22873,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -23188,7 +23250,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0476,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -23630,7 +23693,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -23775,7 +23839,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -23956,7 +24021,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -25030,7 +25096,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -25941,7 +26008,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0323,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -26088,7 +26156,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -26265,7 +26334,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -26869,7 +26939,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0541,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -27392,7 +27463,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0333,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -27545,7 +27617,8 @@
           "similarity": 0.0,
           "citation_precision": 0.6,
           "citation_recall": 0.375,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -27772,7 +27845,8 @@
           "similarity": 1.0,
           "citation_precision": 0.7,
           "citation_recall": 0.875,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -28373,7 +28447,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -29211,7 +29286,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -29361,7 +29437,8 @@
           "similarity": 0.0,
           "citation_precision": 1.0,
           "citation_recall": 0.1,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -29588,7 +29665,8 @@
           "similarity": 0.0,
           "citation_precision": 0.8,
           "citation_recall": 0.8,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -30418,7 +30496,8 @@
           "similarity": 1.0,
           "citation_precision": 0.3125,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -31065,7 +31144,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -31219,7 +31299,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -31392,7 +31473,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.1,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -31817,7 +31899,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -32406,7 +32489,8 @@
           "similarity": 0.95,
           "citation_precision": 0.2941,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.5333
         }
       }
     }
@@ -32554,7 +32638,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -32734,7 +32819,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -33567,7 +33653,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -34601,7 +34688,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -34749,7 +34837,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -34929,7 +35018,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -35498,7 +35588,8 @@
           "similarity": 1.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -36012,7 +36103,8 @@
           "similarity": 1.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -36166,7 +36258,8 @@
           "similarity": 0.0,
           "citation_precision": 1.0,
           "citation_recall": 0.25,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -36395,7 +36488,8 @@
           "similarity": 0.0,
           "citation_precision": 0.6,
           "citation_recall": 0.75,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -36995,7 +37089,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -37539,7 +37634,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -37697,7 +37793,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -37886,7 +37983,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -38257,7 +38355,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -38458,7 +38557,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -38603,7 +38703,8 @@
           "similarity": 0.0,
           "citation_precision": 0.5,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -38784,7 +38885,8 @@
           "similarity": 0.0,
           "citation_precision": 0.1,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -39125,7 +39227,8 @@
           "similarity": 1.0,
           "citation_precision": 0.5,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -39524,7 +39627,8 @@
           "similarity": 1.0,
           "citation_precision": 0.5,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -39678,7 +39782,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -39905,7 +40010,8 @@
           "similarity": 1.0,
           "citation_precision": 0.8,
           "citation_recall": 0.8,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -40659,7 +40765,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -41670,7 +41777,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -41818,7 +41926,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -41999,7 +42108,8 @@
           "similarity": 0.2292,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -42780,7 +42890,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0769,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -43637,7 +43748,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0714,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -43797,7 +43909,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -43989,7 +44102,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -44366,7 +44480,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -44569,7 +44684,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -44714,7 +44830,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -44894,7 +45011,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -45331,7 +45449,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0588,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -45826,7 +45945,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0588,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -45971,7 +46091,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -46152,7 +46273,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -46589,7 +46711,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0667,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -47081,7 +47204,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0667,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -47242,7 +47366,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -47434,7 +47559,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -47805,7 +47931,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -48009,7 +48136,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -48167,7 +48295,8 @@
           "similarity": 0.0,
           "citation_precision": 0.6,
           "citation_recall": 0.2143,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -48394,7 +48523,8 @@
           "similarity": 0.0,
           "citation_precision": 0.1,
           "citation_recall": 0.0714,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -48935,7 +49065,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -49590,7 +49721,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -49750,7 +49882,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -49943,7 +50076,8 @@
           "similarity": 0.275,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": "The predicted number (20) does not match the gold answer (23)."
+          "judge_reason": "The predicted number (20) does not match the gold answer (23).",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -50314,7 +50448,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -50517,7 +50652,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -50677,7 +50813,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -50869,7 +51006,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -51301,7 +51439,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -51504,7 +51643,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -51651,7 +51791,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -51832,7 +51973,8 @@
           "similarity": 0.0,
           "citation_precision": 0.1,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -52241,7 +52383,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1429,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -52647,7 +52790,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1429,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -52805,7 +52949,8 @@
           "similarity": 0.0,
           "citation_precision": 0.6,
           "citation_recall": 0.2143,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -52979,7 +53124,8 @@
           "similarity": 0.847,
           "citation_precision": 1.0,
           "citation_recall": 0.0714,
-          "judge_reason": "The predicted event is the Men's 50 metre rifle three positions, whereas the gold answer specifies the Men's 50 metre rifle prone event."
+          "judge_reason": "The predicted event is the Men's 50 metre rifle three positions, whereas the gold answer specifies the Men's 50 metre rifle prone event.",
+          "completeness": 0.88
         }
       },
       "Agentic GraphRAG": {
@@ -54008,7 +54154,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.0714,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -55093,7 +55240,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.0714,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -55238,7 +55386,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -55419,7 +55568,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -56433,7 +56583,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0175,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -57566,7 +57717,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -57711,7 +57863,8 @@
           "similarity": 0.0,
           "citation_precision": 0.25,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -57887,7 +58040,8 @@
           "similarity": 0.2276,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -58329,7 +58483,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -58769,7 +58924,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0417,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -58916,7 +59072,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -59095,7 +59252,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -59451,7 +59609,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0909,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -59957,7 +60116,8 @@
           "similarity": 1.0,
           "citation_precision": 0.08,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -60105,7 +60265,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -60285,7 +60446,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -60672,7 +60834,8 @@
           "similarity": 1.0,
           "citation_precision": 0.5,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -61110,7 +61273,8 @@
           "similarity": 1.0,
           "citation_precision": 0.5,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -61255,7 +61419,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -61447,7 +61612,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -61878,7 +62044,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -62066,7 +62233,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       }
     }
@@ -62214,7 +62382,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -62394,7 +62563,8 @@
           "similarity": 0.0733,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -62833,7 +63003,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -63491,7 +63662,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -63645,7 +63817,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -63819,7 +63992,8 @@
           "similarity": 0.7779,
           "citation_precision": 1.0,
           "citation_recall": 0.1,
-          "judge_reason": "The predicted answer specifies 'Women's foil' instead of the gold answer's 'Men's épée'."
+          "judge_reason": "The predicted answer specifies 'Women's foil' instead of the gold answer's 'Men's épée'.",
+          "completeness": 0.7778
         }
       },
       "Agentic GraphRAG": {
@@ -64680,7 +64854,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -65516,7 +65691,8 @@
           "similarity": 0.95,
           "citation_precision": 0.9091,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.5
         }
       }
     }
@@ -65703,7 +65879,8 @@
           "similarity": 0.0,
           "citation_precision": 0.4,
           "citation_recall": 0.0465,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -65931,7 +66108,8 @@
           "similarity": 0.0,
           "citation_precision": 0.7,
           "citation_recall": 0.1628,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -67384,7 +67562,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4651,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -68359,7 +68538,8 @@
           "similarity": 1.0,
           "citation_precision": 0.9149,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -68518,7 +68698,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -68708,7 +68889,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -69079,7 +69261,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -69281,7 +69464,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -69424,7 +69608,8 @@
           "similarity": 0.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -69615,7 +69800,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -70045,7 +70231,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -70231,7 +70418,8 @@
           "similarity": 0.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       }
     }
@@ -70376,7 +70564,8 @@
           "similarity": 0.0,
           "citation_precision": 0.5,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -70555,7 +70744,8 @@
           "similarity": 0.2538,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": "The predicted answer names Steven López instead of the gold answer Servet Tazegül."
+          "judge_reason": "The predicted answer names Steven López instead of the gold answer Servet Tazegül.",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -70936,7 +71126,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -71396,7 +71587,8 @@
           "similarity": 1.0,
           "citation_precision": 0.25,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -71541,7 +71733,8 @@
           "similarity": 0.0,
           "citation_precision": 0.25,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -71719,7 +71912,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -72076,7 +72270,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -72567,7 +72762,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0909,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -72715,7 +72911,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -72895,7 +73092,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -73356,7 +73554,8 @@
           "similarity": 1.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -73875,7 +74074,8 @@
           "similarity": 1.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -74035,7 +74235,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -74262,7 +74463,8 @@
           "similarity": 0.0,
           "citation_precision": 0.9,
           "citation_recall": 0.5625,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -75297,7 +75499,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.375,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -76428,7 +76631,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.375,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -76588,7 +76792,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -76780,7 +76985,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -77211,7 +77417,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -77414,7 +77621,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -77572,7 +77780,8 @@
           "similarity": 0.0,
           "citation_precision": 0.8,
           "citation_recall": 0.2857,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -77744,7 +77953,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.0714,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -78842,7 +79052,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.0714,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -79954,7 +80165,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.0714,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -80113,7 +80325,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -80306,7 +80519,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -80677,7 +80891,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -80879,7 +81094,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -81025,7 +81241,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -81204,7 +81421,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -81552,7 +81770,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1429,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -81994,7 +82213,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -82139,7 +82359,8 @@
           "similarity": 0.0,
           "citation_precision": 0.5,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -82316,7 +82537,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -82762,7 +82984,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0417,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -83226,7 +83449,8 @@
           "similarity": 1.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -83373,7 +83597,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -83554,7 +83779,8 @@
           "similarity": 0.0,
           "citation_precision": 0.1,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -84002,7 +84228,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0769,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -84447,7 +84674,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -84603,7 +84831,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -84784,7 +85013,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -85878,7 +86108,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4167,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -87088,7 +87319,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4167,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -87234,7 +87466,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -87410,7 +87643,8 @@
           "similarity": 0.1571,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -87851,7 +88085,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0769,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -88245,7 +88480,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0909,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -88390,7 +88626,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -88570,7 +88807,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -89382,7 +89620,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0233,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -90593,7 +90832,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -90751,7 +90991,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -90941,7 +91182,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -91312,7 +91554,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -91513,7 +91756,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -91658,7 +91902,8 @@
           "similarity": 0.0,
           "citation_precision": 0.5,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -91836,7 +92081,8 @@
           "similarity": 0.1419,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -92219,7 +92465,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0435,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -92657,7 +92904,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0435,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -92801,7 +93049,8 @@
           "similarity": 1.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -92991,7 +93240,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -93368,7 +93618,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -93555,7 +93806,8 @@
           "similarity": 1.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -93703,7 +93955,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -93883,7 +94136,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -94271,7 +94525,8 @@
           "similarity": 1.0,
           "citation_precision": 0.25,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -94724,7 +94979,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1429,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -94878,7 +95134,8 @@
           "similarity": 0.0,
           "citation_precision": 1.0,
           "citation_recall": 0.3636,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -95106,7 +95363,8 @@
           "similarity": 0.0,
           "citation_precision": 0.8,
           "citation_recall": 0.7273,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -95812,7 +96070,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -96542,7 +96801,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -96696,7 +96956,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -96879,7 +97140,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -97229,7 +97491,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -97637,7 +97900,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -97785,7 +98049,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -97965,7 +98230,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -98465,7 +98731,8 @@
           "similarity": 1.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -99023,7 +99290,8 @@
           "similarity": 1.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -99181,7 +99449,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -99371,7 +99640,8 @@
           "similarity": 0.275,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": "The predicted answer is 23, which does not match the gold answer of 24."
+          "judge_reason": "The predicted answer is 23, which does not match the gold answer of 24.",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -99742,7 +100012,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -99943,7 +100214,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -100098,7 +100370,8 @@
           "similarity": 0.0,
           "citation_precision": 0.8,
           "citation_recall": 0.4,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -100325,7 +100598,8 @@
           "similarity": 1.0,
           "citation_precision": 0.8,
           "citation_recall": 0.8,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -101390,7 +101664,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.3,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -102030,7 +102305,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -102184,7 +102460,8 @@
           "similarity": 0.0,
           "citation_precision": 0.4,
           "citation_recall": 0.2,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -102412,7 +102689,8 @@
           "similarity": 1.0,
           "citation_precision": 0.8,
           "citation_recall": 0.8,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -103526,7 +103804,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.3,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -104620,7 +104899,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.3,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -104779,7 +105059,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -104970,7 +105251,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -105315,7 +105597,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1667,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -105517,7 +105800,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -105663,7 +105947,8 @@
           "similarity": 0.0,
           "citation_precision": 0.4,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -105841,7 +106126,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -106225,7 +106511,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -106715,7 +107002,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0769,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -106863,7 +107151,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -107044,7 +107333,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -107372,7 +107662,8 @@
           "similarity": 1.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -107758,7 +108049,8 @@
           "similarity": 1.0,
           "citation_precision": 0.3333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -107917,7 +108209,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -108107,7 +108400,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -108538,7 +108832,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -108740,7 +109035,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -108899,7 +109195,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -109090,7 +109387,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -109520,7 +109818,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -109722,7 +110021,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -109870,7 +110170,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -110051,7 +110352,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -110458,7 +110760,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1429,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -110923,7 +111226,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1429,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -111071,7 +111375,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -111232,7 +111537,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -111650,7 +111956,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0526,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -112123,7 +112430,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0526,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -112284,7 +112592,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.0625,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -112512,7 +112821,8 @@
           "similarity": 0.0,
           "citation_precision": 0.8,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -113785,7 +114095,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4375,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -115064,7 +115375,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4375,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -115212,7 +115524,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -115393,7 +115706,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -115770,7 +116084,8 @@
           "similarity": 1.0,
           "citation_precision": 0.5,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -116323,7 +116638,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0345,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -116481,7 +116797,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -116659,7 +116976,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -117036,7 +117354,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -117237,7 +117556,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -117385,7 +117705,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -117565,7 +117886,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -117978,7 +118300,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1111,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -118449,7 +118772,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1111,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -118619,7 +118943,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -118847,7 +119172,8 @@
           "similarity": 0.0,
           "citation_precision": 0.7,
           "citation_recall": 0.2692,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -120110,7 +120436,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4615,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -121419,7 +121746,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4615,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -121567,7 +121895,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -121748,7 +122077,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -122322,7 +122652,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -122955,7 +123286,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0333,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -123107,7 +123439,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -123281,7 +123614,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.125,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -123696,7 +124030,8 @@
           "similarity": 0.95,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.5
         }
       },
       "Router": {
@@ -124097,7 +124432,8 @@
           "similarity": 0.95,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.5
         }
       }
     }
@@ -124252,7 +124588,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.0909,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -124426,7 +124763,8 @@
           "similarity": 0.7714,
           "citation_precision": 1.0,
           "citation_recall": 0.0909,
-          "judge_reason": "The predicted answer specifies the Laser event instead of the Men's 470 event."
+          "judge_reason": "The predicted answer specifies the Laser event instead of the Men's 470 event.",
+          "completeness": 0.75
         }
       },
       "Agentic GraphRAG": {
@@ -124778,7 +125116,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -125185,7 +125524,8 @@
           "similarity": 0.95,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.5
         }
       }
     }
@@ -125330,7 +125670,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -125511,7 +125852,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -125927,7 +126269,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -126475,7 +126818,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -126657,7 +127001,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.0263,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -126884,7 +127229,8 @@
           "similarity": 0.0,
           "citation_precision": 0.7,
           "citation_recall": 0.1842,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -128243,7 +128589,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4474,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -129578,7 +129925,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4474,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -129732,7 +130080,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -129906,7 +130255,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.1,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -130336,7 +130686,8 @@
           "similarity": 1.0,
           "citation_precision": 0.4545,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -130800,7 +131151,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -130956,7 +131308,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -131183,7 +131536,8 @@
           "similarity": 0.0,
           "citation_precision": 0.8,
           "citation_recall": 0.6667,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -131833,7 +132187,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -132516,7 +132871,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -132663,7 +133019,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -132844,7 +133201,8 @@
           "similarity": 0.0,
           "citation_precision": 0.1,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -133192,7 +133550,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1429,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -133655,7 +134014,8 @@
           "similarity": 1.0,
           "citation_precision": 0.25,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -133813,7 +134173,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -134002,7 +134363,8 @@
           "similarity": 0.275,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": "The predicted number (19) does not match the gold number (18)."
+          "judge_reason": "The predicted number (19) does not match the gold number (18).",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -134373,7 +134735,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -134574,7 +134937,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -134731,7 +135095,8 @@
           "similarity": 0.0,
           "citation_precision": 0.8,
           "citation_recall": 0.3077,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -134959,7 +135324,8 @@
           "similarity": 0.0,
           "citation_precision": 0.8,
           "citation_recall": 0.6154,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -135584,7 +135950,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -136582,7 +136949,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4615,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -136735,7 +137103,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.1111,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -136963,7 +137332,8 @@
           "similarity": 1.0,
           "citation_precision": 0.7,
           "citation_recall": 0.7778,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -138008,7 +138378,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4444,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -139078,7 +139449,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.4444,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -139225,7 +139597,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -139402,7 +139775,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -139759,7 +140133,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -140225,7 +140600,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1818,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -140370,7 +140746,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -140551,7 +140928,8 @@
           "similarity": 0.1467,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -141598,7 +141976,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -142279,7 +142658,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0323,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -142427,7 +142807,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "GraphRAG": {
@@ -142607,7 +142988,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -143032,7 +143414,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0769,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -143515,7 +143898,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0769,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -143661,7 +144045,8 @@
           "similarity": 0.0,
           "citation_precision": 0.4,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -143839,7 +144224,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -144241,7 +144627,8 @@
           "similarity": 1.0,
           "citation_precision": 0.1667,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -144736,7 +145123,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -144881,7 +145269,8 @@
           "similarity": 0.0,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -145062,7 +145451,8 @@
           "similarity": 0.1065,
           "citation_precision": 0.0,
           "citation_recall": 0.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "Agentic GraphRAG": {
@@ -145877,7 +146267,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0143,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -146642,7 +147033,8 @@
           "similarity": 1.0,
           "citation_precision": 0.0175,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -146787,7 +147179,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -146968,7 +147361,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -147981,7 +148375,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -149049,7 +149444,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 1.0,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }
@@ -149195,7 +149591,8 @@
           "similarity": 0.0,
           "citation_precision": 0.2,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 0.0
         }
       },
       "GraphRAG": {
@@ -149373,7 +149770,8 @@
           "similarity": 1.0,
           "citation_precision": 1.0,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Agentic GraphRAG": {
@@ -149757,7 +150155,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       },
       "Router": {
@@ -150173,7 +150572,8 @@
           "similarity": 1.0,
           "citation_precision": 0.04,
           "citation_recall": 0.5,
-          "judge_reason": ""
+          "judge_reason": "",
+          "completeness": 1.0
         }
       }
     }

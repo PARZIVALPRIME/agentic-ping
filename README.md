@@ -48,7 +48,7 @@ Final public run: 100 questions, **live** provider (Gemini 3.8 Flash + TigerGrap
 | Capability Router | 98.0% | 57.3% | **85.3%** | **68.5%** | 13,704 ms | 162 | 6.3 | 16,748 | 17,090 |
 
 > **Evaluation Metric Notes:**
-> - **Accuracy (100.0%) vs. Completeness (97.6%)**: Accuracy measures binary factual correctness (100% of answers identify the correct Olympic entities, counts, and dates as verified by deterministic normalization, containment, and semantic LLM-as-judge). Completeness measures token-level SQuAD $F_1$ lexical overlap against raw scraped Wikipedia strings, where natural formatting differences—such as cleanly separating concatenated athlete names (`Dani King, Laura Trott and Joanna Rowsell` vs Wikipedia's unspaced `'Dani KingLaura TrottJoanna Rowsell'`) or omitting redundant article prefixes—slightly reduce token overlap without altering factual truth.
+> - **Accuracy (100.0%) vs. Completeness (98.4%)**: Accuracy measures binary factual correctness (100% of answers identify the correct Olympic entities, counts, and dates as verified by deterministic normalization, containment, and semantic LLM-as-judge). Completeness measures token-level SQuAD $F_1$ lexical overlap (98.4% for Agentic GraphRAG) against raw scraped Wikipedia strings, where natural formatting differences—such as cleanly separating concatenated athlete names (`Dani King, Laura Trott and Joanna Rowsell` vs Wikipedia's unspaced `'Dani KingLaura TrottJoanna Rowsell'`) or omitting redundant article prefixes—slightly reduce token overlap without altering factual truth.
 > - **Latency & The Pareto Frontier**: GraphRAG answers in 1.9s but collapses on complex queries (33.3% on aggregation, 50.0% on superlatives). Agentic GraphRAG takes 12.9s because it conducts an autonomous multi-turn investigation (5.6 LLM turns, dynamic tool calling). The Router achieves Pareto efficiency by dispatching single-shot lookups in 4.2s (saving 83.8% of tokens) and invoking the agentic loop only when structural complexity or low confidence demands it.
 
 ### Accuracy Breakdown by Question Type ($n = 100$)
@@ -195,17 +195,25 @@ Olympics history (1987–2023) is rife with evolving facts, doping disqualificat
   ```
 - **Resilient Fallback**: Automatically mirrors the 2,951 documents into an in-memory graph so local development or network hiccups never break a run.
 
-### 2. Model Context Protocol (MCP) Server (`tools/mcp_server.py`)
-- **Standardized RFC-Compliant stdio Server**: Implements the official JSON-RPC 2.0 stdio Model Context Protocol, exposing TigerGraph Cloud primitives and multi-agent reasoning tools directly to Claude Desktop, Cursor, and IDEs.
+### 2. Enterprise Model Context Protocol (MCP) Server & Bridge (`tools/mcp_server.py`)
+- **Full RFC-Compliant stdio Server**: Implements the official JSON-RPC 2.0 Model Context Protocol, exposing TigerGraph Cloud primitives, resources, and reasoning prompts directly to Claude Desktop, Cursor, LangChain, and CrewAI.
 - **6 Enterprise Tools Exposed**:
   1. `tg_filter_events`: Attribute filter over TigerGraph vertices with sport, venue, season, year range, and limit.
   2. `tg_neighbours`: Multi-hop edge traversal exploring `WON_BY`, `HELD_AT`, `PART_OF`, `IN_SPORT`, `PREV`, `NEXT`.
   3. `tg_event`: Direct vertex lookup and existence probe.
   4. `tg_aggregate_stats`: Server-side GSQL accumulator query computing event totals, year spans, and unique counts.
-  5. `detect_conflicts`: 4-tier Round 2 conflict adjudication engine.
-  6. `agentic_investigate`: Autonomous multi-agent investigation workflow over TigerGraph.
-- **Resources Advertised**:
-  - `tigergraph://schema/OlympicsKG`: Full schema specification with vertex and edge definitions.
+  5. `detect_conflicts`: 4-tier Round 2 conflict adjudication engine with uncertainty quantification.
+  6. `agentic_investigate`: Autonomous multi-agent investigation workflow over TigerGraph with cached pipeline acceleration.
+- **2 Resources Advertised**:
+  - `tigergraph://schema/OlympicsKG`: Full GSQL graph schema specification (vertices, edge types, attributes).
+  - `tigergraph://stats/OlympicsKG`: Real-time vertex/edge statistics and active cluster host information.
+- **3 Expert Investigation Prompts**:
+  - `investigate_olympic_question`: Structured system instructions for multi-hop tool investigation over TigerGraph.
+  - `adjudicate_conflicting_facts`: System prompt for resolving historical disputes with the 4-tier hierarchy.
+  - `explore_athlete_career`: Prompt for mapping an athlete's career trajectory across sports and Games editions.
+- **Programmatic Python Client Bridge (`TigerGraphMCPBridge`)**:
+  - Enables internal agents, scripts, and evaluation pipelines to invoke MCP tools directly in-process via standardized JSON-RPC message exchange.
+- **Setup Guide**: See [`docs/mcp_setup_guide.md`](docs/mcp_setup_guide.md) for complete Claude Desktop and Cursor integration instructions.
 - **Automated Verification**:
   ```powershell
   python tools/mcp_server.py --test
@@ -279,13 +287,13 @@ python tools/audit_leakage.py
 Run the comprehensive end-to-end self-test suite (exercises all 12 stages without requiring network or API keys):
 
 ```powershell
-# 1. Run the 12-Stage Self-Test
+# 1. Run the 13-Stage Self-Test (including Stage 13: TigerGraph MCP Server Protocol)
 python tools/selftest.py
 
 # 2. Run the Data Leakage Audit
 python tools/audit_leakage.py
 
-# 3. Test MCP Server (6 Tools + Resources)
+# 3. Test MCP Server (6 Tools + Resources + Prompts + Bridge)
 python tools/mcp_server.py --test
 
 # 4. Refresh & Validate Dashboards

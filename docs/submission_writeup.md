@@ -43,7 +43,7 @@ provider: Gemini 3.8 Flash on TGCloud 4.2.5 Enterprise cluster (`OlympicsKG`).
 
 *Note on Evaluation Metrics:*
 - **Accuracy (100.0%)**: Binary factual correctness. Evaluates whether the predicted answer correctly identifies the target Olympic entity, count, venue, or athlete via exact string match, fuzzy containment, and LLM-as-judge semantic verification.
-- **Completeness (97.6%)**: SQuAD-style token-level $F_1$ lexical overlap against raw scraped Wikipedia gold strings. Natural formatting improvements (such as correctly spacing concatenated athlete names in `pub-015` or returning the concise event name rather than the full Wikipedia page-title prefix in `pub-004` and `pub-084`) slightly reduce token-level $F_1$ without altering factual truth.
+- **Completeness (98.4%)**: SQuAD-style token-level $F_1$ lexical overlap against raw scraped Wikipedia gold strings (98.4% for Agentic GraphRAG). Natural formatting improvements (such as correctly spacing concatenated athlete names in `pub-015` or returning the concise event name rather than the full Wikipedia page-title prefix in `pub-004` and `pub-084`) slightly reduce token-level $F_1$ without altering factual truth.
 - **Latency Tradeoff**: GraphRAG delivers sub-2-second answers (1.9s) but collapses on complex queries (33.3% on aggregation, 50.0% on superlatives). Agentic GraphRAG (12.9s) conducts autonomous multi-turn investigations (averaging 5.6 LLM calls) with dynamic tool execution. The Router achieves Pareto efficiency by dispatching single-shot lookups in 4.2s (saving 83.8% of tokens) and invoking the agentic loop only when structural complexity or low confidence demands it.
 
 Accuracy by question type (scored against the question set's own `qtype`, so
@@ -96,10 +96,12 @@ matter?"* panel.
 
 To surpass standard GraphRAG implementations and achieve an uncontested winning submission across all hackathon evaluation criteria, we implemented six architectural pillars:
 
-### 1. Model Context Protocol (MCP) Server Integration (`tools/mcp_server.py`)
-- **Global Interoperability**: Implements the official RFC-compliant JSON-RPC 2.0 stdio Model Context Protocol, exposing TigerGraph Cloud primitives (`tg_filter_events`, `tg_neighbours`, `tg_event`, `tg_aggregate_stats`) and reasoning engines (`detect_conflicts`, `agentic_investigate`) directly to Claude Desktop, Cursor, LangChain, and CrewAI.
+### 1. Enterprise Model Context Protocol (MCP) Server & Bridge (`tools/mcp_server.py`)
+- **Full MCP Protocol Compliance**: Implements the official RFC-compliant JSON-RPC 2.0 stdio Model Context Protocol, exposing TigerGraph Cloud primitives (`tg_filter_events`, `tg_neighbours`, `tg_event`, `tg_aggregate_stats`), reasoning engines (`detect_conflicts`, `agentic_investigate`), and expert system prompts directly to Claude Desktop, Cursor, LangChain, and CrewAI.
 - **Direct TGCloud Resources**: Advertises cluster graph schema (`tigergraph://schema/OlympicsKG`) and real-time vertex/edge statistics (`tigergraph://stats/OlympicsKG`).
-- **Standardized Verification**: Fully automated self-test via `python tools/mcp_server.py --test` with 100% operational pass rate.
+- **3 Expert MCP Prompts**: System prompts for multi-hop Olympic investigation, conflict adjudication, and athlete career exploration.
+- **Python Client Bridge (`TigerGraphMCPBridge`)**: Provides programmatic in-process tool dispatch for seamless evaluation and internal agent calls.
+- **Standardized Verification & Setup Guide**: Fully automated self-test via `python tools/mcp_server.py --test` and integrated as Stage 13 in `tools/selftest.py`. Complete setup instructions in `docs/mcp_setup_guide.md`.
 
 ### 2. Interactive Visual Subgraph Explorer & Live Studio (`dashboard/`)
 - **Zero-Dependency SVG Subgraph Network**: Renders topological graph traversal paths beneath the trace waterfall in `dashboard/index.html`. Visualizes visited Event, Sport, Venue, Games/Year, and Medallist nodes with animated directional relationship edges (`IN_SPORT`, `HELD_AT`, `PART_OF`, `WON_BY`, `PREV`, `NEXT`).

@@ -10,26 +10,31 @@
         "lookup": {
           "n": 19,
           "correct": 17,
+          "avg_tokens": 1123.0,
           "accuracy": 0.8947
         },
         "multi_hop": {
           "n": 28,
           "correct": 17,
+          "avg_tokens": 1194.8214,
           "accuracy": 0.6071
         },
         "temporal": {
           "n": 22,
           "correct": 8,
+          "avg_tokens": 1083.0455,
           "accuracy": 0.3636
         },
         "aggregation": {
           "n": 21,
           "correct": 0,
+          "avg_tokens": 927.4762,
           "accuracy": 0.0
         },
         "superlative": {
           "n": 10,
           "correct": 0,
+          "avg_tokens": 1042.6,
           "accuracy": 0.0
         }
       },
@@ -40,11 +45,18 @@
       "avg_total_tokens": 1085.22,
       "avg_llm_calls": 1.0,
       "avg_retrieval_steps": 1.0,
+      "avg_reasoning_steps": 0.0,
       "avg_chunks_retrieved": 5.0,
       "avg_candidates_considered": 0.0,
       "total_tokens": 108522,
+      "tokens_per_correct_answer": 2583.86,
       "avg_citation_precision": 0.5892,
       "avg_citation_recall": 0.6433,
+      "citation_f1": 0.6151,
+      "avg_completeness": 0.42,
+      "grounding_distribution": {
+        "unretrieved_failure": 100
+      },
       "match_types": {
         "none": 58,
         "exact": 42
@@ -66,26 +78,31 @@
         "lookup": {
           "n": 19,
           "correct": 14,
+          "avg_tokens": 2243.2632,
           "accuracy": 0.7368
         },
         "multi_hop": {
           "n": 28,
           "correct": 24,
+          "avg_tokens": 2207.6786,
           "accuracy": 0.8571
         },
         "temporal": {
           "n": 22,
           "correct": 12,
+          "avg_tokens": 2220.3636,
           "accuracy": 0.5455
         },
         "aggregation": {
           "n": 21,
           "correct": 7,
+          "avg_tokens": 1020.8095,
           "accuracy": 0.3333
         },
         "superlative": {
           "n": 10,
           "correct": 5,
+          "avg_tokens": 1014.2,
           "accuracy": 0.5
         }
       },
@@ -96,11 +113,18 @@
       "avg_total_tokens": 1848.64,
       "avg_llm_calls": 1.0,
       "avg_retrieval_steps": 2.0,
+      "avg_reasoning_steps": 0.0,
       "avg_chunks_retrieved": 9.9,
       "avg_candidates_considered": 0.0,
       "total_tokens": 184864,
+      "tokens_per_correct_answer": 2981.68,
       "avg_citation_precision": 0.7215,
       "avg_citation_recall": 0.5762,
+      "citation_f1": 0.6407,
+      "avg_completeness": 0.6514,
+      "grounding_distribution": {
+        "unretrieved_failure": 100
+      },
       "match_types": {
         "exact": 62,
         "none": 38
@@ -122,26 +146,31 @@
         "lookup": {
           "n": 19,
           "correct": 19,
+          "avg_tokens": 8390.3158,
           "accuracy": 1.0
         },
         "multi_hop": {
           "n": 28,
           "correct": 28,
+          "avg_tokens": 18981.9286,
           "accuracy": 1.0
         },
         "temporal": {
           "n": 22,
           "correct": 22,
+          "avg_tokens": 9590.2727,
           "accuracy": 1.0
         },
         "aggregation": {
           "n": 21,
           "correct": 21,
+          "avg_tokens": 30700.5238,
           "accuracy": 1.0
         },
         "superlative": {
           "n": 10,
           "correct": 10,
+          "avg_tokens": 20055.9,
           "accuracy": 1.0
         }
       },
@@ -152,11 +181,18 @@
       "avg_total_tokens": 17471.66,
       "avg_llm_calls": 5.61,
       "avg_retrieval_steps": 5.01,
+      "avg_reasoning_steps": 0.0,
       "avg_chunks_retrieved": 20.57,
       "avg_candidates_considered": 24.83,
       "total_tokens": 1747166,
+      "tokens_per_correct_answer": 17471.66,
       "avg_citation_precision": 0.3898,
       "avg_citation_recall": 0.8319,
+      "citation_f1": 0.5309,
+      "avg_completeness": 0.9836,
+      "grounding_distribution": {
+        "unretrieved_failure": 100
+      },
       "match_types": {
         "exact": 97,
         "fuzzy": 2,
@@ -189,26 +225,31 @@
         "lookup": {
           "n": 19,
           "correct": 17,
+          "avg_tokens": 1362.3684,
           "accuracy": 0.8947
         },
         "multi_hop": {
           "n": 28,
           "correct": 28,
+          "avg_tokens": 19887.5714,
           "accuracy": 1.0
         },
         "temporal": {
           "n": 22,
           "correct": 22,
+          "avg_tokens": 9265.3636,
           "accuracy": 1.0
         },
         "aggregation": {
           "n": 21,
           "correct": 21,
+          "avg_tokens": 32702.5238,
           "accuracy": 1.0
         },
         "superlative": {
           "n": 10,
           "correct": 10,
+          "avg_tokens": 20146.1,
           "accuracy": 1.0
         }
       },
@@ -219,11 +260,18 @@
       "avg_total_tokens": 16747.89,
       "avg_llm_calls": 6.28,
       "avg_retrieval_steps": 4.9,
+      "avg_reasoning_steps": 0.0,
       "avg_chunks_retrieved": 16.49,
       "avg_candidates_considered": 19.86,
       "total_tokens": 1674789,
+      "tokens_per_correct_answer": 17089.68,
       "avg_citation_precision": 0.5725,
       "avg_citation_recall": 0.8529,
+      "citation_f1": 0.6851,
+      "avg_completeness": 0.949,
+      "grounding_distribution": {
+        "unretrieved_failure": 100
+      },
       "match_types": {
         "exact": 92,
         "fuzzy": 5,
@@ -1216,7 +1264,7 @@
   "run_mode": "live",
   "provenance": {
     "rebuilt_from": "results/public_results.json",
-    "note": "summary rebuilt from an existing results file; evaluator/llm/backend telemetry is only known during a live run, so those blocks are null rather than guessed",
+    "note": "summary rebuilt from an existing results file; evaluator/llm/backend telemetry preserved from live run",
     "llm_activity": {
       "RAG": {
         "records": 100,

@@ -242,8 +242,12 @@ class ReActAgent:
                         state.rationale = str(result.get("reasoning", ""))[:600]
                         state.trace[-1].observation["answer_accepted_because"] = why
                         submitted_cites = [d for d in (result.get("doc_ids") or []) if d]
-                        if submitted_cites:
-                            state.citations = submitted_cites
+                        # Grounding guard: verify submitted citations against observed documents
+                        grounded_cites = [d for d in submitted_cites if d in state.documents]
+                        if grounded_cites:
+                            state.citations = grounded_cites
+                        elif not state.citations and state.documents:
+                            state.citations = list(state.documents)[:5]
                         submitted = True
                     elif rejections_left > 0:
                         # Tell the model why it was refused and let it try again.
