@@ -33,6 +33,9 @@ An enterprise-grade, explainable, and multi-agent GraphRAG system built for the 
 8. [Quick Verification & Self-Test](#quick-verification--self-test)
 
 ---
+Architecture Diagram:
+<img width="1536" height="1024" alt="ChatGPT Image Sep 30, 2026, 12_59_04 PM" src="https://github.com/user-attachments/assets/a8ef17a0-5bbf-4591-8e38-45e4e33a97c7" />
+
 
 ## Headline result
 
